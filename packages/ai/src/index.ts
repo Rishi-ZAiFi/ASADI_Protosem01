@@ -1,25 +1,20 @@
 import { LlmPort, UsageLedgerPort, ResearchCachePort, LlmRequest } from '@contentyou/schemas';
-import OpenAI from 'openai';
 import { GoogleGenAI } from '@google/genai';
 import { z } from 'zod';
-import { zodResponseFormat } from 'openai/helpers/zod';
 import { search as ddSearch } from 'duck-duck-scrape';
 
 export function createAiClient(deps: {
   usageLedger: UsageLedgerPort;
   researchCache: ResearchCachePort;
-  config: { openaiApiKey?: string, geminiApiKey?: string };
+  config: { geminiApiKey?: string };
 }): LlmPort {
-  const openaiKey = deps.config.openaiApiKey || process.env.OPENAI_API_KEY;
   const geminiKey = deps.config.geminiApiKey || process.env.GEMINI_API_KEY;
-  
-  const openai = openaiKey ? new OpenAI({ apiKey: openaiKey }) : null;
   const gemini = geminiKey ? new GoogleGenAI({ apiKey: geminiKey }) : null;
 
   return {
     async generate<T extends z.ZodType>(request: LlmRequest<T>): Promise<z.infer<T>> {
-      if (!openai && !gemini) {
-         throw new Error("No API key found. Please add GEMINI_API_KEY or OPENAI_API_KEY to your .env file.");
+      if (!gemini) {
+         throw new Error("No API key found. Please add GEMINI_API_KEY to your .env file.");
       }
       
       console.log(`[AI] Generating response for prompt: ${request.prompt.substring(0, 100)}...`);
@@ -28,7 +23,7 @@ export function createAiClient(deps: {
       if (gemini) {
         try {
           const response = await gemini.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-1.5-flash',
             contents: request.prompt + "\n\nIMPORTANT: You must output ONLY valid JSON matching this request. Do NOT include markdown blocks like ```json.",
             config: {
               temperature: request.temperature ?? 0.7,
@@ -42,28 +37,8 @@ export function createAiClient(deps: {
           return request.schema.parse(JSON.parse(response.text));
         } catch (error) {
           console.error("[AI] Gemini generation failed:", error);
-          if (!openai) throw error;
-          console.log("[AI] Falling back to OpenAI...");
+          throw error;
         }
-      }
-
-      // 2. Fallback to OpenAI
-      if (openai) {
-        const response = await openai.beta.chat.completions.parse({
-          model: 'gpt-4o-2024-08-06',
-          messages: [
-            { role: 'system', content: 'You are an expert autonomous content creator and planner. Always output valid JSON conforming strictly to the requested schema.' },
-            { role: 'user', content: request.prompt }
-          ],
-          response_format: zodResponseFormat(request.schema as z.ZodTypeAny, 'result'),
-          temperature: request.temperature ?? 0.7,
-        });
-
-        const parsed = response.choices[0].message.parsed;
-        if (!parsed) throw new Error("Failed to parse LLM response");
-        
-        await deps.usageLedger.recordUsage('system', response.usage?.total_tokens || 0, 0.01, 1);
-        return parsed;
       }
 
       throw new Error("Generation failed.");
