@@ -1,3 +1,3 @@
-# TEST_ASADI
+# Content-Repurposer
 
-Repository initialized.
+A tool for repurposing content across platforms and formats.
