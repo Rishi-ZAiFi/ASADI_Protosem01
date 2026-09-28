@@ -42,6 +42,12 @@ lerna-debug.log*
 .pnpm-debug.log*
 .next/
 out/
+dist/
+dist-ssr/
+*.local
+
+# Database data persistence (optional local runtime data)
+server/data/*.json
 
 # Streamlit
 .streamlit/secrets.toml
