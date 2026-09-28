@@ -1,15 +1,25 @@
 import os
 import json
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, validator
+from typing import List, Optional
 from dotenv import load_dotenv
 import google.generativeai as genai
 
 load_dotenv()
 
-app = Flask(__name__)
-# Enable CORS so the React app can communicate with Flask
-CORS(app)
+app = FastAPI()
+
+# Enable CORS so the React app can communicate with FastAPI
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
@@ -20,31 +30,34 @@ if GEMINI_API_KEY and GEMINI_API_KEY != "your_actual_api_key_here":
 else:
     model = None
 
-@app.route('/generate', methods=['POST'])
-def generate_content():
+class GenerateRequest(BaseModel):
+    content: str
+    platforms: List[str]
+    tone: Optional[str] = "professional"
+
+@app.post('/generate')
+async def generate_content(request_data: GenerateRequest):
     if not model:
-        return jsonify({"error": "Gemini API key is missing or invalid. Please check your backend .env file."}), 500
+        return JSONResponse(
+            status_code=500,
+            content={"error": "Gemini API key is missing or invalid. Please check your backend .env file."}
+        )
 
-    data = request.json
-    
-    if not data:
-        return jsonify({"error": "Invalid JSON payload."}), 400
-
-    content = data.get("content", "").strip()
-    platforms = data.get("platforms", [])
-    tone = data.get("tone", "professional")
+    content = request_data.content.strip()
+    platforms = request_data.platforms
+    tone = request_data.tone
 
     if not content:
-        return jsonify({"error": "Content cannot be empty."}), 400
+        return JSONResponse(status_code=400, content={"error": "Content cannot be empty."})
 
-    if not platforms or not isinstance(platforms, list):
-        return jsonify({"error": "At least one platform must be selected."}), 400
+    if not platforms:
+        return JSONResponse(status_code=400, content={"error": "At least one platform must be selected."})
 
     valid_platforms = {"linkedin", "instagram", "x", "youtube"}
     selected_valid = [p for p in platforms if p in valid_platforms]
     
     if not selected_valid:
-        return jsonify({"error": "Invalid platform selections."}), 400
+        return JSONResponse(status_code=400, content={"error": "Invalid platform selections."})
 
     prompt = f"""
 You are an expert social media content repurposing assistant.
@@ -81,7 +94,7 @@ The JSON must follow this exact structure, including only the requested platform
 }}
 """
     try:
-        response = model.generate_content(prompt)
+        response = await model.generate_content_async(prompt)
         
         # Parse the JSON response
         text = response.text.strip()
@@ -95,12 +108,29 @@ The JSON must follow this exact structure, including only the requested platform
         text = text.strip()
 
         result_json = json.loads(text)
-        return jsonify(result_json)
+        return result_json
 
     except json.JSONDecodeError:
-        return jsonify({"error": "Failed to parse the AI response as JSON. Please try again."}), 500
+        return JSONResponse(
+            status_code=500,
+            content={"error": "Failed to parse the AI response as JSON. Please try again."}
+        )
     except Exception as e:
-        return jsonify({"error": f"An error occurred during AI generation: {str(e)}"}), 500
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"An error occurred during AI generation: {str(e)}"}
+        )
+
+# Ensure FastAPI uses the exact JSON syntax error format the frontend expects 
+# (though Pydantic will catch structural issues, we handle the most basic ones)
+from fastapi.exceptions import RequestValidationError
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=400,
+        content={"error": "Invalid JSON payload or missing fields."}
+    )
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    import uvicorn
+    uvicorn.run("app:app", host="127.0.0.1", port=5000, reload=True)

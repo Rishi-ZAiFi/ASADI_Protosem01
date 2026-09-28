@@ -12,7 +12,7 @@ Content Repurposer is a full-stack AI-powered web application that takes a singl
 
 ## Tech Stack
 - **Frontend**: React + Vite, Vanilla CSS
-- **Backend**: Python + Flask, Flask-CORS
+- **Backend**: Python + FastAPI, Uvicorn
 - **AI**: Google Gemini API (`google-generativeai`)
 
 ## Project Structure
@@ -22,7 +22,7 @@ Content-Repurposer/
 │   ├── src/              # React components and CSS
 │   ├── package.json      # Frontend dependencies
 │   └── ...
-├── backend/              # Flask Python API
+├── backend/              # FastAPI Python API
 │   ├── app.py            # Main backend application
 │   ├── requirements.txt  # Python dependencies
 │   ├── .env.example      # Example environment variables
@@ -42,7 +42,7 @@ Navigate to the `backend/` directory and configure your Gemini API Key.
    ```
 *(Note: Never commit your actual `.env` file to version control. An `.env.example` is provided for reference.)*
 
-### 2. How to run Backend (Flask)
+### 2. How to run Backend (FastAPI)
 Open a terminal and run the following commands:
 ```powershell
 cd backend
@@ -52,7 +52,7 @@ venv\Scripts\activate
 # Install requirements:
 pip install -r requirements.txt
 # Run the application:
-python app.py
+uvicorn app:app --reload --port 5000
 ```
 *The backend API will run on `http://localhost:5000`.*
 
