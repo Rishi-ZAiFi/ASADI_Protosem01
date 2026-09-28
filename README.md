@@ -1,189 +1,161 @@
-# 🚀 Protosem — AI Product Development Sprint
+# 18 — AI Content Director (CineSensei Studio) 🎬
 
-Welcome to the **Protosem AI Product Development Repository**! 
+[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-38b2ac?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 
-This repository serves as the central hub for the cohort's AI application development sprint. Each student has been allocated a unique real-world creator-economy problem statement. Students are required to develop a working prototype, test it, and submit their project via a **Pull Request (PR)** following the branch naming convention and workflow outlined below.
-
----
-
-## 📌 Submission Guidelines & Workflow
-
-Students must submit their work by **forking this repository** and opening a **Pull Request (PR)**. Once reviewed and approved by the mentor/admin, your branch will be merged into this repository.
-
-### ⚠️ Strict Branch Naming Convention
-
-Your branch name **MUST** strictly follow this pattern:
-
-```text
-<No>_<Product_Name>
-```
-
-> **Examples:**
-> - `01_Content_Idea_Generator`
-> - `05_Reel_Script_Builder`
-> - `18_AI_Content_Director`
->
-> *(Use double digits for numbers 01 to 09, followed by an underscore, and your assigned product name in Title_Snake_Case or snake_case without spaces or special characters).*
+> **Problem Statement #18:** *Turning an idea into a complete production plan requires several disconnected steps.*  
+> **Build Challenge:** *Research a topic, identify angles, recommend a narrative, generate a script, suggest visuals/B-roll, create a shot list and publishing copy.*  
+> **Assigned Student:** Sri Jananii S  
+> **Branch Name:** `18_AI_Content_Director`  
 
 ---
 
-## 🛠️ Step-by-Step Git Submission Guide
+## 🌟 Overview
+**CineSensei (AI Content Director)** is a production-grade, 7-stage guided content creation workflow engine that transforms raw creative ideas into complete, studio-ready production packages. Rather than requiring creators to juggle disconnected tools, CineSensei provides a single cohesive pipeline with context passing across every stage.
 
-### Step 1: Fork the Repository
-1. Navigate to the main repository page on GitHub.
-2. Click the **Fork** button (top right corner) to create a copy under your personal GitHub account.
+### 🎮 New Feature: AAA Gaming & Video Editor Motion Launch Screen
+- **5–8 Second Intro:** Displays an exclusive fullscreen gaming & pro video editor logo animation before transitioning to the studio dashboard.
+- **Anime Cine-Camera Simulation:** Features motorized rotating amber/tandoori film reels, sweeping radar scanner, glowing anamorphic lens flare beam, and clapperboard marker.
+- **Audio Equalizer & Video Scrubber:** Live millisecond timecode (`[● REC 00:00:0X:XX]`), ProRes 422 HQ telemetry, Web Audio synthesizer power-up and shutter click SFX, and interactive skip controls.
 
-### Step 2: Clone Your Forked Repository
-Open your terminal / command prompt and run:
+### 1. The 7-Stage Production Pipeline
+Every stage feeds its structured context into subsequent stages:
+1. **Research & Facts**: Verified statistics, key facts, emerging trends, audience pain points, and authoritative source links.
+2. **Content Angles**: 5 distinct positioning angles with viral hooks, target emotion, uniqueness scores (1-10), and production difficulty (1-10). Interactive angle selector.
+3. **Narrative Architecture**: Recommended story framework (e.g. *Problem-Agitate-Solve*, *Hero's Journey*), core theme, pacing, and beat-by-beat timeline with timing and emotional arcs.
+4. **Spoken Script**: Full word-for-word spoken teleprompter script (Hook, Intro, Body, CTA) with live word count, speaking cadence (~145 wpm), and vocal delivery notes.
+5. **Visuals & B-Roll**: Section-by-section art direction, B-roll cutaway concepts, click-to-copy stock footage keywords (for Storyblocks/Artgrid), kinetic graphics overlays, and music mood.
+6. **Production Shot List**: Technical shot table (Shot #, Scene, Shot Type, Camera Movement, Location Setup, Dialogue line, Duration, Director Notes) with interactive shot completion checkboxes.
+7. **Publishing & Distribution Matrix**: 5 viral title options, full SEO description with timestamps, hashtag & keyword clouds, 3 high-contrast thumbnail concepts, and platform-tailored copy for **YouTube**, **Instagram Reels**, **TikTok**, **LinkedIn**, and **X (Twitter) Threads**.
+
+---
+
+## 📱 Responsive & Adaptive Architecture
+
+AI Content Director is engineered mobile-first and tested from **320px to 1920px+**:
+
+| Device Width | Layout Strategy |
+| :--- | :--- |
+| **Phones (320px – 430px)** | Single column, safe-area insets (`min-h-dvh`, `viewport-fit=cover`), touch targets $\ge$ 44px, 16px minimum input font (preventing iOS auto-zoom), sticky bottom action bar (`Edit`, `Regenerate`, `Approve & Continue`, `Copy`), compact top "Step 3 of 7" bar with a touch drawer, and slide-over Project Vault drawer. **The shot list automatically transforms into stacked mobile cards.** |
+| **Tablets (768px – 1024px)** | Adaptive two-column layouts with collapsible drawer history and responsive data grids. |
+| **Desktops (1440px+)** | Three-panel studio interface: **Project Vault** (left), **Stage Workspace** (center), and **Pipeline Stepper & Director Tips** (right). |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18.17+ or Node.js 20+
+- npm, pnpm, or yarn
+
+### 1. Installation
+Clone the repository and install dependencies:
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/ASADI_Protosem01.git
-cd ASADI_Protosem01
+git clone https://github.com/your-username/ai-content-director.git
+cd ai-content-director
+npm install
 ```
 
-### Step 3: Link to Upstream (Original) Repo
-Keep your fork in sync with upstream changes:
+### 2. Environment Configuration
+Copy `.env.example` to `.env.local`:
 ```bash
-git remote add upstream https://github.com/Rishi-ZAiFi/ASADI_Protosem01.git
-git fetch upstream
+cp .env.example .env.local
 ```
 
-### Step 4: Create and Checkout Your Assigned Branch
-Create a new branch with your exact assigned branch name:
+Configure your Anthropic API key in `.env.local`:
+```env
+ANTHROPIC_API_KEY=sk-ant-api03-...
+```
+
+> **Note on Zero-Configuration Demo Mode:**  
+> If `ANTHROPIC_API_KEY` is not provided, the application runs in high-fidelity **Demo Mode**. It generates realistic, deeply tailored production packages for whatever topic, platform, and audience you input.
+
+### 3. Run Locally
+Start the development server:
 ```bash
-# Example for Problem 01:
-git checkout -b 01_Content_Idea_Generator
-
-# Example for Problem 14:
-git checkout -b 14_Podcast_Assistant
+npm run dev
 ```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Step 5: Build Your Application
-Develop your application inside your branch. Ensure your project is organized cleanly:
-
-```text
-├── README.md               <-- Detailed instructions on how to run your app
-├── requirements.txt        <-- Python dependencies (or package.json for JS/TS)
-├── .env.example            <-- Sample environment variables (NO REAL API KEYS!)
-├── app.py / main.py        <-- Main application entry point
-├── src/                    <-- Source code and modules
-└── assets/                 <-- Screenshots / demo recordings / diagrams
-```
-
-> 🔒 **Security Notice:** **NEVER commit API keys or secrets!** Add `.env` to `.gitignore` and only commit a `.env.example` file showing placeholder keys (e.g., `GEMINI_API_KEY=your_key_here`).
-
-### Step 6: Commit and Push to Your Fork
+To run the optimized production build:
 ```bash
-# Check modified files
-git status
-
-# Stage your files
-git add .
-
-# Commit with a clear message
-git commit -m "feat(01_Content_Idea_Generator): initial implementation by Kavi Priya CA"
-
-# Push the branch to your GitHub fork
-git push -u origin <YOUR_BRANCH_NAME>
+npm run build
+npm run start
 ```
-
-### Step 7: Create a Pull Request (PR)
-1. Go to your forked repository on GitHub.
-2. You will see a banner saying **"Compare & pull request"**. Click it.
-3. Configure the PR:
-   - **Base repository:** The main/original repository.
-   - **Head repository:** Your fork.
-   - **Compare branch:** Your assigned branch (`XX_<Product_Name>`).
-4. Set the **PR Title**:
-   ```text
-   [Submission] <No>_<Product_Name> - <Your Full Name>
-   ```
-   *Example:* `[Submission] 01_Content_Idea_Generator - Kavi Priya CA`
-5. Fill out the PR template completely:
-   - Overview of the feature
-   - Tech stack used
-   - Screenshots / GIF / Loom video demonstrating the working app
-   - Instructions to test locally
-
-### Step 8: Mentor Review & Approval
-- The mentor/admin will review your code and application logic.
-- If changes or improvements are requested, make commits locally and push them to the same branch — your PR will update automatically.
-- Upon final approval, your branch will be merged into the repository!
 
 ---
 
-## 📋 Student Problem Allocations
+## 🚢 Deployment to Vercel
 
-| No. | Assigned Student | Application Name | Assigned Branch Name | Difficulty | Problem Statement | Build Challenge |
-|:---:|:---|:---|:---|:---:|:---|:---|
-| **01** | **Kavi Priya CA** | Content Idea Generator | `01_Content_Idea_Generator` | Standard | Creators struggle to consistently find content ideas. | Build an app where topic + audience generates 10 relevant content ideas. |
-| **02** | **Jaishanth L** | Content Repurposer | `02_Content_Repurposer` | Standard | One idea needs different treatment on every platform. | Convert one content input into LinkedIn, Instagram, X and YouTube versions. |
-| **03** | **Mithra Ravi** | Hook Generator | `03_Hook_Generator` | Standard | Writing strong hooks takes too much time. | Generate 10 hooks for a topic using different styles. |
-| **04** | **Theeran P** | Daily Content Planner | `04_Daily_Content_Planner` | Standard | Creators don't know what to post today. | Use niche + goal to generate today's content plan. |
-| **05** | **PRAVEEN.A** | Reel Script Builder | `05_Reel_Script_Builder` | Standard | Short-form creators struggle to structure 30–60 second videos. | Turn an idea into a hook, body and CTA. |
-| **06** | **Manoj M** | Clip Finder | `06_Clip_Finder` | Standard | Long videos contain many reusable short clips. | Analyze a transcript and identify the best short-form moments with timestamps. |
-| **07** | **Sanadhani** | Thumbnail Ideator | `07_Thumbnail_Ideator` | Standard | Creators need better thumbnail concepts. | Turn a video title into visual concepts and thumbnail text. |
-| **08** | **Tejaswi K** | Caption Assistant | `08_Caption_Assistant` | Standard | Creators waste time writing captions. | Turn content or an image description into a platform-ready caption. |
-| **09** | **Malligaarjunan AVK** | CTA Generator | `09_CTA_Generator` | Standard | Creators struggle with calls-to-action that don't sound repetitive. | Generate contextual CTAs based on the creator's goal. |
-| **10** | **Poornaa Shree Praveenraj** | Comment Analyzer | `10_Comment_Analyzer` | Standard | Creators receive hundreds of comments but can't easily understand audience sentiment. | Analyze comments into themes, questions, complaints and opportunities. |
-| **11** | **Satheesh** | Comment-to-Content | `11_Comment_to_Content` | Standard | Creators miss good ideas hidden inside audience comments. | Convert audience comments into future post and video ideas. |
-| **12** | **Sudhiksha** | Creator Research Assistant | `12_Creator_Research_Assistant` | Standard | Research before creating educational content takes too long. | Turn a topic into key facts, angles and useful sources. |
-| **13** | **Suryakumar J S** | Voice Replicator | `13_Voice_Replicator` | Standard | Creators don't maintain a consistent writing style. | Learn from previous posts and create a new draft following the creator's style. |
-| **14** | **Priyadharshini B** | Podcast Assistant | `14_Podcast_Assistant` | Standard | Podcast creators spend too much time creating supporting content. | Turn a transcript into a title, description, chapters and highlights. |
-| **15** | **Aatif F** | Creator Workspace | `15_Creator_Workspace` | Standard | Creators struggle to organize scripts, drafts and published content. | Build an Idea → Research → Script → Published workflow. |
-| **16** | **Archana C** | Content Recycler | `16_Content_Recycler` | Standard | Creators don't know which old content deserves to be reused. | Analyze content history and recommend what to repost or rework. |
-| **17** | **Prinetha kannan** | Brand Pitch Builder | `17_Brand_Pitch_Builder` | Standard | Brand collaborations require repetitive proposals and pitches. | Use creator profile + brand information to generate a personalized collaboration proposal. |
-| **18** | **Sri Jananii S** | AI Content Director | `18_AI_Content_Director` | Extra High | Turning an idea into a complete production plan requires several disconnected steps. | Research a topic, identify angles, recommend a narrative, generate a script, suggest visuals/B-roll, create a shot list and publishing copy. |
-| **19** | **Karthik Aravind M** | Creator Second Brain | `19_Creator_Second_Brain` | Extra High | Creators can't easily search, reuse or connect everything they have produced. | Store creator knowledge and enable semantic questions such as 'Have I talked about this before?' and 'What can become a reel?'. |
-| **20** | **SaiSanjay R** | AI Screenplay Workspace | `20_AI_Screenplay_Workspace` | Extra High | Writers need AI assistance without losing character and story continuity. | Build a workspace that understands characters, locations, scenes and previous context while assisting with dialogue, action and scene progression. |
-| **21** | **Sudharshan R** | Autonomous Content Pipeline | `21_Autonomous_Content_Pipeline` | Extra High | Creators repeatedly transform one idea into many different content formats. | Turn one idea through Research → YouTube Script → 3 Reels → LinkedIn Post → X Thread → Captions → Publishing Calendar. |
-| **22** | **Udhayan K** | AI Creative Producer | `22_AI_Creative_Producer` | Extra High | Creators need ongoing strategic decisions, not just individual generated posts. | Given a creator goal, define audience, content pillars and a 30-day strategy, generate today's content, retain history and adapt recommendations using performance data. |
+1. Push your repository to GitHub, GitLab, or Bitbucket.
+2. Go to [Vercel Dashboard](https://vercel.com/new) and click **"Add New Project"**.
+3. Select your repository.
+4. Under **Environment Variables**, add:
+   - `ANTHROPIC_API_KEY` = your Anthropic API key
+5. Click **Deploy**. Vercel will automatically detect Next.js and build the project.
 
 ---
 
-## ✅ Evaluation & Review Checklist
+## 📂 Project Architecture
 
-When evaluating your pull request, the mentor will review:
-
-1. **Problem Solving & Core Logic:** Does the application address the specific challenge requirements?
-2. **UI & Usability:** Is the interface intuitive and user-friendly (Streamlit, Gradio, React, Next.js, etc.)?
-3. **Prompt Engineering & AI Integration:** Are prompt templates robust, structured, and handling edge cases effectively?
-4. **Code Quality:** Is code cleanly structured, modular, and well-commented?
-5. **Documentation:** Does your branch contain a clear `README.md` explaining how to set up, configure environment variables, and run the project?
-6. **Zero Leaked Secrets:** Ensure `.env` is omitted and `.env.example` is supplied.
-
----
-
-## ❓ Frequently Asked Questions (FAQ)
-
-<details>
-<summary><b>1. What if I accidentally made a typo in my branch name?</b></summary>
-
-You can rename your local branch and force push the update:
-```bash
-# Rename the local branch
-git branch -m wrong_branch_name 01_Content_Idea_Generator
-
-# Push the new branch and delete the old remote branch
-git push origin -u 01_Content_Idea_Generator
-git push origin --delete wrong_branch_name
 ```
-</details>
-
-<details>
-<summary><b>2. Which tech stack can I use?</b></summary>
-
-You are free to choose the stack that best fits your project. Common choices include:
-- **Python:** Streamlit, Gradio, FastAPI, Chainlit, Flask
-- **JavaScript / TypeScript:** Next.js, React, Node.js, Express
-- **AI Models & Frameworks:** Google Gemini API, OpenAI API, LangChain, LlamaIndex, LiteLLM
-</details>
-
-<details>
-<summary><b>3. How do I provide API keys for the reviewer to test?</b></summary>
-
-Do **NOT** put your API keys in the code or PR description. In your app's UI, provide an input field (such as `st.sidebar.text_input("Enter API Key", type="password")`) so the reviewer can enter their own API key, or instruct them in your branch `README.md` on how to set it in their local `.env`.
-</details>
+ai-content-director/
+├── app/
+│   ├── api/
+│   │   └── pipeline/
+│   │       └── generate/
+│   │           └── route.ts         # Secure server-side LLM endpoint (rate-limited, Zod-validated)
+│   ├── globals.css                  # Tailwind tokens, dark/light themes, print styles, safe-area insets
+│   ├── layout.tsx                   # Viewport-fit cover, viewport meta, theme providers
+│   └── page.tsx                     # Main 3-panel studio container, project state machine
+├── components/
+│   ├── Header.tsx                   # Brand, Generate All toggle, Export modal trigger, Theme toggle
+│   ├── StartScreen.tsx              # Project intake screen with presets, platforms, tones, durations
+│   ├── SidebarHistory.tsx           # Slide-over & desktop drawer for project history
+│   ├── StageStepper.tsx             # Desktop right-panel stepper & director tip cards
+│   ├── MobileStepperBar.tsx         # Mobile compact "Step X of 7" bar + navigation drawer
+│   ├── StickyBottomBar.tsx          # Sticky mobile action bar (Edit, Regen, Approve, Copy)
+│   ├── StageSkeletonLoader.tsx      # Animated skeleton loaders during generation
+│   ├── stages/
+│   │   ├── ResearchStage.tsx        # Stage 1: Facts, statistics, trends, pain points, sources
+│   │   ├── AnglesStage.tsx          # Stage 2: 5 angles, scores, hooks, emotion badges
+│   │   ├── NarrativeStage.tsx       # Stage 3: Framework, core theme, beat timeline
+│   │   ├── ScriptStage.tsx          # Stage 4: Teleprompter script, word count, speaking time
+│   │   ├── VisualsStage.tsx         # Stage 5: B-roll, stock keywords, overlays, audio mood
+│   │   ├── ShotListStage.tsx        # Stage 6: Responsive table / stacked mobile cards + CSV export
+│   │   └── PublishingStage.tsx      # Stage 7: Titles, SEO desc, thumbnails, multi-platform captions
+│   └── modals/
+│       ├── ExportModal.tsx          # Markdown (.md), CSV (.csv), and PDF print triggers
+│       ├── EditStageModal.tsx       # Live structured JSON/text editor for active stage
+│       └── RegenerateModal.tsx      # Director steering notes and prompt refinement
+├── lib/
+│   ├── export.ts                    # Universal Markdown, CSV, and PDF export formatting
+│   ├── mock-data.ts                 # High-fidelity context-aware fallback generators
+│   ├── prompts.ts                   # Director system prompts and stage prompt builders
+│   ├── schemas.ts                   # Strict Zod validation schemas for all 7 stages
+│   ├── stages-config.ts             # Stage metadata, icons, and director tips
+│   ├── storage.ts                   # LocalStorage persistence, sample project, CRUD
+│   ├── types.ts                     # Full TypeScript interfaces for all 7 stages
+│   └── utils.ts                     # Styling, formatting, word counting, clipboard helpers
+├── .env.example
+├── next.config.mjs
+├── package.json
+├── tailwind.config.ts
+└── tsconfig.json
+```
 
 ---
 
-💡 *Happy building! If you have any questions or blockers, reach out to the mentor or open an issue.*
+## 🔮 What We'd Add Next (Roadmap)
+
+1. **AI Image Generation for Thumbnails**: Directly call Imagen 3 or Flux to generate the 3 thumbnail concepts in visual form.
+2. **Audio Voiceover Synthesis**: Text-to-speech integration (ElevenLabs API) to hear the spoken script in the teleprompter.
+3. **Automated B-Roll Scraper**: Real-time integration with Pexels/Unsplash or Storyblocks API to preview matching video stock clips directly in Stage 5.
+4. **Cloud Database & Collaboration**: Supabase/PostgreSQL backend with team collaboration and shareable production links (`/p/:projectId`).
+5. **Direct Publishing Webhooks**: Push directly to YouTube Studio, TikTok Creator API, or Buffer/Hootsuite with one click.
+
+---
+
+## 📄 License
+MIT © 2026 AI Content Director Studio
