@@ -1,189 +1,234 @@
-# 🚀 Protosem — AI Product Development Sprint
+# Content Recycler 🔁⚡
 
-Welcome to the **Protosem AI Product Development Repository**! 
-
-This repository serves as the central hub for the cohort's AI application development sprint. Each student has been allocated a unique real-world creator-economy problem statement. Students are required to develop a working prototype, test it, and submit their project via a **Pull Request (PR)** following the branch naming convention and workflow outlined below.
+> **AI-Powered Instagram Content Intelligence and Recycling Platform**  
+> *Developed as a College-Level Showcase for Smart India Hackathon (SIH)*  
+> **Theme**: Digital Media Automation, Creator Economy & Content Optimization  
+> **Live Demo URL**: `http://localhost:5173` | **API Base**: `http://localhost:5000/api`
 
 ---
 
-## 📌 Submission Guidelines & Workflow
+## 📌 Executive Summary & Problem Statement
 
-Students must submit their work by **forking this repository** and opening a **Pull Request (PR)**. Once reviewed and approved by the mentor/admin, your branch will be merged into this repository.
+Independent creators and social media teams face severe creative burnout trying to publish daily original content. Meanwhile, **80% of a creator's evergreen historical content decays within 24 to 48 hours** due to algorithmic feed churn—even though newer followers have never seen it.
 
-### ⚠️ Strict Branch Naming Convention
+Existing tools either:
+1. Require expensive monthly subscriptions with paid AI API credits ($50+/mo), or
+2. Force manual spreadsheet tracking without statistical intelligence or feed safety checks.
 
-Your branch name **MUST** strictly follow this pattern:
+**Content Recycler** is a full-stack, zero-cost social media intelligence platform that ingests historical Instagram export data, calculates creator-specific statistical baselines, measures audience fatigue curves, and automatically categorizes content into four tactical actions:
+- 🔁 **REPOST**: Proven evergreen high-performer dormant for $>60$ days. Re-share with near-zero effort.
+- 🛠️ **REWORK**: High algorithmic reach but low conversion (weak hook or call-to-action). Re-script the opening 3 seconds.
+- 🔄 **REPURPOSE**: High-bookmark static post (Image/Text) primed to convert into a high-retention short Reel or educational Carousel.
+- 📦 **ARCHIVE**: Time-bound announcements, expired discounts, or below-baseline posts retired from rotation.
 
-```text
-<No>_<Product_Name>
+In addition, a built-in **zero-cost pure JavaScript NLP engine (TF-IDF & Cosine Similarity)** discovers conceptual clusters across historical captions to propose synergistic **"Mega Carousel" bundles**.
+
+---
+
+## 🛠️ Tech Stack & Engineering Decisions
+
+| Layer | Technologies | Justification |
+| :--- | :--- | :--- |
+| **Frontend** | React 19, Vite, Tailwind CSS | Lightning-fast HMR, dark charcoal (`#070A0F`) & lime-green (`#A3E635`) modern SaaS aesthetic. |
+| **Data Viz** | Recharts | Responsive SVG charts for historical reach/engagement trends and media distribution. |
+| **Backend** | Node.js, Express (ES Modules) | High-throughput non-blocking asynchronous REST API with modular controllers and routers. |
+| **Database** | MongoDB Atlas + Mongoose | Schema-enforced document storage with an automatic **In-Memory Fallback Mode** so the project runs out-of-the-box even without active cloud credentials during live hackathon demos. |
+| **Security** | JWT, bcryptjs | Stateless authorization with HTTP bearer tokens and salt rounds. |
+| **Ingestion** | Multer, Streaming `csv-parser` | Live field validation, schema normalization, and duplicate record detection. |
+| **AI / NLP** | Pure JS TF-IDF & Cosine Vectorizer | **Zero-cost, privacy-first, explainable AI** with zero dependency on paid OpenAI/Anthropic API keys. |
+
+---
+
+## 📐 Mathematical & Algorithmic Formulation
+
+```mermaid
+flowchart TD
+    A[Historical Instagram CSV Export] --> B[Schema Validation & Deduplication]
+    B --> C[Post Database Layer]
+    C --> D[Creator Historical Baseline Engine]
+    D --> E[Decay Curve & Fatigue Analyzer]
+    D --> F[Linguistic Evergreen Scorer]
+    E & F --> G[Explainable Recommendation Matrix]
+    G --> H[REPOST / REWORK / REPURPOSE / ARCHIVE]
+    C --> I[TF-IDF Token Preprocessor]
+    I --> J[Pairwise Cosine Similarity Matrix]
+    J --> K[Thematic Synergy Clusters]
+    H & K --> L[Production Content Planner]
 ```
 
-> **Examples:**
-> - `01_Content_Idea_Generator`
-> - `05_Reel_Script_Builder`
-> - `18_AI_Content_Director`
->
-> *(Use double digits for numbers 01 to 09, followed by an underscore, and your assigned product name in Title_Snake_Case or snake_case without spaces or special characters).*
+### 1. Weighted Engagement Rate ($ER_i$)
+Because the Instagram algorithm prioritizes bookmarks (saves) and direct messages (shares) over passive double-taps:
+$$\text{Engagement Rate } (ER_i) = \frac{\text{Likes}_i + \text{Comments}_i + (\text{Shares}_i \times 1.5) + (\text{Saves}_i \times 2.0)}{\max(\text{Reach}_i, 1)} \times 100$$
+
+### 2. Statistical Baseline & Z-Score Normalization
+Every creator has a distinct audience size. Content Recycler normalizes each post against the creator's personal history:
+$$\mu_{ER} = \frac{1}{N}\sum_{i=1}^N ER_i, \quad \sigma_{ER} = \sqrt{\frac{1}{N}\sum_{i=1}^N (ER_i - \mu_{ER})^2}$$
+$$Z_i = \frac{ER_i - \mu_{ER}}{\sigma_{ER}}$$
+
+### 3. Audience Fatigue & Decay Function ($D_i$)
+To prevent audience irritation from premature reposting, a half-life threshold is enforced:
+$$D_i = \begin{cases} 
+0.20 & \text{if } T_i \le 14 \text{ days (High fatigue)} \\
+0.20 + 0.60 \times \left(\frac{T_i - 14}{T_{\text{dormant}} - 14}\right) & \text{if } 14 < T_i < T_{\text{dormant}} \\
+\min\left(1.0, 0.80 + \frac{T_i - T_{\text{dormant}}}{100}\right) & \text{if } T_i \ge T_{\text{dormant}} \text{ days (Feed fresh)}
+\end{cases}$$
+*(Default $T_{\text{dormant}} = 60$ days, customizable in Creator Settings).*
+
+### 4. Zero-Cost NLP Similarity Engine (TF-IDF + Cosine Distance)
+1. **Preprocessing**: Regex normalization, token stemming (e.g. `optimizing` $\to$ `optim`), stop-word removal (including social noise: `link`, `bio`, `swipe`).
+2. **Term Frequency**:
+   $$TF(t, d) = \frac{f_{t, d}}{\sum_{t' \in d} f_{t', d}}$$
+3. **Inverse Document Frequency**:
+   $$IDF(t, D) = \ln\left(1 + \frac{|D|}{1 + |\{d \in D : t \in d\}|}\right)$$
+4. **Pairwise Vector Cosine Similarity**:
+   $$\text{Sim}(d_A, d_B) = \frac{\vec{V}_A \cdot \vec{V}_B}{\|\vec{V}_A\|_2 \times \|\vec{V}_B\|_2}$$
+5. **Graph Clustering**: Posts with $\text{Sim} \ge \tau$ form connected components proposed as **Multi-Slide Masterclass Carousels**.
 
 ---
 
-## 🛠️ Step-by-Step Git Submission Guide
+## 🚀 Key Modules & System Capabilities
 
-### Step 1: Fork the Repository
-1. Navigate to the main repository page on GitHub.
-2. Click the **Fork** button (top right corner) to create a copy under your personal GitHub account.
+### 1. 📊 Analytics & Recycling Dashboard
+- Real-time summary cards: Total Ingested Posts, Cumulative Reach, Mean ER, Prime Recycling Candidates.
+- Interactive Recharts Area Chart displaying reach trends across historical publishing dates.
+- Format portfolio breakdown (Carousels vs Reels vs Single Images vs Videos).
+- High-intent bookmark performers with direct one-click recycling inspection.
 
-### Step 2: Clone Your Forked Repository
-Open your terminal / command prompt and run:
+### 2. 🗃️ Historical Content Library
+- Interactive multi-parameter search (filter by caption text or `#hashtag`).
+- Format filter pills (`ALL`, `CAROUSEL`, `REEL`, `IMAGE`).
+- Sorting by Newest, Oldest, Highest Reach, Most Saves, or Highest ER.
+- Responsive post cards displaying granular performance metrics and calculated ER badges.
+
+### 3. 📥 CSV Data Ingestion & Live Deduplication Engine
+- Drag-and-drop CSV upload dropzone.
+- Automatic column mapping (`caption`, `mediaType`, `postDate`, `reach`, `likes`, `comments`, `shares`, `saves`).
+- Live preview table highlighting Valid, Duplicate, and Invalid rows.
+- Duplicate detection by both Post ID and identical caption content.
+- **1-Click "Load 50 Demo Posts" Button** for instantaneous jury demonstrations.
+- Downloadable sample CSV template (`sample_instagram_data.csv`).
+
+### 4. 🧠 Explainable Recommendation Engine
+- Clear categorical tabs: `REPOST`, `REWORK`, `REPURPOSE`, `ARCHIVE`.
+- Transparent **Composite Opportunity Index (0–100)**.
+- **Score Breakdown Modal** visualizing:
+  - Engagement Performance Z-Score
+  - Feed Freshness & Dormancy Safety Meter
+  - Evergreen Topic Propensity
+  - Format Repurposing Potential
+  - Algorithmic Diagnosis ("Why this post?")
+  - Tactical Creator Playbook ("What to do next")
+- Direct one-click scheduling from diagnosis into the Content Planner.
+
+### 5. 🕸️ Thematic Similarity & Carousel Bundler
+- Dynamic similarity sensitivity slider (15% to 55%).
+- Automated cluster grouping: Combines related single posts into comprehensive 10-slide guides with aggregated historical reach.
+- Pairwise comparison cards showing overlap percentage and shared keyword badges.
+- One-click bundle export to the production planner.
+
+### 6. 📅 Production Content Planner
+- Kanban Board view (`Draft` $\to$ `Scheduled for Production` $\to$ `Recycled & Published`).
+- List view toggle with in-place format and status dropdowns.
+- Detailed item editing: assign planned dates, customize revised hook copy, and record production notes.
+
+### 7. ⚙️ Creator Settings & Baseline Customizer
+- Creator profile context: Instagram handle, content niche, follower count, and bio.
+- Interactive sliders for algorithmic weights:
+  - Saves Weight Multiplier (1.0x to 4.0x)
+  - Shares Weight Multiplier (1.0x to 3.0x)
+  - Dormancy Threshold (30 to 120 days)
+- Live database diagnostics displaying persistence mode, total posts, and system health.
+
+---
+
+## 💻 Quick Start & Setup Guide
+
+### Prerequisites
+- **Node.js**: v18.0.0 or higher (Tested on Node v24)
+- **npm**: v9.0.0 or higher
+- *(Optional)* **MongoDB Atlas URI** (System includes automatic in-memory fallback)
+
+### Step 1: Clone or Navigate to Project
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/ASADI_Protosem01.git
-cd ASADI_Protosem01
+cd content-recycler
 ```
 
-### Step 3: Link to Upstream (Original) Repo
-Keep your fork in sync with upstream changes:
+### Step 2: Install Dependencies
 ```bash
-git remote add upstream https://github.com/Rishi-ZAiFi/ASADI_Protosem01.git
-git fetch upstream
+# Install backend dependencies
+cd backend
+npm install
+
+# Install frontend dependencies
+cd ../frontend
+npm install
+cd ..
 ```
 
-### Step 4: Create and Checkout Your Assigned Branch
-Create a new branch with your exact assigned branch name:
+### Step 3: Configure Environment Variables (Optional)
+A pre-configured `.env` is already present. To point to a live MongoDB Atlas cluster, edit `backend/.env`:
+```env
+PORT=5000
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/content_recycler?retryWrites=true&w=majority
+JWT_SECRET=super_secret_sih_hackathon_jwt_key_2026_xyz
+```
+*(If `MONGODB_URI` is omitted or offline, the server gracefully activates its In-Memory Demo Engine so the app never crashes during evaluation).*
+
+### Step 4: Run the Application
+In terminal 1 (Backend):
 ```bash
-# Example for Problem 01:
-git checkout -b 01_Content_Idea_Generator
-
-# Example for Problem 14:
-git checkout -b 14_Podcast_Assistant
+cd backend
+node server.js
 ```
+*Backend runs at `http://localhost:5000`*
 
-### Step 5: Build Your Application
-Develop your application inside your branch. Ensure your project is organized cleanly:
-
-```text
-├── README.md               <-- Detailed instructions on how to run your app
-├── requirements.txt        <-- Python dependencies (or package.json for JS/TS)
-├── .env.example            <-- Sample environment variables (NO REAL API KEYS!)
-├── app.py / main.py        <-- Main application entry point
-├── src/                    <-- Source code and modules
-└── assets/                 <-- Screenshots / demo recordings / diagrams
-```
-
-> 🔒 **Security Notice:** **NEVER commit API keys or secrets!** Add `.env` to `.gitignore` and only commit a `.env.example` file showing placeholder keys (e.g., `GEMINI_API_KEY=your_key_here`).
-
-### Step 6: Commit and Push to Your Fork
+In terminal 2 (Frontend):
 ```bash
-# Check modified files
-git status
-
-# Stage your files
-git add .
-
-# Commit with a clear message
-git commit -m "feat(01_Content_Idea_Generator): initial implementation by Kavi Priya CA"
-
-# Push the branch to your GitHub fork
-git push -u origin <YOUR_BRANCH_NAME>
+cd frontend
+npm run dev
 ```
+*Frontend runs at `http://localhost:5173`*
 
-### Step 7: Create a Pull Request (PR)
-1. Go to your forked repository on GitHub.
-2. You will see a banner saying **"Compare & pull request"**. Click it.
-3. Configure the PR:
-   - **Base repository:** The main/original repository.
-   - **Head repository:** Your fork.
-   - **Compare branch:** Your assigned branch (`XX_<Product_Name>`).
-4. Set the **PR Title**:
-   ```text
-   [Submission] <No>_<Product_Name> - <Your Full Name>
-   ```
-   *Example:* `[Submission] 01_Content_Idea_Generator - Kavi Priya CA`
-5. Fill out the PR template completely:
-   - Overview of the feature
-   - Tech stack used
-   - Screenshots / GIF / Loom video demonstrating the working app
-   - Instructions to test locally
-
-### Step 8: Mentor Review & Approval
-- The mentor/admin will review your code and application logic.
-- If changes or improvements are requested, make commits locally and push them to the same branch — your PR will update automatically.
-- Upon final approval, your branch will be merged into the repository!
+Open `http://localhost:5173` in your browser.
 
 ---
 
-## 📋 Student Problem Allocations
+## 🎤 Smart India Hackathon (SIH) Jury Demonstration Script
 
-| No. | Assigned Student | Application Name | Assigned Branch Name | Difficulty | Problem Statement | Build Challenge |
-|:---:|:---|:---|:---|:---:|:---|:---|
-| **01** | **Kavi Priya CA** | Content Idea Generator | `01_Content_Idea_Generator` | Standard | Creators struggle to consistently find content ideas. | Build an app where topic + audience generates 10 relevant content ideas. |
-| **02** | **Jaishanth L** | Content Repurposer | `02_Content_Repurposer` | Standard | One idea needs different treatment on every platform. | Convert one content input into LinkedIn, Instagram, X and YouTube versions. |
-| **03** | **Mithra Ravi** | Hook Generator | `03_Hook_Generator` | Standard | Writing strong hooks takes too much time. | Generate 10 hooks for a topic using different styles. |
-| **04** | **Theeran P** | Daily Content Planner | `04_Daily_Content_Planner` | Standard | Creators don't know what to post today. | Use niche + goal to generate today's content plan. |
-| **05** | **PRAVEEN.A** | Reel Script Builder | `05_Reel_Script_Builder` | Standard | Short-form creators struggle to structure 30–60 second videos. | Turn an idea into a hook, body and CTA. |
-| **06** | **Manoj M** | Clip Finder | `06_Clip_Finder` | Standard | Long videos contain many reusable short clips. | Analyze a transcript and identify the best short-form moments with timestamps. |
-| **07** | **Sanadhani** | Thumbnail Ideator | `07_Thumbnail_Ideator` | Standard | Creators need better thumbnail concepts. | Turn a video title into visual concepts and thumbnail text. |
-| **08** | **Tejaswi K** | Caption Assistant | `08_Caption_Assistant` | Standard | Creators waste time writing captions. | Turn content or an image description into a platform-ready caption. |
-| **09** | **Malligaarjunan AVK** | CTA Generator | `09_CTA_Generator` | Standard | Creators struggle with calls-to-action that don't sound repetitive. | Generate contextual CTAs based on the creator's goal. |
-| **10** | **Poornaa Shree Praveenraj** | Comment Analyzer | `10_Comment_Analyzer` | Standard | Creators receive hundreds of comments but can't easily understand audience sentiment. | Analyze comments into themes, questions, complaints and opportunities. |
-| **11** | **Satheesh** | Comment-to-Content | `11_Comment_to_Content` | Standard | Creators miss good ideas hidden inside audience comments. | Convert audience comments into future post and video ideas. |
-| **12** | **Sudhiksha** | Creator Research Assistant | `12_Creator_Research_Assistant` | Standard | Research before creating educational content takes too long. | Turn a topic into key facts, angles and useful sources. |
-| **13** | **Suryakumar J S** | Voice Replicator | `13_Voice_Replicator` | Standard | Creators don't maintain a consistent writing style. | Learn from previous posts and create a new draft following the creator's style. |
-| **14** | **Priyadharshini B** | Podcast Assistant | `14_Podcast_Assistant` | Standard | Podcast creators spend too much time creating supporting content. | Turn a transcript into a title, description, chapters and highlights. |
-| **15** | **Aatif F** | Creator Workspace | `15_Creator_Workspace` | Standard | Creators struggle to organize scripts, drafts and published content. | Build an Idea → Research → Script → Published workflow. |
-| **16** | **Archana C** | Content Recycler | `16_Content_Recycler` | Standard | Creators don't know which old content deserves to be reused. | Analyze content history and recommend what to repost or rework. |
-| **17** | **Prinetha kannan** | Brand Pitch Builder | `17_Brand_Pitch_Builder` | Standard | Brand collaborations require repetitive proposals and pitches. | Use creator profile + brand information to generate a personalized collaboration proposal. |
-| **18** | **Sri Jananii S** | AI Content Director | `18_AI_Content_Director` | Extra High | Turning an idea into a complete production plan requires several disconnected steps. | Research a topic, identify angles, recommend a narrative, generate a script, suggest visuals/B-roll, create a shot list and publishing copy. |
-| **19** | **Karthik Aravind M** | Creator Second Brain | `19_Creator_Second_Brain` | Extra High | Creators can't easily search, reuse or connect everything they have produced. | Store creator knowledge and enable semantic questions such as 'Have I talked about this before?' and 'What can become a reel?'. |
-| **20** | **SaiSanjay R** | AI Screenplay Workspace | `20_AI_Screenplay_Workspace` | Extra High | Writers need AI assistance without losing character and story continuity. | Build a workspace that understands characters, locations, scenes and previous context while assisting with dialogue, action and scene progression. |
-| **21** | **Sudharshan R** | Autonomous Content Pipeline | `21_Autonomous_Content_Pipeline` | Extra High | Creators repeatedly transform one idea into many different content formats. | Turn one idea through Research → YouTube Script → 3 Reels → LinkedIn Post → X Thread → Captions → Publishing Calendar. |
-| **22** | **Udhayan K** | AI Creative Producer | `22_AI_Creative_Producer` | Extra High | Creators need ongoing strategic decisions, not just individual generated posts. | Given a creator goal, define audience, content pillars and a 30-day strategy, generate today's content, retain history and adapt recommendations using performance data. |
+Follow this 2-minute walkthrough during presentation:
+
+1. **Sign-In & Baseline (0:00 - 0:20)**:
+   - Click the green **"1-Click Hackathon Demo Access"** button.
+   - Notice the status badge indicating 50 synthetic posts indexed and the creator handle `@arjun_codes`.
+2. **Dashboard Analytics (0:20 - 0:45)**:
+   - Show the **Creator Baseline ER** card (calculated with Saves & Shares weighted algorithms).
+   - Point out the Recharts Reach Trend Area Chart and the 4-quadrant **Tactical Recycling Portfolio Split**.
+3. **AI Recommendations & Explainability (0:45 - 1:15)**:
+   - Click **"Recommendations"** in the sidebar.
+   - Click on the **"Repost"** tab to highlight an evergreen post that has been dormant for $>120$ days.
+   - Click **"Inspect & Schedule"** to open the **Score Analysis Modal**. Show the judges the explainable scoring bars (Engagement Z-Score, Freshness, Evergreen Confidence) and the algorithmic diagnosis.
+   - Click **"Save to Content Planner"**.
+4. **TF-IDF Thematic Bundler (1:15 - 1:40)**:
+   - Navigate to **"Similarity Engine"**.
+   - Show the **Thematic Synergy Clusters** (e.g., JavaScript Async + Event Loop posts combined into a 10-slide mega carousel).
+   - Adjust the similarity slider to demonstrate real-time TF-IDF cosine recalculation.
+5. **Content Planner & CSV Ingest (1:40 - 2:00)**:
+   - Switch to **"Content Planner"** to show the scheduled post in the Kanban pipeline.
+   - Move an item from `Scheduled` to `Recycled & Published`.
+   - Briefly visit **"CSV Data Ingest"** and explain the schema validator and duplicate detector.
 
 ---
 
-## ✅ Evaluation & Review Checklist
+## 🛡️ Ethical Data & Synthetic Dataset Disclaimer
 
-When evaluating your pull request, the mentor will review:
-
-1. **Problem Solving & Core Logic:** Does the application address the specific challenge requirements?
-2. **UI & Usability:** Is the interface intuitive and user-friendly (Streamlit, Gradio, React, Next.js, etc.)?
-3. **Prompt Engineering & AI Integration:** Are prompt templates robust, structured, and handling edge cases effectively?
-4. **Code Quality:** Is code cleanly structured, modular, and well-commented?
-5. **Documentation:** Does your branch contain a clear `README.md` explaining how to set up, configure environment variables, and run the project?
-6. **Zero Leaked Secrets:** Ensure `.env` is omitted and `.env.example` is supplied.
+- **No Unauthorized Scraping**: This platform does not scrape Instagram, bypass private profile permissions, or violate Meta Platform Terms.
+- **Ingestion via Creator Consent**: Content is ingested exclusively through user-provided CSV exports or creator-authorized data dumps.
+- **Demonstration Dataset**: The included 50 records in `sample_instagram_data.csv` are realistic but **explicitly synthetic and simulated** for demonstration and hackathon judging.
 
 ---
 
-## ❓ Frequently Asked Questions (FAQ)
+## 👥 Authors & Acknowledgments
 
-<details>
-<summary><b>1. What if I accidentally made a typo in my branch name?</b></summary>
-
-You can rename your local branch and force push the update:
-```bash
-# Rename the local branch
-git branch -m wrong_branch_name 01_Content_Idea_Generator
-
-# Push the new branch and delete the old remote branch
-git push origin -u 01_Content_Idea_Generator
-git push origin --delete wrong_branch_name
-```
-</details>
-
-<details>
-<summary><b>2. Which tech stack can I use?</b></summary>
-
-You are free to choose the stack that best fits your project. Common choices include:
-- **Python:** Streamlit, Gradio, FastAPI, Chainlit, Flask
-- **JavaScript / TypeScript:** Next.js, React, Node.js, Express
-- **AI Models & Frameworks:** Google Gemini API, OpenAI API, LangChain, LlamaIndex, LiteLLM
-</details>
-
-<details>
-<summary><b>3. How do I provide API keys for the reviewer to test?</b></summary>
-
-Do **NOT** put your API keys in the code or PR description. In your app's UI, provide an input field (such as `st.sidebar.text_input("Enter API Key", type="password")`) so the reviewer can enter their own API key, or instruct them in your branch `README.md` on how to set it in their local `.env`.
-</details>
-
----
-
-💡 *Happy building! If you have any questions or blockers, reach out to the mentor or open an issue.*
+- **Project**: Content Recycler
+- **Target Event**: Smart India Hackathon (SIH)
+- **Stack**: React 19 • Vite • Tailwind CSS • Node.js • Express • Mongoose / MongoDB Atlas • Recharts
