@@ -1,5 +1,7 @@
 import { GoogleGenAI, Type } from '@google/genai';
 import { GenerateHooksRequest, HookItem, HOOK_STYLES } from '@/types';
+import fs from 'fs';
+import path from 'path';
 
 // The 10 mandatory styles in exact order
 const REQUIRED_STYLES = [
@@ -15,12 +17,52 @@ const REQUIRED_STYLES = [
   'Surprise/Twist',
 ] as const;
 
+/**
+ * Safely resolves the GEMINI_API_KEY from environment variables or directly
+ * from .env / .env.local on disk to ensure immediate hot-pickup.
+ */
+function getGeminiApiKey(): string | null {
+  // 1. Check process.env first
+  const envKey = process.env.GEMINI_API_KEY;
+  if (envKey && envKey.trim() !== '' && envKey !== 'your_gemini_api_key_here') {
+    return envKey.trim();
+  }
+
+  // 2. Direct filesystem fallback for hot-reload resilience
+  const candidateFiles = ['.env.local', '.env'];
+  for (const file of candidateFiles) {
+    const fullPath = path.resolve(process.cwd(), file);
+    if (fs.existsSync(fullPath)) {
+      try {
+        const content = fs.readFileSync(fullPath, 'utf8');
+        for (const line of content.split(/\r?\n/)) {
+          const trimmed = line.trim();
+          if (trimmed.startsWith('#') || !trimmed.includes('=')) continue;
+          const [k, ...vParts] = trimmed.split('=');
+          if (k.trim() === 'GEMINI_API_KEY') {
+            const rawVal = vParts.join('=').trim().replace(/^["']|["']$/g, '');
+            if (rawVal && rawVal !== 'your_gemini_api_key_here') {
+              // Cache in process.env for subsequent calls
+              process.env.GEMINI_API_KEY = rawVal;
+              return rawVal;
+            }
+          }
+        }
+      } catch {
+        // Ignore file read error
+      }
+    }
+  }
+
+  return null;
+}
+
 export async function generateHooksWithGemini(
   params: GenerateHooksRequest
 ): Promise<HookItem[]> {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = getGeminiApiKey();
 
-  if (!apiKey || apiKey.trim() === '' || apiKey === 'your_gemini_api_key_here') {
+  if (!apiKey || apiKey.trim() === '') {
     throw new Error(
       'GEMINI_API_KEY is not configured. Please add your valid Google Gemini API key to the .env file.'
     );
@@ -40,7 +82,7 @@ Each of the 10 hooks MUST correspond to one of the following 10 styles in this e
 2. Question: A provocative, thought-provoking question that demands an answer.
 3. Contrarian: Challenges conventional wisdom or attacks a sacred cow.
 4. Bold Claim: A definitive, confident statement that stops people in their tracks.
-5. Statistic/Data: A data-centric perspective highlighting trends or measurable reality.
+5. Statistic/Data: A data-centric perspective highlighting trends or measurable reality WITHOUT fabricating numbers.
 6. Story: The opening line of a captivating personal or observational narrative.
 7. Problem/Pain Point: Directly highlights an acute frustration or obstacle.
 8. Fear/Urgency: Creates FOMO, warns of costly mistakes, or sparks timely concern.
@@ -51,21 +93,20 @@ CRITICAL STATISTIC SAFETY RULE:
 For the 'Statistic/Data' hook:
 - NEVER invent statistics, percentages, fake study figures, sample sizes, or fabricated claims.
 - If the user did not supply a verified statistic in the prompt, frame the hook around the data reality, trend shifts, or verifiable metrics WITHOUT inventing numbers.
-- BAD EXAMPLE: "87% of creators fail because of one mistake."
-- GOOD EXAMPLE: "The data behind why most creators lose momentum points to a single hidden bottleneck."
+- BAD EXAMPLE: "87% of students use AI every day."
+- GOOD EXAMPLE: "The data behind how students are using AI is changing faster than most people realize."
 
 REQUIREMENTS:
 - Each hook must feel organic and tailored to the platform (${params.platform}) and tone (${params.tone}).
 - The hooks must be genuinely different angles and frameworks—do NOT just rewrite the same sentence 10 times.
 - Format strictly as JSON with exactly 10 hook objects.`;
 
-  const userPrompt = `Generate 10 viral hooks for:
-Topic: "${params.topic}"
+  const userPrompt = `Topic: "${params.topic}"
 ${audienceText}
 Platform: ${params.platform}
 Tone: ${params.tone}
 
-Output exactly 10 hooks covering the 10 styles:
+Generate exactly 10 hooks covering the 10 styles:
 1. Curiosity
 2. Question
 3. Contrarian
@@ -77,8 +118,16 @@ Output exactly 10 hooks covering the 10 styles:
 9. Future/Possibility
 10. Surprise/Twist`;
 
-  // We attempt gemini-2.5-pro first as requested, with fallback to gemini-2.0-flash if 2.5-pro is unavailable
-  const modelsToTry = ['gemini-2.5-pro', 'gemini-2.0-flash', 'gemini-1.5-pro'];
+  // We attempt gemini-2.5-pro first as requested, with fallback to active working models
+  const modelsToTry = [
+    'gemini-2.5-pro',
+    'gemini-3.5-flash',
+    'gemini-3.5-flash-lite',
+    'gemini-3.6-flash',
+    'gemini-3.7-flash',
+    'gemini-3.8-flash',
+    'gemini-3-flash-preview',
+  ];
   let lastError: Error | null = null;
   let rawText = '';
 
@@ -89,10 +138,13 @@ Output exactly 10 hooks covering the 10 styles:
         contents: [
           {
             role: 'user',
-            parts: [{ text: `${systemInstruction}\n\n${userPrompt}` }],
+            parts: [{ text: userPrompt }],
           },
         ],
         config: {
+          systemInstruction: {
+            parts: [{ text: systemInstruction }],
+          },
           responseMimeType: 'application/json',
           responseSchema: {
             type: Type.OBJECT,
@@ -128,7 +180,8 @@ Output exactly 10 hooks covering the 10 styles:
     } catch (err: unknown) {
       const errMessage = err instanceof Error ? err.message : String(err);
       lastError = new Error(errMessage);
-      // If error indicates model not found or unsupported, continue to next model; else break if invalid key
+
+      // If invalid API key, fail immediately with clear instructions
       if (
         errMessage.includes('API_KEY_INVALID') ||
         errMessage.includes('API key not valid') ||
@@ -165,7 +218,6 @@ Output exactly 10 hooks covering the 10 styles:
 
   for (let i = 0; i < REQUIRED_STYLES.length; i++) {
     const targetStyle = REQUIRED_STYLES[i];
-    // Find matching hook from response or use the i-th item
     const matched =
       parsedData.hooks.find(
         (h) => h.style?.toLowerCase() === targetStyle.toLowerCase()
@@ -178,7 +230,6 @@ Output exactly 10 hooks covering the 10 styles:
         hook: matched.hook.trim(),
       });
     } else {
-      // Fallback if missing
       validatedHooks.push({
         id: i + 1,
         style: targetStyle,
