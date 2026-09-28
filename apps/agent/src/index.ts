@@ -1,5 +1,11 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
+import * as dotenv from 'dotenv';
+import path from 'path';
+
+// Load .env from workspace root
+dotenv.config({ path: path.resolve(process.cwd(), '../../.env') });
+
 import { executePlanAgent } from './graphs/plan/index.js';
 import { createAiClient } from '@contentyou/ai';
 

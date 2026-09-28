@@ -23,7 +23,7 @@ export function createAiClient(deps: {
       if (gemini) {
         try {
           const response = await gemini.models.generateContent({
-            model: 'gemini-1.5-flash',
+            model: 'gemini-3.8-flash',
             contents: request.prompt + "\n\nIMPORTANT: You must output ONLY valid JSON matching this request. Do NOT include markdown blocks like ```json.",
             config: {
               temperature: request.temperature ?? 0.7,
