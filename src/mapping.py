@@ -85,6 +85,7 @@ CANONICAL_SYNONYMS: Dict[str, List[str]] = {
         "duration_sec",
     ],
     "watch_time_hours": [
+        "watch_time_hours",
         "watch time (hours)",
         "watch time",
         "watch hours",
@@ -92,10 +93,10 @@ CANONICAL_SYNONYMS: Dict[str, List[str]] = {
         "total play time (hours)",
     ],
     "ctr": [
+        "ctr",
         "click-through rate (%)",
         "click through rate (%)",
         "impressions click-through rate (%)",
-        "ctr",
         "ctr (%)",
         "reach rate (%)",
     ],
