@@ -103,7 +103,7 @@ export default function HomePage() {
               margin: 0,
             }}
           >
-            HookForge
+            Hook Generator
           </h1>
         </div>
 

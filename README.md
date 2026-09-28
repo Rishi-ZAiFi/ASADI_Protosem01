@@ -1,9 +1,9 @@
-# HookForge ⚡
+# Hook Generator ⚡
 
 > **Turn Any Topic Into a Scroll-Stopping Hook**  
 > *Generate 10 hooks in different styles in seconds.*
 
-HookForge is a fullstack web application designed for content creators, marketers, and founders. It solves the critical bottleneck in content creation: crafting high-converting, scroll-stopping hooks tailored to specific platforms and psychological frameworks using **Google Gemini 2.5 Pro**.
+Hook Generator is a fullstack web application designed for content creators, marketers, and founders. It solves the critical bottleneck in content creation: crafting high-converting, scroll-stopping hooks tailored to specific platforms and psychological frameworks using **Google Gemini**.
 
 ---
 
@@ -11,7 +11,7 @@ HookForge is a fullstack web application designed for content creators, marketer
 
 Writing strong hooks takes too much time. Most creators either stare at a blank screen or rely on generic, repetitive templates. Furthermore, AI tools frequently hallucinate fake statistics and percentages that undermine credibility.
 
-**HookForge solves this by:**
+**Hook Generator solves this by:**
 1. Generating **exactly 10 distinct hooks** covering 10 psychological angles simultaneously.
 2. Tailoring phrasing, structure, and pacing to the platform (LinkedIn, X/Twitter, Instagram, TikTok, YouTube).
 3. Enforcing **Strict Statistical Safety**: Never fabricating fake study figures, sample sizes, or percentages.
@@ -146,7 +146,7 @@ For the *Statistic/Data* hook:
 - **Bad Example**: *"87% of creators fail within 30 days."*
 - **Good Example**: *"The data behind why creators hit a plateau points directly to retention, not reach."*
 
-HookForge enforces this prompt rule via system-level instructions and schema validation.
+Hook Generator enforces this prompt rule via system-level instructions and schema validation.
 
 ---
 
