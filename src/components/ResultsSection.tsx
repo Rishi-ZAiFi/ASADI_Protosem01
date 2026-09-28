@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Copy, Check, RotateCw, Sparkles, Layers } from 'lucide-react';
+import { Copy, Check, RotateCw } from 'lucide-react';
 import { HookItem, Platform, Tone } from '@/types';
 import { HookCard } from './HookCard';
 
@@ -29,7 +29,7 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({
       .map((h, i) => `${String(i + 1).padStart(2, '0')}. [${h.style.toUpperCase()}]\n"${h.hook}"`)
       .join('\n\n');
 
-    const header = `=== HOOKFORGE GENERATED HOOKS ===\nTopic: ${topic}\nPlatform: ${platform} | Tone: ${tone}\n\n`;
+    const header = `=== HOOKS ===\nTopic: ${topic}\nPlatform: ${platform} | Tone: ${tone}\n\n`;
     const fullText = header + formatted;
 
     try {
@@ -54,102 +54,53 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '24px',
+        gap: '20px',
         marginTop: '40px',
       }}
     >
-      {/* Top Header / Actions Bar */}
+      {/* Top Bar: Clean Title & Action Buttons */}
       <div
-        className="glass-panel"
         style={{
-          padding: '20px 28px',
           display: 'flex',
-          flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '16px',
-          borderLeft: '4px solid var(--accent-primary)',
+          flexWrap: 'wrap',
+          gap: '12px',
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span
-              style={{
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                color: 'var(--accent-primary)',
-              }}
-            >
-              Ready For Publishing
-            </span>
-            <span
-              style={{
-                padding: '2px 8px',
-                borderRadius: '6px',
-                background: 'rgba(99, 102, 241, 0.15)',
-                color: '#a5b4fc',
-                fontSize: '0.75rem',
-                fontWeight: 700,
-              }}
-            >
-              10 / 10 Styles
-            </span>
-          </div>
+        <h2
+          style={{
+            fontSize: '1.25rem',
+            fontWeight: 700,
+            color: '#ffffff',
+            margin: 0,
+            letterSpacing: '-0.01em',
+          }}
+        >
+          Generated Hooks
+        </h2>
 
-          <h2
-            style={{
-              fontSize: '1.25rem',
-              fontWeight: 700,
-              color: '#ffffff',
-              letterSpacing: '-0.01em',
-            }}
-          >
-            Generated Hooks for: &ldquo;{topic.length > 55 ? `${topic.slice(0, 55)}...` : topic}&rdquo;
-          </h2>
-
-          <div style={{ display: 'flex', gap: '8px', marginTop: '2px' }}>
-            <span
-              style={{
-                fontSize: '0.75rem',
-                color: 'var(--text-muted)',
-              }}
-            >
-              Platform: <strong style={{ color: '#ffffff' }}>{platform}</strong>
-            </span>
-            <span style={{ color: 'var(--border-subtle)' }}>•</span>
-            <span
-              style={{
-                fontSize: '0.75rem',
-                color: 'var(--text-muted)',
-              }}
-            >
-              Tone: <strong style={{ color: '#ffffff' }}>{tone}</strong>
-            </span>
-          </div>
-        </div>
-
-        {/* Global Actions: Copy All & Regenerate */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button
             type="button"
             id="copy-all-button"
             onClick={handleCopyAll}
             className="btn-secondary"
             style={{
+              padding: '8px 14px',
+              fontSize: '0.85rem',
               color: copiedAll ? '#34d399' : 'var(--text-primary)',
               borderColor: copiedAll ? 'rgba(52, 211, 153, 0.4)' : 'var(--border-subtle)',
             }}
           >
             {copiedAll ? (
               <>
-                <Check size={16} color="#34d399" />
-                <span>All 10 Copied!</span>
+                <Check size={15} color="#34d399" />
+                <span>Copied All</span>
               </>
             ) : (
               <>
-                <Copy size={16} />
+                <Copy size={15} />
                 <span>Copy All</span>
               </>
             )}
@@ -162,12 +113,11 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({
             disabled={isRegenerating}
             className="btn-secondary"
             style={{
-              background: 'rgba(99, 102, 241, 0.1)',
-              borderColor: 'rgba(99, 102, 241, 0.3)',
-              color: '#a5b4fc',
+              padding: '8px 14px',
+              fontSize: '0.85rem',
             }}
           >
-            <RotateCw size={16} className={isRegenerating ? 'animate-spin' : ''} />
+            <RotateCw size={15} className={isRegenerating ? 'animate-spin' : ''} />
             <span>{isRegenerating ? 'Regenerating...' : 'Regenerate'}</span>
           </button>
         </div>
@@ -177,8 +127,8 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-          gap: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+          gap: '16px',
         }}
         id="hooks-grid"
       >

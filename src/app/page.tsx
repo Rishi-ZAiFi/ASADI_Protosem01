@@ -1,12 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Header } from '@/components/Header';
 import { HookForm } from '@/components/HookForm';
 import { ResultsSection } from '@/components/ResultsSection';
-import { Footer } from '@/components/Footer';
 import { Platform, Tone, HookItem } from '@/types';
-import { AlertCircle, X, Sparkles, CheckCircle2 } from 'lucide-react';
+import { AlertCircle, X } from 'lucide-react';
 
 export default function HomePage() {
   const [topic, setTopic] = useState('');
@@ -62,7 +60,6 @@ export default function HomePage() {
 
       setHooks(data.hooks);
 
-      // Smooth scroll to results on initial generation
       if (!isRegen) {
         setTimeout(() => {
           const resultsEl = document.getElementById('results-section');
@@ -85,125 +82,53 @@ export default function HomePage() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Header />
-
-      <main className="container" style={{ flex: 1, paddingTop: '48px', paddingBottom: '40px' }}>
-        {/* HERO SECTION */}
-        <section
-          style={{
-            textAlign: 'center',
-            maxWidth: '820px',
-            margin: '0 auto 40px auto',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '16px',
-          }}
-        >
-          {/* Badge */}
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '6px 14px',
-              borderRadius: '9999px',
-              background: 'rgba(99, 102, 241, 0.1)',
-              border: '1px solid rgba(99, 102, 241, 0.25)',
-              fontSize: '0.82rem',
-              fontWeight: 600,
-              color: '#c7d2fe',
-            }}
-          >
-            <Sparkles size={14} color="#818cf8" />
-            <span>10 Psychological Angles • Instant Conversion</span>
-          </div>
-
-          {/* Single H1 */}
+      <main
+        className="container"
+        style={{
+          flex: 1,
+          maxWidth: '760px',
+          paddingTop: '60px',
+          paddingBottom: '80px',
+        }}
+      >
+        {/* Clean Page Title */}
+        <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <h1
             id="main-heading"
             style={{
-              fontSize: 'clamp(2.2rem, 5vw, 3.4rem)',
+              fontSize: '2.5rem',
               fontWeight: 800,
-              lineHeight: 1.15,
               letterSpacing: '-0.03em',
-              background: 'linear-gradient(180deg, #ffffff 30%, #94a3b8 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              color: '#ffffff',
+              margin: 0,
             }}
           >
-            Turn Any Topic Into a Scroll-Stopping Hook
+            HookForge
           </h1>
+        </div>
 
-          {/* Subtitle */}
-          <p
-            id="main-subtitle"
-            style={{
-              fontSize: '1.2rem',
-              color: 'var(--text-secondary)',
-              lineHeight: 1.6,
-              maxWidth: '620px',
-            }}
-          >
-            Generate 10 hooks in different styles in seconds.
-          </p>
-
-          {/* Trust badges */}
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              gap: '20px',
-              marginTop: '6px',
-              fontSize: '0.85rem',
-              color: 'var(--text-muted)',
-            }}
-          >
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={14} color="#34d399" /> 10 Distinct Psychological Styles
-            </span>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={14} color="#34d399" /> Platform-Native Phrasing
-            </span>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={14} color="#34d399" /> 0% Hallucinated Stats
-            </span>
-          </div>
-        </section>
-
-        {/* ERROR NOTIFICATION BANNER */}
+        {/* Error Notification Banner */}
         {errorMessage && (
           <div
             role="alert"
             id="error-banner"
             style={{
-              maxWidth: '820px',
-              margin: '0 auto 28px auto',
-              padding: '16px 20px',
-              borderRadius: 'var(--radius-md)',
+              marginBottom: '24px',
+              padding: '14px 18px',
+              borderRadius: '12px',
               background: 'var(--error-bg)',
               border: '1px solid var(--error-border)',
               display: 'flex',
-              alignItems: 'flex-start',
+              alignItems: 'center',
               justifyContent: 'space-between',
               gap: '12px',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-              <AlertCircle size={20} color="var(--error)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <div>
-                <p style={{ fontSize: '0.92rem', color: '#fca5a5', fontWeight: 600 }}>
-                  {errorMessage}
-                </p>
-                {errorMessage.includes('GEMINI_API_KEY') && (
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                    Tip: Add your Gemini API key to the <code>.env</code> file in the project root:
-                    <br />
-                    <code>GEMINI_API_KEY=your_key_here</code>
-                  </p>
-                )}
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <AlertCircle size={18} color="var(--error)" style={{ flexShrink: 0 }} />
+              <p style={{ fontSize: '0.9rem', color: '#fca5a5', margin: 0 }}>
+                {errorMessage}
+              </p>
             </div>
 
             <button
@@ -218,28 +143,26 @@ export default function HomePage() {
                 padding: '4px',
               }}
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           </div>
         )}
 
-        {/* INPUT FORM CONTAINER */}
-        <div style={{ maxWidth: '820px', margin: '0 auto' }}>
-          <HookForm
-            topic={topic}
-            setTopic={setTopic}
-            audience={audience}
-            setAudience={setAudience}
-            platform={platform}
-            setPlatform={setPlatform}
-            tone={tone}
-            setTone={setTone}
-            onSubmit={(e) => handleGenerate(e, false)}
-            isLoading={isLoading}
-          />
-        </div>
+        {/* Inputs */}
+        <HookForm
+          topic={topic}
+          setTopic={setTopic}
+          audience={audience}
+          setAudience={setAudience}
+          platform={platform}
+          setPlatform={setPlatform}
+          tone={tone}
+          setTone={setTone}
+          onSubmit={(e) => handleGenerate(e, false)}
+          isLoading={isLoading}
+        />
 
-        {/* RESULTS SECTION (10 HOOKS) */}
+        {/* Results */}
         {hooks.length > 0 && (
           <ResultsSection
             hooks={hooks}
@@ -251,8 +174,6 @@ export default function HomePage() {
           />
         )}
       </main>
-
-      <Footer />
     </div>
   );
 }
