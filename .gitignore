@@ -1,57 +1,51 @@
-# Environment Variables and Secrets
+# Dependencies
+node_modules/
+/node_modules
+/.pnp
+.pnp.js
+.yarn/cache
+
+# Environment variables & secrets - NEVER COMMIT!
 .env
 .env.*
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 !.env.example
-*.env
+*.pem
+*.key
+*.cert
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-.venv/
-ENV/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-.pytest_cache/
-.coverage
-htmlcov/
+# Next.js build outputs
+/.next/
+/out/
+/build
+/dist
+*.tsbuildinfo
+.turbo
 
-# Node.js
-node_modules/
+# Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
 .pnpm-debug.log*
-.next/
-out/
 
-# Streamlit
-.streamlit/secrets.toml
+# Next.js telemetry / cache
+.next/cache
 
 # IDE and OS files
 .vscode/
 .idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 *.swp
 *.swo
 *~
-.DS_Store
 Thumbs.db
 Desktop.ini
