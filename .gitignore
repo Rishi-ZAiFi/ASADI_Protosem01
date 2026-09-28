@@ -20,7 +20,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+/lib/
 lib64/
 parts/
 sdist/
@@ -55,3 +55,4 @@ out/
 .DS_Store
 Thumbs.db
 Desktop.ini
+*.tsbuildinfo
