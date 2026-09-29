@@ -1,5 +1,5 @@
 @echo off
-echo Pushing to your fork: https://github.com/priyadharshinibalakrishnan17/ASADI_Protosem01.git
+echo Syncing changes to your fork: https://github.com/priyadharshinibalakrishnan17/ASADI_Protosem01.git
 cd /d "c:\Users\priya\Downloads\podcraft"
 
 git init
@@ -9,7 +9,7 @@ git remote add origin https://github.com/priyadharshinibalakrishnan17/ASADI_Prot
 git checkout -b 14_Podcast-assistance 2>nul || git checkout 14_Podcast-assistance
 
 git add .
-git commit -m "Add PodCraft files to branch 14_Podcast-assistance"
+git commit -m "Fix Gemini model default to gemini-1.5-flash and update API handler"
 
 echo Fetching remote...
 git fetch origin
@@ -22,6 +22,6 @@ git push -u origin 14_Podcast-assistance --force
 
 echo.
 echo =======================================================
-echo Success! Pushed to your fork branch 14_Podcast-assistance
+echo Success! Pushed changes to branch 14_Podcast-assistance
 echo =======================================================
 pause

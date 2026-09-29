@@ -34,7 +34,7 @@ export async function POST(req: Request) {
   const section = typeof body.section === "string" ? body.section : "";
   const extra = section ? `\nThis is a regeneration of the "${section}" section: give a fresh, noticeably different take on it while still following all rules.` : "";
   try {
-    const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+    const model = process.env.GEMINI_MODEL || "gemini-1.5-flash";
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-goog-api-key": key },
