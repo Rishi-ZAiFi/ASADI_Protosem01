@@ -139,28 +139,38 @@ const NAV = [
 
 type Tone = "dark" | "light";
 
+// Roughly the vertical center of the floating pill (padding + half its height), used to sample
+// the tone of whatever section sits under it without reading the nav's own (possibly translated) rect.
+const NAV_PROBE_Y = 44;
+// Distance to scroll past before the nav will hide — keeps small, jittery scrolls from flickering it.
+const HIDE_THRESHOLD = 72;
+
 /**
  * Floating glass pill. It reads the `data-nav-tone` of whichever section is under it and
  * takes that section's palette, so it stays legible over the dark shader and the light page.
+ * It steps out of the way on scroll-down and returns on scroll-up, so it never fights a long page.
  */
 export function SiteHeader() {
   const path = usePathname();
-  const navRef = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [tone, setTone] = useState<Tone | null>(null);
+  const lastY = useRef(0);
 
   useEffect(() => {
     let frame = 0;
     const measure = () => {
       frame = 0;
-      setScrolled(window.scrollY > 12);
-      const nav = navRef.current;
-      if (!nav) return;
-      const { top, bottom } = nav.getBoundingClientRect();
-      const mid = (top + bottom) / 2;
+      const y = window.scrollY;
+      setScrolled(y > 12);
+      if (y < HIDE_THRESHOLD) setHidden(false);
+      else if (y > lastY.current) setHidden(true);
+      else if (y < lastY.current) setHidden(false);
+      lastY.current = y;
+
       const under = Array.from(document.querySelectorAll<HTMLElement>("[data-nav-tone]")).find((el) => {
         const r = el.getBoundingClientRect();
-        return r.top <= mid && r.bottom >= mid;
+        return r.top <= NAV_PROBE_Y && r.bottom >= NAV_PROBE_Y;
       });
       const next = under?.dataset.navTone;
       setTone(next === "dark" || next === "light" ? next : null);
@@ -179,9 +189,12 @@ export function SiteHeader() {
   }, [path]);
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-40 flex justify-center px-gutter pt-3 sm:pt-4">
+    <motion.header
+      animate={{ y: hidden ? "-130%" : "0%", opacity: hidden ? 0 : 1 }}
+      transition={{ duration: 0.4, ease: EASE }}
+      className="pointer-events-none fixed inset-x-0 top-0 z-40 flex justify-center px-gutter pt-3 sm:pt-4"
+    >
       <nav
-        ref={navRef}
         aria-label="Main"
         className={`pointer-events-auto flex items-center gap-1 rounded-full py-1.5 pl-4 pr-1.5 text-ink transition-[background-color,border-color,box-shadow,color] duration-300 sm:pl-5 ${scrolled ? "glass-strong" : "glass"} ${tone ? `tone-${tone}` : ""}`}
       >
@@ -207,7 +220,7 @@ export function SiteHeader() {
         </LayoutGroup>
         <ThemeToggle />
       </nav>
-    </header>
+    </motion.header>
   );
 }
 

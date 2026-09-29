@@ -534,43 +534,33 @@ function KitView({ kit, selected, onSelect, onCopy, onRewrite, onSave, onCopyAll
     if (!track || !slide) return;
     track.scrollTo({ left: slide.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft), behavior: smooth() });
   };
-  const page = (dir: 1 | -1) => {
-    const track = trackRef.current;
-    const first = track?.children[0] as HTMLElement | undefined;
-    if (!track || !first) return;
-    track.scrollBy({ left: dir * (first.offsetWidth + 16), behavior: smooth() });
-  };
-
   return (
     <div>
-      <header className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4 px-1">
+      <header className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3 px-1">
         <div className="min-w-0 flex-1 basis-[20rem]">
           <h2 id="kit-title" className="text-balance font-heading text-[clamp(1.75rem,2.6vw,2.5rem)] font-bold leading-tight [overflow-wrap:anywhere]">
             {kit.brief.topic}
           </h2>
-          <div className="mt-3 flex flex-wrap items-center gap-1.5">
-            <Chip icon={FORMATS[kit.brief.format].icon}>{FORMATS[kit.brief.format].label} kit</Chip>
-            <Chip icon={goal.icon}>
-              {goal.label}, drives {SIGNALS[goal.signal].label.toLowerCase()}
-            </Chip>
-            <Chip icon="explore">{TEMPERATURES[kit.brief.temperature].label} audience</Chip>
+          <p className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-ink-muted">
+            <span>
+              {FORMATS[kit.brief.format].label} kit for a {TEMPERATURES[kit.brief.temperature].label.toLowerCase()} audience, built to drive {SIGNALS[goal.signal].label.toLowerCase()}.
+            </span>
             {kit.brief.language && kit.brief.language !== "en" && (
               <Chip icon={kit.brief.language === "hinglish" ? "chat" : "language"}>
                 <span lang={kit.brief.language === "hinglish" ? undefined : kit.brief.language}>{LANGUAGES[kit.brief.language].native}</span>
               </Chip>
             )}
-            <Chip icon={kit.engine === "ai" ? "auto_awesome" : "bolt"}>{kit.engine === "ai" ? "Written by Claude" : "Template engine"}</Chip>
-          </div>
+          </p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <Button size="sm" variant="ghost" icon="refresh" onClick={onRegenerate}>
-            Regenerate
+        <div className="flex items-center gap-1.5">
+          <Button size="sm" variant="ghost" icon="refresh" onClick={onRegenerate} aria-label="Regenerate" title="Regenerate" className="px-0! w-10! sm:w-auto! sm:px-3.5!">
+            <span className="hidden sm:inline">Regenerate</span>
+          </Button>
+          <Button size="sm" variant="ghost" icon="download" onClick={onExport} aria-label="Export .md" title="Download the kit as a Markdown file to use in another AI" className="px-0! w-10! sm:w-auto! sm:px-3.5!">
+            <span className="hidden sm:inline">Export .md</span>
           </Button>
           <Button size="sm" icon="content_copy" onClick={onCopyAll}>
             Copy all
-          </Button>
-          <Button size="sm" icon="download" onClick={onExport} title="Download the kit as a Markdown file to use in another AI">
-            Export .md
           </Button>
           <Button size="sm" variant="primary" icon="bookmark" onClick={onSave}>
             Save picks
@@ -579,56 +569,51 @@ function KitView({ kit, selected, onSelect, onCopy, onRewrite, onSave, onCopyAll
       </header>
 
       {(kit.notice || kit.strategy.notes.length > 0) && (
-        <div className="mt-4 grid gap-1.5 px-1 text-sm">
-          {kit.notice && (
-            <p className="flex gap-2 font-medium text-watch">
-              <Icon name="info" size={18} className="mt-px" />
-              <span className="min-w-0">{kit.notice}</span>
-            </p>
+        <details className="group mt-4 px-1" open={Boolean(kit.notice)}>
+          <summary
+            className={`flex cursor-pointer list-none items-start gap-2 text-sm font-medium [&::-webkit-details-marker]:hidden ${kit.notice ? "text-watch" : "text-ink-muted hover:text-ink"}`}
+          >
+            <Icon name={kit.notice ? "info" : "auto_awesome"} size={18} filled={Boolean(kit.notice)} className="mt-px shrink-0" />
+            <span className="min-w-0 flex-1">{kit.notice ?? "Why these picks"}</span>
+            <Icon name="expand_more" size={18} className="mt-px shrink-0 text-ink-muted transition-transform group-open:rotate-180" />
+          </summary>
+          {kit.strategy.notes.length > 0 && (
+            <div className="mt-2 grid gap-1.5 pl-6.5 text-sm text-ink-muted">
+              {kit.strategy.notes.map((n) => (
+                <p key={n} className="flex gap-2">
+                  <Icon name="check" size={16} className="mt-px shrink-0 text-safe" />
+                  <span className="min-w-0">{n}</span>
+                </p>
+              ))}
+            </div>
           )}
-          {kit.strategy.notes.map((n) => (
-            <p key={n} className="flex gap-2 text-ink-muted">
-              <Icon name="check" size={18} className="mt-px text-safe" />
-              <span className="min-w-0">{n}</span>
-            </p>
-          ))}
-        </div>
+        </details>
       )}
 
-      <div className="mt-6 flex items-center gap-2">
-        <nav aria-label="Jump to a placement" className="no-scrollbar glass flex min-w-0 flex-initial gap-1 overflow-x-auto rounded-full p-1">
-          {kit.slots.map((group, i) => (
-            <button
-              key={group.slot}
-              type="button"
-              onClick={() => scrollToSlide(i)}
-              aria-current={inView[i] ? "true" : undefined}
-              className={`${TAB} ${inView[i] ? TAB_ON : TAB_OFF}`}
-            >
-              <Icon name={SLOTS[group.slot].icon} size={16} filled={inView[i]} />
-              {SLOTS[group.slot].label}
-            </button>
-          ))}
+      <nav aria-label="Jump to a placement" className="no-scrollbar glass mt-5 flex gap-1 overflow-x-auto rounded-full p-1">
+        {kit.slots.map((group, i) => (
           <button
+            key={group.slot}
             type="button"
-            onClick={() => scrollToSlide(previewIndex)}
-            aria-current={inView[previewIndex] ? "true" : undefined}
-            className={`${TAB} 2xl:hidden ${inView[previewIndex] ? TAB_ON : TAB_OFF}`}
+            onClick={() => scrollToSlide(i)}
+            aria-current={inView[i] ? "true" : undefined}
+            className={`${TAB} ${inView[i] ? TAB_ON : TAB_OFF}`}
           >
-            <Icon name="smartphone" size={16} filled={inView[previewIndex]} />
-            Preview
+            <Icon name={SLOTS[group.slot].icon} size={16} filled={inView[i]} />
+            {SLOTS[group.slot].label}
           </button>
-        </nav>
-        <div className="ml-auto flex shrink-0 gap-1">
-          <button type="button" onClick={() => page(-1)} aria-label="Scroll placements left" className={TRACK_BTN}>
-            <Icon name="chevron_left" />
-          </button>
-          <button type="button" onClick={() => page(1)} aria-label="Scroll placements right" className={TRACK_BTN}>
-            <Icon name="chevron_right" />
-          </button>
-        </div>
-      </div>
-      <p className="mt-3 px-1 text-sm text-ink-muted">The card on top of each stack is your pick. Flip through with the arrows; Copy all and Save use the top cards.</p>
+        ))}
+        <button
+          type="button"
+          onClick={() => scrollToSlide(previewIndex)}
+          aria-current={inView[previewIndex] ? "true" : undefined}
+          className={`${TAB} 2xl:hidden ${inView[previewIndex] ? TAB_ON : TAB_OFF}`}
+        >
+          <Icon name="smartphone" size={16} filled={inView[previewIndex]} />
+          Preview
+        </button>
+      </nav>
+      <p className="mt-2 px-1 text-sm text-ink-muted">The card on top of each stack is your pick — copy all and save use the top cards.</p>
 
       <div
         ref={trackRef}
@@ -689,8 +674,6 @@ function KitView({ kit, selected, onSelect, onCopy, onRewrite, onSave, onCopyAll
 const TAB = "inline-flex h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 text-sm font-medium transition-colors duration-300";
 const TAB_ON = "bg-primary text-on-primary";
 const TAB_OFF = "text-ink-muted hover:text-ink";
-
-const TRACK_BTN ="glass grid h-11 w-11 place-items-center rounded-full text-ink-muted transition-colors hover:text-ink";
 
 function CtaCard({ candidate: c, onCopy, onRewrite }: { candidate: ScoredCandidate; onCopy: () => void; onRewrite: () => void }) {
   const [open, setOpen] = useState(false);
