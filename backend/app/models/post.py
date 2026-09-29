@@ -14,8 +14,12 @@ class Post(Base):
     hashtags = Column(JSON, default=list)  # List of strings
     media_path = Column(String, nullable=True)
     post_type = Column(String, default="educational")  # educational, promotional, storytelling, carousel, etc.
-    published_at = Column(DateTime, nullable=True, default=datetime.utcnow)
+    published_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+    
+    analysis_status = Column(String, default="success") # success, failed
+    analysis_error = Column(Text, nullable=True)
+    parse_error = Column(Text, nullable=True)
 
     # Relationships
     project = relationship("Project", back_populates="posts")
