@@ -121,7 +121,9 @@ class GeminiLLMProvider(LLMProvider):
             }
         }
 
+        start_t = time.time()
         max_attempts = 4
+        retry_count = 0
         for attempt in range(max_attempts):
             try:
                 with httpx.Client(timeout=45.0) as client:
@@ -129,9 +131,12 @@ class GeminiLLMProvider(LLMProvider):
                     res.raise_for_status()
                     data = res.json()
                     
+                    duration = time.time() - start_t
                     if "usageMetadata" in data:
                         usage = data["usageMetadata"]
-                        print(f"[Tokens] Prompt: {usage.get('promptTokenCount', 0)}, Candidates: {usage.get('candidatesTokenCount', 0)}, Total: {usage.get('totalTokenCount', 0)}")
+                        print(f"[LLM Call] Duration: {duration:.2f}s, Retries: {retry_count} | [Tokens] Prompt: {usage.get('promptTokenCount', 0)}, Candidates: {usage.get('candidatesTokenCount', 0)}, Total: {usage.get('totalTokenCount', 0)}")
+                    else:
+                        print(f"[LLM Call] Duration: {duration:.2f}s, Retries: {retry_count}")
                     
                     text_out = data["candidates"][0]["content"]["parts"][0]["text"]
                     parsed = self._parse_json_response(text_out)
@@ -139,6 +144,7 @@ class GeminiLLMProvider(LLMProvider):
             except httpx.HTTPStatusError as e:
                 status = e.response.status_code
                 if status in (429, 503) and attempt < max_attempts - 1:
+                    retry_count += 1
                     sleep_time = 2 ** attempt
                     print(f"Gemini API returned {status}. Retrying in {sleep_time}s... (Attempt {attempt+1}/{max_attempts})")
                     time.sleep(sleep_time)
@@ -166,7 +172,7 @@ class GeminiLLMProvider(LLMProvider):
 
         return {
             "hook": f"Here is what nobody tells you about {topic_str} 🚀",
-            "caption": (
+            "body": (
                 f"Here is what nobody tells you about {topic_str} 🚀\n\n"
                 f"Most creators focus on surface-level tactics, but the real secret to {topic_str} comes down to 3 core principles:\n\n"
                 f"1. Consistency over intensity\n"
@@ -176,11 +182,8 @@ class GeminiLLMProvider(LLMProvider):
             ),
             "cta": f"What's your biggest takeaway on {topic_str}? Drop a comment below! 👇",
             "hashtags": ["#contentstrategy", "#ai", "#creator", "#growth", "#productivity"],
-            "slides": [
-                {"title": f"Understanding {topic_str}", "body": "Why standard approaches fail and how to optimize."},
-                {"title": "The 3 Principles", "body": "1. Consistency\n2. Analytical feedback\n3. Value first"},
-                {"title": "Action Plan", "body": "Apply these insights today to see immediate results."}
-            ] if post_type == "carousel" else []
+            "image_text": "",
+            "visual_brief": ""
         }
 
 class LLMService:

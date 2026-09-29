@@ -68,6 +68,7 @@ def generate_draft(project_id: str, req: GenerationRequest, db: Session = Depend
         post_type=req.post_type,
         hook=structured_out.hook,
         caption=caption_full,
+        body=structured_out.body,
         cta=structured_out.cta,
         hashtags=structured_out.hashtags,
         slides=[],

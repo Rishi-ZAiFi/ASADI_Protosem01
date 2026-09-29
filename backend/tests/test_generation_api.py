@@ -16,7 +16,7 @@ def test_tc_gen_006_generate_without_style_profile_error(client):
     assert res.status_code == 400
     assert "Style profile required" in res.json()["detail"]
 
-def test_tc_gen_001_to_005_generation_pipeline(client):
+def test_mocked_generation_pipeline(client):
     """TC-GEN-001 through 005 — Generate educational post with CTA requirement & target length"""
     proj_res = client.post("/api/projects", json={"name": "Gen Test Project"})
     proj_id = proj_res.json()["id"]
@@ -92,3 +92,34 @@ def test_tc_gen_prompt_builder():
     assert "STRICT ORIGINALITY CONSTRAINTS" in prompt
     assert "TOPIC & USER CONSTRAINTS" in prompt
     assert "RELEVANT HISTORICAL EXAMPLES" in prompt
+
+
+def test_generate_returns_non_empty_caption_and_body(client):
+    """Verify /generate returns non-empty caption and body fields (regression for schema mismatch)"""
+    proj_res = client.post("/api/projects", json={"name": "NonEmpty Caption Test"})
+    proj_id = proj_res.json()["id"]
+
+    dataset_path = os.path.join(os.path.dirname(__file__), "..", "sample_datasets", "tech_creator.json")
+    with open(dataset_path) as f:
+        dataset = json.load(f)
+
+    client.post(f"/api/projects/{proj_id}/posts/import", json=dataset)
+    client.post(f"/api/projects/{proj_id}/analyze")
+
+    gen_payload = {
+        "topic": "5 essential tools for modern AI developers",
+        "post_type": "educational",
+        "cta_requirement": "Ask followers to save for later",
+        "desired_length": "medium"
+    }
+
+    res = client.post(f"/api/projects/{proj_id}/generate", json=gen_payload)
+    assert res.status_code == 200, res.text
+    draft = res.json()
+
+    assert "caption" in draft, "Response missing 'caption' field"
+    assert "body" in draft, "Response missing 'body' field"
+    assert len(draft["caption"]) > 10, f"Caption is empty or too short: {len(draft['caption'])} chars"
+    assert len(draft["body"]) > 10, f"Body is empty or too short: {len(draft['body'])} chars"
+    assert draft["hook"], "Hook should not be empty"
+    assert draft["cta"], "CTA should not be empty"
