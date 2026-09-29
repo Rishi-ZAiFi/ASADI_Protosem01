@@ -106,7 +106,7 @@ def generate_draft_graph(project_id: str, req: GenerationRequest, db: Session = 
         raise HTTPException(status_code=404, detail="Project not found")
 
     # 1. Run Graph
-    best_candidate = run_generation_graph(db, project_id, req)
+    best_candidate, warnings = run_generation_graph(db, project_id, req)
 
     # 2. Save GeneratedDraft
     draft = GeneratedDraft(
@@ -117,14 +117,13 @@ def generate_draft_graph(project_id: str, req: GenerationRequest, db: Session = 
         caption=best_candidate.caption,
         cta=best_candidate.cta,
         hashtags=best_candidate.hashtags,
-        slides=[s.model_dump() for s in best_candidate.slides] if best_candidate.slides else [],
+        slides=[s.model_dump() if hasattr(s, "model_dump") else s for s in (best_candidate.slides or [])],
         status="draft"
     )
     db.add(draft)
     db.flush()
 
-    # 3. Validation result should ideally be saved too, but we can reuse the one from the state if we returned it.
-    # For now, just re-run validation on the saved draft to store it in DB consistently.
+    # 3. Validation result
     sp = db.query(StyleProfile).filter(StyleProfile.project_id == project_id).first()
     style_profile_data = {}
     if sp:
@@ -155,10 +154,12 @@ def generate_draft_graph(project_id: str, req: GenerationRequest, db: Session = 
         originality_status=val_report["originality_status"],
         max_ngram_overlap=val_report["max_ngram_overlap"],
         flagged_phrases=val_report["flagged_phrases"],
-        retrieved_examples_used=[] # We didn't easily bubble up retrieved_posts IDs from graph
+        retrieved_examples_used=[]
     )
     db.add(val_res)
     db.commit()
     db.refresh(draft)
 
-    return draft
+    response_data = GenerationResponse.from_orm(draft)
+    response_data.warnings = warnings
+    return response_data
