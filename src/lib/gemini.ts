@@ -1,4 +1,6 @@
-import { GoogleGenAI, Type } from '@google/genai';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
+import { SystemMessage, HumanMessage } from '@langchain/core/messages';
+import { z } from 'zod';
 import { GenerateHooksRequest, HookItem, HOOK_STYLES } from '@/types';
 import fs from 'fs';
 import path from 'path';
@@ -16,6 +18,20 @@ const REQUIRED_STYLES = [
   'Future/Possibility',
   'Surprise/Twist',
 ] as const;
+
+// LangChain structured output schema for the 10 hooks
+const HookOutputSchema = z.object({
+  hooks: z
+    .array(
+      z.object({
+        style: z
+          .string()
+          .describe('The style of hook (e.g., Curiosity, Question, Contrarian, etc.)'),
+        hook: z.string().describe('The hook copy.'),
+      })
+    )
+    .describe('An array of exactly 10 hooks with their corresponding style.'),
+});
 
 /**
  * Safely resolves the GEMINI_API_KEY from environment variables or directly
@@ -67,8 +83,6 @@ export async function generateHooksWithGemini(
       'GEMINI_API_KEY is not configured. Please add your valid Google Gemini API key to the .env file.'
     );
   }
-
-  const ai = new GoogleGenAI({ apiKey });
 
   const audienceText = params.audience?.trim()
     ? `Target Audience: ${params.audience.trim()}`
@@ -129,52 +143,25 @@ Generate exactly 10 hooks covering the 10 styles:
     'gemini-3-flash-preview',
   ];
   let lastError: Error | null = null;
-  let rawText = '';
+  let rawHooks: Array<{ style?: string; hook?: string }> | null = null;
 
   for (const modelName of modelsToTry) {
     try {
-      const response = await ai.models.generateContent({
+      const llm = new ChatGoogleGenerativeAI({
         model: modelName,
-        contents: [
-          {
-            role: 'user',
-            parts: [{ text: userPrompt }],
-          },
-        ],
-        config: {
-          systemInstruction: {
-            parts: [{ text: systemInstruction }],
-          },
-          responseMimeType: 'application/json',
-          responseSchema: {
-            type: Type.OBJECT,
-            properties: {
-              hooks: {
-                type: Type.ARRAY,
-                description: 'An array of exactly 10 hooks with their corresponding style.',
-                items: {
-                  type: Type.OBJECT,
-                  properties: {
-                    style: {
-                      type: Type.STRING,
-                      description: 'The style of hook (e.g., Curiosity, Question, Contrarian, etc.)',
-                    },
-                    hook: {
-                      type: Type.STRING,
-                      description: 'The hook copy.',
-                    },
-                  },
-                  required: ['style', 'hook'],
-                },
-              },
-            },
-            required: ['hooks'],
-          },
-        },
+        apiKey,
+        maxRetries: 0,
       });
 
-      rawText = response.text || '';
-      if (rawText) {
+      const structuredLlm = llm.withStructuredOutput(HookOutputSchema);
+
+      const response = await structuredLlm.invoke([
+        new SystemMessage(systemInstruction),
+        new HumanMessage(userPrompt),
+      ]);
+
+      if (response && Array.isArray(response.hooks) && response.hooks.length > 0) {
+        rawHooks = response.hooks;
         break; // Successfully got response
       }
     } catch (err: unknown) {
@@ -194,23 +181,10 @@ Generate exactly 10 hooks covering the 10 styles:
     }
   }
 
-  if (!rawText) {
+  if (!rawHooks || rawHooks.length === 0) {
     throw new Error(
       lastError?.message || 'Failed to receive a response from Gemini. Please try again.'
     );
-  }
-
-  // Parse structured JSON
-  let parsedData: { hooks?: Array<{ style?: string; hook?: string }> };
-  try {
-    const cleaned = rawText.trim().replace(/^```json\s*/i, '').replace(/\s*```$/i, '');
-    parsedData = JSON.parse(cleaned);
-  } catch {
-    throw new Error('Received an unparseable response from Gemini. Please regenerate.');
-  }
-
-  if (!parsedData.hooks || !Array.isArray(parsedData.hooks) || parsedData.hooks.length === 0) {
-    throw new Error('Gemini response did not contain the expected hooks array.');
   }
 
   // Validate and normalize exactly 10 hooks
@@ -219,9 +193,9 @@ Generate exactly 10 hooks covering the 10 styles:
   for (let i = 0; i < REQUIRED_STYLES.length; i++) {
     const targetStyle = REQUIRED_STYLES[i];
     const matched =
-      parsedData.hooks.find(
+      rawHooks.find(
         (h) => h.style?.toLowerCase() === targetStyle.toLowerCase()
-      ) || parsedData.hooks[i];
+      ) || rawHooks[i];
 
     if (matched && matched.hook && matched.hook.trim()) {
       validatedHooks.push({
