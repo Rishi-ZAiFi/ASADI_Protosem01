@@ -99,14 +99,25 @@ def test_best_candidate_return_on_exhaustion(mock_llm_service, mock_validation, 
 
 def test_langsmith_trace_toggle(mock_llm_service, mock_validation, mock_db_session):
     req = GenerationRequest(topic="test", post_type="educational")
-    os.environ["LANGCHAIN_TRACING_V2"] = "true"
-    if "ENABLE_LANGSMITH" in os.environ:
-        del os.environ["ENABLE_LANGSMITH"]
-        
     mock_validation.return_value = {"overall_score": 90, "originality_status": "PASS"}
-    run_generation_graph(mock_db_session, "proj-1", req, n_candidates=1)
     
-    assert "LANGCHAIN_TRACING_V2" not in os.environ
+    os.environ["LANGSMITH_API_KEY"] = "dummy_key"
+    os.environ["ENABLE_LANGSMITH"] = "0"
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    
+    run_generation_graph(mock_db_session, "proj-1", req, n_candidates=1)
+    assert os.environ.get("LANGCHAIN_TRACING_V2") == "false"
+
+    os.environ["ENABLE_LANGSMITH"] = "1"
+    os.environ["LANGSMITH_PROJECT"] = "test_ls_proj"
+    
+    run_generation_graph(mock_db_session, "proj-1", req, n_candidates=1)
+    assert os.environ.get("LANGCHAIN_TRACING_V2") == "true"
+    assert os.environ.get("LANGCHAIN_PROJECT") == "test_ls_proj"
+    
+    # Cleanup env
+    del os.environ["ENABLE_LANGSMITH"]
+    del os.environ["LANGSMITH_API_KEY"]
 
 def test_prompt_includes_validation_feedback(mock_llm_service, mock_validation, mock_db_session):
     mock_validation.return_value = {"overall_score": 40, "originality_status": "FAIL", "flagged_phrases": ["too similar"]}

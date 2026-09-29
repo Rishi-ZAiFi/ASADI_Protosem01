@@ -258,11 +258,26 @@ def run_generation_graph(db_session, project_id: str, req: GenerationRequest, n_
     )
     
     # LangSmith tracing check (Tier 2 rule)
-    if os.environ.get("ENABLE_LANGSMITH") != "1":
-        if "LANGCHAIN_TRACING_V2" in os.environ:
-            del os.environ["LANGCHAIN_TRACING_V2"]
+    if os.environ.get("ENABLE_LANGSMITH") == "1":
+        os.environ["LANGCHAIN_TRACING_V2"] = "true"
+        if "LANGSMITH_PROJECT" in os.environ:
+            os.environ["LANGCHAIN_PROJECT"] = os.environ["LANGSMITH_PROJECT"]
+    else:
+        os.environ["LANGCHAIN_TRACING_V2"] = "false"
+
+    variant = "both" if (enable_revision and max_iterations > 0 and n_candidates > 1) else ("revise" if enable_revision else "best_of_n")
+    data_provenance = os.environ.get("DATA_PROVENANCE", "synthetic")
+    
+    run_config = {
+        "tags": [f"variant:{variant}", f"data_provenance:{data_provenance}"],
+        "metadata": {
+            "variant": variant,
+            "data_provenance": data_provenance,
+            "project_id": project_id
+        }
+    }
             
-    final_state = graph.invoke(initial_state)
+    final_state = graph.invoke(initial_state, config=run_config)
     
     # Extract candidate & warnings
     selected_candidate = final_state.get("selected_candidate") or final_state.get("global_best_candidate")
