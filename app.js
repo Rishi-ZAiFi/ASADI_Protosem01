@@ -7,6 +7,13 @@
 'use strict';
 
 /* ==========================================================================
+   AI API Key Configuration (Google Gemini)
+   ========================================================================== */
+// Replace with your Google Gemini API key (starts with "AIzaSy...") to enable live AI generation
+// If left empty or invalid, IdeaForge automatically runs on the built-in 24+ template engine with 0 errors!
+const GEMINI_API_KEY = "";
+
+/* ==========================================================================
    1. State & Storage Management
    ========================================================================== */
 const STORAGE_KEY = 'ideaforge_v1';
@@ -1439,12 +1446,16 @@ async function runGeneration(topic, audience, niche, tone, length) {
   skeletonGrid.classList.remove('hidden');
   skeletonGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  const hasApiKey = state.apiKey && state.apiKey.trim().length > 5;
+  // Check for code-embedded GEMINI_API_KEY or localStorage fallback
+  const activeKey = (typeof GEMINI_API_KEY === 'string' && GEMINI_API_KEY.trim().length > 5 && GEMINI_API_KEY !== 'YOUR_GEMINI_API_KEY_HERE')
+    ? GEMINI_API_KEY.trim()
+    : (state.apiKey && state.apiKey.trim().length > 5 ? state.apiKey.trim() : '');
+
   let usedAi = false;
 
   try {
-    if (hasApiKey) {
-      const aiIdeas = await fetchIdeasFromAI(topic, audience, niche, tone, length);
+    if (activeKey) {
+      const aiIdeas = await fetchIdeasFromAI(topic, audience, niche, tone, length, activeKey);
       if (Array.isArray(aiIdeas) && aiIdeas.length > 0) {
         currentIdeas = aiIdeas;
         usedAi = true;
@@ -1452,13 +1463,12 @@ async function runGeneration(topic, audience, niche, tone, length) {
         throw new Error('AI returned an empty list of ideas');
       }
     } else {
-      // Small realistic pause for offline generator
+      // Fast, realistic pause for built-in generator
       await new Promise(r => setTimeout(r, 650));
       currentIdeas = generateIdeas(topic, audience, niche, tone, length);
     }
   } catch (err) {
-    console.warn('AI generation failed, falling back to built-in engine:', err);
-    showToast(`AI Notice: ${err.message || 'Error'}. Using built-in generator! ⚡`, 'info');
+    console.warn('AI generation notice (falling back to built-in generator):', err);
     currentIdeas = generateIdeas(topic, audience, niche, tone, length);
   }
 
@@ -1485,7 +1495,7 @@ async function runGeneration(topic, audience, niche, tone, length) {
     niche,
     tone,
     length,
-    engine: usedAi ? 'AI' : 'Built-in',
+    engine: usedAi ? 'Gemini AI' : 'Built-in',
     date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     timeAgo: 'Just now',
     timestamp: Date.now()
@@ -1507,18 +1517,18 @@ async function runGeneration(topic, audience, niche, tone, length) {
   resultsSection.classList.remove('hidden');
 
   if (usedAi) {
-    showToast('Generated 10 custom ideas with Live AI! ✨', 'success');
+    showToast('Generated 10 custom ideas with Google Gemini AI! ✨', 'success');
   } else {
     showToast('Generated 10 fresh ideas! ✨', 'success');
   }
 }
 
 /**
- * Live AI Generation via Google Gemini or OpenAI
+ * Live AI Generation via Google Gemini API
  */
-async function fetchIdeasFromAI(topic, audience, niche, tone, length) {
-  const key = state.apiKey.trim();
-  const provider = state.apiProvider || 'gemini';
+async function fetchIdeasFromAI(topic, audience, niche, tone, length, key) {
+  const activeKey = key || GEMINI_API_KEY;
+  if (!activeKey) throw new Error('No API key provided');
 
   const systemInstructions = `You are an elite YouTube content strategist and algorithm consultant with 10+ years of experience.
 Generate exactly 10 diverse, specific, high-click-through-rate YouTube video ideas for:
@@ -1537,40 +1547,9 @@ Rules:
 6. Provide an effort estimation ("Easy", "Medium", or "Hard") and a potential virality score from 75 to 97.
 7. Return strictly valid JSON array with 10 objects.`;
 
-  if (provider === 'openai' || (key.startsWith('sk-') && provider !== 'gemini')) {
-    // OpenAI API
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${key}`
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          { role: 'system', content: systemInstructions },
-          { role: 'user', content: 'Generate the 10 YouTube video ideas in a JSON array format now.' }
-        ],
-        temperature: 0.7,
-        response_format: { type: 'json_object' }
-      })
-    });
-
-    if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      throw new Error(errData.error?.message || `HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-    const rawContent = data.choices?.[0]?.message?.content || '{}';
-    const parsed = JSON.parse(rawContent);
-    const list = Array.isArray(parsed) ? parsed : (parsed.ideas || parsed.videos || Object.values(parsed)[0]);
-    return normalizeAiIdeaList(list, topic, audience, length);
-
-  } else {
-    // Google Gemini API (gemini-1.5-flash / gemini-2.0-flash)
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(key)}`;
-    const prompt = `${systemInstructions}\n\nRespond ONLY with a JSON array containing 10 objects matching this JSON schema:
+  // Google Gemini API (gemini-1.5-flash endpoint)
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(activeKey)}`;
+  const prompt = `${systemInstructions}\n\nRespond ONLY with a JSON array containing 10 objects matching this JSON schema:
 [
   {
     "type": "Tutorial | Case Study | Myth Busting | Challenge | Tier List | Storytime | Breakdown | vs Comparison",
@@ -1585,40 +1564,38 @@ Rules:
   }
 ]`;
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          responseMimeType: 'application/json',
-          temperature: 0.7
-        }
-      })
-    });
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseMimeType: 'application/json',
+        temperature: 0.7
+      }
+    })
+  });
 
-    if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      const msg = errData.error?.message || `HTTP ${response.status}`;
-      throw new Error(msg);
-    }
-
-    const data = await response.json();
-    const textOut = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!textOut) throw new Error('No response text received from Gemini');
-
-    let parsed;
-    try {
-      parsed = JSON.parse(textOut);
-    } catch (e) {
-      // In case wrapped in markdown code blocks
-      const clean = textOut.replace(/```json/gi, '').replace(/```/g, '').trim();
-      parsed = JSON.parse(clean);
-    }
-
-    const list = Array.isArray(parsed) ? parsed : (parsed.ideas || parsed.videos || Object.values(parsed)[0]);
-    return normalizeAiIdeaList(list, topic, audience, length);
+  if (!response.ok) {
+    const errData = await response.json().catch(() => ({}));
+    const msg = errData.error?.message || `HTTP ${response.status}`;
+    throw new Error(msg);
   }
+
+  const data = await response.json();
+  const textOut = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!textOut) throw new Error('No response text received from Gemini');
+
+  let parsed;
+  try {
+    parsed = JSON.parse(textOut);
+  } catch (e) {
+    const clean = textOut.replace(/```json/gi, '').replace(/```/g, '').trim();
+    parsed = JSON.parse(clean);
+  }
+
+  const list = Array.isArray(parsed) ? parsed : (parsed.ideas || parsed.videos || Object.values(parsed)[0]);
+  return normalizeAiIdeaList(list, topic, audience, length);
 }
 
 /**
@@ -2478,184 +2455,6 @@ function initKeyboardShortcuts() {
   });
 }
 
-/* ==========================================================================
-   AI API Key Modal & Settings Management
-   ========================================================================== */
-function initApiSettings() {
-  const modalOverlay = document.getElementById('api-modal-overlay');
-  const openNavBtn = document.getElementById('api-key-btn');
-  const openConfigBtn = document.getElementById('open-api-config-btn');
-  const closeBtn = document.getElementById('api-modal-close-btn');
-  const keyInput = document.getElementById('api-key-input');
-  const providerSelect = document.getElementById('api-provider-select');
-  const toggleVisBtn = document.getElementById('toggle-key-visibility');
-  const testBtn = document.getElementById('api-test-btn');
-  const saveBtn = document.getElementById('api-save-btn');
-  const clearBtn = document.getElementById('api-clear-btn');
-  const testResult = document.getElementById('api-test-result');
-  const helpLink = document.getElementById('api-key-help-link');
-
-  if (!modalOverlay) return;
-
-  function openModal() {
-    keyInput.value = state.apiKey || '';
-    providerSelect.value = state.apiProvider || 'gemini';
-    updateHelpLink();
-    if (testResult) {
-      testResult.className = 'api-test-msg hidden';
-      testResult.textContent = '';
-    }
-    modalOverlay.classList.remove('hidden');
-    keyInput.focus();
-  }
-
-  function closeModal() {
-    modalOverlay.classList.add('hidden');
-  }
-
-  function updateHelpLink() {
-    if (!helpLink) return;
-    if (providerSelect.value === 'openai') {
-      helpLink.href = 'https://platform.openai.com/api-keys';
-      helpLink.innerHTML = 'Get OpenAI Key &rarr;';
-    } else {
-      helpLink.href = 'https://aistudio.google.com/app/apikey';
-      helpLink.innerHTML = 'Get Free Gemini Key &rarr;';
-    }
-  }
-
-  openNavBtn?.addEventListener('click', openModal);
-  openConfigBtn?.addEventListener('click', openModal);
-  closeBtn?.addEventListener('click', closeModal);
-
-  modalOverlay.addEventListener('click', (e) => {
-    if (e.target === modalOverlay) closeModal();
-  });
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modalOverlay.classList.contains('hidden')) {
-      closeModal();
-    }
-  });
-
-  providerSelect?.addEventListener('change', updateHelpLink);
-
-  toggleVisBtn?.addEventListener('click', () => {
-    const isPass = keyInput.type === 'password';
-    keyInput.type = isPass ? 'text' : 'password';
-    toggleVisBtn.setAttribute('title', isPass ? 'Hide Key' : 'Show Key');
-  });
-
-  // Test Connection
-  testBtn?.addEventListener('click', async () => {
-    const key = keyInput.value.trim();
-    const provider = providerSelect.value;
-    if (!key) {
-      showTestResult('Please enter an API key first.', 'error');
-      return;
-    }
-
-    showTestResult('Testing connection to ' + (provider === 'openai' ? 'OpenAI' : 'Google Gemini') + '...', 'loading');
-    testBtn.disabled = true;
-
-    try {
-      if (provider === 'openai') {
-        const res = await fetch('https://api.openai.com/v1/models', {
-          headers: { 'Authorization': `Bearer ${key}` }
-        });
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          throw new Error(err.error?.message || `HTTP ${res.status}`);
-        }
-        showTestResult('Connection Successful! OpenAI API is active and ready. ✅', 'success');
-      } else {
-        // Gemini test ping
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(key)}`;
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: 'Hello' }] }]
-          })
-        });
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          throw new Error(err.error?.message || `HTTP ${res.status}`);
-        }
-        showTestResult('Connection Successful! Gemini API is active and ready. ✅', 'success');
-      }
-    } catch (err) {
-      showTestResult(`Connection Failed: ${err.message}`, 'error');
-    } finally {
-      testBtn.disabled = false;
-    }
-  });
-
-  // Save Settings
-  saveBtn?.addEventListener('click', () => {
-    const key = keyInput.value.trim();
-    const provider = providerSelect.value;
-    state.apiKey = key;
-    state.apiProvider = provider;
-    saveState();
-    updateApiUiIndicators();
-    closeModal();
-    if (key) {
-      showToast(`Saved ${provider === 'openai' ? 'OpenAI' : 'Gemini'} API key! ✨`, 'success');
-    } else {
-      showToast('Switched to built-in generator engine', 'info');
-    }
-  });
-
-  // Clear Key
-  clearBtn?.addEventListener('click', () => {
-    keyInput.value = '';
-    state.apiKey = '';
-    saveState();
-    updateApiUiIndicators();
-    showTestResult('API Key cleared.', 'info');
-    showToast('API Key removed. Using offline templates.', 'info');
-  });
-
-  function showTestResult(msg, type) {
-    if (!testResult) return;
-    testResult.className = `api-test-msg ${type}`;
-    testResult.textContent = msg;
-    testResult.classList.remove('hidden');
-  }
-
-  updateApiUiIndicators();
-}
-
-function updateApiUiIndicators() {
-  const hasKey = Boolean(state.apiKey && state.apiKey.trim().length > 5);
-  const provider = state.apiProvider === 'openai' ? 'OpenAI' : 'Google Gemini';
-
-  // Navbar dot & label
-  const navDot = document.getElementById('nav-api-dot');
-  const navLabel = document.getElementById('nav-api-label');
-  if (navDot) {
-    navDot.classList.toggle('connected', hasKey);
-  }
-  if (navLabel) {
-    navLabel.textContent = hasKey ? `${provider.split(' ')[0]} AI` : 'API Key';
-  }
-
-  // Engine status in generator card
-  const engineDot = document.getElementById('engine-status-dot');
-  const engineText = document.getElementById('engine-status-text');
-  if (engineDot) {
-    engineDot.classList.toggle('active', hasKey);
-  }
-  if (engineText) {
-    if (hasKey) {
-      engineText.textContent = `Engine: ${provider} (Live AI Active ✨)`;
-    } else {
-      engineText.textContent = 'Engine: Built-in Templates (Offline ⚡)';
-    }
-  }
-}
-
 /* Event Listeners for Nav Tabs & Logo */
 function initNavigation() {
   document.querySelectorAll('.nav-tab, .mobile-tab').forEach(tab => {
@@ -2684,7 +2483,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initTypewriter();
   initFormListeners();
-  initApiSettings();
   initNavigation();
   initKeyboardShortcuts();
   updateSavedBadge();
