@@ -10,7 +10,7 @@ export class GeminiAIProvider implements AIProvider {
     if (key) {
       this.client = new GoogleGenAI({ apiKey: key });
     }
-    this.defaultModel = model || process.env.AI_MODEL || 'gemini-1.5-flash';
+    this.defaultModel = model || process.env.AI_MODEL || 'gemini-3.5-flash-lite';
   }
 
   async generateStructuredJSON<T>(
