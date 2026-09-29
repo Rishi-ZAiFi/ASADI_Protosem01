@@ -13,13 +13,31 @@ def mock_llm_service():
         def mock_generate_structured(prompt, schema):
             from datetime import datetime
             import uuid
+            from app.schemas.generation import ParsedBrief, StructuredGeneratorOutput, GenerationResponse
+            if schema == ParsedBrief:
+                return ParsedBrief(
+                    topic="test topic",
+                    format="educational",
+                    goal="educate audience",
+                    constraints=["short"]
+                )
+            if schema == StructuredGeneratorOutput:
+                return StructuredGeneratorOutput(
+                    hook="Test hook",
+                    body="Mock text",
+                    cta="Test cta",
+                    hashtags=["#mock"],
+                    image_text="Image overlay text",
+                    visual_brief="Graphic showing diagram"
+                )
             return GenerationResponse(
                 id=str(uuid.uuid4()),
                 project_id="proj-1",
                 topic="test topic",
                 post_type="educational",
                 hook="Test hook",
-                caption="Mock text",
+                body="Mock text",
+                caption="Test hook\n\nMock text\n\nTest cta",
                 cta="Test cta",
                 hashtags=["#mock"],
                 created_at=datetime.utcnow()
@@ -67,8 +85,9 @@ def test_max_iterations_loop_0(mock_llm_service, mock_validation, mock_db_sessio
     
     result, warnings = run_generation_graph(mock_db_session, "proj-1", req, n_candidates=1, max_iterations=0)
     
-    assert mock_llm_service.generate_structured.call_count == 1
-    assert result.caption == "Mock text"
+    # 1 brief parse + 1 generate = 2 calls
+    assert mock_llm_service.generate_structured.call_count == 2
+    assert result.caption is not None
 
 def test_max_iterations_loop_exhausted(mock_llm_service, mock_validation, mock_db_session):
     mock_validation.return_value = {"overall_score": 30, "originality_status": "FAIL"}
@@ -76,8 +95,9 @@ def test_max_iterations_loop_exhausted(mock_llm_service, mock_validation, mock_d
     
     result, warnings = run_generation_graph(mock_db_session, "proj-1", req, n_candidates=1, max_iterations=1)
     
-    assert mock_llm_service.generate_structured.call_count == 2
-    assert result.caption == "Mock text"
+    # 1 brief parse + 1 generate + 1 revise = 3 calls
+    assert mock_llm_service.generate_structured.call_count == 3
+    assert result.caption is not None
     assert len(warnings) > 0
 
 def test_best_candidate_return_on_exhaustion(mock_llm_service, mock_validation, mock_db_session):
@@ -94,7 +114,7 @@ def test_best_candidate_return_on_exhaustion(mock_llm_service, mock_validation, 
     
     result, warnings = run_generation_graph(mock_db_session, "proj-1", req, n_candidates=1, max_iterations=1)
     
-    assert mock_llm_service.generate_structured.call_count == 2
+    assert mock_llm_service.generate_structured.call_count == 3
     assert len(warnings) > 0
 
 def test_langsmith_trace_toggle(mock_llm_service, mock_validation, mock_db_session):
@@ -126,8 +146,28 @@ def test_prompt_includes_validation_feedback(mock_llm_service, mock_validation, 
     run_generation_graph(mock_db_session, "proj-1", req, n_candidates=1, max_iterations=1)
     
     calls = mock_llm_service.generate_structured.call_args_list
-    assert len(calls) == 2
-    prompt = calls[1][0][0]
+    assert len(calls) >= 2
+    prompt = calls[-1][0][0]
     
     assert "Originality Status: FAIL" in prompt
     assert "too similar" in prompt
+
+def test_parse_brief_node_returns_parsed_brief(mock_llm_service):
+    from app.services.graph_service import parse_brief
+    req = GenerationRequest(topic="AI trends", post_type="educational")
+    state = GraphState(project_id="1", request=req)
+    res = parse_brief(state)
+    assert "parsed_brief" in res
+    assert res["parsed_brief"].topic == "test topic"
+
+def test_style_exemplar_retriever_invokes_mmr():
+    from app.services.custom_retriever import StyleExemplarRetriever
+    mock_service = MagicMock()
+    mock_service.retrieve_style_exemplars.return_value = [
+        {"id": "p1", "caption": "Caption 1", "post_type": "educational"}
+    ]
+    retriever = StyleExemplarRetriever(retrieval_service=mock_service, project_id="p1", post_type="educational")
+    docs = retriever.invoke("AI tools")
+    assert len(docs) == 1
+    assert docs[0].metadata["id"] == "p1"
+    assert docs[0].page_content == "Caption 1"

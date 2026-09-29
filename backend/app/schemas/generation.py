@@ -12,6 +12,20 @@ class GenerationRequest(BaseModel):
     max_iterations: Optional[int] = Field(2, ge=0)
     enable_revision: Optional[bool] = Field(True)
 
+class ParsedBrief(BaseModel):
+    topic: str
+    format: str
+    goal: str
+    constraints: List[str] = Field(default_factory=list)
+
+class StructuredGeneratorOutput(BaseModel):
+    hook: str
+    body: str
+    cta: Optional[str] = ""
+    hashtags: List[str] = Field(default_factory=list)
+    image_text: Optional[str] = ""
+    visual_brief: Optional[str] = ""
+
 class SlideContent(BaseModel):
     title: str
     body: str
@@ -23,8 +37,11 @@ class GenerationResponse(BaseModel):
     post_type: str
     hook: str
     caption: str
-    cta: Optional[str]
-    hashtags: List[str]
+    body: Optional[str] = ""
+    cta: Optional[str] = ""
+    hashtags: List[str] = Field(default_factory=list)
+    image_text: Optional[str] = ""
+    visual_brief: Optional[str] = ""
     slides: Optional[List[SlideContent]] = []
     created_at: datetime
     warnings: Optional[List[str]] = Field(default_factory=list)

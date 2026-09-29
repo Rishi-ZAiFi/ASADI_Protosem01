@@ -62,6 +62,12 @@ class PostTextFeatures(Base):
     cta_phrase = Column(String, nullable=True)
     has_url = Column(Integer, default=0)
     
+    # LLM & Heuristic Extraction Fields
+    extracted_hook = Column(Text, nullable=True)
+    extracted_cta = Column(Text, nullable=True)
+    extraction_source = Column(String, default="heuristic")  # "llm" or "heuristic"
+    extraction_status = Column(String, default="success")    # "success" or "failed"
+    
     # Vocabulary & Pronoun / Tone Indicators
     vocabulary_stats = Column(JSON, default=dict)
     first_person_ratio = Column(Float, default=0.0)

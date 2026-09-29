@@ -5,13 +5,13 @@ import time
 import uuid
 import os
 
-from app.schemas.generation import GenerationRequest, GenerationResponse
+from datetime import datetime
+from app.schemas.generation import GenerationRequest, GenerationResponse, ParsedBrief, StructuredGeneratorOutput
 from app.services.retrieval_service import RetrievalService
 from app.services.prompt_builder import PromptBuilder
 from app.services.llm_service import LLMService
 from app.services.validation_service import ValidationService
 
-# The graph state as Pydantic BaseModel
 from pydantic import ConfigDict
 
 class GraphState(BaseModel):
@@ -24,6 +24,7 @@ class GraphState(BaseModel):
     max_iterations: int = Field(default=2)
     iterations: int = Field(default=0)
     
+    parsed_brief: Optional[ParsedBrief] = None
     style_profile: Optional[Dict[str, Any]] = Field(default_factory=dict)
     retrieved_posts: Optional[List[Dict[str, Any]]] = Field(default_factory=list)
     historical_posts: Optional[List[Dict[str, Any]]] = Field(default_factory=list)
@@ -40,12 +41,23 @@ class GraphState(BaseModel):
     best_val: Optional[Dict[str, Any]] = None
     warnings: Optional[List[str]] = Field(default_factory=list)
     retriever: Optional[Any] = None
+    style_retriever: Optional[Any] = None
     
     global_best_candidate: Optional[GenerationResponse] = None
     global_best_score: int = -1
 
 def parse_brief(state: GraphState) -> dict:
-    return {}
+    prompt = f"""
+    Parse the following content creation request into a structured brief.
+    Topic: {state.request.topic}
+    Post Type/Format: {state.request.post_type}
+    CTA Requirement: {state.request.cta_requirement or 'None'}
+    Desired Length: {state.request.desired_length or 'medium'}
+    Custom Instructions: {state.request.custom_instructions or 'None'}
+    """
+    llm_service = LLMService.get_provider()
+    parsed = llm_service.generate_structured(prompt, ParsedBrief)
+    return {"parsed_brief": parsed}
 
 def retrieve(state: GraphState) -> dict:
     if state.retriever:
@@ -57,26 +69,50 @@ def retrieve(state: GraphState) -> dict:
 def generate(state: GraphState) -> dict:
     llm_service = LLMService.get_provider()
     
+    style_exemplars = []
+    if state.style_retriever:
+        docs = state.style_retriever.invoke(state.request.topic)
+        style_exemplars = [{"id": d.metadata["id"], "caption": d.page_content, "post_type": d.metadata.get("post_type")} for d in docs]
+
     prompt = PromptBuilder.build_generation_prompt(
         style_profile=state.style_profile or {},
         relevant_examples=state.retrieved_posts or [],
-        topic=state.request.topic,
-        post_type=state.request.post_type,
+        topic=state.parsed_brief.topic if state.parsed_brief else state.request.topic,
+        post_type=state.parsed_brief.format if state.parsed_brief else state.request.post_type,
         cta_requirement=state.request.cta_requirement,
         desired_length=state.request.desired_length,
         custom_instructions=state.request.custom_instructions
     )
     
+    if style_exemplars:
+        exemplar_lines = [f"- Style Reference ({ex.get('post_type', 'post')}): {ex['caption'][:150]}..." for ex in style_exemplars]
+        prompt += "\n\nSTYLE REFERENCES (DO NOT reuse their phrasing or topics, use them ONLY as stylistic references for format and tone):\n" + "\n".join(exemplar_lines)
+
     candidates = []
     metrics = []
     
     for i in range(state.n_candidates):
         start_t = time.time()
-        candidate = llm_service.generate_structured(prompt, GenerationResponse)
+        out = llm_service.generate_structured(prompt, StructuredGeneratorOutput)
         latency = time.time() - start_t
         
-        candidate.id = f"cand-{uuid.uuid4().hex[:6]}"
-        candidate.project_id = state.project_id
+        cand_id = f"cand-{uuid.uuid4().hex[:6]}"
+        caption_full = f"{out.hook}\n\n{out.body}\n\n{out.cta or ''}".strip()
+        candidate = GenerationResponse(
+            id=cand_id,
+            project_id=state.project_id,
+            topic=state.request.topic,
+            post_type=state.request.post_type or "educational",
+            hook=out.hook,
+            body=out.body,
+            caption=caption_full,
+            cta=out.cta,
+            hashtags=out.hashtags,
+            image_text=out.image_text,
+            visual_brief=out.visual_brief,
+            slides=[],
+            created_at=datetime.utcnow()
+        )
         
         candidates.append(candidate)
         metrics.append({"candidate_id": candidate.id, "latency_sec": round(latency, 2)})
@@ -175,9 +211,23 @@ def revise(state: GraphState) -> dict:
     Fix these issues while keeping the same format and topic.
     """
     llm_service = LLMService.get_provider()
-    revised = llm_service.generate_structured(prompt, GenerationResponse)
-    revised.id = f"{best_cand.id}-rev{state.iterations + 1}"
-    revised.project_id = best_cand.project_id
+    out = llm_service.generate_structured(prompt, StructuredGeneratorOutput)
+    caption_full = f"{out.hook}\n\n{out.body}\n\n{out.cta or ''}".strip()
+    revised = GenerationResponse(
+        id=f"{best_cand.id}-rev{state.iterations + 1}",
+        project_id=best_cand.project_id,
+        topic=state.request.topic,
+        post_type=state.request.post_type or "educational",
+        hook=out.hook,
+        body=out.body,
+        caption=caption_full,
+        cta=out.cta,
+        hashtags=out.hashtags,
+        image_text=out.image_text,
+        visual_brief=out.visual_brief,
+        slides=[],
+        created_at=datetime.utcnow()
+    )
     
     return {
         "revised_candidate": revised, 
@@ -216,7 +266,7 @@ def run_generation_graph(db_session, project_id: str, req: GenerationRequest, n_
     from app.models.style_profile import StyleProfile
     from app.models.post import Post
     from app.services.retrieval_service import RetrievalService
-    from app.services.custom_retriever import RetrievalServiceRetriever
+    from app.services.custom_retriever import RetrievalServiceRetriever, StyleExemplarRetriever
     
     n_candidates = n_candidates if n_candidates is not None else (req.n_candidates if req.n_candidates is not None else 4)
     max_iterations = max_iterations if max_iterations is not None else (req.max_iterations if req.max_iterations is not None else 2)
@@ -244,6 +294,11 @@ def run_generation_graph(db_session, project_id: str, req: GenerationRequest, n_
         project_id=project_id,
         post_type=req.post_type or "general"
     )
+    style_retriever = StyleExemplarRetriever(
+        retrieval_service=retrieval_service,
+        project_id=project_id,
+        post_type=req.post_type or "general"
+    )
     
     initial_state = GraphState(
         project_id=project_id,
@@ -254,7 +309,8 @@ def run_generation_graph(db_session, project_id: str, req: GenerationRequest, n_
         style_profile=style_profile_data,
         retrieved_posts=[],
         historical_posts=h_posts_list,
-        retriever=retriever
+        retriever=retriever,
+        style_retriever=style_retriever
     )
     
     # LangSmith tracing check (Tier 2 rule)
