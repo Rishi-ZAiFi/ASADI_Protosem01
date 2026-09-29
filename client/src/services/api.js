@@ -178,3 +178,44 @@ export async function runAutonomousChain({
   }
 }
 
+/**
+ * Autonomous Self-Refining Auto-Pilot Pipeline:
+ * Agent 1 ➔ Agent 2 ➔ Agent 3 ➔ Reflexion / Self-Correction
+ */
+export async function runAutopilot({
+  niche,
+  format,
+  audience,
+  tone,
+  apiKey,
+}) {
+  const endpoint = `${API_BASE_URL}/api/gemini/autopilot/run`;
+
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ niche, format, audience, tone, apiKey }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      const error = new Error(data.message || 'Auto-Pilot execution failed.');
+      error.code = data.error || 'AUTOPILOT_FAILED';
+      throw error;
+    }
+
+    return data.data;
+  } catch (error) {
+    if (!error.code) {
+      error.message = 'Failed to connect to backend server for Auto-Pilot.';
+      error.code = 'NETWORK_ERROR';
+    }
+    throw error;
+  }
+}
+
+

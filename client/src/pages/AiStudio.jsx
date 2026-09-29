@@ -22,7 +22,7 @@ import {
   Lightbulb,
   ArrowRight,
 } from 'lucide-react';
-import { generateContent, evaluateContent, runAutonomousChain } from '../services/api';
+import { generateContent, evaluateContent, runAutonomousChain, runAutopilot } from '../services/api';
 import FormatBadge from '../components/FormatBadge';
 
 export default function AiStudio({
@@ -54,6 +54,12 @@ export default function AiStudio({
   // Autonomous Chain Pipeline State (Agent 1 ➔ Agent 2 ➔ Agent 3)
   const [isRunningChain, setIsRunningChain] = useState(false);
   const [chainStep, setChainStep] = useState(0); // 0: idle, 1: scout, 2: script, 3: evaluate
+
+  // Auto-Pilot Autonomous Reflexion Loop State
+  const [isAutopilotRunning, setIsAutopilotRunning] = useState(false);
+  const [autopilotLogs, setAutopilotLogs] = useState([]);
+  const [showAutopilotModal, setShowAutopilotModal] = useState(false);
+  const [autopilotData, setAutopilotData] = useState(null);
 
   // Initialize from preferences or location state (from Trend Radar or Dashboard)
   useEffect(() => {
@@ -242,6 +248,87 @@ export default function AiStudio({
       setChainStep(0);
     }
   };
+
+  // Handler for Autonomous Auto-Pilot Reflexion Loop (Agent 1 ➔ 2 ➔ 3 ➔ Self-Refinement ➔ Auto-Save)
+  const handleRunAutopilot = async () => {
+    setIsAutopilotRunning(true);
+    setShowAutopilotModal(true);
+    setErrorState(null);
+    setAutopilotData(null);
+    setAutopilotLogs([
+      {
+        agent: 'Auto-Pilot Controller',
+        action: 'Booting autonomous multi-agent creation cycle...',
+        time: new Date().toLocaleTimeString(),
+      },
+    ]);
+
+    try {
+      const result = await runAutopilot({
+        niche: topic.trim() || 'AI Productivity & Creator Tools',
+        format,
+        audience,
+        tone,
+      });
+
+      if (result) {
+        setAutopilotData(result);
+        if (result.logs) setAutopilotLogs(result.logs);
+        if (result.topic) setTopic(result.topic);
+
+        const generatedData = {
+          topic: result.topic,
+          format: result.format,
+          audience: result.audience,
+          tone: result.tone,
+          content: result.content,
+          provider: 'gemini',
+          model: result.model || 'gemini-3.5-flash-lite',
+          agent: `Auto-Pilot (${result.iterations} Reflexion Passes)`,
+          timestamp: result.timestamp,
+        };
+
+        setGeneratedResult(generatedData);
+
+        if (result.evaluation) {
+          setEvaluationResult(result.evaluation);
+        }
+
+        // Auto-save to content library!
+        onSaveContent({
+          topic: result.topic,
+          format: result.format,
+          audience: result.audience,
+          tone: result.tone,
+          content: result.content,
+          provider: 'gemini',
+          model: result.model || 'gemini-3.5-flash-lite',
+        });
+        setHasSavedCurrent(true);
+
+        addToast(
+          `Auto-Pilot completed with Score ${result.evaluation?.overallScore}/100 and auto-saved to library!`,
+          'success'
+        );
+      }
+    } catch (err) {
+      console.error('Auto-Pilot Error:', err);
+      setErrorState({
+        title: 'Auto-Pilot Failed',
+        message: err.message,
+      });
+      addToast(err.message || 'Auto-Pilot execution failed', 'error');
+    } finally {
+      setIsAutopilotRunning(false);
+    }
+  };
+
+  // Auto-launch if navigated from Dashboard
+  useEffect(() => {
+    if (location.state?.autoLaunchAutopilot) {
+      handleRunAutopilot();
+    }
+  }, [location.state?.autoLaunchAutopilot]);
 
   const handleSave = () => {
     if (!generatedResult) return;
@@ -729,6 +816,41 @@ export default function AiStudio({
                   <>
                     <Sparkles size={17} />
                     <span>⚡ Run 1-Click 3-Agent Chain (End-to-End)</span>
+                  </>
+                )}
+              </button>
+
+              {/* 3. Fully Autonomous Auto-Pilot Mode (Self-Refining Loop) */}
+              <button
+                onClick={handleRunAutopilot}
+                disabled={isGenerating || isRunningChain || isAutopilotRunning}
+                className="btn"
+                style={{
+                  width: '100%',
+                  padding: '0.85rem',
+                  fontSize: '0.96rem',
+                  background: 'linear-gradient(135deg, #10b981, #06b6d4)',
+                  color: '#fff',
+                  border: 'none',
+                  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
+                  cursor: isGenerating || isRunningChain || isAutopilotRunning ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  fontWeight: 700,
+                  borderRadius: '8px',
+                }}
+              >
+                {isAutopilotRunning ? (
+                  <>
+                    <RefreshCw size={17} style={{ animation: 'spin 1s linear infinite' }} />
+                    <span>Auto-Pilot: Self-Refining & Saving...</span>
+                  </>
+                ) : (
+                  <>
+                    <Bot size={17} />
+                    <span>🤖 Launch Auto-Pilot (Self-Automates Itself)</span>
                   </>
                 )}
               </button>
@@ -1308,6 +1430,215 @@ export default function AiStudio({
                         </div>
                       </div>
                     )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Autonomous Auto-Pilot Reflexion Modal */}
+          {showAutopilotModal && (
+            <div
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                backdropFilter: 'blur(6px)',
+                zIndex: 9999,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '1rem',
+              }}
+            >
+              <div
+                className="card"
+                style={{
+                  width: '100%',
+                  maxWidth: '700px',
+                  maxHeight: '90vh',
+                  overflowY: 'auto',
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'rgba(16, 185, 129, 0.4)',
+                  padding: '1.75rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1.25rem',
+                  position: 'relative',
+                  boxShadow: '0 10px 40px rgba(0, 0, 0, 0.6)',
+                }}
+              >
+                {/* Header */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    paddingBottom: '1rem',
+                    borderBottom: '1px solid var(--border-subtle)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div
+                      style={{
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '10px',
+                        backgroundColor: 'rgba(16, 185, 129, 0.15)',
+                        color: 'var(--accent-emerald)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Bot size={22} />
+                    </div>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0, color: 'var(--text-main)' }}>
+                          Auto-Pilot: Self-Refining Creator
+                        </h3>
+                        <span
+                          style={{
+                            padding: '0.15rem 0.55rem',
+                            borderRadius: '999px',
+                            backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                            color: 'var(--accent-emerald)',
+                            fontSize: '0.7rem',
+                            fontWeight: 700,
+                          }}
+                        >
+                          Autonomous Reflexion
+                        </span>
+                      </div>
+                      <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                        Scouts trends, writes scripts, critiques retention, self-corrects flaws, and auto-saves to your library.
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setShowAutopilotModal(false)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--text-muted)',
+                      cursor: 'pointer',
+                      padding: '4px',
+                      borderRadius: '6px',
+                    }}
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+
+                {/* Live Autonomous Log Terminal */}
+                <div
+                  style={{
+                    backgroundColor: '#090e1a',
+                    border: '1px solid rgba(16, 185, 129, 0.25)',
+                    borderRadius: '10px',
+                    padding: '1.25rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.75rem',
+                    maxHeight: '360px',
+                    overflowY: 'auto',
+                    fontFamily: 'var(--font-sans)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '0.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                    <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-dim)', fontWeight: 700 }}>
+                      ⚡ Autonomous Agentic Execution Stream
+                    </span>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--accent-emerald)' }}>
+                      {isAutopilotRunning ? '● Live Self-Refining Loop Active' : '✔ Loop Complete'}
+                    </span>
+                  </div>
+
+                  {autopilotLogs.map((log, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.2rem',
+                        padding: '0.5rem 0.75rem',
+                        borderRadius: '6px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                        borderLeft: log.agent.includes('Critic')
+                          ? '3px solid #06b6d4'
+                          : log.agent.includes('Reflexion') || log.agent.includes('Self')
+                          ? '3px solid #f59e0b'
+                          : log.agent.includes('Scout')
+                          ? '3px solid #6366f1'
+                          : '3px solid #10b981',
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                          {log.agent}
+                        </span>
+                        <span style={{ fontSize: '0.68rem', color: 'var(--text-dim)' }}>
+                          {log.time}
+                        </span>
+                      </div>
+                      <p style={{ margin: 0, fontSize: '0.8rem', color: '#cbd5e1', lineHeight: 1.4 }}>
+                        {log.action}
+                      </p>
+                    </div>
+                  ))}
+
+                  {isAutopilotRunning && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem', color: 'var(--accent-emerald)', fontSize: '0.8rem' }}>
+                      <RefreshCw size={14} style={{ animation: 'spin 1s linear infinite' }} />
+                      <span>Agents are autonomously coordinating and refining...</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Completed Banner */}
+                {!isAutopilotRunning && autopilotData && (
+                  <div
+                    style={{
+                      padding: '1rem 1.25rem',
+                      borderRadius: '10px',
+                      backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                      border: '1px solid rgba(16, 185, 129, 0.3)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      flexWrap: 'wrap',
+                      gap: '0.75rem',
+                    }}
+                  >
+                    <div>
+                      <div style={{ fontSize: '0.92rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.2rem' }}>
+                        Autonomous Content Generation Finished!
+                      </div>
+                      <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>
+                        Reflexion Passes: {autopilotData.iterations} • Verified Quality Score: {autopilotData.evaluation?.overallScore}/100 (Grade {autopilotData.evaluation?.grade || 'A+'}) • Auto-Saved to Library
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <button
+                        onClick={() => setShowAutopilotModal(false)}
+                        className="btn btn-primary btn-sm"
+                      >
+                        View in Studio
+                      </button>
+
+                      <button
+                        onClick={handleRunAutopilot}
+                        className="btn btn-secondary btn-sm"
+                      >
+                        Run Next Cycle
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

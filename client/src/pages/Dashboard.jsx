@@ -14,6 +14,7 @@ import {
   ExternalLink,
   ArrowRight,
   Eye,
+  Bot,
 } from 'lucide-react';
 import FormatBadge from '../components/FormatBadge';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
@@ -144,6 +145,26 @@ export default function Dashboard({
             >
               <Sparkles size={16} />
               <span>Open AI Studio</span>
+            </button>
+            <button
+              onClick={() => navigate('/studio', { state: { autoLaunchAutopilot: true } })}
+              className="btn"
+              style={{
+                padding: '0.7rem 1.4rem',
+                background: 'linear-gradient(135deg, #10b981, #06b6d4)',
+                color: '#fff',
+                border: 'none',
+                boxShadow: '0 4px 14px rgba(16, 185, 129, 0.3)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontWeight: 700,
+                borderRadius: '8px',
+                cursor: 'pointer',
+              }}
+            >
+              <Bot size={16} />
+              <span>⚡ Launch Auto-Pilot</span>
             </button>
             <button
               onClick={() => navigate('/trends')}

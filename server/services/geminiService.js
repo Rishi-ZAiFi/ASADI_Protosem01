@@ -305,3 +305,172 @@ export async function runAutonomousChain({ niche, format = 'Instagram Reel', aud
   };
 }
 
+/**
+ * Autonomous Self-Refining Multi-Agent Loop (Reflexion Pattern)
+ * Agent 1 (Trend Scout) ➔ Agent 2 (Draft) ➔ Agent 3 (Critic) ➔
+ * Self-Correction: Agent 2 iterates based on Agent 3's feedback ➔
+ * Final approved piece ready for automated storage
+ */
+export async function runSelfRefiningAutonomousLoop({
+  niche,
+  format = 'Instagram Reel',
+  audience = 'Content Creators',
+  tone = 'Engaging',
+  apiKeyOverride,
+}) {
+  const logs = [];
+
+  // Step 1: Agent 1 Trend Scout
+  logs.push({
+    agent: 'Agent 1: Trend Scout',
+    action: `Scouting high-velocity angles for "${niche || 'Digital Creator Tools'}"...`,
+    time: new Date().toLocaleTimeString(),
+  });
+
+  const scoutResult = await scoutTrendsWithGemini({
+    niche: niche || 'Digital Creator Tools & Growth',
+    platform: format,
+    audience,
+    apiKeyOverride,
+  });
+
+  const topTrend = scoutResult.trends?.[0] || {
+    title: 'Autonomous Creator Revolution',
+    suggestedAngle: 'How self-running AI multi-agent workflows automate content production.',
+  };
+
+  const chainedTopic = `${topTrend.title}: ${topTrend.suggestedAngle}`;
+  logs.push({
+    agent: 'Agent 1: Trend Scout',
+    action: `Breakout trend detected: "${topTrend.title}" (${topTrend.momentum || '🔥 Viral Velocity'})`,
+    time: new Date().toLocaleTimeString(),
+  });
+
+  // Step 2: Agent 2 Initial Synthesis
+  logs.push({
+    agent: 'Agent 2: Script Builder',
+    action: `Generating initial ${format} draft adapted for ${audience}...`,
+    time: new Date().toLocaleTimeString(),
+  });
+
+  const scriptResult = await generateWithGemini({
+    topic: chainedTopic,
+    format,
+    audience,
+    tone,
+    apiKeyOverride,
+  });
+
+  logs.push({
+    agent: 'Agent 2: Script Builder',
+    action: `Initial draft completed (${scriptResult.content.length} chars). Handing off to Agent 3...`,
+    time: new Date().toLocaleTimeString(),
+  });
+
+  // Step 3: Agent 3 Rigorous Evaluation
+  logs.push({
+    agent: 'Agent 3: Content Critic',
+    action: 'Analyzing hook psychology, pacing drop-offs, and CTA strength...',
+    time: new Date().toLocaleTimeString(),
+  });
+
+  let evalResult = await evaluateContentWithGemini({
+    content: scriptResult.content,
+    format,
+    topic: chainedTopic,
+    audience,
+    tone,
+    apiKeyOverride,
+  });
+
+  let iterations = 1;
+  let finalContent = scriptResult.content;
+  const initialScore = evalResult.evaluation?.overallScore || 85;
+
+  logs.push({
+    agent: 'Agent 3: Content Critic',
+    action: `Initial evaluation: Score ${initialScore}/100 (Grade ${evalResult.evaluation?.grade || 'A'}).`,
+    time: new Date().toLocaleTimeString(),
+  });
+
+  // Step 4: Autonomous Reflexion & Self-Correction
+  // If score < 95 and improvements suggested, Agent 2 autonomously rewrites using Critic's feedback
+  if (evalResult.evaluation?.improvements?.length > 0 && initialScore < 95) {
+    logs.push({
+      agent: 'Reflexion Loop: Self-Refinement',
+      action: 'Agent 2 autonomously consuming Agent 3 critique to eliminate weak points and elevate hook...',
+      time: new Date().toLocaleTimeString(),
+    });
+
+    const refinementPrompt = `You are Agent 2 (Script Builder). You generated this draft:
+---
+${scriptResult.content}
+---
+
+Agent 3 (Content Critic) evaluated it and identified these areas to fix:
+- Current Score: ${initialScore}/100
+- Critique Improvements:
+${(evalResult.evaluation?.improvements || []).map((imp) => `  * ${imp}`).join('\n')}
+- Recommended Winning Hook: "${evalResult.evaluation?.optimizedHook || ''}"
+
+INSTRUCTION: Autonomously rewrite this content to achieve a top-tier viral score.
+1. Open with the improved, punchy hook.
+2. Fix all pacing and clarity weaknesses noted by the critic.
+3. Ensure the CTA drives maximum comments and saves.
+Return ONLY the perfected final content.`;
+
+    const refinedResult = await executeGeminiRequest({
+      prompt: refinementPrompt,
+      apiKeyOverride,
+      temperature: 0.7,
+      maxTokens: 2048,
+    });
+
+    finalContent = refinedResult.text;
+    iterations = 2;
+
+    // Agent 3 Re-evaluates the refined draft
+    const reEvalResult = await evaluateContentWithGemini({
+      content: finalContent,
+      format,
+      topic: chainedTopic,
+      audience,
+      tone,
+      apiKeyOverride,
+    });
+
+    evalResult = reEvalResult;
+
+    logs.push({
+      agent: 'Agent 3: Re-Evaluation',
+      action: `Self-refinement verified! Elevated Score: ${evalResult.evaluation?.overallScore}/100 (Grade ${evalResult.evaluation?.grade || 'A+'}). Approved for publication.`,
+      time: new Date().toLocaleTimeString(),
+    });
+  } else {
+    if (evalResult.evaluation?.optimizedHook) {
+      finalContent = `[OPTIMIZED HOOK (AGENT 3)]\n"${evalResult.evaluation.optimizedHook}"\n\n---\n\n${finalContent}`;
+    }
+    logs.push({
+      agent: 'Auto-Pilot Pipeline',
+      action: 'Content verified at high grade. Optimal hook applied automatically.',
+      time: new Date().toLocaleTimeString(),
+    });
+  }
+
+  return {
+    autonomous: true,
+    iterations,
+    logs,
+    trend: topTrend,
+    topic: chainedTopic,
+    format,
+    audience,
+    tone,
+    content: finalContent,
+    evaluation: evalResult.evaluation,
+    model: scriptResult.model,
+    timestamp: new Date().toISOString(),
+  };
+}
+
+

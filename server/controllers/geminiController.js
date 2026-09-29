@@ -3,6 +3,7 @@ import {
   scoutTrendsWithGemini,
   evaluateContentWithGemini,
   runAutonomousChain,
+  runSelfRefiningAutonomousLoop,
 } from '../services/geminiService.js';
 
 /**
@@ -156,3 +157,34 @@ export async function handleAutonomousChain(req, res) {
     });
   }
 }
+
+/**
+ * Controller for Autonomous Self-Refining Auto-Pilot
+ * Agent 1 ➔ Agent 2 ➔ Agent 3 ➔ Reflexion / Self-Correction
+ */
+export async function handleAutopilotRun(req, res) {
+  try {
+    const { niche, format, audience, tone, apiKey } = req.body;
+
+    const result = await runSelfRefiningAutonomousLoop({
+      niche: niche ? niche.trim() : 'Digital Creator Tools & Growth',
+      format: format ? format.trim() : 'Instagram Reel',
+      audience: audience ? audience.trim() : 'Content Creators & Entrepreneurs',
+      tone: tone ? tone.trim() : 'Engaging',
+      apiKeyOverride: apiKey,
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    const statusCode = error.statusCode || 500;
+    return res.status(statusCode).json({
+      success: false,
+      error: error.code || 'AUTOPILOT_FAILED',
+      message: error.message || 'An unexpected error occurred during autonomous autopilot execution.',
+    });
+  }
+}
+

@@ -4,6 +4,7 @@ import {
   handleTrendScout,
   handleContentEvaluation,
   handleAutonomousChain,
+  handleAutopilotRun,
 } from '../controllers/geminiController.js';
 
 const router = Router();
@@ -19,5 +20,8 @@ router.post('/evaluate', handleContentEvaluation);
 
 // POST /api/gemini/chain (Autonomous 3-Agent Sequential Chain: Agent 1 ➔ Agent 2 ➔ Agent 3)
 router.post('/chain', handleAutonomousChain);
+
+// POST /api/gemini/autopilot/run (Self-Refining Autonomous Auto-Pilot: Agent 1 ➔ Agent 2 ➔ Agent 3 ➔ Reflexion)
+router.post('/autopilot/run', handleAutopilotRun);
 
 export default router;
