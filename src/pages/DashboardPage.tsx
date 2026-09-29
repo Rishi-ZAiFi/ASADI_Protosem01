@@ -100,7 +100,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               <KeyRound className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-amber-200">Connect Google Gemini or OpenAI API Key</h4>
+              <h4 className="text-sm font-bold text-amber-200">Connect OpenAI API Key</h4>
               <p className="text-xs text-slate-300 mt-0.5">
                 Add your key to experience live real-time completions across all 22 tools.
               </p>

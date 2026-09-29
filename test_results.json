@@ -1,0 +1,653 @@
+{
+  "tools": {
+    "content-idea-generator": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "content-idea-generator",
+        "result": {
+          "ideas": [
+            {
+              "title": "I Replaced My Entire Tech Stack with Open Source AI for 30 Days",
+              "angle": "Contrarian move away from expensive SaaS to prove bootstrap efficiency",
+              "format": "3-act story with cinematic b-roll",
+              "hook": "I canceled a $2,000/month software stack and replaced it with free AI tools—here is what broke.",
+              "description": "Follows the entrepreneurial journey of migrating to open-source alternatives. The retention loop relies on the suspense of which crucial tool will fail first, ending with a massive cost-saving payoff."
+            },
+            {
+              "title": "Stop Using ChatGPT Like a Search Engine (Do This Instead)",
+              "angle": "Exposing common user error with an immediate, high-value upgrade",
+              "format": "Screen demo with fast-paced picture-in-picture",
+              "hook": "You are using 99% of AI wrong. Stop asking questions and start building autonomous agent loops.",
+              "description": "Breaks down a advanced prompt engineering framework designed specifically for solo creators. High shareability due to immediate practical utility and visual workflow demos."
+            },
+            {
+              "title": "The Brutal Truth About Solopreneur Burnout in the AI Era",
+              "angle": "Emotional vulnerability mixed with technological realism",
+              "format": "Talking head with high-retention jump cuts and kinetic captions",
+              "hook": "AI was supposed to give us our time back. So why are creators working harder than ever?",
+              "description": "A paradigm-shifting critique of hustle culture amplified by modern technology. Drives massive engagement through comment-section debates and community validation."
+            },
+            {
+              "title": "Building a Million-Dollar Business Using Only My Phone and an iPad",
+              "angle": "Ultra-minimalist setup challenging the notion that creators need expensive gear",
+              "format": "POV workflow documentary style",
+              "hook": "I left my $5,000 editing rig at home and ran my entire tech company from a coffee shop using just this.",
+              "description": "Showcases the ultimate mobile productivity stack for creators on the move. Retains viewers through aesthetic, satisfying UI navigation and unexpected app combinations."
+            },
+            {
+              "title": "5 Secret Tech Tools VCs Don't Want Founders to Know About",
+              "angle": "Insider-secret framing that positions the creator as an elite gatekeeper",
+              "format": "Fast-paced listicle carousel (IG) / Rapid-fire video cuts (YT)",
+              "hook": "Silicon Valley founders use these 5 under-the-radar tools to automate their entire team.",
+              "description": "Presents a curated list of obscure, hyper-efficient software that levels the playing field for indie hackers. Drives high save-and-share metrics on social algorithms."
+            }
+          ]
+        },
+        "metadata": {
+          "tool": "content-idea-generator",
+          "executionTime": 3615
+        }
+      }
+    },
+    "content-repurposer": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "content-repurposer",
+        "result": {
+          "linkedin": "Please provide the source content you would like me to repurpose.",
+          "instagram": "Please provide the source content you would like me to repurpose.",
+          "x": "Please provide the source content you would like me to repurpose.",
+          "youtube": "Please provide the source content you would like me to repurpose."
+        },
+        "metadata": {
+          "tool": "content-repurposer",
+          "executionTime": 1210
+        }
+      }
+    },
+    "hook-generator": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "hook-generator",
+        "result": {
+          "hooks": [
+            {
+              "style": "Curiosity Gap",
+              "hook": "Most creators are testing their content completely wrong, and it’s costing them thousands of views."
+            },
+            {
+              "style": "Fear of Missing Out",
+              "hook": "The top 1% of builders are using a secret content test, and they refuse to share it."
+            },
+            {
+              "style": "Contrarian",
+              "hook": "Stop A/B testing your content. It’s actually killing your reach."
+            },
+            {
+              "style": "Urgent Warning",
+              "hook": "If you aren't running this exact test before hitting publish, your next post is already dead."
+            },
+            {
+              "style": "The Insider Secret",
+              "hook": "I wasn't supposed to share this, but here is the exact content testing framework the pros hide from you."
+            },
+            {
+              "style": "Pain Point Amplification",
+              "hook": "Tired of pouring hours into content that nobody sees? You're missing this one critical test."
+            },
+            {
+              "style": "Loss Aversion",
+              "hook": "Every day you skip this content test, you are handing followers directly to your competitors."
+            },
+            {
+              "style": "Pattern Interrupt",
+              "hook": "Unpopular opinion: Your content isn't bad. Your testing strategy is just ancient."
+            },
+            {
+              "style": "The Reveal",
+              "hook": "This 10-second test tells you if your content will go viral before you even post it."
+            },
+            {
+              "style": "Exclusivity",
+              "hook": "Only a handful of top creators know this content loophole—and it's closing soon."
+            }
+          ]
+        },
+        "metadata": {
+          "tool": "hook-generator",
+          "executionTime": 2047
+        }
+      }
+    },
+    "daily-content-planner": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "daily-content-planner",
+        "result": {
+          "topic": "Mastering Digital Marketing in the AI Era: Strategies for Sustainable Growth and Lead Generation",
+          "format": "Carousel & Long-form Text",
+          "hook": "Stop wasting budget on outdated tactics—here is the exact digital marketing blueprint top brands use to scale leads on autopilot.",
+          "outline": [
+            {
+              "day": "Day 1",
+              "postType": "Educational",
+              "title": "The 3 Pillars of Modern Digital Marketing",
+              "description": "Break down the shift from traditional SEO/PPC to AI-driven search, omnichannel personalization, and community-led growth."
+            },
+            {
+              "day": "Day 2",
+              "postType": "Case Study",
+              "title": "How We Scaled B2B Lead Generation by 300%",
+              "description": "A step-by-step breakdown of a recent client campaign using targeted LinkedIn outreach combined with high-value lead magnets."
+            },
+            {
+              "day": "Day 3",
+              "postType": "Interactive/Poll",
+              "title": "What is Your Biggest Marketing Bottleneck Right Now?",
+              "description": "Engage the audience with a multiple-choice poll covering budget allocation, content creation, and conversion rates."
+            },
+            {
+              "day": "Day 4",
+              "postType": "Thought Leadership",
+              "title": "Why Vanity Metrics Are Killing Your ROI",
+              "description": "A contrarian take on likes and impressions versus pipeline revenue, urging marketers to focus on bottom-funnel metrics."
+            },
+            {
+              "day": "Day 5",
+              "postType": "Actionable Framework",
+              "title": "The 5-Step High-Converting Funnel Blueprint",
+              "description": "An Instagram carousel detailing the exact journey from cold traffic to loyal customer, complete with design tips."
+            },
+            {
+              "day": "Day 6",
+              "postType": "Behind the Scenes",
+              "title": "Our Agency's Weekly Content Workflow",
+              "description": "Showcase the tools, AI prompts, and scheduling systems used to produce 30+ pieces of content per week in under 4 hours."
+            },
+            {
+              "day": "Day 7",
+              "postType": "Summary & Resource Drop",
+              "title": "Weekly Digital Marketing Roundup & Free Template",
+              "description": "Recap the week's key learnings and provide a downloadable checklist for auditing current marketing campaigns."
+            }
+          ],
+          "cta": "Comment 'GROWTH' below to get our complete 2024 Digital Marketing Audit Checklist sent directly to your DMs."
+        },
+        "metadata": {
+          "tool": "daily-content-planner",
+          "executionTime": 2546
+        }
+      }
+    },
+    "reel-script-builder": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "reel-script-builder",
+        "result": {
+          "hook": "Stop scrolling right now if you want to know the biggest secret no one is telling you!",
+          "body": "In the next 20 seconds, your entire perspective is about to flip. Most people think success is a straight line, but it is actually a chaotic loop of failing fast, learning instantly, and doubling down on what works. Look at this pattern—every single viral trend, every massive breakthrough, follows this exact three-step blueprint. You spot the gap, you move at lightning speed, and you refuse to look back.",
+          "cta": "Hit that follow button right now or you'll miss the next big update!",
+          "timestamps": [
+            {
+              "time": "00:00 - 00:03",
+              "action": "Visual: Fast zoom-in on creator pointing aggressively at the camera. Audio: Loud whoosh sound effect, upbeat energetic background beat drops."
+            },
+            {
+              "time": "00:03 - 00:10",
+              "action": "Visual: Rapid-fire B-roll cuts, text overlays flashing keywords like 'SECRET' and 'PERSPECTIVE'. Audio: Quick rhythmic drum beat."
+            },
+            {
+              "time": "00:10 - 00:20",
+              "action": "Visual: Dynamic hand gestures, screen recording of a fast-moving chart or viral graph. Audio: Rising pitch riser sound effect."
+            },
+            {
+              "time": "00:20 - 00:27",
+              "action": "Visual: Creator leaning in close, pointing down toward the caption/follow button. Audio: Satisfying pop sound effect."
+            },
+            {
+              "time": "00:27 - 00:30",
+              "action": "Visual: End screen graphic with a glowing follow button animation. Audio: Outro beat resolves with a snap."
+            }
+          ]
+        },
+        "metadata": {
+          "tool": "reel-script-builder",
+          "executionTime": 2208
+        }
+      }
+    },
+    "clip-finder": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "clip-finder",
+        "result": {
+          "clips": [
+            {
+              "title": "Empty Transcript",
+              "startTimestamp": "00:00",
+              "endTimestamp": "00:00",
+              "hook": "No content provided",
+              "reason": "The provided transcript is empty, so no viral moments could be identified.",
+              "caption": "Please provide a valid transcript to generate clips! 🎥"
+            }
+          ]
+        },
+        "metadata": {
+          "tool": "clip-finder",
+          "executionTime": 1129
+        }
+      }
+    },
+    "thumbnail-ideator": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "thumbnail-ideator",
+        "result": {
+          "concepts": [
+            {
+              "visualConcept": "A confused creator staring blankly at a glowing computer screen displaying error messages.",
+              "thumbnailText": "JUST A TEST",
+              "composition": "Close-up shot of the creator on the right third, text on the left in bold yellow font, screen glow illuminating the face.",
+              "emotion": "Curiosity and humor",
+              "background": "A dimly lit modern desk setup with out-of-focus RGB lighting."
+            }
+          ]
+        },
+        "metadata": {
+          "tool": "thumbnail-ideator",
+          "executionTime": 1217
+        }
+      }
+    },
+    "caption-assistant": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "caption-assistant",
+        "result": {
+          "caption": "Let’s be real for a second—how often do we overthink the little things instead of just hitting publish? 💭✨\n\nSometimes, you just need to put it out there and see what happens. This right here is your friendly reminder to stop waiting for perfection and start embracing the process. \n\nDrop a 👇 if you needed to hear this today!",
+          "hashtags": [
+            "#testcontent",
+            "#creativelife",
+            "#growthmindset",
+            "#keepgoing",
+            "#contentcreator"
+          ]
+        },
+        "metadata": {
+          "tool": "caption-assistant",
+          "executionTime": 1232
+        }
+      }
+    },
+    "cta-generator": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "cta-generator",
+        "result": {
+          "ctas": [
+            {
+              "type": "Value-Exchange",
+              "text": "Want the exact steps? Drop a 'READY' in the comments and I'll automagically slide the full guide straight to your DMs."
+            },
+            {
+              "type": "Curiosity Gap",
+              "text": "Comment 'SECRET' below and I'll send you the exact template I used for this right to your inbox."
+            },
+            {
+              "type": "Speed/Shortcut",
+              "text": "Stop guessing. Comment 'SEND' and I'll DM you the plug-and-play checklist instantly."
+            },
+            {
+              "type": "Direct Benefit",
+              "text": "Want this sent directly to you? Type 'INFO' in the comments and my automation will deliver it in seconds."
+            },
+            {
+              "type": "FOMO",
+              "text": "I'm sending this out to everyone who comments 'GUIDE' in the next 24 hours. Drop your word below!"
+            }
+          ]
+        },
+        "metadata": {
+          "tool": "cta-generator",
+          "executionTime": 1495
+        }
+      }
+    },
+    "comment-analyzer": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "comment-analyzer",
+        "result": {
+          "sentiment": {
+            "positive": "0%",
+            "negative": "0%",
+            "neutral": "100%"
+          },
+          "themes": [],
+          "questions": [],
+          "complaints": [],
+          "opportunities": []
+        },
+        "metadata": {
+          "tool": "comment-analyzer",
+          "executionTime": 884
+        }
+      }
+    },
+    "comment-to-content": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "comment-to-content",
+        "result": {
+          "ideas": [
+            {
+              "idea": "How to handle zero comments on your posts",
+              "format": "Short",
+              "sourceComment": "No comments provided",
+              "reason": "Addresses a universal pain point for creators, driving high engagement and relatability."
+            }
+          ]
+        },
+        "metadata": {
+          "tool": "comment-to-content",
+          "executionTime": 1141
+        }
+      }
+    },
+    "creator-research-assistant": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "creator-research-assistant",
+        "result": {
+          "keyFacts": [
+            "Content testing is a standard methodology used by digital creators to evaluate thumbnail, headline, and hook performance before full production.",
+            "A/B testing and split testing on platforms like YouTube and Twitter help optimize click-through rates (CTR) and audience retention.",
+            "Specific metrics such as average view duration and initial drop-off points require verification against current platform algorithm updates."
+          ],
+          "concepts": [
+            "Iterative content design",
+            "Data-driven audience feedback loops",
+            "Micro-testing and rapid prototyping"
+          ],
+          "angles": [
+            "How to stop guessing and start testing your content ideas like a top 1% creator",
+            "The minimalist content testing framework that saves hours of wasted editing time"
+          ],
+          "questions": [
+            "What are the best tools for creators to A/B test thumbnails and hooks?",
+            "How large does an audience need to be to get statistically significant results from a content test?"
+          ],
+          "sources": [
+            "Standard digital marketing and creator economy best practices; platform-specific metrics require verification against current terms of service."
+          ],
+          "contentStructure": [
+            "The Problem: Why creators waste time making content nobody watches",
+            "The Solution: The core principles of content testing",
+            "Step-by-Step Framework: How to run your first test",
+            "Analyzing Data: What the metrics actually mean",
+            "Actionable Next Steps"
+          ]
+        },
+        "metadata": {
+          "tool": "creator-research-assistant",
+          "executionTime": 1875
+        }
+      }
+    },
+    "voice-replicator": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "voice-replicator",
+        "result": {
+          "styleAnalysis": {
+            "tone": "Direct, analytical, and pragmatic",
+            "vocabulary": "Concise, modern, and performance-oriented",
+            "sentenceStyle": "Punchy and balanced, using short statements for emphasis",
+            "hookStyle": "Presents a clear dichotomy or foundational truth",
+            "ctaStyle": "Leaves the reader with a thought-provoking takeaway"
+          },
+          "generatedContent": "Intensity makes headlines. Consistency makes habits.\n\nEveryone loves the 5 AM marathon sessions and the all-nighter sprints. They feel heroic.\n\nBut heroism doesn't build long-term results. Routine does.\n\nShowing up for twenty minutes every single day will always beat showing up for five hours once a month.\n\nStop waiting for the burst of motivation. Build the system instead."
+        },
+        "metadata": {
+          "tool": "voice-replicator",
+          "executionTime": 1710
+        }
+      }
+    },
+    "podcast-assistant": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "podcast-assistant",
+        "result": {
+          "title": "Silence and Space: The Art of the Unspoken",
+          "description": "In this episode, we explore the profound impact of silence in communication, creativity, and daily life. Discover how leaving room for the unspoken can transform your relationships and unlock new levels of focus.",
+          "chapters": [
+            {
+              "timestamp": "00:00",
+              "title": "Introduction: The Power of Quiet"
+            },
+            {
+              "timestamp": "05:15",
+              "title": "Why We Fear Silence in Conversation"
+            },
+            {
+              "timestamp": "12:30",
+              "title": "Creativity and the Need for Mental White Space"
+            },
+            {
+              "timestamp": "22:45",
+              "title": "Practical Exercises for Embracing Stillness"
+            },
+            {
+              "timestamp": "30:00",
+              "title": "Final Thoughts and Outro"
+            }
+          ],
+          "highlights": [
+            "Silence is not an empty space; it is the canvas upon which communication is painted.",
+            "The discomfort we feel in silence is often just our ego demanding to be heard.",
+            "True creativity requires periods of unstructured, unstimulated thought."
+          ],
+          "keyTakeaways": [
+            "Allowing a three-second pause after someone finishes speaking dramatically improves the quality of your response.",
+            "Constant digital stimulation starves the brain of the recovery time it needs to solve complex problems.",
+            "Intentional silence in relationships builds deeper trust and psychological safety."
+          ],
+          "socialPosts": [
+            "Are you terrified of awkward silences? You might be missing out on the most powerful tool in communication. Listen to our latest episode to find out why. #Podcast #CommunicationSkills #Mindfulness",
+            "Creativity doesn't happen in the noise; it happens in the margins. How much white space are you giving your brain today? Tune in now! #Creativity #MentalHealth #Focus"
+          ]
+        },
+        "metadata": {
+          "tool": "podcast-assistant",
+          "executionTime": 2606
+        }
+      }
+    },
+    "creator-workspace": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "creator-workspace",
+        "result": {
+          "currentStage": "Ideation",
+          "nextSteps": [
+            "Define the core concept and target audience based on the raw notes",
+            "Identify key topics to research for the content"
+          ],
+          "generatedAsset": "No asset generated yet as raw notes, research, and script inputs are empty.",
+          "missingContext": "Please provide your initial idea, raw notes, or topic to kick off the production brief."
+        },
+        "metadata": {
+          "tool": "creator-workspace",
+          "executionTime": 1071
+        }
+      }
+    },
+    "content-recycler": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "content-recycler",
+        "result": {
+          "recommendations": [
+            {
+              "content": "Why Everything You Know About This Topic is Wrong (Data from 2026)",
+              "action": "Invert",
+              "reason": "Challenging established norms triggers high engagement and curiosity in current feeds.",
+              "newFormat": "Long-form essay"
+            }
+          ]
+        },
+        "metadata": {
+          "tool": "content-recycler",
+          "executionTime": 1226
+        }
+      }
+    },
+    "brand-pitch-builder": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "tool": "brand-pitch-builder",
+        "result": {
+          "pitch": "Subject: Partnership Idea: Scaling [Brand Info] with [Creator Profile]’s High-Intent Audience\n\nHi [Brand Contact Name],\n\nI’ve been following [Brand Info]’s recent push in the [Industry/Niche] space, and I’m genuinely obsessed with how you're approaching [Specific Product/Feature]. \n\nI’m [Creator Name], a content creator specializing in [Niche/Content Style]. Over the past [X] years, I’ve built an engaged community of [X] million passionate followers across [Platforms] who constantly look to me for recommendations in the [Category] space—specifically, [Target Audience Pain Point].\n\nYour upcoming [Campaign Info] initiative is a natural fit for my audience. My community doesn't just watch; they take action. In fact, my recent campaign with [Past Brand/Benchmark] drove a [X]% conversion rate and generated [X] impressions by integrating the product naturally into a [Specific Content Format, e.g., Day-in-the-Life vlog].\n\nI have a concept for [Campaign Info] that I know will resonate deeply with my viewers: an authentic, narrative-driven campaign showcasing how [Brand Info] solves [Specific Problem] in real-time.\n\nI’d love to send over a brief custom proposal detailing how we can drive measurable ROI for [Brand Info] this quarter. Do you have 10 minutes next Tuesday for a quick chat?\n\nBest,\n[Creator Name]",
+          "proposal": "A high-impact, multi-platform campaign integrating [Brand Info] into [Creator Profile]'s core content pillars, designed to drive brand awareness, engagement, and direct conversions through trackable links and exclusive promo codes.",
+          "deliverables": [
+            "1x Dedicated YouTube Video Integration (60-90 seconds) with custom CTA and pinned comment",
+            "3x Instagram/TikTok Reels showcasing product utility in native, high-retention formats",
+            "5x Instagram/TikTok Stories with direct swipe-up/sticker links and interactive poll"
+          ],
+          "valueProposition": "This partnership bridges the gap between [Brand Info]'s target acquisition goals and [Creator Profile]'s highly trusted audience authority, resulting in authentic advocacy that drastically lowers customer acquisition costs (CAC) compared to traditional paid social.",
+          "followUp": "Send a polite, value-add follow-up 3 business days post-pitch. Include a fresh piece of audience demographic data or a quick mock-up concept to spark immediate interest."
+        },
+        "metadata": {
+          "tool": "brand-pitch-builder",
+          "executionTime": 3592
+        }
+      }
+    },
+    "ai-content-director": {
+      "status": 500,
+      "data": {
+        "success": false,
+        "tool": "ai-content-director",
+        "error": {
+          "code": "500",
+          "message": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 58.1547222s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"58s\"}]"
+        }
+      }
+    },
+    "creator-second-brain": {
+      "status": 500,
+      "data": {
+        "success": false,
+        "tool": "creator-second-brain",
+        "error": {
+          "code": "500",
+          "message": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 57.840714145s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"57s\"}]"
+        }
+      }
+    },
+    "ai-screenplay-workspace": {
+      "status": 500,
+      "data": {
+        "success": false,
+        "tool": "ai-screenplay-workspace",
+        "error": {
+          "code": "500",
+          "message": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 57.512749621s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"57s\"}]"
+        }
+      }
+    },
+    "autonomous-content-pipeline": {
+      "status": 500,
+      "data": {
+        "success": false,
+        "tool": "autonomous-content-pipeline",
+        "error": {
+          "code": "500",
+          "message": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 57.190963642s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-3.5-flash-lite\",\"location\":\"global\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"57s\"}]"
+        }
+      }
+    },
+    "ai-creative-producer": {
+      "status": 500,
+      "data": {
+        "success": false,
+        "tool": "ai-creative-producer",
+        "error": {
+          "code": "500",
+          "message": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 56.870220282s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-3.5-flash-lite\",\"location\":\"global\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"56s\"}]"
+        }
+      }
+    }
+  },
+  "workflows": {
+    "ai-content-director": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "workflow": "ai-content-director",
+        "steps": [
+          {
+            "tool": "creator-research-assistant",
+            "status": "failed",
+            "error": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 56.537107868s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"56s\"}]"
+          }
+        ],
+        "finalResult": {
+          "topic": "test content"
+        }
+      }
+    },
+    "autonomous-content-pipeline": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "workflow": "autonomous-content-pipeline",
+        "steps": [
+          {
+            "tool": "content-idea-generator",
+            "status": "failed",
+            "error": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 56.198505744s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"56s\"}]"
+          }
+        ],
+        "finalResult": {
+          "topic": "test content"
+        }
+      }
+    },
+    "ai-creative-producer": {
+      "status": 200,
+      "data": {
+        "success": true,
+        "workflow": "ai-creative-producer",
+        "steps": [
+          {
+            "tool": "ai-content-director",
+            "status": "failed",
+            "error": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 55.893740274s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"55s\"}]"
+          }
+        ],
+        "finalResult": {
+          "topic": "test content"
+        }
+      }
+    }
+  }
+}

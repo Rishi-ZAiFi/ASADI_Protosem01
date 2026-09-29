@@ -12,12 +12,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@langchain/core": "^1.2.13",
+    "@langchain/google-genai": "^2.3.2",
     "clsx": "^2.1.1",
     "cors": "^2.8.6",
     "dotenv": "^18.0.4",
     "express": "^5.2.1",
+    "langchain": "^1.5.14",
+    "langsmith": "^0.10.5",
     "lucide-react": "^1.48.0",
-    "openai": "^7.23.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "tailwind-merge": "^3.7.0"

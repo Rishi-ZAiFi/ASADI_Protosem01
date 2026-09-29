@@ -178,16 +178,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ systemStatus, onRefr
 
           <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
             <div className="flex items-center gap-3 text-xs text-slate-400">
-              <a
-                href="https://aistudio.google.com/app/apikey"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-purple-300 underline flex items-center gap-1"
-              >
-                <span>Get free Gemini API Key</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-              <span>•</span>
+
               <a
                 href="https://platform.openai.com/api-keys"
                 target="_blank"

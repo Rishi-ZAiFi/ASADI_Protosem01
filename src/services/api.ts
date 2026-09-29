@@ -32,17 +32,66 @@ export async function generateAI(
   inputs: Record<string, any>,
   apiKeyOverride?: string
 ): Promise<{ success: boolean; data: { raw: string; parsed?: any; modelUsed: string; provider: string; isMock: boolean }; durationMs: number }> {
-  const res = await fetch(`${API_BASE}/ai/generate`, {
+  const workflows = ['ai-content-director', 'autonomous-content-pipeline', 'ai-creative-producer']
+  const isWorkflow = workflows.includes(toolId)
+  
+  const endpoint = isWorkflow ? '/agent/workflow' : '/agent/run'
+  const bodyPayload = isWorkflow ? { workflow: toolId, input: inputs } : { tool: toolId, input: inputs }
+
+  const res = await fetch(`${API_BASE}${endpoint}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ toolId, inputs, apiKeyOverride }),
+    body: JSON.stringify(bodyPayload),
   })
 
   const payload = await res.json()
   if (!res.ok || !payload.success) {
-    throw new Error(payload.error || 'AI generation failed')
+    throw new Error(payload.error?.message || payload.error || 'AI generation failed')
   }
-  return payload
+  
+  let resultPayload = isWorkflow ? payload.finalResult : payload.result
+  let displayRaw = JSON.stringify(resultPayload, null, 2)
+  
+  if (isWorkflow && payload.steps) {
+    displayRaw = payload.steps.map((step: any) => {
+      const stepTitle = step.tool.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
+      const stepContent = typeof step.result === 'object' ? JSON.stringify(step.result, null, 2) : String(step.result)
+      return `### ${stepTitle}\n${stepContent}`
+    }).join('\n\n')
+  } else if (toolId !== 'content-idea-generator' && resultPayload) {
+    displayRaw = Object.entries(resultPayload)
+      .map(([key, val]) => {
+        const title = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => (str as string).toUpperCase())
+        if (Array.isArray(val)) {
+          return `### ${title}\n` + val.map(v => (typeof v === 'object' ? JSON.stringify(v, null, 2) : `- ${v}`)).join('\n')
+        } else if (typeof val === 'object' && val !== null) {
+          return `### ${title}\n${JSON.stringify(val, null, 2)}`
+        }
+        return `### ${title}\n${val}`
+      })
+      .join('\n\n')
+  }
+
+  let parsedData = resultPayload || {}
+  if (toolId === 'content-idea-generator') {
+    parsedData = Array.isArray(resultPayload?.ideas)
+      ? resultPayload.ideas
+      : Array.isArray(resultPayload)
+      ? resultPayload
+      : []
+  }
+  
+  return {
+    success: true,
+    data: {
+      raw: displayRaw,
+      parsed: parsedData,
+      modelUsed: 'langchain-orchestrated',
+      provider: 'openai',
+      isMock: false
+    },
+    durationMs: payload.metadata?.executionTime || 0
+  }
 }
 
 export async function getSavedIdeas(): Promise<IdeaItem[]> {

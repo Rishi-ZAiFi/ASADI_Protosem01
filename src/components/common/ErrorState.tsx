@@ -11,8 +11,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({ error, onRetry, onOpenSe
   const isKeyError =
     error.toLowerCase().includes('api key') ||
     error.toLowerCase().includes('401') ||
-    error.toLowerCase().includes('gemini_api_key') ||
-    error.toLowerCase().includes('openai_api_key')
+    error.toLowerCase().includes('gemini_api_key')
 
   return (
     <div className="glass-panel rounded-2xl p-6 md:p-8 border border-red-500/30 bg-red-950/10 my-4 relative overflow-hidden">
@@ -35,10 +34,10 @@ export const ErrorState: React.FC<ErrorStateProps> = ({ error, onRetry, onOpenSe
               </p>
               <ul className="list-disc list-inside space-y-1 text-slate-400">
                 <li>
-                  Add <code className="text-purple-300 bg-purple-950/40 px-1 py-0.5 rounded">OPENAI_API_KEY</code> to your{' '}
+                  Add <code className="text-purple-300 bg-purple-950/40 px-1 py-0.5 rounded">GEMINI_API_KEY</code> to your{' '}
                   <span className="text-slate-200 font-mono">.env</span> file.
                 </li>
-                <li>Or go directly to the Settings page in CreatorOS to enter and save your OpenAI key securely.</li>
+                <li>Or go directly to the Settings page in CreatorOS to enter and save your Gemini key securely.</li>
               </ul>
             </div>
           )}

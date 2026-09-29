@@ -1,15 +1,15 @@
+import './setupEnv.js'
 import express from 'express'
 import cors from 'cors'
-import dotenv from 'dotenv'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { generateAI, isOpenAIConfigured, getOpenAIModel } from '../backend/services/openaiService.js'
+import { traceable } from 'langsmith/traceable'
+import { generateAI, isGeminiConfigured as isAIConfigured, getGeminiModel as getAIModel } from '../backend/services/geminiService.js'
 import { db } from './db.js'
-import { TOOLS_CONFIG, buildPromptForTool } from './prompts.js'
-
-dotenv.config()
-
+import { TOOLS_CONFIG } from './prompts.js'
+import { buildPromptForTool } from '../backend/config/toolPrompts.js'
+import { executeApiCallAgent, executeWorkflowAgent } from '../backend/agents/apiCallAgent.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -26,8 +26,8 @@ app.use(express.json({ limit: '10mb' }))
  */
 app.get('/api/ai/status', (_req, res) => {
   res.json({
-    configured: isOpenAIConfigured(),
-    provider: 'openai',
+    configured: isAIConfigured(),
+    provider: 'gemini',
   })
 })
 
@@ -36,19 +36,19 @@ app.get('/api/ai/status', (_req, res) => {
  * Overall system status & diagnostics
  */
 app.get('/api/status', (_req, res) => {
-  const configured = isOpenAIConfigured()
-  const key = process.env.OPENAI_API_KEY?.trim() || ''
+  const configured = isAIConfigured()
+  const key = process.env.GEMINI_API_KEY?.trim() || ''
 
   res.json({
     status: 'online',
     configured,
-    provider: 'openai',
-    model: getOpenAIModel(),
+    provider: 'gemini',
+    model: getAIModel(),
     ai: {
       hasKey: configured,
-      provider: 'openai',
+      provider: 'gemini',
       maskedKey: configured && key.length > 8 ? `${key.slice(0, 4)}...${key.slice(-4)}` : null,
-      model: getOpenAIModel(),
+      model: getAIModel(),
     },
     stats: db.getStats(),
   })
@@ -63,129 +63,63 @@ app.get('/api/tools', (_req, res) => {
 })
 
 /**
- * POST /api/ai/generate
- * Centralized OpenAI generation endpoint.
- * Supports:
- *  1. Generic request: { systemPrompt, userPrompt, responseFormat }
- *  2. Tool-based request: { toolId, inputs }
+ * POST /api/agent/run
+ * Central API Call Agent endpoint for individual tools
  */
-app.post('/api/ai/generate', async (req, res) => {
-  const startTime = Date.now()
-  const { systemPrompt, userPrompt, responseFormat, toolId, inputs } = req.body
+app.post('/api/agent/run', async (req, res) => {
+  const handleCreatorOSRequest = traceable(async (toolName: string, inputData: any) => {
+    return await executeApiCallAgent(toolName, inputData)
+  }, { name: "CreatorOS Request" })
 
-  try {
-    // 1. Generic request path
-    if (systemPrompt && userPrompt) {
-      const result = await generateAI({
-        systemPrompt: String(systemPrompt),
-        userPrompt: String(userPrompt),
-        responseFormat: responseFormat === 'json' ? 'json' : 'text',
-      })
-
-      const durationMs = Date.now() - startTime
-      return res.json({
-        success: true,
-        data: result.data || result.raw,
-        raw: result.raw,
-        model: result.model,
-        provider: 'openai',
-        durationMs,
-      })
-    }
-
-    // 2. Tool-based request path (All 22 tools)
-    if (toolId) {
-      const toolConfig = TOOLS_CONFIG.find(t => t.id === toolId)
-      if (!toolConfig) {
-        return res.status(400).json({
-          success: false,
-          error: `Tool "${toolId}" is not recognized.`,
-        })
-      }
-
-      const isJsonFormat = toolId === 'content-idea-generator'
-      const { systemPrompt: generatedSystemPrompt, userPrompt: generatedUserPrompt } = buildPromptForTool(toolId, inputs || {})
-
-      const result = await generateAI({
-        systemPrompt: generatedSystemPrompt,
-        userPrompt: generatedUserPrompt,
-        responseFormat: isJsonFormat ? 'json' : 'text',
-      })
-
-      const durationMs = Date.now() - startTime
-
-      let parsedData = null
-      if (isJsonFormat) {
-        parsedData = Array.isArray(result.data?.ideas)
-          ? result.data.ideas
-          : Array.isArray(result.data)
-          ? result.data
-          : []
-      }
-
-      // Record generation into database history
-      db.addHistory({
-        toolId: toolId,
-        toolName: toolConfig.name,
-        promptSummary: `Generated output for ${toolConfig.name}`,
-        durationMs,
-        status: 'success',
-      })
-
-      return res.json({
-        success: true,
-        ideas: parsedData, // Backward compatibility for specific tools
-        data: {
-          raw: result.raw,
-          parsed: parsedData,
-          modelUsed: result.model,
-          provider: 'openai',
-          isMock: false,
-        },
-        durationMs,
-      })
-    }
-
-    // Input validation failure
-    return res.status(400).json({
-      success: false,
-      error: 'Invalid request. Provide either { systemPrompt, userPrompt } or { toolId, inputs }.',
+  const { tool, input } = req.body
+  const result = await handleCreatorOSRequest(tool, input || {})
+  
+  // Record generation into database history if successful
+  if (result.success && tool) {
+    const toolConfig = TOOLS_CONFIG.find(t => t.id === tool)
+    db.addHistory({
+      toolId: tool,
+      toolName: toolConfig?.name || tool,
+      promptSummary: `Generated output via API Call Agent`,
+      durationMs: result.metadata?.executionTime || 0,
+      status: 'success',
     })
-  } catch (err: any) {
-    const durationMs = Date.now() - startTime
-
-    // Record error in database history if toolId was supplied
-    if (toolId) {
-      db.addHistory({
-        toolId: String(toolId),
-        toolName: 'Content Idea Generator',
-        promptSummary: 'Failed generation request',
-        durationMs,
-        status: 'error',
-      })
-    }
-
-    const safeMessage = err?.message || 'An error occurred during AI generation.'
-    const isClientConfigError = safeMessage.includes('OPENAI_API_KEY is not configured') || safeMessage.includes('Invalid request')
-    const statusCode = isClientConfigError ? 400 : 500
-
-    return res.status(statusCode).json({
-      success: false,
-      error: safeMessage,
-      durationMs,
+  } else if (!result.success && tool) {
+    db.addHistory({
+      toolId: tool,
+      toolName: tool,
+      promptSummary: 'Failed API Agent request',
+      durationMs: 0,
+      status: 'error',
     })
   }
+  
+  return res.status(result.success ? 200 : (parseInt(result.error?.code) || 500)).json(result)
+})
+
+/**
+ * POST /api/agent/workflow
+ * Central API Call Agent endpoint for multi-tool orchestration
+ */
+app.post('/api/agent/workflow', async (req, res) => {
+  const handleCreatorOSWorkflowRequest = traceable(async (workflowName: string, inputData: any) => {
+    return await executeWorkflowAgent(workflowName, inputData)
+  }, { name: "CreatorOS Request" })
+
+  const { workflow, input } = req.body
+  const result = await handleCreatorOSWorkflowRequest(workflow, input || {})
+  return res.status(result.success ? 200 : 500).json(result)
 })
 
 /**
  * POST /api/settings/key
- * Update OPENAI_API_KEY dynamically and persist to .env
+ * Update GEMINI_API_KEY dynamically and persist to .env
  */
 app.post('/api/settings/key', (req, res) => {
   const { apiKey } = req.body
   if (typeof apiKey === 'string') {
     const cleanKey = apiKey.trim()
-    process.env.OPENAI_API_KEY = cleanKey
+    process.env.GEMINI_API_KEY = cleanKey
 
     try {
       const envPath = path.join(__dirname, '..', '.env')
@@ -194,10 +128,10 @@ app.post('/api/settings/key', (req, res) => {
         envContent = fs.readFileSync(envPath, 'utf-8')
       }
 
-      if (/OPENAI_API_KEY=.*/.test(envContent)) {
-        envContent = envContent.replace(/OPENAI_API_KEY=.*/, `OPENAI_API_KEY=${cleanKey}`)
+      if (/GEMINI_API_KEY=.*/.test(envContent)) {
+        envContent = envContent.replace(/GEMINI_API_KEY=.*/, `GEMINI_API_KEY=${cleanKey}`)
       } else {
-        envContent += `\nOPENAI_API_KEY=${cleanKey}`
+        envContent += `\nGEMINI_API_KEY=${cleanKey}`
       }
 
       fs.writeFileSync(envPath, envContent.trim() + '\n', 'utf-8')
@@ -207,8 +141,8 @@ app.post('/api/settings/key', (req, res) => {
 
     return res.json({
       success: true,
-      configured: isOpenAIConfigured(),
-      provider: 'openai',
+      configured: isAIConfigured(),
+      provider: 'gemini',
     })
   }
 

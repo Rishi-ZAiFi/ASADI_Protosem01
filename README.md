@@ -53,7 +53,7 @@ The platform organizes all 22 AI creator modules into 4 distinct workflows:
 - **Frontend:** React 19, TypeScript, Tailwind CSS, Lucide Icons, Vite
 - **Backend Server:** Node.js, Express, TypeScript (`tsx`)
 - **AI Engine:**
-  - OpenAI API (`gpt-4o-mini` / configurable)
+  - Gemini API (`gemini-3.5-flash-lite` / configurable)
   - Google Gemini API integration ready
   - Resilient mock response generator for offline testing or without API credentials
 - **State & Storage:** Local persistent JSON storage and reactive UI state
@@ -84,8 +84,8 @@ cp .env.example .env
 Inside `.env`:
 ```env
 PORT=5000
-OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_MODEL=gpt-4o-mini
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-3.5-flash-lite
 ```
 *(Note: If no API key is provided, CreatorOS automatically falls back to high-fidelity structured generation so all 22 tools remain 100% interactive and testable).*
 

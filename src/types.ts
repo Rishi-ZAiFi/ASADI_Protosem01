@@ -61,7 +61,7 @@ export interface SystemStatus {
   status: string
   ai: {
     hasKey: boolean
-    provider: 'gemini' | 'openai'
+    provider: 'openai'
     maskedKey: string | null
     model: string
   }
