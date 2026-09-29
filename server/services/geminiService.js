@@ -251,3 +251,57 @@ export async function evaluateContentWithGemini({ content, format, topic, audien
     timestamp: result.timestamp,
   };
 }
+
+/**
+ * Autonomous Multi-Agent Chain Pipeline
+ * Sequentially chains: Agent 1 (Trend Scout) ➔ Agent 2 (Script Builder) ➔ Agent 3 (Content Critic)
+ */
+export async function runAutonomousChain({ niche, format = 'Instagram Reel', audience, tone, apiKeyOverride }) {
+  // Step 1: Agent 1 Trend Scout
+  const scoutResult = await scoutTrendsWithGemini({
+    niche: niche || 'Digital Growth & AI',
+    platform: format,
+    audience: audience || 'Content Creators & Entrepreneurs',
+    apiKeyOverride,
+  });
+
+  const topTrend = scoutResult.trends?.[0] || {
+    title: niche || 'Content Creation Shift',
+    suggestedAngle: 'Break down how to dominate this trend right now.',
+  };
+
+  const chainedTopic = `${topTrend.title}: ${topTrend.suggestedAngle}`;
+
+  // Step 2: Agent 2 Script Builder
+  const scriptResult = await generateWithGemini({
+    topic: chainedTopic,
+    format,
+    audience: audience || 'Content Creators & Entrepreneurs',
+    tone: tone || 'Engaging',
+    apiKeyOverride,
+  });
+
+  // Step 3: Agent 3 Content Critic & Evaluator
+  const evaluationResult = await evaluateContentWithGemini({
+    content: scriptResult.content,
+    format,
+    topic: chainedTopic,
+    audience: audience || 'Content Creators & Entrepreneurs',
+    tone: tone || 'Engaging',
+    apiKeyOverride,
+  });
+
+  return {
+    pipeline: '3-Agent Autonomous Sequential Chain',
+    trend: topTrend,
+    topic: chainedTopic,
+    format,
+    audience: audience || 'Content Creators & Entrepreneurs',
+    tone: tone || 'Engaging',
+    content: scriptResult.content,
+    evaluation: evaluationResult.evaluation,
+    model: scriptResult.model,
+    timestamp: new Date().toISOString(),
+  };
+}
+

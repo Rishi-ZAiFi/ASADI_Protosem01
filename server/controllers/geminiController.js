@@ -2,6 +2,7 @@ import {
   generateWithGemini,
   scoutTrendsWithGemini,
   evaluateContentWithGemini,
+  runAutonomousChain,
 } from '../services/geminiService.js';
 
 /**
@@ -122,6 +123,36 @@ export async function handleContentEvaluation(req, res) {
       success: false,
       error: error.code || 'EVALUATION_FAILED',
       message: error.message || 'An unexpected error occurred during content evaluation.',
+    });
+  }
+}
+
+/**
+ * Controller for Autonomous 3-Agent Sequential Chain
+ * Agent 1 ➔ Agent 2 ➔ Agent 3
+ */
+export async function handleAutonomousChain(req, res) {
+  try {
+    const { niche, format, audience, tone, apiKey } = req.body;
+
+    const result = await runAutonomousChain({
+      niche: niche ? niche.trim() : 'Digital Creators & AI',
+      format: format ? format.trim() : 'Instagram Reel',
+      audience: audience ? audience.trim() : 'Content Creators & Entrepreneurs',
+      tone: tone ? tone.trim() : 'Engaging',
+      apiKeyOverride: apiKey,
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    const statusCode = error.statusCode || 500;
+    return res.status(statusCode).json({
+      success: false,
+      error: error.code || 'CHAIN_FAILED',
+      message: error.message || 'An unexpected error occurred during autonomous chaining.',
     });
   }
 }

@@ -137,3 +137,44 @@ export async function evaluateContent({
     throw error;
   }
 }
+
+/**
+ * Autonomous 3-Agent Sequential Chain:
+ * Agent 1 (Trend Scout) ➔ Agent 2 (Script Builder) ➔ Agent 3 (Content Critic)
+ */
+export async function runAutonomousChain({
+  niche,
+  format,
+  audience,
+  tone,
+  apiKey,
+}) {
+  const endpoint = `${API_BASE_URL}/api/gemini/chain`;
+
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ niche, format, audience, tone, apiKey }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      const error = new Error(data.message || 'Autonomous chain failed.');
+      error.code = data.error || 'CHAIN_FAILED';
+      throw error;
+    }
+
+    return data.data;
+  } catch (error) {
+    if (!error.code) {
+      error.message = 'Failed to connect to backend server for Autonomous Chain.';
+      error.code = 'NETWORK_ERROR';
+    }
+    throw error;
+  }
+}
+

@@ -22,7 +22,7 @@ import {
   Lightbulb,
   ArrowRight,
 } from 'lucide-react';
-import { generateContent, evaluateContent } from '../services/api';
+import { generateContent, evaluateContent, runAutonomousChain } from '../services/api';
 import FormatBadge from '../components/FormatBadge';
 
 export default function AiStudio({
@@ -50,6 +50,10 @@ export default function AiStudio({
   const [evaluationResult, setEvaluationResult] = useState(null);
   const [showEvaluationModal, setShowEvaluationModal] = useState(false);
   const [evaluationError, setEvaluationError] = useState(null);
+
+  // Autonomous Chain Pipeline State (Agent 1 ➔ Agent 2 ➔ Agent 3)
+  const [isRunningChain, setIsRunningChain] = useState(false);
+  const [chainStep, setChainStep] = useState(0); // 0: idle, 1: scout, 2: script, 3: evaluate
 
   // Initialize from preferences or location state (from Trend Radar or Dashboard)
   useEffect(() => {
@@ -179,6 +183,66 @@ export default function AiStudio({
     addToast('Optimized hook applied to your script!', 'success');
   };
 
+  // Handler for 1-Click Autonomous Multi-Agent Chain Pipeline
+  const handleRunAutonomousChain = async () => {
+    setIsRunningChain(true);
+    setIsGenerating(true);
+    setErrorState(null);
+    setHasSavedCurrent(false);
+    setEvaluationResult(null);
+    setChainStep(1); // Step 1: Agent 1 Trend Scout
+
+    const t1 = setTimeout(() => setChainStep(2), 2500); // Visual step progress
+    const t2 = setTimeout(() => setChainStep(3), 6000);
+
+    try {
+      const chainData = await runAutonomousChain({
+        niche: topic.trim() || 'AI Tools & Productivity Growth',
+        format,
+        audience,
+        tone,
+      });
+
+      clearTimeout(t1);
+      clearTimeout(t2);
+
+      if (chainData) {
+        if (chainData.topic) setTopic(chainData.topic);
+
+        setGeneratedResult({
+          topic: chainData.topic,
+          format: chainData.format,
+          audience: chainData.audience,
+          tone: chainData.tone,
+          content: chainData.content,
+          provider: 'gemini',
+          model: chainData.model || 'gemini-3.5-flash-lite',
+          agent: '3-Agent Autonomous Chain',
+          timestamp: chainData.timestamp,
+        });
+
+        if (chainData.evaluation) {
+          setEvaluationResult(chainData.evaluation);
+        }
+
+        addToast('Autonomous 3-Agent Chain completed successfully!', 'success');
+      }
+    } catch (err) {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      console.error('Autonomous Chain Error:', err);
+      setErrorState({
+        title: 'Autonomous Chain Failed',
+        message: err.message,
+      });
+      addToast(err.message || 'Chain execution failed', 'error');
+    } finally {
+      setIsRunningChain(false);
+      setIsGenerating(false);
+      setChainStep(0);
+    }
+  };
+
   const handleSave = () => {
     if (!generatedResult) return;
     onSaveContent({
@@ -242,6 +306,7 @@ export default function AiStudio({
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+          {/* Agent 1 Step */}
           <div
             style={{
               display: 'flex',
@@ -250,18 +315,29 @@ export default function AiStudio({
               fontSize: '0.76rem',
               padding: '0.3rem 0.65rem',
               borderRadius: '999px',
-              backgroundColor: 'rgba(6, 182, 212, 0.1)',
-              border: '1px solid rgba(6, 182, 212, 0.25)',
+              backgroundColor: isRunningChain && chainStep === 1
+                ? 'rgba(6, 182, 212, 0.25)'
+                : 'rgba(6, 182, 212, 0.1)',
+              border: isRunningChain && chainStep === 1
+                ? '1px solid var(--accent-cyan)'
+                : '1px solid rgba(6, 182, 212, 0.25)',
               color: 'var(--accent-cyan)',
-              fontWeight: 500,
+              fontWeight: isRunningChain && chainStep === 1 ? 700 : 500,
+              boxShadow: isRunningChain && chainStep === 1 ? '0 0 12px rgba(6, 182, 212, 0.4)' : 'none',
+              transition: 'all 0.2s ease',
             }}
           >
-            <TrendingUp size={13} />
-            <span>1. Trend Scout</span>
+            {isRunningChain && chainStep === 1 ? (
+              <RefreshCw size={13} style={{ animation: 'spin 1s linear infinite' }} />
+            ) : (
+              <TrendingUp size={13} />
+            )}
+            <span>1. Trend Scout {isRunningChain && chainStep === 1 ? '(Scouting...)' : ''}</span>
           </div>
 
           <ChevronRight size={14} color="var(--text-dim)" />
 
+          {/* Agent 2 Step */}
           <div
             style={{
               display: 'flex',
@@ -270,18 +346,29 @@ export default function AiStudio({
               fontSize: '0.76rem',
               padding: '0.3rem 0.65rem',
               borderRadius: '999px',
-              backgroundColor: 'rgba(99, 102, 241, 0.2)',
-              border: '1px solid rgba(99, 102, 241, 0.4)',
+              backgroundColor: isRunningChain && chainStep === 2
+                ? 'rgba(99, 102, 241, 0.35)'
+                : 'rgba(99, 102, 241, 0.2)',
+              border: isRunningChain && chainStep === 2
+                ? '1px solid #818cf8'
+                : '1px solid rgba(99, 102, 241, 0.4)',
               color: '#c7d2fe',
               fontWeight: 700,
+              boxShadow: isRunningChain && chainStep === 2 ? '0 0 12px rgba(99, 102, 241, 0.5)' : 'none',
+              transition: 'all 0.2s ease',
             }}
           >
-            <Sparkles size={13} />
-            <span>2. Script Builder (Active)</span>
+            {isRunningChain && chainStep === 2 ? (
+              <RefreshCw size={13} style={{ animation: 'spin 1s linear infinite' }} />
+            ) : (
+              <Sparkles size={13} />
+            )}
+            <span>2. Script Builder {isRunningChain && chainStep === 2 ? '(Writing...)' : '(Active)'}</span>
           </div>
 
           <ChevronRight size={14} color="var(--text-dim)" />
 
+          {/* Agent 3 Step */}
           <div
             style={{
               display: 'flex',
@@ -290,14 +377,37 @@ export default function AiStudio({
               fontSize: '0.76rem',
               padding: '0.3rem 0.65rem',
               borderRadius: '999px',
-              backgroundColor: evaluationResult ? 'rgba(16, 185, 129, 0.15)' : 'rgba(255, 255, 255, 0.04)',
-              border: evaluationResult ? '1px solid rgba(16, 185, 129, 0.35)' : '1px solid var(--border-subtle)',
-              color: evaluationResult ? 'var(--accent-emerald)' : 'var(--text-dim)',
-              fontWeight: evaluationResult ? 700 : 500,
+              backgroundColor: isRunningChain && chainStep === 3
+                ? 'rgba(16, 185, 129, 0.25)'
+                : evaluationResult
+                ? 'rgba(16, 185, 129, 0.15)'
+                : 'rgba(255, 255, 255, 0.04)',
+              border: isRunningChain && chainStep === 3
+                ? '1px solid var(--accent-emerald)'
+                : evaluationResult
+                ? '1px solid rgba(16, 185, 129, 0.35)'
+                : '1px solid var(--border-subtle)',
+              color: evaluationResult || (isRunningChain && chainStep === 3)
+                ? 'var(--accent-emerald)'
+                : 'var(--text-dim)',
+              fontWeight: evaluationResult || (isRunningChain && chainStep === 3) ? 700 : 500,
+              boxShadow: isRunningChain && chainStep === 3 ? '0 0 12px rgba(16, 185, 129, 0.4)' : 'none',
+              transition: 'all 0.2s ease',
             }}
           >
-            <Award size={13} />
-            <span>3. Content Critic {evaluationResult ? `(${evaluationResult.overallScore}/100)` : ''}</span>
+            {isRunningChain && chainStep === 3 ? (
+              <RefreshCw size={13} style={{ animation: 'spin 1s linear infinite' }} />
+            ) : (
+              <Award size={13} />
+            )}
+            <span>
+              3. Content Critic{' '}
+              {isRunningChain && chainStep === 3
+                ? '(Scoring...)'
+                : evaluationResult
+                ? `(${evaluationResult.overallScore}/100)`
+                : ''}
+            </span>
           </div>
         </div>
       </div>
@@ -558,30 +668,71 @@ export default function AiStudio({
               </div>
             </div>
 
-            {/* Generate Action Button */}
-            <button
-              onClick={handleGenerate}
-              disabled={isGenerating}
-              className="btn btn-primary"
-              style={{
-                width: '100%',
-                padding: '0.85rem',
-                fontSize: '0.98rem',
-                marginTop: '0.5rem',
-              }}
-            >
-              {isGenerating ? (
-                <>
-                  <RefreshCw size={18} className="spin-animation" style={{ animation: 'spin 1s linear infinite' }} />
-                  <span>Generating {format}...</span>
-                </>
-              ) : (
-                <>
-                  <Zap size={18} />
-                  <span>Generate Content</span>
-                </>
-              )}
-            </button>
+            {/* Action Buttons: Single Format or 1-Click Chain */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '0.5rem' }}>
+              <button
+                onClick={handleGenerate}
+                disabled={isGenerating || isRunningChain}
+                className="btn btn-secondary"
+                style={{
+                  width: '100%',
+                  padding: '0.8rem',
+                  fontSize: '0.94rem',
+                  justifyContent: 'center',
+                }}
+              >
+                {isGenerating && !isRunningChain ? (
+                  <>
+                    <RefreshCw size={17} className="spin-animation" style={{ animation: 'spin 1s linear infinite' }} />
+                    <span>Generating {format}...</span>
+                  </>
+                ) : (
+                  <>
+                    <Zap size={17} />
+                    <span>Generate Single Format (Agent 2)</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={handleRunAutonomousChain}
+                disabled={isGenerating || isRunningChain}
+                className="btn"
+                style={{
+                  width: '100%',
+                  padding: '0.85rem',
+                  fontSize: '0.96rem',
+                  background: 'linear-gradient(135deg, #6366f1, #06b6d4)',
+                  color: '#fff',
+                  border: 'none',
+                  boxShadow: '0 4px 14px rgba(99, 102, 241, 0.35)',
+                  cursor: isGenerating || isRunningChain ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  fontWeight: 700,
+                  borderRadius: '8px',
+                }}
+              >
+                {isRunningChain ? (
+                  <>
+                    <RefreshCw size={17} style={{ animation: 'spin 1s linear infinite' }} />
+                    <span>
+                      {chainStep === 1 && 'Agent 1: Scouting Trend...'}
+                      {chainStep === 2 && 'Agent 2: Building Script...'}
+                      {chainStep === 3 && 'Agent 3: Critiquing Retention...'}
+                      {chainStep === 0 && 'Executing Autonomous Chain...'}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={17} />
+                    <span>⚡ Run 1-Click 3-Agent Chain (End-to-End)</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
