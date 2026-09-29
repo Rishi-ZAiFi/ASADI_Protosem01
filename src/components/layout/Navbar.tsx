@@ -200,7 +200,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <>
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               <span className="hidden md:inline">
-                OpenAI Active
+                Gemini Active
               </span>
               <span className="md:hidden">AI Online</span>
             </>
