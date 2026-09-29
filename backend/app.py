@@ -25,8 +25,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 if GEMINI_API_KEY and GEMINI_API_KEY != "your_actual_api_key_here":
     genai.configure(api_key=GEMINI_API_KEY)
-    # Recommended model
-    model = genai.GenerativeModel('gemini-3.6-flash')
+    model = genai.GenerativeModel('gemini-3.1-flash-lite')
 else:
     model = None
 
