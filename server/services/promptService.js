@@ -1,6 +1,9 @@
 /**
  * Prompt Engineering Service for CreatorSpace AI
- * Builds structured, format-adapted prompts for social media content creation.
+ * Multi-Agent System:
+ * - Agent 1: Trend Scout Agent (identifies viral trends & content angles)
+ * - Agent 2: Content Generation Agent (crafts format-tailored copy)
+ * - Agent 3: Content Critic & Evaluator Agent (audits quality, viral score & optimizes hooks)
  */
 
 export const FORMAT_TYPES = {
@@ -11,7 +14,7 @@ export const FORMAT_TYPES = {
 };
 
 /**
- * Builds the system instruction tailored for social media strategy
+ * Builds the system instruction tailored for social media strategy (Agent 2)
  */
 export function buildSystemInstruction() {
   return `You are an elite social media content strategist and creative copywriter for CreatorSpace AI.
@@ -27,7 +30,42 @@ Core Guidelines:
 }
 
 /**
- * Builds user prompt adapted to specific formats
+ * Agent 1: Trend Scout Agent Prompt
+ * Discovers emerging trends, algorithmic momentum, and creative angles
+ */
+export function buildTrendScoutPrompt({ niche, platform, audience }) {
+  const targetNiche = (niche || 'Technology & Creator Economy').trim();
+  const targetPlatform = (platform || 'Instagram, YouTube Shorts & TikTok').trim();
+  const targetAudience = (audience || 'Content Creators & Digital Audience').trim();
+
+  return `You are the AI Trend Scout Agent for CreatorSpace AI.
+Analyze high-momentum, viral, and emerging content trends for the following domain:
+- Industry / Niche: "${targetNiche}"
+- Focus Platform: "${targetPlatform}"
+- Target Audience: "${targetAudience}"
+
+Identify 3 distinct, high-velocity trend opportunities that creators can turn into viral content right now.
+
+OUTPUT REQUIREMENTS:
+Respond ONLY with a valid JSON array of objects without surrounding markdown backticks or commentary.
+Format:
+[
+  {
+    "id": "trend_${Date.now()}_1",
+    "title": "Trend Title / Viral Movement",
+    "category": "${targetNiche}",
+    "momentum": "🔥 Viral Velocity" or "📈 Rising Fast" or "⚡ Breakout Pattern",
+    "viralScore": 92,
+    "description": "2-3 concise sentences on why this trend is blowing up, audience psychology, and algorithmic drivers.",
+    "suggestedAngle": "A specific hook or storytelling angle that a creator can immediately use.",
+    "recommendedFormat": "Instagram Reel" | "Carousel" | "Caption" | "Story",
+    "tags": ["Tag1", "Tag2", "Tag3"]
+  }
+]`;
+}
+
+/**
+ * Agent 2: Format-Specific Content Generation Prompt
  */
 export function buildPrompt({ topic, format, audience, tone }) {
   const normalizedFormat = (format || 'Caption').trim();
@@ -148,4 +186,49 @@ Content Format: ${normalizedFormat}
 ${formatSpecificGuidelines}
 
 Deliver the output with clean formatting, crisp headers, and actionable creative content.`;
+}
+
+/**
+ * Agent 3: Content Critic & Viral Quality Evaluator Prompt
+ * Audits generated copy, scores engagement metrics, and suggests optimizations
+ */
+export function buildContentEvaluatorPrompt({ content, format, topic, audience, tone }) {
+  return `You are the Senior Content Critic & Viral Quality Auditor Agent for CreatorSpace AI.
+You evaluate social media scripts and copy before publication against modern algorithmic retention standards.
+
+AUDIT CONTEXT:
+- Topic: "${topic || 'Untitled'}"
+- Content Format: "${format || 'Social Post'}"
+- Target Audience: "${audience || 'General'}"
+- Writing Tone: "${tone || 'Engaging'}"
+
+CONTENT TO EVALUATE:
+"""
+${content}
+"""
+
+YOUR TASK:
+Perform a comprehensive audit.
+Respond ONLY with a valid JSON object without surrounding markdown code blocks.
+Format:
+{
+  "overallScore": 88,
+  "grade": "A" (one of "A+", "A", "B+", "B", "C"),
+  "verdict": "2-sentence executive summary of the script's strengths and readiness to publish.",
+  "metrics": {
+    "hookStrength": 9 (score 1-10 on stopping the scroll in first 3 seconds),
+    "retentionPacing": 8 (score 1-10 on story flow, punchiness, and holding attention),
+    "ctaPower": 9 (score 1-10 on prompting comments, saves, and shares),
+    "clarityValue": 9 (score 1-10 on actionable value for the target audience)
+  },
+  "strengths": [
+    "Specific strength point 1",
+    "Specific strength point 2"
+  ],
+  "improvements": [
+    "Specific tactical recommendation 1",
+    "Specific tactical recommendation 2"
+  ],
+  "optimizedHook": "A refined, ultra-viral alternative opening hook designed to boost retention even further."
+}`;
 }

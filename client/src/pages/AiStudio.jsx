@@ -12,8 +12,17 @@ import {
   Smartphone,
   Check,
   Zap,
+  Award,
+  TrendingUp,
+  Bot,
+  ChevronRight,
+  ShieldCheck,
+  CheckCircle2,
+  X,
+  Lightbulb,
+  ArrowRight,
 } from 'lucide-react';
-import { generateContent } from '../services/api';
+import { generateContent, evaluateContent } from '../services/api';
 import FormatBadge from '../components/FormatBadge';
 
 export default function AiStudio({
@@ -30,11 +39,17 @@ export default function AiStudio({
   const [audience, setAudience] = useState('Content Creators');
   const [tone, setTone] = useState('Educational');
 
-  // Generation state
+  // Generation state (Agent 2)
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedResult, setGeneratedResult] = useState(null);
   const [errorState, setErrorState] = useState(null);
   const [hasSavedCurrent, setHasSavedCurrent] = useState(false);
+
+  // Evaluation state (Agent 3: Content Critic)
+  const [isEvaluating, setIsEvaluating] = useState(false);
+  const [evaluationResult, setEvaluationResult] = useState(null);
+  const [showEvaluationModal, setShowEvaluationModal] = useState(false);
+  const [evaluationError, setEvaluationError] = useState(null);
 
   // Initialize from preferences or location state (from Trend Radar or Dashboard)
   useEffect(() => {
@@ -78,7 +93,7 @@ export default function AiStudio({
     'Humorous',
   ];
 
-  // Handler for content generation
+  // Handler for content generation (Agent 2)
   const handleGenerate = async () => {
     if (!topic.trim()) {
       setErrorState({
@@ -92,6 +107,7 @@ export default function AiStudio({
     setIsGenerating(true);
     setErrorState(null);
     setHasSavedCurrent(false);
+    setEvaluationResult(null);
 
     try {
       const responseData = await generateContent({
@@ -117,6 +133,52 @@ export default function AiStudio({
     }
   };
 
+  // Handler for Content Critic & Evaluation (Agent 3)
+  const handleEvaluate = async () => {
+    if (!generatedResult || !generatedResult.content) {
+      addToast('Please generate content first before evaluating!', 'error');
+      return;
+    }
+
+    setIsEvaluating(true);
+    setEvaluationError(null);
+    setShowEvaluationModal(true);
+
+    try {
+      const evalData = await evaluateContent({
+        content: generatedResult.content,
+        format: generatedResult.format,
+        topic: generatedResult.topic,
+        audience: generatedResult.audience,
+        tone: generatedResult.tone,
+      });
+
+      setEvaluationResult(evalData.evaluation);
+      addToast('Content Critic evaluation complete!', 'success');
+    } catch (err) {
+      console.error('Evaluation Error:', err);
+      setEvaluationError(err.message || 'Failed to evaluate script.');
+      addToast(err.message || 'Evaluation failed', 'error');
+    } finally {
+      setIsEvaluating(false);
+    }
+  };
+
+  // Apply optimized hook directly to generated content
+  const handleApplyOptimizedHook = (optimizedHook) => {
+    if (!optimizedHook || !generatedResult) return;
+
+    const updatedContent = `[OPTIMIZED HOOK (AGENT 3 CRITIC)]\n"${optimizedHook}"\n\n---\n\n${generatedResult.content}`;
+
+    setGeneratedResult((prev) => ({
+      ...prev,
+      content: updatedContent,
+    }));
+    setHasSavedCurrent(false);
+    setShowEvaluationModal(false);
+    addToast('Optimized hook applied to your script!', 'success');
+  };
+
   const handleSave = () => {
     if (!generatedResult) return;
     onSaveContent({
@@ -135,13 +197,109 @@ export default function AiStudio({
   return (
     <div className="studio-page">
       {/* Studio Header */}
-      <div style={{ marginBottom: '1.75rem' }}>
+      <div style={{ marginBottom: '1.25rem' }}>
         <h1 style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '0.35rem' }}>
           AI Content Studio
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.94rem' }}>
-          Craft platform-specific copy engineered for high engagement and conversions, powered by Google Gemini AI.
+          Autonomous 3-Agent Creator Pipeline: Scout trends, engineer platform-adapted copy, and rigorously evaluate retention with Google Gemini AI.
         </p>
+      </div>
+
+      {/* Multi-Agent Creator Pipeline Bar */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+          padding: '0.85rem 1.25rem',
+          borderRadius: '12px',
+          backgroundColor: 'rgba(17, 24, 39, 0.75)',
+          border: '1px solid var(--border-subtle)',
+          marginBottom: '1.75rem',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '28px',
+              height: '28px',
+              borderRadius: '8px',
+              background: 'linear-gradient(135deg, #6366f1, #06b6d4)',
+              color: '#fff',
+            }}
+          >
+            <Bot size={16} />
+          </div>
+          <span style={{ fontSize: '0.86rem', fontWeight: 700, color: 'var(--text-main)' }}>
+            3-Agent Creator Pipeline
+          </span>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              fontSize: '0.76rem',
+              padding: '0.3rem 0.65rem',
+              borderRadius: '999px',
+              backgroundColor: 'rgba(6, 182, 212, 0.1)',
+              border: '1px solid rgba(6, 182, 212, 0.25)',
+              color: 'var(--accent-cyan)',
+              fontWeight: 500,
+            }}
+          >
+            <TrendingUp size={13} />
+            <span>1. Trend Scout</span>
+          </div>
+
+          <ChevronRight size={14} color="var(--text-dim)" />
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              fontSize: '0.76rem',
+              padding: '0.3rem 0.65rem',
+              borderRadius: '999px',
+              backgroundColor: 'rgba(99, 102, 241, 0.2)',
+              border: '1px solid rgba(99, 102, 241, 0.4)',
+              color: '#c7d2fe',
+              fontWeight: 700,
+            }}
+          >
+            <Sparkles size={13} />
+            <span>2. Script Builder (Active)</span>
+          </div>
+
+          <ChevronRight size={14} color="var(--text-dim)" />
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              fontSize: '0.76rem',
+              padding: '0.3rem 0.65rem',
+              borderRadius: '999px',
+              backgroundColor: evaluationResult ? 'rgba(16, 185, 129, 0.15)' : 'rgba(255, 255, 255, 0.04)',
+              border: evaluationResult ? '1px solid rgba(16, 185, 129, 0.35)' : '1px solid var(--border-subtle)',
+              color: evaluationResult ? 'var(--accent-emerald)' : 'var(--text-dim)',
+              fontWeight: evaluationResult ? 700 : 500,
+            }}
+          >
+            <Award size={13} />
+            <span>3. Content Critic {evaluationResult ? `(${evaluationResult.overallScore}/100)` : ''}</span>
+          </div>
+        </div>
       </div>
 
       <div
@@ -512,7 +670,38 @@ export default function AiStudio({
                 </div>
 
                 {/* Result Action Buttons */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  {/* Agent 3 Critic Evaluation Button */}
+                  <button
+                    onClick={handleEvaluate}
+                    disabled={isEvaluating}
+                    className="btn btn-secondary btn-sm"
+                    style={{
+                      backgroundColor: evaluationResult ? 'rgba(16, 185, 129, 0.12)' : 'rgba(99, 102, 241, 0.15)',
+                      borderColor: evaluationResult ? 'rgba(16, 185, 129, 0.35)' : 'rgba(99, 102, 241, 0.4)',
+                      color: evaluationResult ? 'var(--accent-emerald)' : '#a5b4fc',
+                      fontWeight: 600,
+                    }}
+                    title="Evaluate script quality with Agent 3 (Content Critic)"
+                  >
+                    {isEvaluating ? (
+                      <>
+                        <RefreshCw size={14} style={{ animation: 'spin 1s linear infinite' }} />
+                        <span>Evaluating...</span>
+                      </>
+                    ) : evaluationResult ? (
+                      <>
+                        <ShieldCheck size={14} />
+                        <span>Critic Score: {evaluationResult.overallScore}/100</span>
+                      </>
+                    ) : (
+                      <>
+                        <Award size={14} color="var(--accent-cyan)" />
+                        <span>Evaluate Script (Agent 3)</span>
+                      </>
+                    )}
+                  </button>
+
                   <button
                     onClick={() => onCopyContent(generatedResult.content)}
                     className="btn btn-secondary btn-sm"
@@ -544,6 +733,66 @@ export default function AiStudio({
                 </div>
               </div>
 
+              {/* Agent 3 Quick Critic Summary Banner (if evaluated) */}
+              {evaluationResult && (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '0.85rem 1.15rem',
+                    marginBottom: '1.25rem',
+                    borderRadius: '10px',
+                    backgroundColor: 'rgba(16, 185, 129, 0.08)',
+                    border: '1px solid rgba(16, 185, 129, 0.25)',
+                    flexWrap: 'wrap',
+                    gap: '0.75rem',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '50%',
+                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                        color: 'var(--accent-emerald)',
+                        fontWeight: 800,
+                        fontSize: '0.9rem',
+                      }}
+                    >
+                      {evaluationResult.grade || 'A'}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                        Agent 3 Content Score: {evaluationResult.overallScore}/100 ({evaluationResult.grade || 'A'})
+                      </div>
+                      <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+                        Hook: {evaluationResult.metrics?.hookStrength || 8}/10 • Retention: {evaluationResult.metrics?.retentionPacing || 8}/10 • CTA: {evaluationResult.metrics?.ctaPower || 8}/10
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setShowEvaluationModal(true)}
+                    className="btn btn-ghost btn-sm"
+                    style={{
+                      color: 'var(--accent-emerald)',
+                      borderColor: 'rgba(16, 185, 129, 0.3)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                    }}
+                  >
+                    <span>View Full Scorecard & Hook</span>
+                    <ArrowRight size={13} />
+                  </button>
+                </div>
+              )}
+
               {/* Formatted Content Body */}
               <div
                 style={{
@@ -566,6 +815,350 @@ export default function AiStudio({
                 >
                   {generatedResult.content}
                 </pre>
+              </div>
+            </div>
+          )}
+
+          {/* Evaluation Scorecard Modal (Agent 3) */}
+          {showEvaluationModal && (
+            <div
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                backdropFilter: 'blur(5px)',
+                zIndex: 9999,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '1rem',
+              }}
+            >
+              <div
+                className="card"
+                style={{
+                  width: '100%',
+                  maxWidth: '680px',
+                  maxHeight: '90vh',
+                  overflowY: 'auto',
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'rgba(99, 102, 241, 0.35)',
+                  padding: '1.75rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1.25rem',
+                  position: 'relative',
+                  boxShadow: 'var(--shadow-lg)',
+                }}
+              >
+                {/* Modal Header */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    paddingBottom: '1rem',
+                    borderBottom: '1px solid var(--border-subtle)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div
+                      style={{
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '10px',
+                        backgroundColor: 'rgba(99, 102, 241, 0.15)',
+                        color: 'var(--primary)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Award size={20} />
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0, color: 'var(--text-main)' }}>
+                        Agent 3: Content Critic & Evaluator
+                      </h3>
+                      <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                        Deep algorithmic analysis of hook retention, pacing, and conversion impact.
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setShowEvaluationModal(false)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--text-muted)',
+                      cursor: 'pointer',
+                      padding: '4px',
+                      borderRadius: '6px',
+                    }}
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+
+                {/* Loading State */}
+                {isEvaluating && (
+                  <div style={{ padding: '3rem 1.5rem', textAlign: 'center' }}>
+                    <RefreshCw size={32} style={{ animation: 'spin 1.2s linear infinite', margin: '0 auto 1rem', color: 'var(--primary)' }} />
+                    <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.4rem' }}>
+                      Agent 3 is Evaluating Script Quality...
+                    </h4>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                      Analyzing hook psychology, audience retention curve, clarity score, and formulating optimized alternatives...
+                    </p>
+                  </div>
+                )}
+
+                {/* Error State */}
+                {!isEvaluating && evaluationError && (
+                  <div
+                    style={{
+                      padding: '1.25rem',
+                      borderRadius: '10px',
+                      backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                      border: '1px solid rgba(244, 63, 94, 0.3)',
+                    }}
+                  >
+                    <h4 style={{ color: 'var(--accent-rose)', margin: '0 0 0.35rem' }}>Evaluation Failed</h4>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', margin: '0 0 1rem' }}>
+                      {evaluationError}
+                    </p>
+                    <button onClick={handleEvaluate} className="btn btn-secondary btn-sm">
+                      Retry Evaluation
+                    </button>
+                  </div>
+                )}
+
+                {/* Scorecard Results */}
+                {!isEvaluating && evaluationResult && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    {/* Top Score Box */}
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: '120px 1fr',
+                        gap: '1.25rem',
+                        alignItems: 'center',
+                        padding: '1.25rem',
+                        borderRadius: '12px',
+                        backgroundColor: 'rgba(99, 102, 241, 0.08)',
+                        border: '1px solid rgba(99, 102, 241, 0.25)',
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '1rem',
+                          borderRadius: '10px',
+                          background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.2))',
+                          border: '1px solid rgba(99, 102, 241, 0.35)',
+                          textAlign: 'center',
+                        }}
+                      >
+                        <span style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--text-main)', lineHeight: 1 }}>
+                          {evaluationResult.overallScore}
+                        </span>
+                        <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          Out of 100
+                        </span>
+                        <span
+                          style={{
+                            marginTop: '0.35rem',
+                            fontSize: '0.75rem',
+                            fontWeight: 700,
+                            padding: '0.15rem 0.5rem',
+                            borderRadius: '999px',
+                            backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                            color: 'var(--accent-emerald)',
+                          }}
+                        >
+                          Grade: {evaluationResult.grade || 'A'}
+                        </span>
+                      </div>
+
+                      <div>
+                        <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.35rem' }}>
+                          Content Critic Verdict
+                        </h4>
+                        <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', lineHeight: 1.55, margin: 0 }}>
+                          {evaluationResult.verdict}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* 4 Core Metrics Sliders */}
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr',
+                        gap: '1rem',
+                        padding: '1rem',
+                        borderRadius: '10px',
+                        backgroundColor: 'var(--bg-input)',
+                        border: '1px solid var(--border-subtle)',
+                      }}
+                    >
+                      {[
+                        { label: 'Hook Strength', key: 'hookStrength', color: '#6366f1' },
+                        { label: 'Retention & Pacing', key: 'retentionPacing', color: '#06b6d4' },
+                        { label: 'CTA Power', key: 'ctaPower', color: '#10b981' },
+                        { label: 'Clarity & Value', key: 'clarityValue', color: '#f59e0b' },
+                      ].map((m) => {
+                        const val = evaluationResult.metrics?.[m.key] || 8;
+                        return (
+                          <div key={m.key} style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
+                              <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>{m.label}</span>
+                              <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>{val} / 10</span>
+                            </div>
+                            <div
+                              style={{
+                                width: '100%',
+                                height: '6px',
+                                borderRadius: '999px',
+                                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                                overflow: 'hidden',
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: `${Math.min(val * 10, 100)}%`,
+                                  height: '100%',
+                                  borderRadius: '999px',
+                                  backgroundColor: m.color,
+                                  transition: 'width 0.4s ease',
+                                }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Strengths & Improvements */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                      {/* Strengths */}
+                      <div
+                        style={{
+                          padding: '1rem',
+                          borderRadius: '10px',
+                          backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                          border: '1px solid rgba(16, 185, 129, 0.2)',
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.65rem' }}>
+                          <CheckCircle2 size={16} color="var(--accent-emerald)" />
+                          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-emerald)' }}>
+                            Key Strengths
+                          </span>
+                        </div>
+                        <ul style={{ margin: 0, paddingLeft: '1.15rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                          {(evaluationResult.strengths || []).map((s, idx) => (
+                            <li key={idx} style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.45 }}>
+                              {s}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Improvements */}
+                      <div
+                        style={{
+                          padding: '1rem',
+                          borderRadius: '10px',
+                          backgroundColor: 'rgba(245, 158, 11, 0.05)',
+                          border: '1px solid rgba(245, 158, 11, 0.2)',
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.65rem' }}>
+                          <Lightbulb size={16} color="var(--accent-amber)" />
+                          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-amber)' }}>
+                            Actionable Improvements
+                          </span>
+                        </div>
+                        <ul style={{ margin: 0, paddingLeft: '1.15rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                          {(evaluationResult.improvements || []).map((item, idx) => (
+                            <li key={idx} style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.45 }}>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* AI-Optimized Hook Alternative */}
+                    {evaluationResult.optimizedHook && (
+                      <div
+                        style={{
+                          padding: '1.15rem',
+                          borderRadius: '12px',
+                          backgroundColor: 'rgba(6, 182, 212, 0.08)',
+                          border: '1px solid rgba(6, 182, 212, 0.3)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '0.75rem',
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                            <Sparkles size={16} color="var(--accent-cyan)" />
+                            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-cyan)' }}>
+                              High-Retention Hook Alternative
+                            </span>
+                          </div>
+                          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>
+                            Generated by Agent 3
+                          </span>
+                        </div>
+
+                        <div
+                          style={{
+                            padding: '0.75rem 1rem',
+                            borderRadius: '8px',
+                            backgroundColor: 'var(--bg-input)',
+                            fontStyle: 'italic',
+                            fontSize: '0.88rem',
+                            color: 'var(--text-main)',
+                            border: '1px solid var(--border-subtle)',
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          "{evaluationResult.optimizedHook}"
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '0.6rem', marginTop: '0.2rem' }}>
+                          <button
+                            onClick={() => handleApplyOptimizedHook(evaluationResult.optimizedHook)}
+                            className="btn btn-primary btn-sm"
+                            style={{ flex: 1, justifyContent: 'center' }}
+                          >
+                            <Check size={14} />
+                            <span>Apply Hook to Script</span>
+                          </button>
+
+                          <button
+                            onClick={() => onCopyContent(evaluationResult.optimizedHook)}
+                            className="btn btn-secondary btn-sm"
+                          >
+                            <Copy size={14} />
+                            <span>Copy Hook</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           )}

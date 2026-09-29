@@ -1,7 +1,11 @@
-import { generateWithGemini } from '../services/geminiService.js';
+import {
+  generateWithGemini,
+  scoutTrendsWithGemini,
+  evaluateContentWithGemini,
+} from '../services/geminiService.js';
 
 /**
- * Controller for Gemini content generation
+ * Controller for Gemini content generation (Agent 2: Script Builder Agent)
  */
 export async function handleGeminiGenerate(req, res) {
   try {
@@ -42,6 +46,7 @@ export async function handleGeminiGenerate(req, res) {
         content: result.content,
         provider: result.provider,
         model: result.model,
+        agent: result.agent || 'Script Builder Agent',
         timestamp: result.timestamp,
       },
     });
@@ -51,6 +56,72 @@ export async function handleGeminiGenerate(req, res) {
       success: false,
       error: error.code || 'GENERATION_FAILED',
       message: error.message || 'An unexpected error occurred during Gemini generation.',
+    });
+  }
+}
+
+/**
+ * Controller for Trend Scout Agent (Agent 1)
+ */
+export async function handleTrendScout(req, res) {
+  try {
+    const { niche, platform, audience, apiKey } = req.body;
+
+    const result = await scoutTrendsWithGemini({
+      niche: niche ? niche.trim() : 'Digital Creators & Tech',
+      platform: platform ? platform.trim() : 'Instagram Reels',
+      audience: audience ? audience.trim() : 'Content Creators & Entrepreneurs',
+      apiKeyOverride: apiKey,
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    const statusCode = error.statusCode || 500;
+    return res.status(statusCode).json({
+      success: false,
+      error: error.code || 'TREND_SCOUT_FAILED',
+      message: error.message || 'An unexpected error occurred during trend scouting.',
+    });
+  }
+}
+
+/**
+ * Controller for Content Critic & Evaluator Agent (Agent 3)
+ */
+export async function handleContentEvaluation(req, res) {
+  try {
+    const { content, format, topic, audience, tone, apiKey } = req.body;
+
+    if (!content || typeof content !== 'string' || content.trim().length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Validation Error',
+        message: 'Content is required for evaluation.',
+      });
+    }
+
+    const result = await evaluateContentWithGemini({
+      content: content.trim(),
+      format: format ? format.trim() : 'Instagram Reel',
+      topic: topic ? topic.trim() : '',
+      audience: audience ? audience.trim() : 'General audience',
+      tone: tone ? tone.trim() : 'Engaging',
+      apiKeyOverride: apiKey,
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    const statusCode = error.statusCode || 500;
+    return res.status(statusCode).json({
+      success: false,
+      error: error.code || 'EVALUATION_FAILED',
+      message: error.message || 'An unexpected error occurred during content evaluation.',
     });
   }
 }

@@ -4,22 +4,55 @@
 
 ---
 
-## 🌟 Key Features
+## 🌟 3-Agent Autonomous Creator Architecture
 
-* **AI Studio (Multi-Format Generator)**:
-  * Format-tailored outputs:
-    * **Instagram Reel**: Viral hooks (0-3s), scene-by-scene script & b-roll directions, on-screen text, feed caption, and strategic hashtags.
-    * **Multi-Slide Carousel**: Catchy cover title, slide-by-slide value breakdowns, layout cues, final CTA slide, caption, and hashtags.
-    * **Social Caption**: High-retention openers, structured narrative body, call-to-action, and targeted hashtags.
-    * **Story Sequence**: 3-5 frame visual flow with poll/sticker engagement prompts and creator pro-tips.
-  * Target audience customization (Beginners, Students, Entrepreneurs, Tech Enthusiasts, etc.).
-  * Writing tone control (Educational, Conversational, Professional, Creative, Humorous, Friendly).
-  * Quick topic inspiration pill buttons (`+ 5 habits of top creators`, etc.).
-  * 1-Click Copy to clipboard with instant user feedback.
-  * 1-Click Save to local library.
-  * Regenerate capability with current parameters.
+CreatorSpace AI is powered by a coordinated 3-agent intelligence pipeline engineered with Google Gemini 3.5:
+
+```
+┌────────────────────────┐      ┌─────────────────────────┐      ┌────────────────────────┐
+│  AGENT 1: TREND SCOUT  │ ───► │ AGENT 2: SCRIPT BUILDER │ ───► │ AGENT 3: CONTENT CRITIC│
+│  Live Market Signals & │      │ Platform-Adapted Copy   │      │ Retention, Hook & CTA  │
+│  Viral Velocity Angles │      │ (Reels/Carousels/Story) │      │ Scoring & Optimization │
+└────────────────────────┘      └─────────────────────────┘      └────────────────────────┘
+```
+
+1. **Agent 1: Trend Scout Agent (`/api/gemini/trends/scout`)**:
+   * Scouts high-velocity narrative angles, breakout hooks, and algorithmic shifts tailored to any creator niche or platform.
+   * Calculates viral velocity scores (0-100), recommends ideal formats, tags, and suggested creative angles.
+   * 1-Click transfer from Trend Radar into the AI Studio.
+
+2. **Agent 2: Script Builder Agent (`/api/gemini/generate`)**:
+   * Crafts platform-adapted copy engineered for conversions and attention:
+     * **Instagram Reel**: Viral hook (0-3s), scene-by-scene b-roll, pacing directions, on-screen text, caption, and strategic hashtags.
+     * **Multi-Slide Carousel**: Catchy cover title, slide-by-slide value breakdowns, layout cues, final CTA slide, caption, and hashtags.
+     * **Social Caption**: High-retention openers, structured narrative body, call-to-action, and targeted hashtags.
+     * **Story Sequence**: 3-5 frame visual flow with poll/sticker engagement prompts and creator pro-tips.
+   * Tone adaptation (Educational, Conversational, Professional, Creative, Humorous, Friendly).
+   * Target audience customization (Beginners, Students, Entrepreneurs, Tech Enthusiasts, etc.).
+
+3. **Agent 3: Content Critic & Evaluator Agent (`/api/gemini/evaluate`)**:
+   * Evaluates generated scripts against retention benchmarks before publishing.
+   * Multi-dimensional scoring (1-10) for:
+     * **Hook Strength** (0-3s attention grab)
+     * **Retention & Pacing** (flow, drop-off mitigation)
+     * **CTA Power** (conversion trigger, comment/save prompt)
+     * **Clarity & Value** (actionability, cognitive load)
+   * Overall Quality Score (0-100) & Letter Grade (A+, A, B, etc.).
+   * Bulleted Strengths and Actionable Improvements.
+   * **AI-Engineered Optimized Hook**: 1-click **"Apply Hook to Script"** button dynamically injects the improved opener into your working draft!
+
+---
+
+## 🚀 Key Modules & Capabilities
+
+* **AI Studio (Multi-Agent Workspace)**:
+  * 3-Agent Creator Pipeline status bar showing active stage.
+  * Interactive script generation with quick topic pills (`+ 5 habits of top creators`, etc.).
+  * Embedded **Content Critic Scorecard** with metric progress bars, actionable critique, and hook applicator.
+  * 1-Click Copy and Save to Library.
 
 * **Trend Radar**:
+  * Dedicated **Agent 1 AI Trend Scout Panel** with live niche querying and platform filters.
   * Curated industry trend database categorized by Technology & AI, Creator Economy, Productivity, Marketing, and Lifestyle.
   * Search, category filtering, and bookmarking.
   * **"Create Content From Trend" Action**: Automatically pre-populates AI Studio with the selected trend title and angle for seamless workflow acceleration.

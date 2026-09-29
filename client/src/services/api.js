@@ -59,3 +59,81 @@ export async function generateContent({
     throw error;
   }
 }
+
+/**
+ * Agent 1: Scout emerging trends
+ */
+export async function scoutTrends({
+  niche,
+  platform,
+  audience,
+  apiKey,
+}) {
+  const endpoint = `${API_BASE_URL}/api/gemini/trends/scout`;
+
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ niche, platform, audience, apiKey }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      const error = new Error(data.message || 'Trend scouting failed.');
+      error.code = data.error || 'SCOUT_FAILED';
+      throw error;
+    }
+
+    return data.data;
+  } catch (error) {
+    if (!error.code) {
+      error.message = 'Failed to connect to backend server for Trend Scout.';
+      error.code = 'NETWORK_ERROR';
+    }
+    throw error;
+  }
+}
+
+/**
+ * Agent 3: Content Critic & Evaluator
+ */
+export async function evaluateContent({
+  content,
+  format,
+  topic,
+  audience,
+  tone,
+  apiKey,
+}) {
+  const endpoint = `${API_BASE_URL}/api/gemini/evaluate`;
+
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ content, format, topic, audience, tone, apiKey }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      const error = new Error(data.message || 'Evaluation failed.');
+      error.code = data.error || 'EVALUATION_FAILED';
+      throw error;
+    }
+
+    return data.data;
+  } catch (error) {
+    if (!error.code) {
+      error.message = 'Failed to connect to backend server for Content Evaluation.';
+      error.code = 'NETWORK_ERROR';
+    }
+    throw error;
+  }
+}
