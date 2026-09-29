@@ -1,0 +1,423 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0
+rootdir: /home/surya-j-s/Projects/Agentic_AI_Demo/backend
+configfile: pytest.ini
+plugins: asyncio-1.4.0, anyio-4.15.1, langsmith-0.14.1, platformdirs-4.12.1
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 48 items
+
+tests/test_analysis_api.py ..F                                           [  6%]
+tests/test_cv_ocr.py ..F                                                 [ 12%]
+tests/test_drafts_api.py F                                               [ 14%]
+tests/test_e2e_pipeline.py F                                             [ 16%]
+tests/test_embeddings_retrieval.py .F                                    [ 20%]
+tests/test_environment.py .                                              [ 22%]
+tests/test_failed_posts.py ...                                           [ 29%]
+tests/test_generation_api.py .F.                                         [ 35%]
+tests/test_graph_smoke.py Fs                                             [ 39%]
+tests/test_graph_spec.py .......                                         [ 54%]
+tests/test_health_api.py .                                               [ 56%]
+tests/test_originality_sanity.py .                                       [ 58%]
+tests/test_phase_1_9.py .....                                            [ 68%]
+tests/test_phase_3_0.py ..                                               [ 72%]
+tests/test_posts_api.py FF...                                            [ 83%]
+tests/test_projects_api.py ......                                        [ 95%]
+tests/test_validation_originality.py ..                                  [100%]
+
+=================================== FAILURES ===================================
+_________________ test_tc_style_001_and_002_style_profile_apis _________________
+
+client = <starlette.testclient.TestClient object at 0x78641775f3a0>
+
+    def test_tc_style_001_and_002_style_profile_apis(client):
+        """TC-STYLE-001 & 002 — Trigger and retrieve Style Profile via API"""
+        proj_res = client.post("/api/projects", json={"name": "Style Profile Test Project"})
+        proj_id = proj_res.json()["id"]
+    
+        dataset_path = os.path.join(os.path.dirname(__file__), "..", "sample_datasets", "tech_creator.json")
+        with open(dataset_path) as f:
+            dataset = json.load(f)
+    
+        client.post(f"/api/projects/{proj_id}/posts/import", json=dataset)
+    
+        # TC-STYLE-001: Trigger analysis
+        analyze_res = client.post(f"/api/projects/{proj_id}/analyze")
+>       assert analyze_res.status_code == 200
+E       assert 400 == 200
+E        +  where 400 = <Response [400 Bad Request]>.status_code
+
+tests/test_analysis_api.py:81: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9941.62it/s]
+------------------------------ Captured log call -------------------------------
+WARNING  huggingface_hub.utils._http:_http.py:993 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING  root:posts.py:116 Failed to extract features for post tech-001: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-002: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-003: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-004: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-005: Media path does not exist:
+______________________ test_tc_cv_004_invalid_image_path _______________________
+
+    def test_tc_cv_004_invalid_image_path():
+        """TC-CV-004 — Invalid image path gracefully handled"""
+>       feats = ImageAnalyzer.extract_features("/nonexistent/path/image.jpg")
+
+tests/test_cv_ocr.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+media_path = '/nonexistent/path/image.jpg'
+
+    @staticmethod
+    def extract_features(media_path: Optional[str]) -> Dict[str, Any]:
+        default_features = {
+            "width": None,
+            "height": None,
+            "aspect_ratio": None,
+            "brightness": 0.5,
+            "contrast": 0.5,
+            "saturation": 0.5,
+            "dominant_colors": ["#4F46E5", "#1E1B4B", "#F3F4F6"],
+            "color_histogram": {},
+            "text_area_ratio": 0.0,
+            "ocr_text": "",
+        }
+    
+        if not media_path or not os.path.exists(media_path):
+>           raise ValueError(f"Media path does not exist: {media_path}")
+E           ValueError: Media path does not exist: /nonexistent/path/image.jpg
+
+app/services/image_analyzer.py:39: ValueError
+_________________ test_tc_draft_001_to_006_drafts_api_pipeline _________________
+
+client = <starlette.testclient.TestClient object at 0x786414fc6380>
+
+    def test_tc_draft_001_to_006_drafts_api_pipeline(client):
+        """TC-DRAFT-001 through 006 — Draft Management & Validation Retrieval APIs"""
+        proj_res = client.post("/api/projects", json={"name": "Draft API Project"})
+        proj_id = proj_res.json()["id"]
+    
+        dataset_path = os.path.join(os.path.dirname(__file__), "..", "sample_datasets", "tech_creator.json")
+        with open(dataset_path) as f:
+            dataset = json.load(f)
+    
+        client.post(f"/api/projects/{proj_id}/posts/import", json=dataset)
+        client.post(f"/api/projects/{proj_id}/analyze")
+    
+        # Generate draft
+        gen_res = client.post(f"/api/projects/{proj_id}/generate", json={
+            "topic": "Draft Management Test",
+            "post_type": "educational"
+        })
+>       assert gen_res.status_code == 200
+E       assert 400 == 200
+E        +  where 400 = <Response [400 Bad Request]>.status_code
+
+tests/test_drafts_api.py:22: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10519.98it/s]
+------------------------------ Captured log call -------------------------------
+WARNING  root:posts.py:116 Failed to extract features for post tech-001: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-002: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-003: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-004: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-005: Media path does not exist:
+________ test_tc_e2e_001_complete_instagram_voice_replication_pipeline _________
+
+client = <starlette.testclient.TestClient object at 0x7864144da350>
+
+    def test_tc_e2e_001_complete_instagram_voice_replication_pipeline(client):
+        """TC-E2E-001 — Complete Instagram Voice Replication Pipeline"""
+    
+        # 1. Create Project
+        proj_res = client.post("/api/projects", json={
+            "name": "E2E AI Content Creator",
+            "creator_handle": "@ai_voice_e2e",
+            "description": "Full end-to-end style replication pipeline verification"
+        })
+        assert proj_res.status_code == 200
+        proj_id = proj_res.json()["id"]
+    
+        # 2. Import Historical Dataset
+        dataset_path = os.path.join(os.path.dirname(__file__), "..", "sample_datasets", "tech_creator.json")
+        with open(dataset_path) as f:
+            dataset = json.load(f)
+    
+        import_res = client.post(f"/api/projects/{proj_id}/posts/import", json=dataset)
+        assert import_res.status_code == 200
+>       assert import_res.json()["count"] == 5
+E       KeyError: 'count'
+
+tests/test_e2e_pipeline.py:24: KeyError
+----------------------------- Captured stderr call -----------------------------
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9645.09it/s]
+------------------------------ Captured log call -------------------------------
+WARNING  root:posts.py:116 Failed to extract features for post tech-001: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-002: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-003: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-004: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-005: Media path does not exist:
+____________________ test_tc_embed_005_empty_text_embedding ____________________
+
+    def test_tc_embed_005_empty_text_embedding():
+        """TC-EMBED-005 — Empty text embedding handling"""
+        service = EmbeddingService()
+>       vec = service.generate_embedding("")
+
+tests/test_embeddings_retrieval.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <app.services.embedding_service.EmbeddingService object at 0x7864144c8700>
+text = ''
+
+    def generate_embedding(self, text: str) -> List[float]:
+        if not text or not text.strip():
+>           raise ValueError("Cannot generate embedding for empty text")
+E           ValueError: Cannot generate embedding for empty text
+
+app/services/embedding_service.py:30: ValueError
+----------------------------- Captured stderr call -----------------------------
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9768.53it/s]
+__________________ test_tc_gen_001_to_005_generation_pipeline __________________
+
+client = <starlette.testclient.TestClient object at 0x7863ec31bdc0>
+
+    def test_tc_gen_001_to_005_generation_pipeline(client):
+        """TC-GEN-001 through 005 — Generate educational post with CTA requirement & target length"""
+        proj_res = client.post("/api/projects", json={"name": "Gen Test Project"})
+        proj_id = proj_res.json()["id"]
+    
+        dataset_path = os.path.join(os.path.dirname(__file__), "..", "sample_datasets", "tech_creator.json")
+        with open(dataset_path) as f:
+            dataset = json.load(f)
+    
+        client.post(f"/api/projects/{proj_id}/posts/import", json=dataset)
+        client.post(f"/api/projects/{proj_id}/analyze")
+    
+        gen_payload = {
+            "topic": "5 essential tools for modern AI developers",
+            "post_type": "educational",
+            "cta_requirement": "Ask followers to save for later",
+            "desired_length": "medium"
+        }
+    
+        res = client.post(f"/api/projects/{proj_id}/generate", json=gen_payload)
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Style profile required for generation. Please analyze the project first."}
+E       assert 400 == 200
+E        +  where 400 = <Response [400 Bad Request]>.status_code
+
+tests/test_generation_api.py:38: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8720.14it/s]
+------------------------------ Captured log call -------------------------------
+WARNING  root:posts.py:116 Failed to extract features for post tech-001: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-002: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-003: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-004: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-005: Media path does not exist:
+___________________________ test_graph_with_mock_llm ___________________________
+
+    def test_graph_with_mock_llm():
+        req = GenerationRequest(
+            topic="mock topic",
+            post_type="educational"
+        )
+    
+        initial_state = {
+            "project_id": "test-project",
+            "request": req,
+            "style_profile": {},
+            "retrieved_posts": [],
+            "historical_posts": []
+        }
+    
+        mock_resp = GenerationResponse(
+            id="test-cand",
+            project_id="test-project",
+            topic="mock topic",
+            post_type="educational",
+            hook="Mock hook",
+            caption="Mock caption",
+            cta="Mock CTA",
+            hashtags=["#mock"],
+            slides=[],
+            created_at=datetime.datetime.utcnow()
+        )
+    
+        with patch("app.services.graph_service.LLMService.get_provider") as mock_get_provider, \
+             patch("app.services.graph_service.ValidationService.validate_draft") as mock_validate:
+    
+            mock_provider = MagicMock()
+            mock_provider.generate_structured.return_value = mock_resp
+            mock_get_provider.return_value = mock_provider
+    
+            mock_validate.return_value = {
+                "overall_score": 85,
+                "metrics_breakdown": {"style_score": 85, "format_score": 85, "tone_score": 85, "length_score": 85},
+                "originality_status": "pass",
+                "max_ngram_overlap": 0.0,
+                "flagged_phrases": []
+            }
+    
+            final_state = graph.invoke(initial_state)
+    
+            # Verify node execution
+            assert "selected_candidate" in final_state
+            assert final_state["selected_candidate"].caption == "Mock caption"
+            assert len(final_state["candidates"]) == 4
+            assert len(final_state["validation_results"]) == 4
+            assert not final_state.get("_needs_revision")
+            assert "revised_candidate" not in final_state
+    
+            # Verify revise path
+            mock_validate.return_value = {
+                "overall_score": 30, # Fails validation
+                "metrics_breakdown": {"style_score": 30, "format_score": 30, "tone_score": 30, "length_score": 30},
+                "originality_status": "fail",
+                "max_ngram_overlap": 0.9,
+                "flagged_phrases": []
+            }
+            final_state_failed = graph.invoke(initial_state)
+>           assert final_state_failed.get("_needs_revision") is True
+E           AssertionError: assert None is True
+E            +  where None = <built-in method get of dict object at 0x7863945013c0>('_needs_revision')
+E            +    where <built-in method get of dict object at 0x7863945013c0> = {'project_id': 'test-project', 'request': GenerationRequest(topic='mock topic', post_type='educational', cta_requirement=None, desired_length='medium', custom_instructions=None), 'iterations': 2, 'style_profile': {}, ...}.get
+
+tests/test_graph_smoke.py:70: AssertionError
+----------------------------- Captured stdout call -----------------------------
+DEBUG route_after_select: iterations=0, needs_revision=False
+DEBUG route_after_select: iterations=0, needs_revision=True
+DEBUG route_after_select: iterations=1, needs_revision=True
+DEBUG route_after_select: iterations=2, needs_revision=False
+____________________ test_tc_post_001_import_valid_dataset _____________________
+
+client = <starlette.testclient.TestClient object at 0x7864179e7cd0>
+
+    def test_tc_post_001_import_valid_dataset(client):
+        """TC-POST-001 — Import valid historical dataset"""
+        proj_res = client.post("/api/projects", json={"name": "Post Import Project"})
+        proj_id = proj_res.json()["id"]
+    
+        dataset_path = os.path.join(os.path.dirname(__file__), "..", "sample_datasets", "tech_creator.json")
+        with open(dataset_path) as f:
+            dataset = json.load(f)
+    
+        res = client.post(f"/api/projects/{proj_id}/posts/import", json=dataset)
+        assert res.status_code == 200, res.text
+        data = res.json()
+>       assert data["count"] == 5
+E       KeyError: 'count'
+
+tests/test_posts_api.py:17: KeyError
+----------------------------- Captured stderr call -----------------------------
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8081.06it/s]
+------------------------------ Captured log call -------------------------------
+WARNING  root:posts.py:116 Failed to extract features for post tech-001: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-002: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-003: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-004: Media path does not exist: 
+WARNING  root:posts.py:116 Failed to extract features for post tech-005: Media path does not exist:
+____________________ test_tc_post_002_import_empty_dataset _____________________
+
+client = <starlette.testclient.TestClient object at 0x786394449ed0>
+
+    def test_tc_post_002_import_empty_dataset(client):
+        """TC-POST-002 — Import empty dataset"""
+        proj_res = client.post("/api/projects", json={"name": "Empty Dataset Project"})
+        proj_id = proj_res.json()["id"]
+    
+        res = client.post(f"/api/projects/{proj_id}/posts/import", json={"posts": []})
+        assert res.status_code == 200
+>       assert res.json()["count"] == 0
+E       KeyError: 'count'
+
+tests/test_posts_api.py:26: KeyError
+----------------------------- Captured stderr call -----------------------------
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11948.59it/s]
+=============================== warnings summary ===============================
+app/config.py:4
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/config.py:4: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Settings(BaseSettings):
+
+app/schemas/project.py:6
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:6: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    name: str = Field(..., example="Tech Insights Creator")
+
+app/schemas/project.py:7
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:7: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    creator_handle: Optional[str] = Field(None, example="@tech_guru")
+
+app/schemas/project.py:8
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:8: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    description: Optional[str] = Field(None, example="AI & Software engineering content")
+
+app/schemas/project.py:18
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:18: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class ProjectResponse(ProjectBase):
+
+app/schemas/post.py:16
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/post.py:16: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class TextFeaturesResponse(BaseModel):
+
+app/schemas/post.py:41
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/post.py:41: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class VisualFeaturesResponse(BaseModel):
+
+app/schemas/post.py:55
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/post.py:55: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class PostResponse(BaseModel):
+
+app/schemas/style.py:5
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/style.py:5: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class StyleProfileResponse(BaseModel):
+
+app/schemas/generation.py:6
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:6: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    topic: str = Field(..., example="5 essential tools for modern AI developers")
+
+app/schemas/generation.py:7
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:7: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    post_type: Optional[str] = Field("educational", example="educational")
+
+app/schemas/generation.py:8
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:8: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    cta_requirement: Optional[str] = Field(None, example="Ask followers to comment their favorite tool")
+
+app/schemas/generation.py:9
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:9: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    desired_length: Optional[str] = Field("medium", example="medium") # short, medium, long
+
+app/schemas/generation.py:10
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:10: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    custom_instructions: Optional[str] = Field(None, example="Include a tip about python environment setup")
+
+app/schemas/generation.py:16
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:16: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class GenerationResponse(BaseModel):
+
+app/schemas/validation.py:5
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/validation.py:5: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class ValidationResponse(BaseModel):
+
+.venv/lib/python3.10/site-packages/_pytest/config/__init__.py:1464
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/.venv/lib/python3.10/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: env
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+tests/test_graph_spec.py::test_retrieve_node_uses_custom_retriever
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/.venv/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:663: ArbitraryTypeWarning: <built-in function any> is not a Python type (it may be an instance of an object), Pydantic will allow any object with no validation since we cannot even enforce that the input is an instance of the given type. To get rid of this error wrap the type with `pydantic.SkipValidation`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_analysis_api.py::test_tc_style_001_and_002_style_profile_apis
+FAILED tests/test_cv_ocr.py::test_tc_cv_004_invalid_image_path - ValueError: ...
+FAILED tests/test_drafts_api.py::test_tc_draft_001_to_006_drafts_api_pipeline
+FAILED tests/test_e2e_pipeline.py::test_tc_e2e_001_complete_instagram_voice_replication_pipeline
+FAILED tests/test_embeddings_retrieval.py::test_tc_embed_005_empty_text_embedding
+FAILED tests/test_generation_api.py::test_tc_gen_001_to_005_generation_pipeline
+FAILED tests/test_graph_smoke.py::test_graph_with_mock_llm - AssertionError: ...
+FAILED tests/test_posts_api.py::test_tc_post_001_import_valid_dataset - KeyEr...
+FAILED tests/test_posts_api.py::test_tc_post_002_import_empty_dataset - KeyEr...
+======= 9 failed, 38 passed, 1 skipped, 18 warnings in 286.36s (0:04:46) =======

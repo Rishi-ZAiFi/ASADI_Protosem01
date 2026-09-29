@@ -3,10 +3,27 @@ import os
 import socket
 import pytest
 
+# Ensure tests use the test database
+os.environ["DATABASE_URL"] = "postgresql+psycopg://instagram_user:instagram_password@localhost:5432/instagram_voice_test"
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 from app.main import app
+from app.config import settings
+from app.db.session import Base, engine, SessionLocal, get_db
+
+@pytest.fixture(scope="session", autouse=True)
+def assert_test_db():
+    dev_db_url = os.getenv("DEV_DATABASE_URL", "postgresql+psycopg://instagram_user:instagram_password@localhost:5432/instagram_voice")
+    db_url = str(settings.DATABASE_URL).strip()
+    if db_url == dev_db_url or db_url.rstrip('/').endswith('/instagram_voice'):
+        pytest.exit(f"ABORT: Test database URL must not match the dev URL! Current: {db_url}")
+    # Create tables
+    Base.metadata.create_all(bind=engine)
 
 def is_postgres_reachable() -> bool:
     try:
@@ -18,18 +35,16 @@ def is_postgres_reachable() -> bool:
     except Exception:
         return False
 
-# Pytest mark for PostgreSQL dependency
 requires_postgres = pytest.mark.skipif(
     not is_postgres_reachable(),
-    reason="PostgreSQL database instagram_voice on port 5432 is not reachable (Docker container instagram_voice_db requires user permission to start)"
+    reason="PostgreSQL not reachable"
 )
 
 @pytest.fixture(autouse=True)
 def skip_if_postgres_missing(request):
-    """Automatically skip database-dependent API tests if PostgreSQL is unreachable."""
     if "requires_postgres" in request.keywords or "client" in request.fixturenames:
         if not is_postgres_reachable():
-            pytest.skip("PostgreSQL database instagram_voice on port 5432 is not reachable (Docker container instagram_voice_db requires starting)")
+            pytest.skip("PostgreSQL not reachable")
 
 @pytest.fixture
 def client():
@@ -39,8 +54,8 @@ def client():
 def sample_tech_post_data():
     return {
         "id": "test-post-001",
-        "caption": "5 AI Agent Frameworks You Need to Know in 2026 🚀\n\nBuilding autonomous AI systems is moving faster than ever. If you're still writing custom wrapper scripts from scratch, you are losing hours of development time.\n\nHere are the top 5 frameworks reshaping AI engineering:\n\n• LangGraph — State graph orchestration\n• AutoGen — Multi-agent conversation\n• CrewAI — Role-playing AI agents\n• Semantic Kernel — Enterprise-grade AI\n• LlamaIndex — Data-centric agentic RAG\n\nWhich framework are you building with this week? Drop a comment below! 👇",
-        "hashtags": ["#ai", "#python", "#tech"],
+        "caption": "test",
+        "hashtags": ["#ai"],
         "media_path": "",
         "post_type": "educational",
         "published_at": "2026-01-10"

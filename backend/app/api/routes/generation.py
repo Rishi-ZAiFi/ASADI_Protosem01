@@ -11,6 +11,7 @@ from app.services.retrieval_service import RetrievalService
 from app.services.prompt_builder import PromptBuilder
 from app.services.llm_service import LLMService
 from app.services.validation_service import ValidationService
+from app.services.graph_service import run_generation_graph
 
 router = APIRouter(prefix="/projects/{project_id}", tags=["generation"])
 
@@ -93,6 +94,68 @@ def generate_draft(project_id: str, req: GenerationRequest, db: Session = Depend
         max_ngram_overlap=val_report["max_ngram_overlap"],
         flagged_phrases=val_report["flagged_phrases"],
         retrieved_examples_used=[ex["id"] for ex in relevant_examples if "id" in ex]
+    )
+    db.add(val_res)
+    db.commit()
+    return draft
+
+@router.post("/generate/graph", response_model=GenerationResponse)
+def generate_draft_graph(project_id: str, req: GenerationRequest, db: Session = Depends(get_db)):
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    # 1. Run Graph
+    best_candidate = run_generation_graph(db, project_id, req)
+
+    # 2. Save GeneratedDraft
+    draft = GeneratedDraft(
+        project_id=project_id,
+        topic=best_candidate.topic,
+        post_type=best_candidate.post_type,
+        hook=best_candidate.hook,
+        caption=best_candidate.caption,
+        cta=best_candidate.cta,
+        hashtags=best_candidate.hashtags,
+        slides=[s.model_dump() for s in best_candidate.slides] if best_candidate.slides else [],
+        status="draft"
+    )
+    db.add(draft)
+    db.flush()
+
+    # 3. Validation result should ideally be saved too, but we can reuse the one from the state if we returned it.
+    # For now, just re-run validation on the saved draft to store it in DB consistently.
+    sp = db.query(StyleProfile).filter(StyleProfile.project_id == project_id).first()
+    style_profile_data = {}
+    if sp:
+        style_profile_data = {
+            "tone_scores": sp.tone_scores or {},
+            "caption_stats": sp.caption_stats or {},
+            "formatting_patterns": sp.formatting_patterns or {},
+            "emoji_profile": sp.emoji_profile or {},
+            "hashtag_profile": sp.hashtag_profile or {},
+            "cta_profile": sp.cta_profile or {},
+            "common_structures": sp.common_structures or []
+        }
+        
+    historical_posts = db.query(Post).filter(Post.project_id == project_id).all()
+    h_posts_list = [{"id": p.id, "caption": p.caption} for p in historical_posts]
+    
+    val_report = ValidationService.validate_draft(
+        draft_caption=draft.caption,
+        draft_hashtags=draft.hashtags or [],
+        style_profile=style_profile_data,
+        historical_posts=h_posts_list
+    )
+
+    val_res = ValidationResult(
+        draft_id=draft.id,
+        overall_score=val_report["overall_score"],
+        metrics_breakdown=val_report["metrics_breakdown"],
+        originality_status=val_report["originality_status"],
+        max_ngram_overlap=val_report["max_ngram_overlap"],
+        flagged_phrases=val_report["flagged_phrases"],
+        retrieved_examples_used=[] # We didn't easily bubble up retrieved_posts IDs from graph
     )
     db.add(val_res)
     db.commit()
