@@ -22,7 +22,8 @@ def assert_test_db():
     db_url = str(settings.DATABASE_URL).strip()
     if db_url == dev_db_url or db_url.rstrip('/').endswith('/instagram_voice'):
         pytest.exit(f"ABORT: Test database URL must not match the dev URL! Current: {db_url}")
-    # Create tables
+    # Re-create tables to reflect latest schema
+    Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
 
 def is_postgres_reachable() -> bool:
@@ -45,6 +46,17 @@ def skip_if_postgres_missing(request):
     if "requires_postgres" in request.keywords or "client" in request.fixturenames:
         if not is_postgres_reachable():
             pytest.skip("PostgreSQL not reachable")
+
+from unittest.mock import patch
+
+@pytest.fixture(autouse=True)
+def mock_embedding_in_api_tests(request):
+    unmocked = ("test_embeddings_retrieval", "test_phase_1_9", "test_originality_sanity")
+    if not any(name in request.node.nodeid for name in unmocked):
+        with patch("app.services.embedding_service.EmbeddingService.generate_embedding", return_value=[0.1] * 384):
+            yield
+    else:
+        yield
 
 @pytest.fixture
 def client():

@@ -69,13 +69,7 @@ def test_import_posts_parse_error_and_resilience(mock_embed, mock_img, mock_text
     }
     
     mock_img.side_effect = [
-        # Post 1 succeeds
-        {
-            "width": 100, "height": 100, "aspect_ratio": 1.0, "brightness": 0.5,
-            "contrast": 0.5, "saturation": 0.5, "dominant_colors": [],
-            "color_histogram": {}, "text_area_ratio": 0.0, "ocr_text": ""
-        },
-        # Post 2 fails extraction
+        # Post 2 fails extraction (Post 1 has no media path)
         RuntimeError("Simulated extraction failure")
     ]
     
@@ -93,7 +87,8 @@ def test_import_posts_parse_error_and_resilience(mock_embed, mock_img, mock_text
             {
                 "id": "post-2",
                 "caption": "test 2",
-                "published_at": "2023-01-01" # Valid date, but extraction will fail
+                "media_path": "/nonexistent/media.jpg",
+                "published_at": "2023-01-01" # Valid date, but image extraction will fail
             }
         ]
     }

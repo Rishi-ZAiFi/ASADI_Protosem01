@@ -1,6 +1,8 @@
 import os
 import json
 import pytest
+import datetime
+import datetime
 
 def test_tc_draft_001_to_006_drafts_api_pipeline(client):
     """TC-DRAFT-001 through 006 — Draft Management & Validation Retrieval APIs"""
@@ -14,14 +16,40 @@ def test_tc_draft_001_to_006_drafts_api_pipeline(client):
     client.post(f"/api/projects/{proj_id}/posts/import", json=dataset)
     client.post(f"/api/projects/{proj_id}/analyze")
 
-    # Generate draft
-    gen_res = client.post(f"/api/projects/{proj_id}/generate", json={
-        "topic": "Draft Management Test",
-        "post_type": "educational"
-    })
-    assert gen_res.status_code == 200
-    draft = gen_res.json()
-    draft_id = draft["id"]
+    from unittest.mock import patch, MagicMock
+    from app.schemas.generation import GenerationResponse, ParsedBrief
+
+    mock_resp = GenerationResponse(
+        id="mock-draft-id",
+        project_id=proj_id,
+        topic="Draft Management Test",
+        post_type="educational",
+        hook="Mock draft hook",
+        caption="Mock draft caption text body",
+        body="Mock draft caption text body",
+        cta="Mock CTA",
+        hashtags=["#mock"],
+        slides=[],
+        created_at=datetime.datetime.utcnow()
+    )
+
+    with patch("app.services.llm_service.LLMService.get_provider") as mock_get_provider:
+        mock_provider = MagicMock()
+        def mock_generate_structured(prompt, schema):
+            if schema == ParsedBrief:
+                return ParsedBrief(topic="Draft", format="educational", goal="educate", constraints=[])
+            return mock_resp
+        mock_provider.generate_structured.side_effect = mock_generate_structured
+        mock_get_provider.return_value = mock_provider
+
+        # Generate draft
+        gen_res = client.post(f"/api/projects/{proj_id}/generate", json={
+            "topic": "Draft Management Test",
+            "post_type": "educational"
+        })
+        assert gen_res.status_code == 200
+        draft = gen_res.json()
+        draft_id = draft["id"]
 
     # TC-DRAFT-003: List drafts
     list_res = client.get(f"/api/projects/{proj_id}/drafts")

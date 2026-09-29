@@ -6,7 +6,7 @@ from app.models.post import Post
 from app.models.style_profile import StyleProfile
 from app.models.draft import GeneratedDraft
 from app.models.validation import ValidationResult
-from app.schemas.generation import GenerationRequest, GenerationResponse
+from app.schemas.generation import GenerationRequest, GenerationResponse, StructuredGeneratorOutput
 from app.services.retrieval_service import RetrievalService
 from app.services.prompt_builder import PromptBuilder
 from app.services.llm_service import LLMService
@@ -56,20 +56,21 @@ def generate_draft(project_id: str, req: GenerationRequest, db: Session = Depend
         custom_instructions=req.custom_instructions
     )
 
-    # 4. Call External Text-Generation LLM
+    # 4. Call LLM with Structured Output
     llm_service = LLMService.get_provider()
-    generated_content = llm_service.generate(prompt)
+    structured_out = llm_service.generate_structured(prompt, StructuredGeneratorOutput)
+    caption_full = f"{structured_out.hook}\n\n{structured_out.body}\n\n{structured_out.cta}".strip()
 
     # 5. Create GeneratedDraft record
     draft = GeneratedDraft(
         project_id=project_id,
         topic=req.topic,
         post_type=req.post_type,
-        hook=generated_content.get("hook", ""),
-        caption=generated_content.get("caption", ""),
-        cta=generated_content.get("cta", ""),
-        hashtags=generated_content.get("hashtags", []),
-        slides=generated_content.get("slides", []),
+        hook=structured_out.hook,
+        caption=caption_full,
+        cta=structured_out.cta,
+        hashtags=structured_out.hashtags,
+        slides=[],
         status="draft"
     )
     db.add(draft)

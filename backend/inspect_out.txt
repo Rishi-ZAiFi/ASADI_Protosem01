@@ -1,0 +1,317 @@
+--- 5: DATA ---
+
+Project: 'Style Profile Test Project' (ID: 794c7e88-73ae-4570-a25d-898fc3d6aab3)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Draft API Project' (ID: f3a930a2-bc61-40fd-b413-f7abbf23a7ac)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'E2E AI Content Creator' (ID: eaad666a-baac-4437-92fe-17e84e94e226)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'No Profile Project' (ID: 8f9d8c47-8678-4cd2-9515-c8c7fb6115d8)
+  No posts.
+
+Project: 'Gen Test Project' (ID: 2c91c7fa-0693-4238-b4ac-52419aa9d758)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Post Import Project' (ID: a810f8d4-4457-4266-8c21-b17bb3ca04d4)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Empty Dataset Project' (ID: 61ae6d9a-1521-4ce2-ad4d-f31f3c7ec4a0)
+  No posts.
+
+Project: 'Malformed Post Project' (ID: 3db64bb9-2dfb-49d2-a865-6eeb9601959b)
+  No posts.
+
+Project: 'Fetch Posts Project' (ID: ffc7112a-4708-4c7b-8a4a-26d4514fafe7)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Duplicate Import Project' (ID: ad7558e7-14de-4341-90f7-0ce84c19304b)
+  Post counts by format:
+    - educational: 2
+  Avg length: 4.0 (std 0.0)
+  Avg hashtags: 1.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'AI Tech Insights' (ID: 21ee0463-33de-45a7-bcba-bc4cc9d71b13)
+  No posts.
+
+Project: 'Fetch Test Project' (ID: a00a98b6-c380-4d99-8d61-b390e6ce20bc)
+  No posts.
+
+Project: 'List Project 1' (ID: 03dca241-4d9b-49e2-92b8-8940d1beb7ae)
+  No posts.
+
+Project: 'Style Profile Test Project' (ID: 14433b95-2096-45da-92a3-617e2560f0b9)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Draft API Project' (ID: 9cbdc1ce-ccb7-4e36-a019-f5923fc37080)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'E2E AI Content Creator' (ID: 025c52e1-0d17-4518-8230-b66acfbd0a7e)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'No Profile Project' (ID: 48a07a03-820e-439d-af64-6925f223feb0)
+  No posts.
+
+Project: 'Gen Test Project' (ID: c7258bef-bdf8-4970-bedd-fd87d568872b)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Post Import Project' (ID: 0fc3cafe-74cb-46ce-b98c-afa0a5345633)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Empty Dataset Project' (ID: bd27b31f-064e-4b40-8942-ba421bc929ef)
+  No posts.
+
+Project: 'Malformed Post Project' (ID: 309dba1a-3ee0-4867-8b0e-194741eac0be)
+  No posts.
+
+Project: 'Fetch Posts Project' (ID: e0f74e47-e293-452f-afcb-4a87406a9324)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Duplicate Import Project' (ID: d3baa9ab-5663-4e87-81d7-f395792a06ae)
+  Post counts by format:
+    - educational: 2
+  Avg length: 4.0 (std 0.0)
+  Avg hashtags: 1.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'AI Tech Insights' (ID: f8ce727a-92ee-47a6-9473-81d4b4db0bfc)
+  No posts.
+
+Project: 'Fetch Test Project' (ID: f6b3e79b-aa23-41df-8665-c8989abf9e44)
+  No posts.
+
+Project: 'List Project 1' (ID: 8893fc9a-4462-46a9-b726-f87cf91025d6)
+  No posts.
+
+Project: 'Style Profile Test Project' (ID: 2755f0fc-048d-43f9-91e8-45bfc41690b7)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Draft API Project' (ID: 733f2a50-fc16-42e6-b0ac-f9dcd41b4a0b)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'E2E AI Content Creator' (ID: a321b226-e6ed-41c6-beeb-90f17bfe1e10)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'No Profile Project' (ID: f07fc8cb-db1e-426a-8a42-b3a97412d75a)
+  No posts.
+
+Project: 'Gen Test Project' (ID: d3e6f42b-2afc-454a-96eb-8a334f67ee6f)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Post Import Project' (ID: 678db314-780e-49f5-8749-36bfd15d789f)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Empty Dataset Project' (ID: 1c122fd5-8b6a-4465-83e3-9c3bb02da2d5)
+  No posts.
+
+Project: 'Malformed Post Project' (ID: 3476588c-3365-4cfd-ae39-96272ae23d61)
+  No posts.
+
+Project: 'Fetch Posts Project' (ID: 29bd75dd-e945-47d7-a60e-0477bc4463bc)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Duplicate Import Project' (ID: 032a98a1-2716-44d0-a641-dde51bcfc515)
+  Post counts by format:
+    - educational: 2
+  Avg length: 4.0 (std 0.0)
+  Avg hashtags: 1.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'AI Tech Insights' (ID: 50833e27-2f20-4425-ac31-1e34c0731377)
+  No posts.
+
+Project: 'Fetch Test Project' (ID: c768196f-3694-44d3-9be3-e36d0df1d4c1)
+  No posts.
+
+Project: 'List Project 1' (ID: 5a53393d-c413-441d-b840-1d14d9916b05)
+  No posts.
+
+Project: 'Style Profile Test Project' (ID: 5a5ca0cb-8d51-4988-8e55-f7363bcd8f52)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Draft API Project' (ID: a5cf54c5-b6a2-44b7-af51-ffece82439fd)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'E2E AI Content Creator' (ID: 94c2ce7d-a7a7-496a-a4cf-08311a1c5bbe)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'No Profile Project' (ID: 1e69c143-457e-4708-ae30-284eb451c676)
+  No posts.
+
+Project: 'Gen Test Project' (ID: 253a0430-7c97-4585-b8e5-41fc49d0092c)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Post Import Project' (ID: de2135cb-dee0-41bf-aba1-8da93b78bb8a)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Empty Dataset Project' (ID: 16b92cbf-15b4-40dd-b5ca-fafb9b5565b2)
+  No posts.
+
+Project: 'Malformed Post Project' (ID: 25d21858-310c-4430-ba0f-094d5b647015)
+  No posts.
+
+Project: 'Fetch Posts Project' (ID: 5407998c-88cc-4f35-80e7-8301d192800b)
+  Post counts by format:
+    - educational: 3
+    - storytelling: 1
+    - promotional: 1
+  Avg length: 91.0 (std 21.7)
+  Avg hashtags: 5.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'Duplicate Import Project' (ID: 166c822a-915f-4448-b6da-5b4eccf64cd3)
+  Post counts by format:
+    - educational: 2
+  Avg length: 4.0 (std 0.0)
+  Avg hashtags: 1.0 (std 0.0)
+  Appears real: NO (Seeded/Synthetic)
+
+Project: 'AI Tech Insights' (ID: e37a21fd-4d87-4fc9-abfe-90b4357520fe)
+  No posts.
+
+Project: 'Fetch Test Project' (ID: 0d6ef69f-82be-4b8e-ac30-79c62263edb0)
+  No posts.
+
+Project: 'List Project 1' (ID: 858d4378-965d-4517-aa80-0219d68f1584)
+  No posts.

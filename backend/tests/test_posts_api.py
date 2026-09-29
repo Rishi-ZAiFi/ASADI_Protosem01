@@ -14,7 +14,7 @@ def test_tc_post_001_import_valid_dataset(client):
     res = client.post(f"/api/projects/{proj_id}/posts/import", json=dataset)
     assert res.status_code == 200, res.text
     data = res.json()
-    assert data["count"] == 5
+    assert data["imported_count"] == 5
 
 def test_tc_post_002_import_empty_dataset(client):
     """TC-POST-002 — Import empty dataset"""
@@ -23,7 +23,7 @@ def test_tc_post_002_import_empty_dataset(client):
 
     res = client.post(f"/api/projects/{proj_id}/posts/import", json={"posts": []})
     assert res.status_code == 200
-    assert res.json()["count"] == 0
+    assert res.json()["imported_count"] == 0
 
 def test_tc_post_003_import_malformed_post(client):
     """TC-POST-003 — Import malformed post"""

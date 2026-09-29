@@ -1,0 +1,481 @@
+......FF.......F..s...............................                       [100%]
+=================================== FAILURES ===================================
+_________________ test_tc_draft_001_to_006_drafts_api_pipeline _________________
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+.venv/lib/python3.10/site-packages/psycopg/cursor.py:117: in execute
+    raise ex.with_traceback(None)
+E   psycopg.ProgrammingError: cannot adapt type 'MagicMock' using placeholder '%s' (format: AUTO)
+
+The above exception was the direct cause of the following exception:
+tests/test_drafts_api.py:46: in test_tc_draft_001_to_006_drafts_api_pipeline
+    gen_res = client.post(f"/api/projects/{proj_id}/generate", json={
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1204: in post
+    return self.request(
+.venv/lib/python3.10/site-packages/starlette/testclient.py:463: in request
+    return super().request(
+.venv/lib/python3.10/site-packages/httpx2/_client.py:797: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.10/site-packages/httpx2/_client.py:980: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1008: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1043: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1076: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.10/site-packages/starlette/testclient.py:360: in handle_request
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/testclient.py:357: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.10/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/usr/lib/python3.10/concurrent/futures/_base.py:458: in result
+    return self.__get_result()
+/usr/lib/python3.10/concurrent/futures/_base.py:403: in __get_result
+    raise self._exception
+.venv/lib/python3.10/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.10/site-packages/fastapi/applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.10/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+.venv/lib/python3.10/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.10/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:2734: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:1780: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:2789: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:1800: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:1279: in handle
+    await app(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:158: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:144: in app
+    response = await f(request)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:706: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.10/site-packages/fastapi/routing.py:354: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+.venv/lib/python3.10/site-packages/starlette/concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+.venv/lib/python3.10/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+.venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+app/api/routes/generation.py:76: in generate_draft
+    db.add(draft)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/persistence.py:1234: in _emit_insert_statements
+    result = connection.execute(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+.venv/lib/python3.10/site-packages/psycopg/cursor.py:117: in execute
+    raise ex.with_traceback(None)
+E   sqlalchemy.exc.ProgrammingError: (psycopg.ProgrammingError) cannot adapt type 'MagicMock' using placeholder '%s' (format: AUTO)
+E   [SQL: INSERT INTO generated_drafts (id, project_id, topic, post_type, hook, caption, cta, hashtags, slides, status, created_at) VALUES (%(id)s::VARCHAR, %(project_id)s::VARCHAR, %(topic)s::VARCHAR, %(post_type)s::VARCHAR, %(hook)s::VARCHAR, %(caption)s::VARCHAR, %(cta)s::VARCHAR, %(hashtags)s::JSON, %(slides)s::JSON, %(status)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+E   [parameters: {'id': 'b45bc2c2-5eff-4fa2-b179-d23a1ee2c61a', 'project_id': '30ca90de-1ff2-4e5f-a643-9f7dfab916b8', 'topic': 'Draft Management Test', 'post_type': 'educational', 'hook': <MagicMock name='get_provider().generate().get()' id='132915051765552'>, 'caption': <MagicMock name='get_provider().generate().get()' id='132915051765552'>, 'cta': <MagicMock name='get_provider().generate().get()' id='132915051765552'>, 'hashtags': Json(<MagicMock name='get_provider().gen ... (71 chars)), 'slides': Json(<MagicMock name='get_provider().gen ... (71 chars)), 'status': 'draft', 'created_at': datetime.datetime(2026, 9, 29, 11, 29, 58, 548195)}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+----------------------------- Captured stderr call -----------------------------
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11690.89it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9010.60it/s]
+________ test_tc_e2e_001_complete_instagram_voice_replication_pipeline _________
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+.venv/lib/python3.10/site-packages/psycopg/cursor.py:117: in execute
+    raise ex.with_traceback(None)
+E   psycopg.ProgrammingError: cannot adapt type 'MagicMock' using placeholder '%s' (format: AUTO)
+
+The above exception was the direct cause of the following exception:
+tests/test_e2e_pipeline.py:65: in test_tc_e2e_001_complete_instagram_voice_replication_pipeline
+    gen_res = client.post(f"/api/projects/{proj_id}/generate", json={
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1204: in post
+    return self.request(
+.venv/lib/python3.10/site-packages/starlette/testclient.py:463: in request
+    return super().request(
+.venv/lib/python3.10/site-packages/httpx2/_client.py:797: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.10/site-packages/httpx2/_client.py:980: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1008: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1043: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1076: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.10/site-packages/starlette/testclient.py:360: in handle_request
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/testclient.py:357: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.10/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/usr/lib/python3.10/concurrent/futures/_base.py:458: in result
+    return self.__get_result()
+/usr/lib/python3.10/concurrent/futures/_base.py:403: in __get_result
+    raise self._exception
+.venv/lib/python3.10/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.10/site-packages/fastapi/applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.10/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+.venv/lib/python3.10/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.10/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:2734: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:1780: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:2789: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:1800: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:1279: in handle
+    await app(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:158: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:144: in app
+    response = await f(request)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:706: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.10/site-packages/fastapi/routing.py:354: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+.venv/lib/python3.10/site-packages/starlette/concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+.venv/lib/python3.10/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+.venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+app/api/routes/generation.py:76: in generate_draft
+    db.add(draft)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/persistence.py:1234: in _emit_insert_statements
+    result = connection.execute(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+.venv/lib/python3.10/site-packages/psycopg/cursor.py:117: in execute
+    raise ex.with_traceback(None)
+E   sqlalchemy.exc.ProgrammingError: (psycopg.ProgrammingError) cannot adapt type 'MagicMock' using placeholder '%s' (format: AUTO)
+E   [SQL: INSERT INTO generated_drafts (id, project_id, topic, post_type, hook, caption, cta, hashtags, slides, status, created_at) VALUES (%(id)s::VARCHAR, %(project_id)s::VARCHAR, %(topic)s::VARCHAR, %(post_type)s::VARCHAR, %(hook)s::VARCHAR, %(caption)s::VARCHAR, %(cta)s::VARCHAR, %(hashtags)s::JSON, %(slides)s::JSON, %(status)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+E   [parameters: {'id': '1f4f4b46-c2e4-46bf-ba2b-4c7bb7a1a6b7', 'project_id': '74b32efd-4467-454d-ad8c-573dc2a6d40b', 'topic': '5 essential tools for modern AI developers', 'post_type': 'educational', 'hook': <MagicMock name='get_provider().generate().get()' id='132915336514480'>, 'caption': <MagicMock name='get_provider().generate().get()' id='132915336514480'>, 'cta': <MagicMock name='get_provider().generate().get()' id='132915336514480'>, 'hashtags': Json(<MagicMock name='get_provider().gen ... (71 chars)), 'slides': Json(<MagicMock name='get_provider().gen ... (71 chars)), 'status': 'draft', 'created_at': datetime.datetime(2026, 9, 29, 11, 30, 11, 995768)}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+----------------------------- Captured stderr call -----------------------------
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9656.30it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11677.30it/s]
+__________________ test_tc_gen_001_to_005_generation_pipeline __________________
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+.venv/lib/python3.10/site-packages/psycopg/cursor.py:117: in execute
+    raise ex.with_traceback(None)
+E   psycopg.ProgrammingError: cannot adapt type 'MagicMock' using placeholder '%s' (format: AUTO)
+
+The above exception was the direct cause of the following exception:
+tests/test_generation_api.py:64: in test_tc_gen_001_to_005_generation_pipeline
+    res = client.post(f"/api/projects/{proj_id}/generate", json=gen_payload)
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1204: in post
+    return self.request(
+.venv/lib/python3.10/site-packages/starlette/testclient.py:463: in request
+    return super().request(
+.venv/lib/python3.10/site-packages/httpx2/_client.py:797: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.10/site-packages/httpx2/_client.py:980: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1008: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1043: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.10/site-packages/httpx2/_client.py:1076: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.10/site-packages/starlette/testclient.py:360: in handle_request
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/testclient.py:357: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.10/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/usr/lib/python3.10/concurrent/futures/_base.py:458: in result
+    return self.__get_result()
+/usr/lib/python3.10/concurrent/futures/_base.py:403: in __get_result
+    raise self._exception
+.venv/lib/python3.10/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.10/site-packages/fastapi/applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.10/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+.venv/lib/python3.10/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.10/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:2734: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:1780: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:2789: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:1800: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:1279: in handle
+    await app(scope, receive, send)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:158: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.10/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:144: in app
+    response = await f(request)
+.venv/lib/python3.10/site-packages/fastapi/routing.py:706: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.10/site-packages/fastapi/routing.py:354: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+.venv/lib/python3.10/site-packages/starlette/concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+.venv/lib/python3.10/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+.venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+app/api/routes/generation.py:76: in generate_draft
+    db.add(draft)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+.venv/lib/python3.10/site-packages/sqlalchemy/orm/persistence.py:1234: in _emit_insert_statements
+    result = connection.execute(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+.venv/lib/python3.10/site-packages/psycopg/cursor.py:117: in execute
+    raise ex.with_traceback(None)
+E   sqlalchemy.exc.ProgrammingError: (psycopg.ProgrammingError) cannot adapt type 'MagicMock' using placeholder '%s' (format: AUTO)
+E   [SQL: INSERT INTO generated_drafts (id, project_id, topic, post_type, hook, caption, cta, hashtags, slides, status, created_at) VALUES (%(id)s::VARCHAR, %(project_id)s::VARCHAR, %(topic)s::VARCHAR, %(post_type)s::VARCHAR, %(hook)s::VARCHAR, %(caption)s::VARCHAR, %(cta)s::VARCHAR, %(hashtags)s::JSON, %(slides)s::JSON, %(status)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+E   [parameters: {'id': '54eddd53-33ef-48e9-99b0-e5d0b7799352', 'project_id': '5dd3c28c-5ec6-4b53-955c-cca32cb6393b', 'topic': '5 essential tools for modern AI developers', 'post_type': 'educational', 'hook': <MagicMock name='get_provider().generate().get()' id='132915300716880'>, 'caption': <MagicMock name='get_provider().generate().get()' id='132915300716880'>, 'cta': <MagicMock name='get_provider().generate().get()' id='132915300716880'>, 'hashtags': Json(<MagicMock name='get_provider().gen ... (71 chars)), 'slides': Json(<MagicMock name='get_provider().gen ... (71 chars)), 'status': 'draft', 'created_at': datetime.datetime(2026, 9, 29, 11, 30, 52, 414687)}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+----------------------------- Captured stderr call -----------------------------
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8028.05it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7042.36it/s]
+=============================== warnings summary ===============================
+app/config.py:4
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/config.py:4: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Settings(BaseSettings):
+
+app/schemas/project.py:6
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:6: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    name: str = Field(..., example="Tech Insights Creator")
+
+app/schemas/project.py:7
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:7: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    creator_handle: Optional[str] = Field(None, example="@tech_guru")
+
+app/schemas/project.py:8
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:8: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    description: Optional[str] = Field(None, example="AI & Software engineering content")
+
+app/schemas/project.py:18
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:18: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class ProjectResponse(ProjectBase):
+
+app/schemas/post.py:16
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/post.py:16: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class TextFeaturesResponse(BaseModel):
+
+app/schemas/post.py:41
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/post.py:41: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class VisualFeaturesResponse(BaseModel):
+
+app/schemas/post.py:55
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/post.py:55: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class PostResponse(BaseModel):
+
+app/schemas/style.py:5
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/style.py:5: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class StyleProfileResponse(BaseModel):
+
+app/schemas/generation.py:6
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:6: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    topic: str = Field(..., example="5 essential tools for modern AI developers")
+
+app/schemas/generation.py:7
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:7: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    post_type: Optional[str] = Field("educational", example="educational")
+
+app/schemas/generation.py:8
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:8: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    cta_requirement: Optional[str] = Field(None, example="Ask followers to comment their favorite tool")
+
+app/schemas/generation.py:9
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:9: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    desired_length: Optional[str] = Field("medium", example="medium") # short, medium, long
+
+app/schemas/generation.py:10
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:10: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    custom_instructions: Optional[str] = Field(None, example="Include a tip about python environment setup")
+
+app/schemas/generation.py:33
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:33: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class GenerationResponse(BaseModel):
+
+app/schemas/validation.py:5
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/validation.py:5: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class ValidationResponse(BaseModel):
+
+.venv/lib/python3.10/site-packages/_pytest/config/__init__.py:1464
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/.venv/lib/python3.10/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: env
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+tests/test_graph_spec.py::test_retrieve_node_uses_custom_retriever
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/.venv/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:663: ArbitraryTypeWarning: <built-in function any> is not a Python type (it may be an instance of an object), Pydantic will allow any object with no validation since we cannot even enforce that the input is an instance of the given type. To get rid of this error wrap the type with `pydantic.SkipValidation`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_drafts_api.py::test_tc_draft_001_to_006_drafts_api_pipeline
+FAILED tests/test_e2e_pipeline.py::test_tc_e2e_001_complete_instagram_voice_replication_pipeline
+FAILED tests/test_generation_api.py::test_tc_gen_001_to_005_generation_pipeline
+3 failed, 46 passed, 1 skipped, 18 warnings in 165.84s (0:02:45)

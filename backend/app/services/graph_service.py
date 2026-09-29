@@ -44,7 +44,7 @@ class GraphState(BaseModel):
     style_retriever: Optional[Any] = None
     
     global_best_candidate: Optional[GenerationResponse] = None
-    global_best_score: int = -1
+    global_best_score: float = -1.0
 
 def parse_brief(state: GraphState) -> dict:
     prompt = f"""

@@ -26,11 +26,12 @@ def import_posts(project_id: str, dataset: PostDatasetImport, db: Session = Depe
     for item in dataset.posts:
         # Parse publication date if provided
         pub_date = None
+        parse_error = None
         if item.published_at:
             try:
                 pub_date = datetime.strptime(item.published_at, "%Y-%m-%d")
-            except Exception:
-                pub_date = datetime.utcnow()
+            except Exception as e:
+                parse_error = f"Failed to parse published_at: {e}"
 
         # 1. Create base Post record
         post = Post(
@@ -40,78 +41,98 @@ def import_posts(project_id: str, dataset: PostDatasetImport, db: Session = Depe
             hashtags=item.hashtags or [],
             media_path=item.media_path,
             post_type=item.post_type or "educational",
-            published_at=pub_date
+            published_at=pub_date,
+            parse_error=parse_error
         )
         db.add(post)
         db.flush()
 
-        # 2. Extract Text Features
-        text_feats = TextAnalyzer.extract_features(item.caption, item.hashtags)
-        detected_type = ContentAnalyzer.classify_post_type(item.caption, text_feats)
-        post.post_type = item.post_type or detected_type
+        try:
+            # 2. Extract Text Features
+            text_feats = TextAnalyzer.extract_features(item.caption, item.hashtags)
+            detected_type = ContentAnalyzer.classify_post_type(item.caption, text_feats)
+            post.post_type = item.post_type or detected_type
 
-        post_tf = PostTextFeatures(
-            post_id=post.id,
-            char_count=text_feats["char_count"],
-            word_count=text_feats["word_count"],
-            sentence_count=text_feats["sentence_count"],
-            paragraph_count=text_feats["paragraph_count"],
-            avg_sentence_length=text_feats["avg_sentence_length"],
-            avg_word_length=text_feats["avg_word_length"],
-            punctuation_counts=text_feats["punctuation_counts"],
-            question_count=text_feats["question_count"],
-            exclamation_count=text_feats["exclamation_count"],
-            line_break_count=text_feats["line_break_count"],
-            has_bullet_points=text_feats["has_bullet_points"],
-            has_numbered_list=text_feats["has_numbered_list"],
-            capitalization_style=text_feats["capitalization_style"],
-            emoji_count=text_feats["emoji_count"],
-            emojis=text_feats["emojis"],
-            hashtag_count=text_feats["hashtag_count"],
-            has_cta=text_feats["has_cta"],
-            cta_phrase=text_feats["cta_phrase"],
-            has_url=text_feats["has_url"],
-            first_person_ratio=text_feats["first_person_ratio"],
-            second_person_ratio=text_feats["second_person_ratio"],
-            formality_score=text_feats["formality_score"],
-            conversational_score=text_feats["conversational_score"],
-            educational_score=text_feats["educational_score"],
-            promotional_score=text_feats["promotional_score"],
-            storytelling_score=text_feats["storytelling_score"],
-            structure_components=text_feats["structure_components"]
-        )
-        db.add(post_tf)
+            post_tf = PostTextFeatures(
+                post_id=post.id,
+                char_count=text_feats["char_count"],
+                word_count=text_feats["word_count"],
+                sentence_count=text_feats["sentence_count"],
+                paragraph_count=text_feats["paragraph_count"],
+                avg_sentence_length=text_feats["avg_sentence_length"],
+                avg_word_length=text_feats["avg_word_length"],
+                punctuation_counts=text_feats["punctuation_counts"],
+                question_count=text_feats["question_count"],
+                exclamation_count=text_feats["exclamation_count"],
+                line_break_count=text_feats["line_break_count"],
+                has_bullet_points=text_feats["has_bullet_points"],
+                has_numbered_list=text_feats["has_numbered_list"],
+                capitalization_style=text_feats["capitalization_style"],
+                emoji_count=text_feats["emoji_count"],
+                emojis=text_feats["emojis"],
+                hashtag_count=text_feats["hashtag_count"],
+                has_cta=text_feats["has_cta"],
+                cta_phrase=text_feats["cta_phrase"],
+                has_url=text_feats["has_url"],
+                first_person_ratio=text_feats["first_person_ratio"],
+                second_person_ratio=text_feats["second_person_ratio"],
+                formality_score=text_feats["formality_score"],
+                conversational_score=text_feats["conversational_score"],
+                educational_score=text_feats["educational_score"],
+                promotional_score=text_feats["promotional_score"],
+                storytelling_score=text_feats["storytelling_score"],
+                structure_components=text_feats["structure_components"]
+            )
+            db.add(post_tf)
 
-        # 3. Extract Visual Features
-        vis_feats = ImageAnalyzer.extract_features(item.media_path)
-        post_vf = PostVisualFeatures(
-            post_id=post.id,
-            width=vis_feats["width"],
-            height=vis_feats["height"],
-            aspect_ratio=vis_feats["aspect_ratio"],
-            brightness=vis_feats["brightness"],
-            contrast=vis_feats["contrast"],
-            saturation=vis_feats["saturation"],
-            dominant_colors=vis_feats["dominant_colors"],
-            color_histogram=vis_feats["color_histogram"],
-            text_area_ratio=vis_feats["text_area_ratio"],
-            ocr_text=vis_feats["ocr_text"]
-        )
-        db.add(post_vf)
+            # 3. Extract Visual Features (only if media_path is provided)
+            ocr_text = ""
+            if item.media_path:
+                vis_feats = ImageAnalyzer.extract_features(item.media_path)
+                post_vf = PostVisualFeatures(
+                    post_id=post.id,
+                    width=vis_feats["width"],
+                    height=vis_feats["height"],
+                    aspect_ratio=vis_feats["aspect_ratio"],
+                    brightness=vis_feats["brightness"],
+                    contrast=vis_feats["contrast"],
+                    saturation=vis_feats["saturation"],
+                    dominant_colors=vis_feats["dominant_colors"],
+                    color_histogram=vis_feats["color_histogram"],
+                    text_area_ratio=vis_feats["text_area_ratio"],
+                    ocr_text=vis_feats["ocr_text"]
+                )
+                db.add(post_vf)
+                ocr_text = vis_feats.get("ocr_text") or ""
 
-        # 4. Generate & Store Vector Embedding
-        combined_text = f"{item.caption} {' '.join(item.hashtags or [])} {vis_feats['ocr_text'] or ''}"
-        vector = embedding_service.generate_embedding(combined_text)
-        post_emb = Embedding(
-            post_id=post.id,
-            vector=vector
-        )
-        db.add(post_emb)
-
+            # 4. Generate & Store Vector Embedding
+            combined_text = f"{item.caption} {' '.join(item.hashtags or [])} {ocr_text}".strip()
+            vector = embedding_service.generate_embedding(combined_text)
+            post_emb = Embedding(
+                post_id=post.id,
+                vector=vector
+            )
+            db.add(post_emb)
+            
+        except Exception as e:
+            import logging
+            logging.warning(f"Failed to extract features for post {item.id}: {e}")
+            post.analysis_status = "failed"
+            post.analysis_error = str(e)
+            
         imported_count += 1
 
     db.commit()
-    return {"message": f"Successfully imported {imported_count} posts into project {project_id}", "count": imported_count}
+    
+    parse_errors_count = db.query(Post).filter(Post.project_id == project_id, Post.parse_error != None).count()
+    failed_analysis_count = db.query(Post).filter(Post.project_id == project_id, Post.analysis_status == "failed").count()
+
+    return {
+        "message": f"Processed {len(dataset.posts)} posts", 
+        "imported_count": imported_count,
+        "parse_errors": parse_errors_count,
+        "analysis_failures": failed_analysis_count
+    }
 
 @router.get("", response_model=List[PostResponse])
 def get_posts(project_id: str, db: Session = Depends(get_db)):

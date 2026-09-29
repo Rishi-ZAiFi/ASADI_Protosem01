@@ -27,6 +27,7 @@ def test_graph_with_mock_llm():
         post_type="educational",
         hook="Mock hook",
         caption="Mock caption",
+        body="Mock caption",
         cta="Mock CTA",
         hashtags=["#mock"],
         slides=[],
@@ -37,7 +38,12 @@ def test_graph_with_mock_llm():
          patch("app.services.graph_service.ValidationService.validate_draft") as mock_validate:
         
         mock_provider = MagicMock()
-        mock_provider.generate_structured.return_value = mock_resp
+        def mock_generate_structured(prompt, schema):
+            from app.schemas.generation import ParsedBrief, StructuredGeneratorOutput
+            if schema == ParsedBrief:
+                return ParsedBrief(topic="mock topic", format="educational", goal="educate", constraints=[])
+            return StructuredGeneratorOutput(hook="Mock hook", body="Mock body", cta="Mock CTA", hashtags=["#mock"], image_text="", visual_brief="")
+        mock_provider.generate_structured.side_effect = mock_generate_structured
         mock_get_provider.return_value = mock_provider
         
         mock_validate.return_value = {
@@ -52,13 +58,14 @@ def test_graph_with_mock_llm():
         
         # Verify node execution
         assert "selected_candidate" in final_state
-        assert final_state["selected_candidate"].caption == "Mock caption"
+        assert "Mock body" in final_state["selected_candidate"].caption
         assert len(final_state["candidates"]) == 4
         assert len(final_state["validation_results"]) == 4
-        assert not final_state.get("_needs_revision")
+        assert final_state.get("needs_revision") is False
         assert "revised_candidate" not in final_state
         
-        # Verify revise path
+        # Verify revise path (exhaustion at max_iterations=2)
+        mock_provider.generate_structured.reset_mock()
         mock_validate.return_value = {
             "overall_score": 30, # Fails validation
             "metrics_breakdown": {"style_score": 30, "format_score": 30, "tone_score": 30, "length_score": 30},
@@ -67,8 +74,15 @@ def test_graph_with_mock_llm():
             "flagged_phrases": []
         }
         final_state_failed = graph.invoke(initial_state)
-        assert final_state_failed.get("_needs_revision") is True
+        # Verify strict expectations upon exhaustion
+        assert final_state_failed.get("needs_revision") is False
+        assert final_state_failed.get("iterations") == 2
+        assert len(final_state_failed.get("warnings", [])) > 0
+        assert "Max iterations exhausted" in final_state_failed["warnings"][0]
         assert "revised_candidate" in final_state_failed
+        assert final_state_failed.get("selected_candidate") is not None
+        # 1 brief parse call + 4 initial candidate calls + 2 revision calls = 7 calls total
+        assert mock_provider.generate_structured.call_count == 7
 
 def test_real_graph_smoke():
     # Only run if explicit env var allows real LLM test

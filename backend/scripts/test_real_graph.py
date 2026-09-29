@@ -66,34 +66,36 @@ def run_tests():
         # Variant 2: Best-of-N only (graph, n=4, enable_revision=False)
         start_t = time.time()
         try:
-            res2 = run_generation_graph(session, project_id, req, n_candidates=4, enable_revision=False)
+            res2, warnings2 = run_generation_graph(session, project_id, req, n_candidates=4, enable_revision=False)
             t2 = time.time() - start_t
-            print(f"2. Best-of-N: Latency={t2:.2f}s, len={len(res2.caption)}")
+            print(f"2. Best-of-N: Latency={t2:.2f}s, len={len(res2.caption or '')}")
         except Exception as e:
             print(f"2. Best-of-N: FAILED: {e}")
 
         # Variant 3: Revise-only (graph, n=1, enable_revision=True)
         start_t = time.time()
         try:
-            res3 = run_generation_graph(session, project_id, req, n_candidates=1, enable_revision=True)
+            res3, warnings3 = run_generation_graph(session, project_id, req, n_candidates=1, enable_revision=True)
             t3 = time.time() - start_t
-            print(f"3. Revise-only: Latency={t3:.2f}s, len={len(res3.caption)}")
+            print(f"3. Revise-only: Latency={t3:.2f}s, len={len(res3.caption or '')}")
         except Exception as e:
             print(f"3. Revise-only: FAILED: {e}")
             
         # Variant 4: Both (graph, n=4, enable_revision=True)
         start_t = time.time()
         try:
-            res4 = run_generation_graph(session, project_id, req, n_candidates=4, enable_revision=True)
+            res4, warnings4 = run_generation_graph(session, project_id, req, n_candidates=4, enable_revision=True)
             t4 = time.time() - start_t
-            print(f"4. Both: Latency={t4:.2f}s, len={len(res4.caption)}")
+            print(f"4. Both: Latency={t4:.2f}s, len={len(res4.caption or '')}")
             
             # For the full graph run, dump verbatim
             if idx == 0:
-                with open("eval/evidence/phase_3_1b_verbatim_run.txt", "w") as f:
+                with open("../eval/evidence/tier4_verbatim_run.txt", "w") as f:
                     f.write(f"Topic: {topic}\n\n")
+                    f.write(f"Hook: {res4.hook}\n\n")
                     f.write(f"Caption:\n{res4.caption}\n\n")
                     f.write(f"Hashtags: {res4.hashtags}\n")
+                    f.write(f"Warnings: {warnings4}\n")
         except Exception as e:
             print(f"4. Both: FAILED: {e}")
 
