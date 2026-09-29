@@ -7,49 +7,54 @@
    1. Design Tokens
    -------------------------------------------------------------------------- */
 :root {
-  --bg-color: #fbfbfd;
+  --bg-color: #f4f0ff;
   --bg-surface: #ffffff;
   --bg-card: #ffffff;
-  --bg-card-hover: #f5f5f7;
-  --bg-input: #f5f5f7;
-  --border-color: #d2d2d7;
-  --border-color-hover: #86868b;
+  --bg-card-hover: #fcfaff;
+  --bg-input: #f0ebf5;
+  --border-color: #2b2b2b;
+  --border-color-hover: #000000;
 
-  --text-primary: #1d1d1f;
-  --text-secondary: #6e6e73;
-  --text-muted: #86868b;
+  --text-primary: #111111;
+  --text-secondary: #4a4a55;
+  --text-muted: #888899;
 
-  --accent-primary: #0071e3;
-  --accent-primary-hover: #0077ed;
-  --accent-amber: #ff9f0a;
-  --accent-emerald: #30d158;
-  --accent-blue: #0071e3;
-  --accent-red: #ff3b30;
+  --accent-primary: #8a2be2;
+  --accent-primary-hover: #6a1b9a;
+  --accent-amber: #ffaa00;
+  --accent-emerald: #00e676;
+  --accent-blue: #00d4ff;
+  --accent-red: #ff3366;
 
-  --card-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
-  --btn-shadow: 0 0.5px 1px rgba(0,0,0,0.1);
-  --radius-sm: 8px;
-  --radius-md: 10px;
+  /* Neo-brutalism GenZ Shadows */
+  --card-shadow: 4px 4px 0px #111111;
+  --btn-shadow: 4px 4px 0px #111111;
+  
+  --radius-sm: 4px;
+  --radius-md: 8px;
   --radius-lg: 12px;
   --radius-full: 9999px;
-  --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-heading: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --transition-fast: 0.15s cubic-bezier(.25,.1,.25,1);
-  --transition-normal: 0.3s cubic-bezier(.25,.1,.25,1);
+  --font-body: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Impact', 'Arial Black', -apple-system, BlinkMacSystemFont, sans-serif;
+  --transition-fast: 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-normal: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 [data-theme="dark"] {
-  --bg-color: #000000;
-  --bg-surface: #1c1c1e;
-  --bg-card: #1c1c1e;
-  --bg-card-hover: #2c2c2e;
-  --bg-input: #2c2c2e;
-  --border-color: #38383a;
-  --border-color-hover: #48484a;
-  --text-primary: #f5f5f7;
-  --text-secondary: #a1a1a6;
-  --text-muted: #636366;
-  --card-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  --bg-color: #120e1f;
+  --bg-surface: #1a1625;
+  --bg-card: #1a1625;
+  --bg-card-hover: #262038;
+  --bg-input: #262038;
+  --border-color: #ff3366;
+  --border-color-hover: #00d4ff;
+  --text-primary: #f0ebf5;
+  --text-secondary: #b5b5c3;
+  --text-muted: #777788;
+  --card-shadow: 4px 4px 0px #00d4ff;
+  --btn-shadow: 4px 4px 0px #ff3366;
+  --accent-primary: #ff3366;
+  --accent-primary-hover: #ff0044;
 }
 
 /* --------------------------------------------------------------------------
@@ -109,7 +114,7 @@ a { color: inherit; text-decoration: none; }
 /* Brand */
 .brand-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
 .logo-icon { color: var(--accent-primary); display: flex; }
-.logo-text { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
+.logo-text { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 900; letter-spacing: 0.05em; text-transform: uppercase; -webkit-text-stroke: 1px var(--border-color); }
 .logo-accent { color: var(--accent-primary); }
 
 /* Desktop Tabs */
@@ -190,15 +195,17 @@ a { color: inherit; text-decoration: none; }
 }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 16px;
-  background: rgba(0,113,227,0.08);
-  border: 1px solid rgba(0,113,227,0.18);
-  border-radius: var(--radius-full);
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
-  color: var(--accent-primary); text-transform: uppercase;
+  padding: 8px 18px;
+  background: var(--accent-primary);
+  border: 3px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem; font-weight: 900; letter-spacing: 0.06em;
+  color: #fff; text-transform: uppercase;
   margin-bottom: 18px;
+  box-shadow: 3px 3px 0px var(--border-color-hover);
+  transform: rotate(-2deg);
 }
-.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-primary); }
+.badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; }
 .hero-title {
   font-family: var(--font-heading);
   font-size: clamp(2.2rem, 4.5vw, 3.2rem);
@@ -215,12 +222,15 @@ a { color: inherit; text-decoration: none; }
    -------------------------------------------------------------------------- */
 .studio-card, .glass-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-color);
+  border: 4px solid var(--border-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--card-shadow);
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
-.studio-card:hover, .glass-card:hover { border-color: var(--border-color-hover); }
+.studio-card:hover, .glass-card:hover { 
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px var(--border-color-hover); 
+}
 
 /* --------------------------------------------------------------------------
    7. Generator Form
@@ -243,17 +253,23 @@ a { color: inherit; text-decoration: none; }
 }
 .required { color: var(--accent-red); }
 .form-input {
-  width: 100%; padding: 11px 14px;
+  width: 100%; padding: 14px 14px;
   background: var(--bg-input);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  font-size: 0.95rem;
+  border: 3px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
   color: var(--text-primary);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition: all var(--transition-fast);
+  box-shadow: inset 2px 2px 0px rgba(0,0,0,0.05);
 }
 .form-input::placeholder {
   color: var(--text-muted);
-  opacity: 0.85;
+  font-weight: bold;
+}
+.form-input:focus {
+  outline: none; border-color: var(--accent-primary);
+  background: var(--bg-surface);
+  box-shadow: 4px 4px 0px var(--accent-primary);
 }
 [data-theme="dark"] .form-input {
   background: #242426;
@@ -360,17 +376,22 @@ a { color: inherit; text-decoration: none; }
 .primary-btn, .goto-gen-btn {
   padding: 13px 32px;
   background: var(--accent-primary); color: #fff;
-  font-weight: 600; font-size: 1rem;
-  border-radius: var(--radius-full);
-  gap: 8px; box-shadow: 0 2px 8px rgba(0, 113, 227, 0.35);
+  font-weight: 900; font-size: 1.1rem;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  border: 3px solid var(--border-color-hover);
+  gap: 8px; box-shadow: var(--btn-shadow);
   transition: all var(--transition-fast);
 }
 .primary-btn:hover, .goto-gen-btn:hover {
   background: var(--accent-primary-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.45);
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0px var(--border-color-hover);
 }
-.primary-btn:active, .goto-gen-btn:active { transform: translateY(0); }
+.primary-btn:active, .goto-gen-btn:active { 
+  transform: translate(2px, 2px); 
+  box-shadow: 2px 2px 0px var(--border-color-hover); 
+}
 
 /* Action Buttons */
 .action-btn {
@@ -402,25 +423,29 @@ a { color: inherit; text-decoration: none; }
 .chips-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip-btn {
   padding: 7px 15px; background: var(--bg-input);
-  border: 1px solid var(--border-color); border-radius: var(--radius-full);
-  font-size: 0.8rem; font-weight: 500; color: var(--text-primary);
+  border: 2px solid var(--border-color); border-radius: var(--radius-sm);
+  font-size: 0.8rem; font-weight: 800; color: var(--text-primary);
+  text-transform: uppercase; box-shadow: 2px 2px 0px var(--border-color);
   transition: all var(--transition-fast);
 }
 .chip-btn:hover {
   border-color: var(--accent-primary);
-  color: var(--accent-primary);
-  background: rgba(0,113,227,0.08);
-  transform: translateY(-1px);
+  color: #fff;
+  background: var(--accent-primary);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--border-color-hover);
 }
 [data-theme="dark"] .chip-btn {
   background: #242426;
-  border-color: #38383a;
+  border-color: #ff3366;
   color: #e5e5ea;
+  box-shadow: 2px 2px 0px #00d4ff;
 }
 [data-theme="dark"] .chip-btn:hover {
-  background: #2c2c2e;
-  border-color: var(--accent-primary);
+  background: #ff3366;
+  border-color: #00d4ff;
   color: #ffffff;
+  box-shadow: 4px 4px 0px #00d4ff;
 }
 
 /* --------------------------------------------------------------------------
@@ -469,11 +494,41 @@ a { color: inherit; text-decoration: none; }
 .idea-card {
   position: relative; padding: 1.25rem;
   display: flex; flex-direction: column; justify-content: space-between; gap: 0.85rem;
-  opacity: 0; transform: translateY(14px);
-  animation: cardFade 0.4s ease-out forwards;
+  border: 3px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  transition: all var(--transition-fast);
+  background: var(--bg-card);
 }
-.idea-card:hover { transform: translateY(-2px); border-color: var(--border-color-hover); }
-@keyframes cardFade { to { opacity:1; transform:translateY(0); } }
+.idea-card:hover { 
+  transform: translate(-4px, -4px); 
+  border-color: var(--border-color-hover); 
+  box-shadow: 8px 8px 0px var(--accent-primary);
+}
+
+@supports ((animation-timeline: view()) and (animation-range: entry)) {
+  @keyframes parallaxCard {
+    from {
+      opacity: 0;
+      transform: translateY(100px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  .idea-card {
+    animation: parallaxCard linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 30%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .idea-card {
+    animation: none;
+  }
+}
 
 /* Card Header */
 .card-top-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; }

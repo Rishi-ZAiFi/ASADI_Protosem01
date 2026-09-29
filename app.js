@@ -7,21 +7,12 @@
 'use strict';
 
 /* ==========================================================================
-   AI API Key Configuration (Google Gemini)
-   ========================================================================== */
-// Replace with your Google Gemini API key (starts with "AIzaSy...") to enable live AI generation
-// If left empty or invalid, IdeaForge automatically runs on the built-in 24+ template engine with 0 errors!
-const GEMINI_API_KEY = "";
-
-/* ==========================================================================
    1. State & Storage Management
    ========================================================================== */
 const STORAGE_KEY = 'ideaforge_v1';
 
 const DEFAULT_STATE = {
   theme: 'light',
-  apiKey: '',
-  apiProvider: 'gemini',
   saved: [], // Array of saved idea objects
   history: [], // Array of past generation sessions
   stats: {
@@ -46,8 +37,6 @@ function loadState() {
     const parsed = JSON.parse(raw);
     return {
       theme: parsed.theme || 'light',
-      apiKey: typeof parsed.apiKey === 'string' ? parsed.apiKey : '',
-      apiProvider: parsed.apiProvider || 'gemini',
       saved: Array.isArray(parsed.saved) ? parsed.saved : [],
       history: Array.isArray(parsed.history) ? parsed.history : [],
       stats: {
@@ -1020,7 +1009,7 @@ const NICHE_SPECIALS = {
 /* ==========================================================================
    4. The Core Idea Generation Engine
    ========================================================================== */
-function generateIdeas(topicInput, audienceInput, niche = 'Fitness', tone = 'Casual', length = 'Shorts') {
+function generateIdeasLocal(topicInput, audienceInput, niche = 'Fitness', tone = 'Casual', length = 'Shorts') {
   const cleanTopic = formatTopicInput(topicInput);
   const cleanAudience = sanitizeString(audienceInput) || 'viewers';
   const currentYear = new Date().getFullYear();
@@ -1141,6 +1130,85 @@ function generateIdeas(topicInput, audienceInput, niche = 'Fitness', tone = 'Cas
   });
 
   return generatedList;
+}
+
+/**
+ * Asynchronous Idea Generation:
+ * Tries the LangChain + Google Gemini backend (http://localhost:3001/api/generate-ideas).
+ * On any failure, network error, timeout, or malformed data, silently falls back
+ * to the built-in local engine (generateIdeasLocal) with ZERO visible errors.
+ */
+async function generateIdeas(topic, audience, niche = 'Fitness', tone = 'Casual', length = 'Shorts') {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const response = await fetch('http://localhost:3001/api/generate-ideas', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        topic: String(topic || '').trim(),
+        audience: String(audience || '').trim(),
+        niche: niche || 'Fitness',
+        tone: tone || 'Casual',
+        length: length || 'Shorts'
+      }),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.source === 'gemini' && Array.isArray(data.ideas) && data.ideas.length === 10) {
+        return data.ideas.map((item, idx) => {
+          const numberBadge = (idx + 1).toString().padStart(2, '0');
+          let formatStr = item.format || 'Standard · 10–15 min';
+          if (length === 'Shorts') formatStr = 'Vertical short · 30–60s';
+          else if (length === '5–8 min') formatStr = 'Quick guide · 5–8 min';
+          else if (length === '10–15 min') formatStr = 'In-depth tutorial · 10–15 min';
+          else if (length === '20+ min') formatStr = 'Full masterclass · 20+ min';
+
+          const outlineSteps = Array.isArray(item.outline) && item.outline.length >= 3 ? item.outline : [
+            'Hook (0-15s): Address the core problem immediately.',
+            'Setup (15-45s): Why this matters for ' + (audience || 'viewers') + '.',
+            'Main Beat 1: Core insight and demonstration.',
+            'Main Beat 2: Key pitfall to avoid.',
+            'Call to Action: Summary and subscribe ask.'
+          ];
+
+          return {
+            id: 'idea_' + Date.now() + '_' + idx + '_' + Math.random().toString(36).substr(2, 4),
+            number: numberBadge,
+            type: item.type || 'Strategy',
+            title: item.title,
+            hook: item.hook,
+            thumbnail: {
+              visual: typeof item.thumbnail === 'object' && item.thumbnail.visual ? item.thumbnail.visual : (item.thumbnail || 'Creator demonstrating ' + topic),
+              overlay: typeof item.thumbnail === 'object' && item.thumbnail.overlay ? item.thumbnail.overlay : 'WATCH THIS'
+            },
+            why: item.why || 'High search demand and viewer retention.',
+            format: formatStr,
+            effort: ['Easy', 'Medium', 'Hard'].includes(item.effort) ? item.effort : 'Medium',
+            score: Math.min(98, Math.max(55, Math.round(Number(item.score) || 85))),
+            outline: outlineSteps,
+            topic: String(topic || '').trim(),
+            audience: String(audience || '').trim(),
+            saved: false
+          };
+        });
+      }
+    }
+  } catch (err) {
+    // Silently fall through to local generator — zero console or UI error
+  } finally {
+    clearTimeout(timeoutId);
+  }
+
+  // Graceful, silent local fallback
+  return generateIdeasLocal(topic, audience, niche, tone, length);
 }
 
 /* ==========================================================================
@@ -1364,7 +1432,7 @@ function swapCard(ideaId) {
     oldCardEl.classList.add('flipping');
   }
 
-  setTimeout(() => {
+  setTimeout(async () => {
     const topic = document.getElementById('topic-input').value.trim() || currentIdeas[cardIdx].topic;
     const audience = document.getElementById('audience-input').value.trim() || currentIdeas[cardIdx].audience;
     const niche = document.getElementById('niche-select').value;
@@ -1372,7 +1440,7 @@ function swapCard(ideaId) {
     const length = document.querySelector('#length-group .active')?.dataset.value || 'Shorts';
 
     // Generate single replacement idea of a fresh type
-    const freshIdeas = generateIdeas(topic, audience, niche, tone, length);
+    const freshIdeas = await generateIdeas(topic, audience, niche, tone, length);
     // Find one whose title isn't in currentIdeas
     const existingTitles = new Set(currentIdeas.map(i => i.title));
     const replacement = freshIdeas.find(f => !existingTitles.has(f.title)) || freshIdeas[0];
@@ -1446,31 +1514,8 @@ async function runGeneration(topic, audience, niche, tone, length) {
   skeletonGrid.classList.remove('hidden');
   skeletonGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  // Check for code-embedded GEMINI_API_KEY or localStorage fallback
-  const activeKey = (typeof GEMINI_API_KEY === 'string' && GEMINI_API_KEY.trim().length > 5 && GEMINI_API_KEY !== 'YOUR_GEMINI_API_KEY_HERE')
-    ? GEMINI_API_KEY.trim()
-    : (state.apiKey && state.apiKey.trim().length > 5 ? state.apiKey.trim() : '');
-
-  let usedAi = false;
-
-  try {
-    if (activeKey) {
-      const aiIdeas = await fetchIdeasFromAI(topic, audience, niche, tone, length, activeKey);
-      if (Array.isArray(aiIdeas) && aiIdeas.length > 0) {
-        currentIdeas = aiIdeas;
-        usedAi = true;
-      } else {
-        throw new Error('AI returned an empty list of ideas');
-      }
-    } else {
-      // Fast, realistic pause for built-in generator
-      await new Promise(r => setTimeout(r, 650));
-      currentIdeas = generateIdeas(topic, audience, niche, tone, length);
-    }
-  } catch (err) {
-    console.warn('AI generation notice (falling back to built-in generator):', err);
-    currentIdeas = generateIdeas(topic, audience, niche, tone, length);
-  }
+  // Generate 10 ideas (LangChain backend with silent local fallback)
+  currentIdeas = await generateIdeas(topic, audience, niche, tone, length);
 
   // Update Stats
   state.stats.totalIdeas += 10;
@@ -1495,7 +1540,7 @@ async function runGeneration(topic, audience, niche, tone, length) {
     niche,
     tone,
     length,
-    engine: usedAi ? 'Gemini AI' : 'Built-in',
+    engine: 'IdeaForge Engine',
     date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     timeAgo: 'Just now',
     timestamp: Date.now()
@@ -1516,131 +1561,7 @@ async function runGeneration(topic, audience, niche, tone, length) {
   skeletonGrid.classList.add('hidden');
   resultsSection.classList.remove('hidden');
 
-  if (usedAi) {
-    showToast('Generated 10 custom ideas with Google Gemini AI! ✨', 'success');
-  } else {
-    showToast('Generated 10 fresh ideas! ✨', 'success');
-  }
-}
-
-/**
- * Live AI Generation via Google Gemini API
- */
-async function fetchIdeasFromAI(topic, audience, niche, tone, length, key) {
-  const activeKey = key || GEMINI_API_KEY;
-  if (!activeKey) throw new Error('No API key provided');
-
-  const systemInstructions = `You are an elite YouTube content strategist and algorithm consultant with 10+ years of experience.
-Generate exactly 10 diverse, specific, high-click-through-rate YouTube video ideas for:
-Topic: "${topic}"
-Target Audience: "${audience}"
-Category/Niche: "${niche}"
-Tone: "${tone}"
-Target Format: "${length}"
-
-Rules:
-1. Every title must be specific, human, high curiosity, strictly under 60 characters. No generic AI clichés.
-2. Hook must be the exact word-for-word spoken opening 10-15 seconds.
-3. Thumbnail concept must describe distinct visual imagery + a punchy 2-4 word bold text overlay.
-4. Why it works should explain psychological/algorithmic triggers in 1-2 punchy sentences.
-5. Provide a 5-step concrete outline for each idea.
-6. Provide an effort estimation ("Easy", "Medium", or "Hard") and a potential virality score from 75 to 97.
-7. Return strictly valid JSON array with 10 objects.`;
-
-  // Google Gemini API (gemini-1.5-flash endpoint)
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(activeKey)}`;
-  const prompt = `${systemInstructions}\n\nRespond ONLY with a JSON array containing 10 objects matching this JSON schema:
-[
-  {
-    "type": "Tutorial | Case Study | Myth Busting | Challenge | Tier List | Storytime | Breakdown | vs Comparison",
-    "title": "Specific video title (under 60 chars)",
-    "hook": "Spoken hook for first 15 seconds",
-    "thumbnail_visual": "Visual imagery description",
-    "thumbnail_overlay": "3-4 word overlay text",
-    "why": "Why this video concept works",
-    "effort": "Easy | Medium | Hard",
-    "score": 88,
-    "outline": ["Hook (0-15s): ...", "Setup (15-45s): ...", "Main Beat 1: ...", "Main Beat 2: ...", "Call to Action: ..."]
-  }
-]`;
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: 'application/json',
-        temperature: 0.7
-      }
-    })
-  });
-
-  if (!response.ok) {
-    const errData = await response.json().catch(() => ({}));
-    const msg = errData.error?.message || `HTTP ${response.status}`;
-    throw new Error(msg);
-  }
-
-  const data = await response.json();
-  const textOut = data.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!textOut) throw new Error('No response text received from Gemini');
-
-  let parsed;
-  try {
-    parsed = JSON.parse(textOut);
-  } catch (e) {
-    const clean = textOut.replace(/```json/gi, '').replace(/```/g, '').trim();
-    parsed = JSON.parse(clean);
-  }
-
-  const list = Array.isArray(parsed) ? parsed : (parsed.ideas || parsed.videos || Object.values(parsed)[0]);
-  return normalizeAiIdeaList(list, topic, audience, length);
-}
-
-/**
- * Normalizes AI output array into the exact format required by IdeaForge cards
- */
-function normalizeAiIdeaList(rawList, topic, audience, length) {
-  if (!Array.isArray(rawList)) {
-    throw new Error('AI did not return a valid list');
-  }
-
-  return rawList.slice(0, 10).map((item, idx) => {
-    const num = (idx + 1).toString().padStart(2, '0');
-    const outlineArray = Array.isArray(item.outline) ? item.outline : [
-      'Hook (0-15s): ' + (item.hook || 'Grab viewer attention with core premise.'),
-      'Setup (15-45s): Explain why this matters to ' + audience,
-      'Main Beat 1: Core insight #1 with examples',
-      'Main Beat 2: Core insight #2 with step-by-step guidance',
-      'Call to Action: Channel subscribe ask'
-    ];
-
-    let formatText = 'Standard · 10–15 min';
-    if (length === 'Shorts') formatText = 'Vertical short · 30–60s';
-    else if (length === '20+ min') formatText = 'Full masterclass · 20+ min';
-    else if (length === '5–8 min') formatText = 'Quick guide · 5–8 min';
-
-    return {
-      id: 'ai_' + Date.now() + '_' + idx + '_' + Math.random().toString(36).substr(2, 4),
-      number: num,
-      type: item.type || 'Strategy',
-      title: item.title || `${topic} for ${audience}`,
-      hook: item.hook || `If you are into ${topic}, you need to know this.`,
-      thumbnail: {
-        visual: item.thumbnail_visual || item.thumbnail?.visual || `Creator demonstrating ${topic}`,
-        overlay: item.thumbnail_overlay || item.thumbnail?.overlay || 'WATCH THIS'
-      },
-      why: item.why || item.why_it_works || 'High audience curiosity with strong search intent.',
-      format: formatText,
-      effort: ['Easy', 'Medium', 'Hard'].includes(item.effort) ? item.effort : 'Medium',
-      score: Math.min(97, Math.max(68, parseInt(item.score) || (82 + (idx % 12)))),
-      outline: outlineArray,
-      topic: topic,
-      audience: audience,
-      saved: false
-    };
-  });
+  showToast('Generated 10 fresh ideas! ✨', 'success');
 }
 
 function updateStreak(todayKey) {
