@@ -59,13 +59,13 @@ app.post('/api/generate-ideas', async (req, res) => {
 
     throw new Error(`Unexpected ideas length: ${ideas?.length}`);
   } catch (err) {
-    // Log failure reason to server console only
+    // Log failure reason to server console
     console.error('[Gemini / LangChain Error]:', err.message);
 
-    // Return 200 with fallback indicator so frontend gracefully falls back without HTTP errors
-    return res.status(200).json({
-      source: 'fallback',
-      ideas: []
+    // Return 500 with descriptive error so frontend can display it
+    return res.status(500).json({
+      error: err.message || 'Failed to generate ideas. Please try again.',
+      source: 'error'
     });
   }
 });

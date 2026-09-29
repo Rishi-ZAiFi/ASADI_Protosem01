@@ -1283,7 +1283,7 @@ function renderIdeasGrid(ideasArray, containerId) {
 
           <!-- Why it works -->
           <div class="why-box" style="margin-top: 0.6rem;">
-            <span class="why-icon">💡</span> <strong>Why it works:</strong> ${escapeHtml(idea.why)}
+            <span class="why-icon"></span> <strong>Why it works:</strong> ${escapeHtml(idea.why)}
           </div>
         </div>
 
@@ -1323,7 +1323,7 @@ function renderIdeasGrid(ideasArray, containerId) {
           <div class="outline-accordion" id="accordion-${idea.id}">
             <div class="accordion-inner">
               <div class="outline-content">
-                <div class="outline-title">📌 5-Point Video Outline</div>
+                <div class="outline-title">5-Point Video Outline</div>
                 <ul class="outline-steps">
                   ${(idea.outline || []).map((step, sIdx) => `
                     <li class="outline-step-item">
@@ -1370,7 +1370,7 @@ function toggleSaveIdea(ideaId) {
   } else {
     state.saved.unshift({ ...targetIdea, savedAt: Date.now() });
     state.stats.savedIdeas += 1;
-    showToast('Saved to your list! ❤️', 'success');
+    showToast('Saved to your list!', 'success');
 
     // Trigger Confetti on 1st save and 10th save
     if (state.stats.savedIdeas === 1 || state.stats.savedIdeas === 10) {
@@ -1561,7 +1561,7 @@ async function runGeneration(topic, audience, niche, tone, length) {
   skeletonGrid.classList.add('hidden');
   resultsSection.classList.remove('hidden');
 
-  showToast('Generated 10 fresh ideas! ✨', 'success');
+  showToast('Generated 10 fresh ideas!', 'success');
 }
 
 function updateStreak(todayKey) {
