@@ -1,5 +1,6 @@
 (function() {
   const Data = window.SyndicateData;
+  const AGENT_BACKEND_URL = "https://PASTE_YOUR_RENDER_URL_HERE.onrender.com/analyze-matches";
 
   // --- STATE ---
   let state = {
@@ -9,7 +10,8 @@
     lastRoute: '#/',
     filters: { platform: '', size: '', goal: '', field: '', search: '' },
     sort: 'best',
-    setupStep: 1
+    setupStep: 1,
+    agentAnalysis: null
   };
 
   function loadState() {
@@ -231,6 +233,7 @@
         
         <div class="flex gap-8" style="margin-top:16px;flex-wrap:wrap;">
           ${c.tags.slice(0,3).map(t => `<span class="tag tag-${tint}">${t}</span>`).join('')}
+          ${state.agentAnalysis && state.agentAnalysis[c.id] ? `<span class="tag tag-${tint}">Agent-verified match <span class="mono" style="margin-left:4px;">${state.agentAnalysis[c.id].judge_score || state.agentAnalysis[c.id].judgeScore || ''}</span></span>` : ''}
         </div>
         
         <div class="flex justify-between items-center" style="margin-top:24px;border-top:1px solid var(--line);padding-top:16px;">
@@ -337,6 +340,8 @@
               <svg style="position:absolute;left:12px;top:14px;color:var(--text-3);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
             ${state.filters.field || state.filters.search ? `<button class="btn btn-secondary" style="border:none;" data-action="clear-filters">Clear filters</button>` : ''}
+            <button class="btn btn-secondary" data-action="run-analysis" id="btn-run-analysis">Run advanced analysis</button>
+            <span id="analysis-error" class="text-14" style="color:var(--clay); display:none;">Could not complete advanced analysis. Existing match data is unaffected.</span>
           </div>
           <div class="color-text-2 text-14">${creators.length} collaborators</div>
         </div>
@@ -630,6 +635,22 @@
 
             <h3 class="mono mono-11 color-text-3 mb-8">Things to watch out for</h3>
             <p class="text-14 color-text-2 mb-24">They post on a ${creator.cadence.toLowerCase()}, which might require asynchronous coordination if your pace differs. Additionally, ${creator.platform} audiences expect native formats.</p>
+
+            ${state.agentAnalysis && state.agentAnalysis[cId] ? `
+              <div class="accordion-item mb-16" style="border:1px solid var(--line);border-radius:8px;padding:0 16px;">
+                <button class="accordion-header" data-action="toggle-accordion" style="color:var(--sage);">Multi-agent analysis <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="accordion-content text-14">
+                  <div class="color-text-2 mb-16">
+                    <strong class="color-text">Fetcher's reasoning:</strong><br/>
+                    ${state.agentAnalysis[cId].fetcher_reasoning || state.agentAnalysis[cId].fetcherReasoning || ''}
+                  </div>
+                  <div class="color-text-2 mb-16">
+                    <strong class="color-text">Judge's notes:</strong><br/>
+                    ${state.agentAnalysis[cId].judge_notes || state.agentAnalysis[cId].judgeNotes || ''}
+                  </div>
+                </div>
+              </div>
+            ` : ''}
           </div>
 
           <div class="tabpanel ${tab==='ideas' ? 'active' : ''}" id="panel-ideas">
@@ -862,6 +883,46 @@ Let me know if you have bandwidth for a quick 20-minute chat this week to explor
     else if (action === 'clear-filters') {
       state.filters = { platform: '', size: '', goal: '', field: '', search: '' };
       renderDiscover();
+    }
+    else if (action === 'run-analysis') {
+      btn.textContent = 'Analyzing...';
+      btn.disabled = true;
+      const errorEl = document.getElementById('analysis-error');
+      if (errorEl) errorEl.style.display = 'none';
+
+      let creators = getRankedCreators();
+      creators = applyFilters(creators);
+      const topCandidates = creators.slice(0, 5);
+      
+      const payload = {
+        profile: state.profile,
+        candidates: topCandidates
+      };
+
+      fetch(AGENT_BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Network error');
+        return res.json();
+      })
+      .then(data => {
+        state.agentAnalysis = state.agentAnalysis || {};
+        const results = Array.isArray(data) ? data : (data.results || data.candidates || (data.data ? data.data : Object.values(data)));
+        results.forEach(res => {
+          if (res && res.id) {
+            state.agentAnalysis[res.id] = res;
+          }
+        });
+        renderDiscover();
+      })
+      .catch(err => {
+        btn.textContent = 'Run advanced analysis';
+        btn.disabled = false;
+        if (errorEl) errorEl.style.display = 'inline-block';
+      });
     }
     else if (action === 'copy-saved') {
       const creators = getRankedCreators().filter(c => state.shortlist.includes(c.id));
