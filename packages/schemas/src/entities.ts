@@ -164,6 +164,7 @@ export const ArtifactSchema = z.discriminatedUnion('format', [
   ArtifactCaptionsSchema,
 ]);
 export type Artifact = z.infer<typeof ArtifactSchema>;
+export type ArtifactFormat = Artifact['format'];
 
 export const ScheduleEntryStatusSchema = z.enum(['pending', 'published', 'failed']);
 

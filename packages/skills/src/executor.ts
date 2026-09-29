@@ -11,7 +11,7 @@ export async function executeSkillsSerially(
   const results = [];
   for (const skill of skills) {
     try {
-      const result = await llm.generatePlan('system', context.plan); // mock call for now
+      const result = await llm.generate({ prompt: 'system: ' + JSON.stringify(context.plan), schema: skill.outputSchema }); // mock call for now
       if (onProgress) onProgress({ skillId: skill.id, status: 'success' });
       results.push({ format: skill.format, data: result });
     } catch (err) {

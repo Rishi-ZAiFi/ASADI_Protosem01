@@ -6,14 +6,13 @@ export class MockLlmPort implements LlmPort {
   public calls: LlmRequest<any>[] = [];
   async generate<T extends z.ZodType>(request: LlmRequest<T>): Promise<z.infer<T>> {
     this.calls.push(request);
-    // Determine a fake but valid value from schema using an extremely basic walk or just parse an empty object if optional, 
-    // or return a fixed mock based on the schema name/type if possible.
-    // For deterministic mock tests, we usually inject the expected output or have a deterministic factory.
-    // We'll require setting the next result for tests to assert on it.
     if (this.nextResult) {
       return this.nextResult;
     }
     throw new Error("MockLlmPort nextResult not set");
+  }
+  async search(query: string) {
+    return [];
   }
   public nextResult: any;
 }
