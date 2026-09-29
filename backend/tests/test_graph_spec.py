@@ -178,3 +178,23 @@ def test_style_exemplar_retriever_invokes_mmr():
     assert len(docs) == 1
     assert docs[0].metadata["id"] == "p1"
     assert docs[0].page_content == "Caption 1"
+
+def test_tags_and_metadata_in_graph_invoke(mock_llm_service, mock_validation, mock_db_session):
+    mock_validation.return_value = {"overall_score": 90, "originality_status": "PASS"}
+    req = GenerationRequest(topic="test", post_type="educational", n_candidates=2, max_iterations=2, enable_revision=True)
+    
+    with patch("app.services.graph_service.graph.invoke") as mock_invoke:
+        mock_invoke.return_value = {"selected_candidate": None, "warnings": []}
+        os.environ["DATA_PROVENANCE"] = "real"
+        try:
+            run_generation_graph(mock_db_session, "proj-100", req)
+            assert mock_invoke.call_count == 1
+            config = mock_invoke.call_args[1]["config"]
+            assert "variant:both" in config["tags"]
+            assert "data_provenance:real" in config["tags"]
+            assert config["metadata"]["variant"] == "both"
+            assert config["metadata"]["data_provenance"] == "real"
+            assert config["metadata"]["project_id"] == "proj-100"
+        finally:
+            del os.environ["DATA_PROVENANCE"]
+
