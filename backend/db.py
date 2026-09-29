@@ -4,7 +4,8 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 from config import settings
 
-engine = create_engine(settings.database_url, pool_pre_ping=True, connect_args={"connect_timeout": 5})
+_timeout = {"timeout": 5} if "pg8000" in settings.database_url else {"connect_timeout": 5}
+engine = create_engine(settings.database_url, pool_pre_ping=True, connect_args=_timeout)
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
 
 

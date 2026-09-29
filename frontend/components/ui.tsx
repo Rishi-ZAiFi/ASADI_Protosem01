@@ -69,7 +69,7 @@ export function ErrorNote({ error }: { error: string | null }) {
 
 export function Empty({ icon, title, children }: { icon?: ReactNode; title: string; children?: ReactNode }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-line px-6 py-14 text-center">
+    <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-line px-6 py-10 text-center">
       {icon && <div className="text-muted">{icon}</div>}
       <p className="font-medium">{title}</p>
       {children && <div className="max-w-md text-sm text-muted">{children}</div>}
@@ -79,7 +79,7 @@ export function Empty({ icon, title, children }: { icon?: ReactNode; title: stri
 
 export function PageHeader({ title, subtitle, children }: { title: string; subtitle: string; children?: ReactNode }) {
   return (
-    <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
       <div>
         <h1 className="text-xl font-semibold tracking-tight">{title}</h1>
         <p className="mt-1 text-sm text-muted">{subtitle}</p>

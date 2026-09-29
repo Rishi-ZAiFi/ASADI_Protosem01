@@ -22,7 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
         {children}
-        <footer className="mt-auto border-t border-line py-4 text-center text-sm text-muted">By: Karthik Aravind M</footer>
+        <footer className="mt-auto border-t border-line py-3 text-center text-sm font-bold text-muted">By: Karthik Aravind M</footer>
       </body>
     </html>
   );

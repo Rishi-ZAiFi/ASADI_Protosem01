@@ -11,11 +11,18 @@ class Settings(BaseSettings):
     youtube_api_key: str = ""
     groq_api_key: str = ""
 
-    database_url: str = "postgresql+psycopg://brain:brain@localhost:5433/brain"
+    # pg8000 is pure Python — Windows Smart App Control blocks psycopg's compiled driver
+    database_url: str = "postgresql+pg8000://brain:brain@localhost:5433/brain"
 
     # Groq models — check console.groq.com/docs/models and override in .env if these change.
     llm_model: str = "openai/gpt-oss-120b"  # reasoning: analysis, answers, drift, composer
     llm_fast_model: str = "openai/gpt-oss-20b"  # bulk: promise verification
+
+    # Agent token budget. Groq's free tier allows 8000 tokens per request-minute on gpt-oss-120b, and it
+    # counts the output reservation too — so input context + max output must stay under that. Raise both
+    # on a paid tier.
+    agent_max_output_tokens: int = 1500
+    agent_context_tokens: int = 4000  # older tool results are cleared from an agent's context beyond this
 
     whisper_model: str = "whisper-large-v3-turbo"  # for uploaded audio files
 
