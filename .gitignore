@@ -1,5 +1,5 @@
 # Dependencies
-/node_modules
+node_modules/
 /.pnpm-store
 
 # Next.js build outputs
@@ -12,6 +12,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
+!.env.example
 
 # Testing
 /coverage
@@ -29,6 +31,18 @@ yarn-error.log*
 # Vercel
 .vercel
 
-# System files
+# System & IDE files
 .DS_Store
 *.pem
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+Desktop.ini
+
+# Python (if any)
+__pycache__/
+*.py[cod]
+.pytest_cache/
