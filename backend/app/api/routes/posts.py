@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List, Dict, Any
@@ -53,6 +54,36 @@ def import_posts(project_id: str, dataset: PostDatasetImport, db: Session = Depe
             detected_type = ContentAnalyzer.classify_post_type(item.caption, text_feats)
             post.post_type = item.post_type or detected_type
 
+            # Hook/CTA extraction logic
+            extract_with_llm = os.environ.get("EXTRACT_HOOKS_ON_IMPORT") == "1"
+            extracted_hook = None
+            extracted_cta = None
+            extraction_source = "heuristic"
+            extraction_status = "completed"
+
+            if extract_with_llm:
+                try:
+                    from pydantic import BaseModel
+                    class ExtractedHookCTA(BaseModel):
+                        hook: str
+                        cta: str
+
+                    llm = LLMService.get_provider()
+                    res = llm.generate_structured(
+                        f"Extract the hook and CTA from this Instagram post:\n{item.caption}",
+                        ExtractedHookCTA
+                    )
+                    extracted_hook = res.hook
+                    extracted_cta = res.cta
+                    extraction_source = "llm"
+                except Exception as ex:
+                    extraction_source = "llm"
+                    extraction_status = "failed"
+                    raise RuntimeError(f"LLM hook/CTA extraction failed: {ex}") from ex
+            else:
+                extracted_hook = item.caption.split("\n")[0] if item.caption else ""
+                extracted_cta = text_feats.get("cta_phrase") or ""
+
             post_tf = PostTextFeatures(
                 post_id=post.id,
                 char_count=text_feats["char_count"],
@@ -73,6 +104,10 @@ def import_posts(project_id: str, dataset: PostDatasetImport, db: Session = Depe
                 hashtag_count=text_feats["hashtag_count"],
                 has_cta=text_feats["has_cta"],
                 cta_phrase=text_feats["cta_phrase"],
+                extracted_hook=extracted_hook,
+                extracted_cta=extracted_cta,
+                extraction_source=extraction_source,
+                extraction_status=extraction_status,
                 has_url=text_feats["has_url"],
                 first_person_ratio=text_feats["first_person_ratio"],
                 second_person_ratio=text_feats["second_person_ratio"],

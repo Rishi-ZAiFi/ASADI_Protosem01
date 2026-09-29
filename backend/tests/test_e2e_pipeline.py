@@ -3,7 +3,7 @@ import json
 import pytest
 import datetime
 
-def test_tc_e2e_001_complete_instagram_voice_replication_pipeline(client):
+def test_mocked_e2e_complete_instagram_voice_replication_pipeline(client):
     """TC-E2E-001 — Complete Instagram Voice Replication Pipeline"""
     
     # 1. Create Project

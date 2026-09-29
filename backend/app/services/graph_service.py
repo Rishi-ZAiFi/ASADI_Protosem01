@@ -88,10 +88,9 @@ def generate(state: GraphState) -> dict:
         exemplar_lines = [f"- Style Reference ({ex.get('post_type', 'post')}): {ex['caption'][:150]}..." for ex in style_exemplars]
         prompt += "\n\nSTYLE REFERENCES (DO NOT reuse their phrasing or topics, use them ONLY as stylistic references for format and tone):\n" + "\n".join(exemplar_lines)
 
-    candidates = []
-    metrics = []
-    
-    for i in range(state.n_candidates):
+    from concurrent.futures import ThreadPoolExecutor
+
+    def _generate_candidate(idx):
         start_t = time.time()
         out = llm_service.generate_structured(prompt, StructuredGeneratorOutput)
         latency = time.time() - start_t
@@ -113,9 +112,14 @@ def generate(state: GraphState) -> dict:
             slides=[],
             created_at=datetime.utcnow()
         )
-        
-        candidates.append(candidate)
-        metrics.append({"candidate_id": candidate.id, "latency_sec": round(latency, 2)})
+        return candidate, {"candidate_id": candidate.id, "latency_sec": round(latency, 2)}
+
+    max_workers = min(max(state.n_candidates, 1), 4)
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        results = list(executor.map(_generate_candidate, range(state.n_candidates)))
+
+    candidates = [r[0] for r in results]
+    metrics = [r[1] for r in results]
         
     return {"candidates": candidates, "variant_metrics": metrics}
 

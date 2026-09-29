@@ -1,118 +1,115 @@
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
 
 --- TOPIC 1: How to use LangGraph for AI agents ---
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 12036.81it/s]
-[Tokens] Prompt: 476, Candidates: 257, Total: 733
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10570.94it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 30539.61it/s]
+[LLM Call] Duration: 5.11s, Retries: 0 | [Tokens] Prompt: 476, Candidates: 229, Total: 705
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9008.16it/s]
 /home/surya-j-s/Projects/Agentic_AI_Demo/backend/.venv/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:663: ArbitraryTypeWarning: <built-in function any> is not a Python type (it may be an instance of an object), Pydantic will allow any object with no validation since we cannot even enforce that the input is an instance of the given type. To get rid of this error wrap the type with `pydantic.SkipValidation`.
   warnings.warn(
-1. Current Pipeline: Latency=32.32s, len=0
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10136.87it/s]
-[Tokens] Prompt: 53, Candidates: 64, Total: 117
-[Tokens] Prompt: 507, Candidates: 225, Total: 732
-[Tokens] Prompt: 507, Candidates: 221, Total: 728
-[Tokens] Prompt: 507, Candidates: 234, Total: 741
+1. Current Pipeline: Latency=26.32s, len=739
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 35691.78it/s]
 Gemini API returned 503. Retrying in 1s... (Attempt 1/4)
-Gemini API returned 429. Retrying in 2s... (Attempt 2/4)
-Gemini API returned 429. Retrying in 4s... (Attempt 3/4)
-[Tokens] Prompt: 507, Candidates: 244, Total: 751
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11107.45it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 12060.34it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10242.38it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10493.15it/s]
+[LLM Call] Duration: 7.37s, Retries: 1 | [Tokens] Prompt: 53, Candidates: 66, Total: 119
+[LLM Call] Duration: 3.23s, Retries: 0 | [Tokens] Prompt: 507, Candidates: 252, Total: 759
+[LLM Call] Duration: 3.51s, Retries: 0 | [Tokens] Prompt: 507, Candidates: 233, Total: 740
+[LLM Call] Duration: 4.75s, Retries: 0 | [Tokens] Prompt: 507, Candidates: 249, Total: 756
+[LLM Call] Duration: 6.71s, Retries: 0 | [Tokens] Prompt: 507, Candidates: 238, Total: 745
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9593.05it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7300.11it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10048.92it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 6159.48it/s]
 DEBUG route_after_select: iterations=0, needs_revision=False
-2. Best-of-N: Latency=66.47s, len=706
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9894.72it/s]
-[Tokens] Prompt: 53, Candidates: 64, Total: 117
-[Tokens] Prompt: 507, Candidates: 255, Total: 762
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9097.89it/s]
+2. Best-of-N: Latency=48.29s, len=625
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9198.43it/s]
+[LLM Call] Duration: 15.43s, Retries: 0 | [Tokens] Prompt: 53, Candidates: 64, Total: 117
+[LLM Call] Duration: 5.96s, Retries: 0 | [Tokens] Prompt: 507, Candidates: 225, Total: 732
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8594.20it/s]
 DEBUG route_after_select: iterations=0, needs_revision=False
-3. Revise-only: Latency=22.23s, len=701
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10392.43it/s]
-[Tokens] Prompt: 53, Candidates: 65, Total: 118
-[Tokens] Prompt: 507, Candidates: 220, Total: 727
-[Tokens] Prompt: 507, Candidates: 238, Total: 745
-[Tokens] Prompt: 507, Candidates: 223, Total: 730
-[Tokens] Prompt: 507, Candidates: 244, Total: 751
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9668.62it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8240.60it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9857.24it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9063.72it/s]
+3. Revise-only: Latency=38.09s, len=606
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7729.29it/s]
+[LLM Call] Duration: 5.14s, Retries: 0 | [Tokens] Prompt: 53, Candidates: 66, Total: 119
+[LLM Call] Duration: 3.97s, Retries: 0 | [Tokens] Prompt: 507, Candidates: 236, Total: 743
+[LLM Call] Duration: 4.59s, Retries: 0 | [Tokens] Prompt: 507, Candidates: 239, Total: 746
+[LLM Call] Duration: 5.12s, Retries: 0 | [Tokens] Prompt: 507, Candidates: 227, Total: 734
+[LLM Call] Duration: 6.11s, Retries: 0 | [Tokens] Prompt: 507, Candidates: 254, Total: 761
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11076.70it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8602.07it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9849.38it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 5757.03it/s]
 DEBUG route_after_select: iterations=0, needs_revision=False
-4. Both: Latency=61.30s, len=625
+4. Both: Latency=46.37s, len=650
 
 --- TOPIC 2: The best features of Next.js 14 ---
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11609.83it/s]
-[Tokens] Prompt: 478, Candidates: 241, Total: 719
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11372.06it/s]
-1. Current Pipeline: Latency=17.50s, len=0
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9551.27it/s]
-[Tokens] Prompt: 55, Candidates: 70, Total: 125
-[Tokens] Prompt: 509, Candidates: 244, Total: 753
-[Tokens] Prompt: 509, Candidates: 239, Total: 748
-[Tokens] Prompt: 509, Candidates: 241, Total: 750
-[Tokens] Prompt: 509, Candidates: 243, Total: 752
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10439.39it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10447.22it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9856.57it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11560.74it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9048.92it/s]
+[LLM Call] Duration: 7.52s, Retries: 0 | [Tokens] Prompt: 478, Candidates: 248, Total: 726
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10539.74it/s]
+1. Current Pipeline: Latency=20.82s, len=709
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9675.77it/s]
+[LLM Call] Duration: 7.50s, Retries: 0 | [Tokens] Prompt: 55, Candidates: 70, Total: 125
+[LLM Call] Duration: 6.09s, Retries: 0 | [Tokens] Prompt: 509, Candidates: 267, Total: 776
+[LLM Call] Duration: 6.35s, Retries: 0 | [Tokens] Prompt: 509, Candidates: 266, Total: 775
+[LLM Call] Duration: 6.89s, Retries: 0 | [Tokens] Prompt: 509, Candidates: 232, Total: 741
+[LLM Call] Duration: 9.51s, Retries: 0 | [Tokens] Prompt: 509, Candidates: 248, Total: 757
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10500.29it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11458.33it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8504.03it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8537.31it/s]
 DEBUG route_after_select: iterations=0, needs_revision=False
-2. Best-of-N: Latency=49.46s, len=682
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4950.31it/s]
-[Tokens] Prompt: 55, Candidates: 70, Total: 125
-[Tokens] Prompt: 509, Candidates: 236, Total: 745
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10919.91it/s]
+2. Best-of-N: Latency=54.78s, len=755
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8632.84it/s]
+[LLM Call] Duration: 9.36s, Retries: 0 | [Tokens] Prompt: 55, Candidates: 70, Total: 125
+[LLM Call] Duration: 5.12s, Retries: 0 | [Tokens] Prompt: 509, Candidates: 232, Total: 741
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9970.30it/s]
 DEBUG route_after_select: iterations=0, needs_revision=False
-3. Revise-only: Latency=23.59s, len=673
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8637.50it/s]
-[Tokens] Prompt: 55, Candidates: 67, Total: 122
-[Tokens] Prompt: 509, Candidates: 242, Total: 751
-[Tokens] Prompt: 509, Candidates: 246, Total: 755
-[Tokens] Prompt: 509, Candidates: 256, Total: 765
-[Tokens] Prompt: 509, Candidates: 254, Total: 763
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8866.90it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9501.90it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10125.71it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7123.17it/s]
+3. Revise-only: Latency=30.04s, len=638
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10050.33it/s]
+[LLM Call] Duration: 26.19s, Retries: 0 | [Tokens] Prompt: 55, Candidates: 64, Total: 119
+Gemini API returned 503. Retrying in 1s... (Attempt 1/4)
+[LLM Call] Duration: 6.40s, Retries: 0 | [Tokens] Prompt: 509, Candidates: 229, Total: 738
+Gemini API returned 503. Retrying in 2s... (Attempt 2/4)
+[LLM Call] Duration: 6.45s, Retries: 0 | [Tokens] Prompt: 509, Candidates: 246, Total: 755
+Gemini API returned 503. Retrying in 4s... (Attempt 3/4)
+[LLM Call] Duration: 18.74s, Retries: 0 | [Tokens] Prompt: 509, Candidates: 232, Total: 741
+[LLM Call] Duration: 19.00s, Retries: 3 | [Tokens] Prompt: 509, Candidates: 239, Total: 748
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9174.40it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9456.14it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9039.45it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8185.79it/s]
 DEBUG route_after_select: iterations=0, needs_revision=False
-4. Both: Latency=78.14s, len=668
+4. Both: Latency=81.76s, len=646
 
 --- TOPIC 3: Why structured outputs matter for LLMs ---
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11610.14it/s]
-[Tokens] Prompt: 475, Candidates: 243, Total: 718
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9203.13it/s]
-1. Current Pipeline: Latency=16.73s, len=0
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10348.12it/s]
-[Tokens] Prompt: 52, Candidates: 62, Total: 114
-[Tokens] Prompt: 506, Candidates: 219, Total: 725
-[Tokens] Prompt: 506, Candidates: 238, Total: 744
-[Tokens] Prompt: 506, Candidates: 223, Total: 729
-[Tokens] Prompt: 506, Candidates: 229, Total: 735
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11572.20it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10488.81it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8192.00it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10650.43it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11067.33it/s]
+[LLM Call] Duration: 12.11s, Retries: 0 | [Tokens] Prompt: 475, Candidates: 254, Total: 729
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9239.74it/s]
+1. Current Pipeline: Latency=26.93s, len=720
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8000.69it/s]
+[LLM Call] Duration: 4.25s, Retries: 0 | [Tokens] Prompt: 52, Candidates: 63, Total: 115
+[LLM Call] Duration: 4.90s, Retries: 0 | [Tokens] Prompt: 506, Candidates: 233, Total: 739
+[LLM Call] Duration: 6.03s, Retries: 0 | [Tokens] Prompt: 506, Candidates: 236, Total: 742
+[LLM Call] Duration: 7.39s, Retries: 0 | [Tokens] Prompt: 506, Candidates: 246, Total: 752
+[LLM Call] Duration: 10.85s, Retries: 0 | [Tokens] Prompt: 506, Candidates: 229, Total: 735
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10136.64it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 6598.75it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 6717.25it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10262.82it/s]
 DEBUG route_after_select: iterations=0, needs_revision=False
-2. Best-of-N: Latency=60.43s, len=622
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10218.64it/s]
-[Tokens] Prompt: 52, Candidates: 64, Total: 116
-[Tokens] Prompt: 506, Candidates: 216, Total: 722
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10179.87it/s]
+2. Best-of-N: Latency=52.02s, len=667
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9333.36it/s]
+[LLM Call] Duration: 4.33s, Retries: 0 | [Tokens] Prompt: 52, Candidates: 62, Total: 114
+[LLM Call] Duration: 12.57s, Retries: 0 | [Tokens] Prompt: 506, Candidates: 248, Total: 754
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11546.84it/s]
 DEBUG route_after_select: iterations=0, needs_revision=False
-3. Revise-only: Latency=22.09s, len=641
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9570.10it/s]
-[Tokens] Prompt: 52, Candidates: 64, Total: 116
-[Tokens] Prompt: 506, Candidates: 240, Total: 746
-[Tokens] Prompt: 506, Candidates: 228, Total: 734
-[Tokens] Prompt: 506, Candidates: 239, Total: 745
-[Tokens] Prompt: 506, Candidates: 236, Total: 742
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11484.83it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10441.66it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9616.97it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8509.56it/s]
+3. Revise-only: Latency=32.19s, len=656
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8018.21it/s]
+[LLM Call] Duration: 3.99s, Retries: 0 | [Tokens] Prompt: 52, Candidates: 62, Total: 114
+[LLM Call] Duration: 3.67s, Retries: 0 | [Tokens] Prompt: 506, Candidates: 224, Total: 730
+[LLM Call] Duration: 4.28s, Retries: 0 | [Tokens] Prompt: 506, Candidates: 239, Total: 745
+[LLM Call] Duration: 4.72s, Retries: 0 | [Tokens] Prompt: 506, Candidates: 258, Total: 764
+[LLM Call] Duration: 6.43s, Retries: 0 | [Tokens] Prompt: 506, Candidates: 263, Total: 769
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10397.43it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10778.24it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9299.01it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11905.46it/s]
 DEBUG route_after_select: iterations=0, needs_revision=False
-4. Both: Latency=69.36s, len=644
- 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8012.41it/s]
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9704.24it/s]
-DEBUG route_after_select: iterations=0, needs_revision=False
-4. Both: Latency=51.21s, len=658
+4. Both: Latency=48.41s, len=568

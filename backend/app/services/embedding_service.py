@@ -23,7 +23,8 @@ class EmbeddingService:
             self.use_fake = False
             if SentenceTransformer is None:
                 raise ImportError("sentence_transformers is not installed, and TEST_FAKE_EMBEDDINGS is not set.")
-            self.model = SentenceTransformer(self.model_name)
+            device = os.environ.get("EMBEDDING_DEVICE", "cpu")
+            self.model = SentenceTransformer(self.model_name, device=device)
 
     def generate_embedding(self, text: str) -> List[float]:
         if not text or not text.strip():

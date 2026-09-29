@@ -6,7 +6,7 @@ import uuid
 import datetime
 from unittest.mock import patch, MagicMock
 
-def test_graph_with_mock_llm():
+def test_mocked_graph_with_llm():
     req = GenerationRequest(
         topic="mock topic",
         post_type="educational"
@@ -61,7 +61,7 @@ def test_graph_with_mock_llm():
         assert "Mock body" in final_state["selected_candidate"].caption
         assert len(final_state["candidates"]) == 4
         assert len(final_state["validation_results"]) == 4
-        assert final_state.get("needs_revision") is False
+        assert final_state["needs_revision"] is False
         assert "revised_candidate" not in final_state
         
         # Verify revise path (exhaustion at max_iterations=2)
@@ -75,7 +75,7 @@ def test_graph_with_mock_llm():
         }
         final_state_failed = graph.invoke(initial_state)
         # Verify strict expectations upon exhaustion
-        assert final_state_failed.get("needs_revision") is False
+        assert final_state_failed["needs_revision"] is False
         assert final_state_failed.get("iterations") == 2
         assert len(final_state_failed.get("warnings", [])) > 0
         assert "Max iterations exhausted" in final_state_failed["warnings"][0]

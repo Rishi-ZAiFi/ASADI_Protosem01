@@ -4,7 +4,7 @@ import pytest
 import datetime
 import datetime
 
-def test_tc_draft_001_to_006_drafts_api_pipeline(client):
+def test_mocked_drafts_api_pipeline(client):
     """TC-DRAFT-001 through 006 — Draft Management & Validation Retrieval APIs"""
     proj_res = client.post("/api/projects", json={"name": "Draft API Project"})
     proj_id = proj_res.json()["id"]
