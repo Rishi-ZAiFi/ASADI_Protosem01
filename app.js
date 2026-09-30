@@ -12,7 +12,7 @@
 const STORAGE_KEY = 'ideaforge_v1';
 
 const DEFAULT_STATE = {
-  theme: 'light',
+  theme: 'dark',
   saved: [], // Array of saved idea objects
   history: [], // Array of past generation sessions
   stats: {
@@ -36,7 +36,7 @@ function loadState() {
     if (!raw) return { ...DEFAULT_STATE };
     const parsed = JSON.parse(raw);
     return {
-      theme: parsed.theme || 'dark',
+      theme: parsed.theme || 'light',
       saved: Array.isArray(parsed.saved) ? parsed.saved : [],
       history: Array.isArray(parsed.history) ? parsed.history : [],
       stats: {
@@ -1009,7 +1009,7 @@ const NICHE_SPECIALS = {
 /* ==========================================================================
    4. The Core Idea Generation Engine
    ========================================================================== */
-function generateIdeas(topicInput, audienceInput, niche = 'Fitness', tone = 'Casual', length = 'Shorts') {
+function generateIdeasLocal(topicInput, audienceInput, niche = 'Fitness', tone = 'Casual', length = 'Shorts') {
   const cleanTopic = formatTopicInput(topicInput);
   const cleanAudience = sanitizeString(audienceInput) || 'viewers';
   const currentYear = new Date().getFullYear();
@@ -1132,6 +1132,85 @@ function generateIdeas(topicInput, audienceInput, niche = 'Fitness', tone = 'Cas
   return generatedList;
 }
 
+/**
+ * Asynchronous Idea Generation:
+ * Tries the LangChain + Google Gemini backend (http://localhost:3001/api/generate-ideas).
+ * On any failure, network error, timeout, or malformed data, silently falls back
+ * to the built-in local engine (generateIdeasLocal) with ZERO visible errors.
+ */
+async function generateIdeas(topic, audience, niche = 'Fitness', tone = 'Casual', length = 'Shorts') {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const response = await fetch('http://localhost:3001/api/generate-ideas', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        topic: String(topic || '').trim(),
+        audience: String(audience || '').trim(),
+        niche: niche || 'Fitness',
+        tone: tone || 'Casual',
+        length: length || 'Shorts'
+      }),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.source === 'gemini' && Array.isArray(data.ideas) && data.ideas.length === 10) {
+        return data.ideas.map((item, idx) => {
+          const numberBadge = (idx + 1).toString().padStart(2, '0');
+          let formatStr = item.format || 'Standard · 10–15 min';
+          if (length === 'Shorts') formatStr = 'Vertical short · 30–60s';
+          else if (length === '5–8 min') formatStr = 'Quick guide · 5–8 min';
+          else if (length === '10–15 min') formatStr = 'In-depth tutorial · 10–15 min';
+          else if (length === '20+ min') formatStr = 'Full masterclass · 20+ min';
+
+          const outlineSteps = Array.isArray(item.outline) && item.outline.length >= 3 ? item.outline : [
+            'Hook (0-15s): Address the core problem immediately.',
+            'Setup (15-45s): Why this matters for ' + (audience || 'viewers') + '.',
+            'Main Beat 1: Core insight and demonstration.',
+            'Main Beat 2: Key pitfall to avoid.',
+            'Call to Action: Summary and subscribe ask.'
+          ];
+
+          return {
+            id: 'idea_' + Date.now() + '_' + idx + '_' + Math.random().toString(36).substr(2, 4),
+            number: numberBadge,
+            type: item.type || 'Strategy',
+            title: item.title,
+            hook: item.hook,
+            thumbnail: {
+              visual: typeof item.thumbnail === 'object' && item.thumbnail.visual ? item.thumbnail.visual : (item.thumbnail || 'Creator demonstrating ' + topic),
+              overlay: typeof item.thumbnail === 'object' && item.thumbnail.overlay ? item.thumbnail.overlay : 'WATCH THIS'
+            },
+            why: item.why || 'High search demand and viewer retention.',
+            format: formatStr,
+            effort: ['Easy', 'Medium', 'Hard'].includes(item.effort) ? item.effort : 'Medium',
+            score: Math.min(98, Math.max(55, Math.round(Number(item.score) || 85))),
+            outline: outlineSteps,
+            topic: String(topic || '').trim(),
+            audience: String(audience || '').trim(),
+            saved: false
+          };
+        });
+      }
+    }
+  } catch (err) {
+    // Silently fall through to local generator — zero console or UI error
+  } finally {
+    clearTimeout(timeoutId);
+  }
+
+  // Graceful, silent local fallback
+  return generateIdeasLocal(topic, audience, niche, tone, length);
+}
+
 /* ==========================================================================
    5. UI Rendering Functions
    ========================================================================== */
@@ -1156,9 +1235,9 @@ function renderIdeasGrid(ideasArray, containerId) {
     if (idea.effort === 'Hard') effortClass = 'effort-hard';
 
     // Score ring color
-    let scoreColor = '#0071e3'; // Apple Blue
-    if (idea.score >= 86) scoreColor = '#30d158'; // Apple Green
-    if (idea.score <= 74) scoreColor = '#ff9f0a'; // Apple Orange
+    let scoreColor = '#7c3aed'; // Violet
+    if (idea.score >= 86) scoreColor = '#10b981'; // Emerald
+    if (idea.score <= 74) scoreColor = '#f59e0b'; // Amber
 
     const strokeOffset = 100 - idea.score;
 
@@ -1204,7 +1283,7 @@ function renderIdeasGrid(ideasArray, containerId) {
 
           <!-- Why it works -->
           <div class="why-box" style="margin-top: 0.6rem;">
-            <span class="why-icon">💡</span> <strong>Why it works:</strong> ${escapeHtml(idea.why)}
+            <span class="why-icon"></span> <strong>Why it works:</strong> ${escapeHtml(idea.why)}
           </div>
         </div>
 
@@ -1244,7 +1323,7 @@ function renderIdeasGrid(ideasArray, containerId) {
           <div class="outline-accordion" id="accordion-${idea.id}">
             <div class="accordion-inner">
               <div class="outline-content">
-                <div class="outline-title">📌 5-Point Video Outline</div>
+                <div class="outline-title">5-Point Video Outline</div>
                 <ul class="outline-steps">
                   ${(idea.outline || []).map((step, sIdx) => `
                     <li class="outline-step-item">
@@ -1291,7 +1370,8 @@ function toggleSaveIdea(ideaId) {
   } else {
     state.saved.unshift({ ...targetIdea, savedAt: Date.now() });
     state.stats.savedIdeas += 1;
-    showToast('Saved to your list! ❤️', 'success');
+    showToast('Saved to your list! +10 XP 💎', 'success');
+    if (typeof addXP === 'function') addXP(XP_CONFIG.perSave);
 
     // Trigger Confetti on 1st save and 10th save
     if (state.stats.savedIdeas === 1 || state.stats.savedIdeas === 10) {
@@ -1353,7 +1433,7 @@ function swapCard(ideaId) {
     oldCardEl.classList.add('flipping');
   }
 
-  setTimeout(() => {
+  setTimeout(async () => {
     const topic = document.getElementById('topic-input').value.trim() || currentIdeas[cardIdx].topic;
     const audience = document.getElementById('audience-input').value.trim() || currentIdeas[cardIdx].audience;
     const niche = document.getElementById('niche-select').value;
@@ -1361,7 +1441,7 @@ function swapCard(ideaId) {
     const length = document.querySelector('#length-group .active')?.dataset.value || 'Shorts';
 
     // Generate single replacement idea of a fresh type
-    const freshIdeas = generateIdeas(topic, audience, niche, tone, length);
+    const freshIdeas = await generateIdeas(topic, audience, niche, tone, length);
     // Find one whose title isn't in currentIdeas
     const existingTitles = new Set(currentIdeas.map(i => i.title));
     const replacement = freshIdeas.find(f => !existingTitles.has(f.title)) || freshIdeas[0];
@@ -1426,7 +1506,7 @@ function handleFormSubmit(e) {
   runGeneration(topicVal, audienceVal, niche, tone, length);
 }
 
-function runGeneration(topic, audience, niche, tone, length) {
+async function runGeneration(topic, audience, niche, tone, length) {
   const skeletonGrid = document.getElementById('skeleton-section');
   const resultsSection = document.getElementById('results-section');
 
@@ -1435,53 +1515,57 @@ function runGeneration(topic, audience, niche, tone, length) {
   skeletonGrid.classList.remove('hidden');
   skeletonGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  setTimeout(() => {
-    currentIdeas = generateIdeas(topic, audience, niche, tone, length);
+  // Generate 10 ideas (LangChain backend with silent local fallback)
+  currentIdeas = await generateIdeas(topic, audience, niche, tone, length);
 
-    // Update Stats
-    state.stats.totalIdeas += 10;
-    state.stats.generations += 1;
+  // Update Stats
+  state.stats.totalIdeas += 10;
+  state.stats.generations += 1;
 
-    // Track Topic Count
-    const cleanTopicKey = topic.toLowerCase();
-    state.stats.topics[cleanTopicKey] = (state.stats.topics[cleanTopicKey] || 0) + 1;
+  // Track Topic Count
+  const cleanTopicKey = topic.toLowerCase();
+  state.stats.topics[cleanTopicKey] = (state.stats.topics[cleanTopicKey] || 0) + 1;
 
-    // Daily Counts (YYYY-MM-DD)
-    const todayKey = new Date().toISOString().split('T')[0];
-    state.stats.dailyCounts[todayKey] = (state.stats.dailyCounts[todayKey] || 0) + 10;
+  // Daily Counts (YYYY-MM-DD)
+  const todayKey = new Date().toISOString().split('T')[0];
+  state.stats.dailyCounts[todayKey] = (state.stats.dailyCounts[todayKey] || 0) + 10;
 
-    // Calculate Streak
-    updateStreak(todayKey);
+  // Calculate Streak
+  updateStreak(todayKey);
 
-    // History Record (cap at 20)
-    const historyItem = {
-      id: 'hist_' + Date.now(),
-      topic,
-      audience,
-      niche,
-      tone,
-      length,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      timeAgo: 'Just now',
-      timestamp: Date.now()
-    };
+  // History Record (cap at 20)
+  const historyItem = {
+    id: 'hist_' + Date.now(),
+    topic,
+    audience,
+    niche,
+    tone,
+    length,
+    engine: 'IdeaForge Engine',
+    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    timeAgo: 'Just now',
+    timestamp: Date.now()
+  };
 
-    state.history.unshift(historyItem);
-    if (state.history.length > 20) state.history.pop();
+  state.history.unshift(historyItem);
+  if (state.history.length > 20) state.history.pop();
 
-    saveState();
-    updateFooterCount();
+  saveState();
+  updateFooterCount();
 
-    // Render Results Header & Grid
-    document.getElementById('res-topic').textContent = topic;
-    document.getElementById('res-audience').textContent = audience;
+  // Gamification: Award XP for generation
+  if (typeof addXP === 'function') addXP(XP_CONFIG.perGeneration);
 
-    renderIdeasGrid(currentIdeas, 'ideas-grid');
+  // Render Results Header & Grid
+  document.getElementById('res-topic').textContent = topic;
+  document.getElementById('res-audience').textContent = audience;
 
-    skeletonGrid.classList.add('hidden');
-    resultsSection.classList.remove('hidden');
-    showToast('Generated 10 fresh ideas! ✨', 'success');
-  }, 850);
+  renderIdeasGrid(currentIdeas, 'ideas-grid');
+
+  skeletonGrid.classList.add('hidden');
+  resultsSection.classList.remove('hidden');
+
+  showToast('Generated 10 fresh ideas! +25 XP ⚡', 'success');
 }
 
 function updateStreak(todayKey) {
@@ -1612,8 +1696,8 @@ function renderBarChart() {
 
       <defs>
         <linearGradient id="barGrad" x1="0%" y1="100%" x2="0%" y2="0%">
-          <stop offset="0%" stop-color="#0071e3" />
-          <stop offset="100%" stop-color="#40a0ff" />
+          <stop offset="0%" stop-color="#7c3aed" />
+          <stop offset="100%" stop-color="#06b6d4" />
         </linearGradient>
       </defs>
     </svg>
@@ -1643,7 +1727,7 @@ function renderDonutChart() {
   });
 
   const totalSaved = state.saved.length;
-  const colors = ['#0071e3', '#ff9f0a', '#30d158', '#5e5ce6', '#ff375f', '#bf5af2', '#64d2ff'];
+  const colors = ['#7c3aed', '#f59e0b', '#10b981', '#06b6d4', '#ef4444', '#ec4899', '#8b5cf6'];
   const entries = Object.entries(typeCounts);
 
   let cumulativePercent = 0;
@@ -1903,7 +1987,8 @@ function exportTxt(ideasArr) {
   });
 
   downloadBlob(textContent, 'text/plain', 'ideaforge-ideas.txt');
-  showToast('Exported .txt file 📄', 'success');
+  showToast('Exported .txt file +15 XP 📄', 'success');
+  if (typeof addXP === 'function') addXP(XP_CONFIG.perExport);
 }
 
 function exportCsv(ideasArr) {
@@ -1926,7 +2011,8 @@ function exportCsv(ideasArr) {
   });
 
   downloadBlob(csvContent, 'text/csv', 'ideaforge-ideas.csv');
-  showToast('Exported .csv file 📊', 'success');
+  showToast('Exported .csv file +15 XP 📊', 'success');
+  if (typeof addXP === 'function') addXP(XP_CONFIG.perExport);
 }
 
 function escapeCsv(str) {
@@ -1968,7 +2054,7 @@ function triggerConfetti() {
   canvas.height = window.innerHeight;
 
   const particles = [];
-  const colors = ['#0071e3', '#30d158', '#ff9f0a', '#5e5ce6', '#ff375f'];
+  const colors = ['#7c3aed', '#10b981', '#f59e0b', '#06b6d4', '#ef4444', '#ec4899'];
 
   for (let i = 0; i < 70; i++) {
     particles.push({
@@ -2328,4 +2414,380 @@ document.addEventListener('DOMContentLoaded', () => {
   initKeyboardShortcuts();
   updateSavedBadge();
   updateFooterCount();
+  initCustomCursor();
+  initParticleBackground();
+  initScrollRevealFallback();
+  initGamification();
+  initMagneticButtons();
+  initTiltCards();
 });
+
+/* ==========================================================================
+   14. Custom Cursor with Dot Trail (Antigravity-inspired)
+   ========================================================================== */
+function initCustomCursor() {
+  if (window.innerWidth <= 768) return;
+
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  const canvas = document.getElementById('cursor-trail-canvas');
+  if (!dot || !ring || !canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let mouseX = -100, mouseY = -100;
+  let ringX = -100, ringY = -100;
+  const trailPoints = [];
+  const MAX_TRAIL = 25;
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.left = mouseX + 'px';
+    dot.style.top = mouseY + 'px';
+
+    trailPoints.push({ x: mouseX, y: mouseY, alpha: 1, size: 3 });
+    if (trailPoints.length > MAX_TRAIL) trailPoints.shift();
+  });
+
+  // Hover detection for interactive elements
+  const hoverTargets = 'a, button, input, select, textarea, [role="button"], .chip-btn, .card-btn, .primary-btn, .nav-tab, .mobile-tab, .idea-card';
+
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest(hoverTargets)) {
+      dot.classList.add('hovering');
+      ring.classList.add('hovering');
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest(hoverTargets)) {
+      dot.classList.remove('hovering');
+      ring.classList.remove('hovering');
+    }
+  });
+
+  function animateCursor() {
+    // Smooth ring follow
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+
+    // Draw trail
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < trailPoints.length; i++) {
+      const p = trailPoints[i];
+      const progress = i / trailPoints.length;
+      p.alpha -= 0.025;
+
+      if (p.alpha <= 0) continue;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * progress, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(124, 58, 237, ${p.alpha * 0.4})`;
+      ctx.fill();
+
+      // Secondary glow dot
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * progress * 0.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(6, 182, 212, ${p.alpha * 0.3})`;
+      ctx.fill();
+    }
+
+    // Remove dead points
+    while (trailPoints.length > 0 && trailPoints[0].alpha <= 0) {
+      trailPoints.shift();
+    }
+
+    requestAnimationFrame(animateCursor);
+  }
+
+  animateCursor();
+}
+
+/* ==========================================================================
+   15. Particle Background System
+   ========================================================================== */
+function initParticleBackground() {
+  const canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  const particles = [];
+  const PARTICLE_COUNT = 50;
+  const CONNECTION_DIST = 120;
+  let mouseX = -1000, mouseY = -1000;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Create particles
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      size: Math.random() * 2 + 0.5,
+      alpha: Math.random() * 0.3 + 0.1
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+
+    particles.forEach((p, i) => {
+      // Move
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Mouse repulsion
+      const dx = p.x - mouseX;
+      const dy = p.y - mouseY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 150) {
+        p.x += dx * 0.01;
+        p.y += dy * 0.01;
+      }
+
+      // Wrap
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+
+      // Draw dot
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(124, 58, 237, ${p.alpha})`;
+      ctx.fill();
+
+      // Connect nearby particles
+      for (let j = i + 1; j < particles.length; j++) {
+        const p2 = particles[j];
+        const ddx = p.x - p2.x;
+        const ddy = p.y - p2.y;
+        const d = Math.sqrt(ddx * ddx + ddy * ddy);
+        if (d < CONNECTION_DIST) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = `rgba(124, 58, 237, ${0.06 * (1 - d / CONNECTION_DIST)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+}
+
+/* ==========================================================================
+   16. Scroll Reveal Fallback (IntersectionObserver for non-supporting browsers)
+   ========================================================================== */
+function initScrollRevealFallback() {
+  // If native CSS scroll-driven animations are supported, skip the JS fallback
+  if (CSS.supports('(animation-timeline: view()) and (animation-range: entry)')) {
+    return;
+  }
+
+  const elements = document.querySelectorAll('.scroll-reveal');
+  elements.forEach(el => {
+    el.classList.add('scroll-reveal-js');
+    el.classList.remove('scroll-reveal');
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  document.querySelectorAll('.scroll-reveal-js').forEach(el => observer.observe(el));
+}
+
+/* ==========================================================================
+   17. Gamification System (XP, Levels, Achievements)
+   ========================================================================== */
+const XP_CONFIG = {
+  perGeneration: 25,
+  perSave: 10,
+  perExport: 15,
+  levelThresholds: [0, 100, 250, 500, 1000, 2000, 4000, 7500, 12000, 20000],
+  levelNames: ['Newbie', 'Thinker', 'Ideator', 'Creator', 'Producer', 'Director', 'Visionary', 'Legend', 'Master', 'Titan']
+};
+
+const ACHIEVEMENTS = [
+  { id: 'first_spark', name: 'First Spark ⚡', condition: (s) => s.stats.generations >= 1, icon: '⚡' },
+  { id: 'idea_machine', name: 'Idea Machine 🧠', condition: (s) => s.stats.totalIdeas >= 50, icon: '🧠' },
+  { id: 'collector', name: 'Collector 💎', condition: (s) => s.saved.length >= 10, icon: '💎' },
+  { id: 'streak_3', name: '3-Day Streak 🔥', condition: (s) => s.stats.streak >= 3, icon: '🔥' },
+  { id: 'century', name: 'Century Club 💯', condition: (s) => s.stats.totalIdeas >= 100, icon: '💯' },
+  { id: 'power_user', name: 'Power User 🚀', condition: (s) => s.stats.generations >= 20, icon: '🚀' },
+];
+
+function initGamification() {
+  if (!state.xp) state.xp = 0;
+  if (!state.level) state.level = 1;
+  if (!state.achievements) state.achievements = [];
+  updateXPBar();
+}
+
+function addXP(amount) {
+  if (!state.xp) state.xp = 0;
+  state.xp += amount;
+
+  // Level up check
+  const newLevel = calculateLevel(state.xp);
+  if (newLevel > (state.level || 1)) {
+    state.level = newLevel;
+    const levelName = XP_CONFIG.levelNames[Math.min(newLevel - 1, XP_CONFIG.levelNames.length - 1)];
+    showAchievement(`Level ${newLevel}: ${levelName} 🎮`);
+    triggerConfetti();
+  }
+
+  state.level = newLevel;
+  saveState();
+  updateXPBar();
+  checkAchievements();
+}
+
+function calculateLevel(xp) {
+  for (let i = XP_CONFIG.levelThresholds.length - 1; i >= 0; i--) {
+    if (xp >= XP_CONFIG.levelThresholds[i]) return i + 1;
+  }
+  return 1;
+}
+
+function updateXPBar() {
+  const xp = state.xp || 0;
+  const level = state.level || 1;
+  const levelIdx = Math.min(level - 1, XP_CONFIG.levelThresholds.length - 2);
+  const currentThreshold = XP_CONFIG.levelThresholds[levelIdx] || 0;
+  const nextThreshold = XP_CONFIG.levelThresholds[levelIdx + 1] || XP_CONFIG.levelThresholds[XP_CONFIG.levelThresholds.length - 1];
+  const progressInLevel = xp - currentThreshold;
+  const levelRange = nextThreshold - currentThreshold;
+  const percent = Math.min(100, (progressInLevel / levelRange) * 100);
+
+  const fillEl = document.getElementById('xp-fill');
+  const textEl = document.getElementById('xp-text');
+  const badgeEl = document.getElementById('xp-level-badge');
+
+  if (fillEl) fillEl.style.width = percent + '%';
+  if (textEl) textEl.textContent = `${xp} / ${nextThreshold} XP`;
+  if (badgeEl) {
+    const levelName = XP_CONFIG.levelNames[Math.min(level - 1, XP_CONFIG.levelNames.length - 1)];
+    badgeEl.textContent = `LVL ${level}`;
+    badgeEl.title = levelName;
+  }
+}
+
+function checkAchievements() {
+  if (!state.achievements) state.achievements = [];
+
+  ACHIEVEMENTS.forEach(ach => {
+    if (!state.achievements.includes(ach.id) && ach.condition(state)) {
+      state.achievements.push(ach.id);
+      saveState();
+      showAchievement(ach.name);
+    }
+  });
+}
+
+function showAchievement(name) {
+  const popup = document.getElementById('achievement-popup');
+  const nameEl = document.getElementById('achievement-name');
+  if (!popup || !nameEl) return;
+
+  nameEl.textContent = name;
+  popup.classList.remove('hidden');
+  popup.classList.add('visible');
+
+  setTimeout(() => {
+    popup.classList.remove('visible');
+    setTimeout(() => popup.classList.add('hidden'), 400);
+  }, 3500);
+}
+
+/* ==========================================================================
+   18. Magnetic Buttons
+   ========================================================================== */
+function initMagneticButtons() {
+  if (window.innerWidth <= 768) return;
+
+  document.querySelectorAll('.magnetic-btn').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = 'translate(0, 0)';
+    });
+  });
+}
+
+/* ==========================================================================
+   19. Interactive Tilt Cards (3D perspective on hover)
+   ========================================================================== */
+function initTiltCards() {
+  if (window.innerWidth <= 768) return;
+
+  document.addEventListener('mousemove', (e) => {
+    const cards = document.querySelectorAll('.idea-card');
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!isVisible) return;
+
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const dist = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+
+      if (dist < 300) {
+        const rotateX = ((y - centerY) / centerY) * -3;
+        const rotateY = ((x - centerX) / centerX) * 3;
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      }
+    });
+  });
+
+  document.addEventListener('mouseleave', () => {
+    document.querySelectorAll('.idea-card').forEach(card => {
+      card.style.transform = '';
+    });
+  });
+}
