@@ -1,20 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IdeaForge — Generate 10 viral YouTube content ideas tailored to your niche and audience. Free AI-powered idea generator for creators.">
+  <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#120e1f" media="(prefers-color-scheme: dark)">
   <title>IdeaForge — YouTube Content Idea Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Top Navigation Bar (Apple frosted glass) -->
+  <!-- Custom Cursor -->
+  <div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" class="cursor-ring" aria-hidden="true"></div>
+  <canvas id="cursor-trail-canvas" class="cursor-trail-canvas" aria-hidden="true"></canvas>
+
+  <!-- Particle Background -->
+  <canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Gradient Orbs (ambient animated blobs) -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- XP / Level Bar (Gamification) -->
+  <div id="xp-bar-container" class="xp-bar-container" aria-label="Experience progress">
+    <div class="xp-bar-inner">
+      <div class="xp-level-badge" id="xp-level-badge">LVL 1</div>
+      <div class="xp-track">
+        <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
+      </div>
+      <div class="xp-text" id="xp-text">0 / 100 XP</div>
+    </div>
+  </div>
+
+  <!-- Top Navigation Bar -->
   <header class="navbar">
     <div class="nav-container">
       <div class="brand-logo" id="brand-home" role="button" tabindex="0" aria-label="IdeaForge Home">
         <div class="logo-icon">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-            <path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm6 4v10l7-5-7-5z"/>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+            <defs>
+              <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#7c3aed"/>
+                <stop offset="100%" style="stop-color:#06b6d4"/>
+              </linearGradient>
+            </defs>
+            <path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm6 4v10l7-5-7-5z" fill="url(#logo-grad)"/>
           </svg>
         </div>
         <span class="logo-text">Idea<span class="logo-accent">Forge</span></span>
@@ -69,12 +107,23 @@
     </button>
   </nav>
 
+  <!-- Achievement Toast Popup -->
+  <div id="achievement-popup" class="achievement-popup hidden" role="status" aria-live="polite">
+    <div class="achievement-inner">
+      <div class="achievement-icon">🏆</div>
+      <div class="achievement-text">
+        <span class="achievement-label">Achievement Unlocked!</span>
+        <span class="achievement-name" id="achievement-name">First Spark</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Content -->
   <main class="main-container">
 
     <!-- VIEW 1: GENERATE -->
     <section id="view-generate" class="view-section active">
-      <div class="hero-section">
+      <div class="hero-section scroll-reveal">
         <div class="hero-badge">
           <span class="badge-dot"></span> Content Workspace
         </div>
@@ -85,7 +134,7 @@
       </div>
 
       <!-- Generator Card -->
-      <div class="studio-card generator-card">
+      <div class="studio-card generator-card scroll-reveal">
         <form id="generator-form" novalidate>
           <div class="form-grid">
             <div class="form-group">
@@ -152,9 +201,10 @@
           </div>
 
           <div class="form-actions">
-            <button type="submit" id="generate-btn" class="primary-btn">
+            <button type="submit" id="generate-btn" class="primary-btn magnetic-btn">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
               <span>Generate 10 Ideas</span>
+              <span class="btn-shimmer"></span>
             </button>
           </div>
         </form>
@@ -190,7 +240,7 @@
 
       <!-- Results -->
       <div id="results-section" class="results-section hidden">
-        <div class="results-header">
+        <div class="results-header scroll-reveal">
           <h2 class="results-title" id="results-heading">
             10 ideas for <span id="res-topic" class="highlight-text"></span> → <span id="res-audience" class="highlight-text"></span>
           </h2>
@@ -219,13 +269,13 @@
 
     <!-- VIEW 2: DASHBOARD -->
     <section id="view-dashboard" class="view-section hidden">
-      <div class="section-header">
+      <div class="section-header scroll-reveal">
         <h1 class="section-title">Creator Dashboard</h1>
         <p class="section-subtitle">Your content idea generation analytics at a glance.</p>
       </div>
 
       <div class="stats-grid">
-        <div class="studio-card stat-card">
+        <div class="studio-card stat-card scroll-reveal">
           <div class="stat-icon-wrapper red">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
           </div>
@@ -234,7 +284,7 @@
             <span class="stat-value" id="stat-total-ideas">0</span>
           </div>
         </div>
-        <div class="studio-card stat-card">
+        <div class="studio-card stat-card scroll-reveal">
           <div class="stat-icon-wrapper amber">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </div>
@@ -243,7 +293,7 @@
             <span class="stat-value" id="stat-saved-ideas">0</span>
           </div>
         </div>
-        <div class="studio-card stat-card">
+        <div class="studio-card stat-card scroll-reveal">
           <div class="stat-icon-wrapper emerald">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
@@ -252,7 +302,7 @@
             <span class="stat-value" id="stat-generations-run">0</span>
           </div>
         </div>
-        <div class="studio-card stat-card">
+        <div class="studio-card stat-card scroll-reveal">
           <div class="stat-icon-wrapper orange">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3.5z"/></svg>
           </div>
@@ -264,22 +314,22 @@
       </div>
 
       <div class="charts-grid">
-        <div class="studio-card chart-card">
+        <div class="studio-card chart-card scroll-reveal">
           <h3 class="chart-title">Activity (Last 7 Days)</h3>
           <div id="bar-chart-container" class="chart-box"></div>
         </div>
-        <div class="studio-card chart-card">
+        <div class="studio-card chart-card scroll-reveal">
           <h3 class="chart-title">Saved Ideas by Type</h3>
           <div id="donut-chart-container" class="chart-box donut-box"></div>
         </div>
       </div>
 
       <div class="dashboard-row">
-        <div class="studio-card dash-subcard flex-1">
+        <div class="studio-card dash-subcard flex-1 scroll-reveal">
           <h3 class="chart-title">Top Searched Topics</h3>
           <div id="top-topics-container" class="topics-list"></div>
         </div>
-        <div class="studio-card dash-subcard flex-1">
+        <div class="studio-card dash-subcard flex-1 scroll-reveal">
           <h3 class="chart-title">Recent Generations</h3>
           <div id="recent-activity-container" class="activity-timeline"></div>
         </div>
@@ -295,12 +345,12 @@
 
     <!-- VIEW 3: SAVED -->
     <section id="view-saved" class="view-section hidden">
-      <div class="section-header">
+      <div class="section-header scroll-reveal">
         <h1 class="section-title">Saved Ideas</h1>
         <p class="section-subtitle">Your bookmarked video concepts ready for production.</p>
       </div>
 
-      <div class="saved-toolbar studio-card">
+      <div class="saved-toolbar studio-card scroll-reveal">
         <div class="search-box">
           <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <input type="text" id="saved-search-input" class="search-input" placeholder="Search saved ideas...">
@@ -337,7 +387,7 @@
 
     <!-- VIEW 4: HISTORY -->
     <section id="view-history" class="view-section hidden">
-      <div class="section-header">
+      <div class="section-header scroll-reveal">
         <h1 class="section-title">Generation History</h1>
         <p class="section-subtitle">Revisit your past 20 idea generation sessions.</p>
       </div>
@@ -352,7 +402,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
+  <footer class="footer scroll-reveal">
     <div class="footer-container">
       <p class="footer-text">Built for YouTube Creators · <span id="footer-count">0</span> ideas generated</p>
     </div>
