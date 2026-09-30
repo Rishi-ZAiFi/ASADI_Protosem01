@@ -45,8 +45,8 @@ Writing strong hooks takes too much time. Most creators either stare at a blank 
 - **Frontend**: Next.js 15 (App Router), React 19, TypeScript
 - **Styling**: Vanilla CSS Design System with custom tokens, glassmorphism, micro-animations, and responsive layout
 - **Backend / API**: Next.js Server Route Handlers (`/api/generate-hooks`)
-- **AI SDK**: Official `@google/genai` (v2.24+)
-- **LLM**: Google Gemini 2.5 Pro (`gemini-2.5-pro` with resilient fallback support)
+- **AI Integration**: LangChain (`@langchain/google-genai` & `@langchain/core`)
+- **LLM**: Google Gemini (`gemini-2.5-pro` with resilient fallback support)
 - **Icons**: Lucide React
 
 ---
@@ -59,8 +59,8 @@ Writing strong hooks takes too much time. Most creators either stare at a blank 
         ▼ (POST /api/generate-hooks)
 [ Next.js Server Route ] ── reads ──> [ process.env.GEMINI_API_KEY ]
         │
-        ▼ (Strict JSON Schema + Statistical Guardrails)
-[ @google/genai SDK ] ──── HTTPS ───> [ Google Gemini 2.5 Pro API ]
+        ▼ (LangChain Structured Output + Statistical Guardrails)
+[ LangChain ChatGoogleGenerativeAI ] ── HTTPS ──> [ Google Gemini API ]
         │
         ▼ (Validates Exactly 10 Structured Hooks)
 [ Clean JSON Response ]
