@@ -34,14 +34,17 @@ function card(v,i,o){const tc=['--lilac','--blush','--mint','--butter'];const s=
 $('#go').onclick=async()=>{
  const desc=$('#desc').value.trim();if(!img&&!desc){out.innerHTML='<div class="err">Add a photo or a short description first.</div>';return}
  const o={fmt:sel('fmt')[0],tone:sel('tone'),vibe:sel('vibe')[0],hook:sel('hook')[0],goal:sel('goal')[0],niche:$('#niche').value.trim(),lang:$('#lang').value,len:['a hook plus one short line (under 200 characters total)','2–4 short lines (about 300–500 characters)','a storytelling caption (about 700–1000 characters)'][$('#len').value],emo:$('#emo').checked,hsh:$('#hsh').checked,seo:$('#seo').checked,cta:$('#cta').checked};
- out.innerHTML='<div class="empty"><div><div class="dots"><span></span><span></span><span></span></div><p class="par" style="margin-top:18px">crafting four takes</p></div></div>';
+ out.innerHTML='<div class="empty"><div><div class="dots"><span></span><span></span><span></span></div><p class="par" style="margin-top:18px">'+(img?'reading your photo, then crafting four takes':'crafting four takes')+'<span id="el"></span></p></div></div>';
+ const t0=Date.now(),tm=setInterval(()=>{const e=$('#el');if(e)e.textContent=' · '+Math.round((Date.now()-t0)/1000)+'s'},1000);
  $('#go').disabled=true;
  try{const image=img?await shrink(img):null;
   const res=await fetch('/api/captions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({desc,opts:o,image})});
   const r=await res.json().catch(()=>({error:'Bad response from server'}));if(!res.ok)throw new Error(r.error||'Request failed');
   out.innerHTML='';picks=[];cur=-1;o.rec=Math.min(Math.max(+r.recommended||0,0),3);const vs=(r.variants||[]).slice(0,4);
-  if(r.recommendReason&&vs.length){const rc=document.createElement('p');rc.className='rc';rc.textContent='★ Our pick (option '+(o.rec+1)+'): '+r.recommendReason+' Tap any caption to choose your own.';out.appendChild(rc)}
+  if(r.recommendReason&&vs.length){const rc=document.createElement('p');rc.className='rc';rc.textContent='★ Our pick (option '+(o.rec+1)+'): '+r.recommendReason+' Tap any caption to choose your own.'+(r.provider?' (written by '+r.provider+')':'');out.appendChild(rc)}
+  if(r.note){const nt=document.createElement('p');nt.className='rc';nt.textContent='ℹ '+r.note;out.insertBefore(nt,out.firstChild)}
+  if(r.imageDescription){const sn=document.createElement('p');sn.className='rc';sn.textContent='📷 What the vision model saw: '+r.imageDescription;out.insertBefore(sn,out.firstChild)}
   vs.forEach((v,i)=>card(v,i,o));if(vs.length)choose(o.rec);
   if(!$$('.cap').length)out.innerHTML='<div class="err">No captions came back. Try again.</div>'}
  catch(e){out.innerHTML='<div class="err"></div>';out.firstChild.textContent='Something went wrong: '+(e.message||e)}
- $('#go').disabled=false};
+ clearInterval(tm);$('#go').disabled=false};
