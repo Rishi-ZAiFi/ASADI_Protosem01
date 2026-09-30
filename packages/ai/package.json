@@ -11,6 +11,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@contentyou/schemas": "workspace:*",
     "@google/genai": "^2.24.0",
     "duck-duck-scrape": "^2.2.7",
     "openai": "^7.23.0",

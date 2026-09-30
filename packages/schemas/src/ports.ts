@@ -5,6 +5,7 @@ export interface LlmRequest<T extends z.ZodType> {
   prompt: string;
   schema: T;
   temperature?: number;
+  model?: string;
 }
 
 export interface LlmPort {
@@ -43,4 +44,13 @@ export interface AgentClientPort {
 export interface ProfileMemoryPort {
   getProfile(userId: string): Promise<CreatorProfile | null>;
   updateProfile(userId: string, updates: Partial<CreatorProfile>): Promise<CreatorProfile>;
+}
+
+export class BudgetExceededError extends Error {
+  public resetAt: Date;
+  constructor(message: string, { resetAt }: { resetAt: Date }) {
+    super(message);
+    this.name = 'BudgetExceededError';
+    this.resetAt = resetAt;
+  }
 }

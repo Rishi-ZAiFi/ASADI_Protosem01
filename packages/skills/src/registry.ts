@@ -1,6 +1,6 @@
-
 import { Skill } from './types.js';
 import { SkillRegistryPort } from '@contentyou/schemas';
+import { Plan, Artifact } from '@contentyou/schemas';
 
 export class SkillRegistry implements SkillRegistryPort {
   private skills: Map<string, Skill<any>> = new Map();
@@ -15,5 +15,9 @@ export class SkillRegistry implements SkillRegistryPort {
 
   getAll() {
     return Array.from(this.skills.values());
+  }
+
+  async generateArtifact(format: string, plan: Plan): Promise<Artifact> {
+    throw new Error('Not implemented');
   }
 }

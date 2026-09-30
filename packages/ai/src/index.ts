@@ -1,7 +1,7 @@
 import { LlmPort, UsageLedgerPort, ResearchCachePort, LlmRequest } from '@contentyou/schemas';
 import { GoogleGenAI } from '@google/genai';
 import { z } from 'zod';
-import { search as ddSearch } from 'duck-duck-scrape';
+import { search as ddSearch, SafeSearchType } from 'duck-duck-scrape';
 
 export function createAiClient(deps: {
   usageLedger: UsageLedgerPort;
@@ -23,7 +23,7 @@ export function createAiClient(deps: {
       if (gemini) {
         try {
           const response = await gemini.models.generateContent({
-            model: 'gemini-3.8-flash',
+            model: request.model ?? 'gemini-3.8-flash',
             contents: request.prompt + "\n\nIMPORTANT: You must output ONLY valid JSON matching this request. Do NOT include markdown blocks like ```json.",
             config: {
               temperature: request.temperature ?? 0.7,
@@ -47,7 +47,7 @@ export function createAiClient(deps: {
     async search(query: string) {
       console.log(`[AI] Searching web for: ${query}`);
       try {
-        const results = await ddSearch(query, { safeSearch: 'off' });
+        const results = await ddSearch(query, { safeSearch: SafeSearchType.OFF });
         return results.results.slice(0, 5).map(r => ({
           title: r.title,
           url: r.url,
