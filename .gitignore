@@ -56,3 +56,4 @@ out/
 Thumbs.db
 Desktop.ini
 *.tsbuildinfo
+backend/data/

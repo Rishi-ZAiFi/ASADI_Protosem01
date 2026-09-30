@@ -89,7 +89,7 @@ export default function AskPage() {
       </div>
 
       {!result && !loading && !error && (
-        <div className="mt-8">
+        <div className="mt-6">
           <Empty icon={<MessageCircleQuestion className="size-8" />} title="Your back catalogue, one question away">
             Search is semantic: ask about ideas, not keywords. &ldquo;Staying consistent&rdquo; will find the moment you said &ldquo;I almost quit
             posting in 2023&rdquo;.
