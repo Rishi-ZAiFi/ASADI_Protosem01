@@ -236,8 +236,11 @@ function regenerateSectionFallback({ sectionKey, currentContent, modifier, custo
   };
 }
 
+const { ChatGoogleGenerativeAI } = require("@langchain/google-genai");
+const { SystemMessage, HumanMessage } = require("@langchain/core/messages");
+
 /**
- * Call Google Gemini REST API
+ * Call Google Gemini via LangChain
  */
 async function callGemini(systemInstruction, userPrompt) {
   const apiKey = config.geminiApiKey;
@@ -259,44 +262,25 @@ async function callGemini(systemInstruction, userPrompt) {
 
   for (const model of modelsToTry) {
     try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-
-      const payload = {
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: `${systemInstruction}\n\n${userPrompt}` }]
-          }
-        ],
-        generationConfig: {
-          temperature: 0.7,
-          topP: 0.95,
-          responseMimeType: "application/json"
-        }
-      };
-
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+      const llm = new ChatGoogleGenerativeAI({
+        model: model,
+        modelName: model,
+        apiKey: apiKey,
+        maxRetries: 0,
+        temperature: 0.7,
+        topP: 0.95,
       });
 
-      if (!res.ok) {
-        const errorBody = await res.text();
-        console.warn(`[AI] Model ${model} returned HTTP ${res.status}: ${errorBody}`);
-        lastError = new Error(`Gemini API error (${res.status}): ${errorBody}`);
-        if (res.status === 404 || res.status === 503) {
-          continue; // Try next model on not found or high demand
-        }
-        throw lastError;
-      }
+      const res = await llm.invoke([
+        new SystemMessage(systemInstruction),
+        new HumanMessage(userPrompt)
+      ]);
 
-      const data = await res.json();
-      const textOutput = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      return cleanAndParseJSON(textOutput);
+      return cleanAndParseJSON(res.content);
     } catch (err) {
       lastError = err;
       if (err.message.includes('404') || err.message.includes('503')) {
+        console.warn(`[AI] Model ${model} failed (${err.message}). Trying next...`);
         continue;
       }
       throw err;
@@ -306,33 +290,22 @@ async function callGemini(systemInstruction, userPrompt) {
   throw lastError || new Error("All Gemini models failed");
 }
 
+const { executeMasterProposalPipeline } = require('../agents/masterAgent');
+
 /**
- * Proposal Dispatcher
+ * Proposal Dispatcher - Orchestrated by LangChain MasterPitchCoordinator
  */
 async function generateProposal(promptData) {
-  const { systemInstruction, userPrompt } = require('./promptBuilder').buildProposalPrompt(promptData);
-
-  if (isGeminiKeyConfigured()) {
-    try {
-      console.log('[AI] Calling Google Gemini API with configured key...');
-      const result = await callGemini(systemInstruction, userPrompt);
-      return { data: result, usedLiveAI: true };
-    } catch (err) {
-      console.warn('[AI] Gemini call failed, falling back to smart demo engine:', err.message);
-      return {
-        data: generateSmartProposalFallback(promptData),
-        usedLiveAI: false,
-        warning: `Gemini API call failed (${err.message}). A demo proposal was generated instead.`
-      };
-    }
+  try {
+    return await executeMasterProposalPipeline(promptData);
+  } catch (err) {
+    console.error('[MasterPitchCoordinator] Pipeline error, falling back to smart fallback:', err);
+    return {
+      data: generateSmartProposalFallback(promptData),
+      usedLiveAI: false,
+      warning: `Multi-agent generation encountered an issue (${err.message}). A demo proposal was generated instead.`
+    };
   }
-
-  console.log('[AI] Generating preview proposal (GEMINI_API_KEY is PASTE_YOUR_KEY_HERE or not set)...');
-  return {
-    data: generateSmartProposalFallback(promptData),
-    usedLiveAI: false,
-    warning: "Running with demo response. To use live Google Gemini AI, open .env and paste your GEMINI_API_KEY."
-  };
 }
 
 /**
