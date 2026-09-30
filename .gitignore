@@ -1,57 +1,48 @@
-# Environment Variables and Secrets
+# Dependencies
+node_modules/
+/.pnpm-store
+
+# Next.js build outputs
+/.next/
+/out/
+
+# Environment files
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 .env.*
 !.env.example
-*.env
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-.venv/
-ENV/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-.pytest_cache/
-.coverage
-htmlcov/
+# Testing
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 
-# Node.js
-node_modules/
+# Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
 .pnpm-debug.log*
-.next/
-out/
 
-# Streamlit
-.streamlit/secrets.toml
+# Vercel
+.vercel
 
-# IDE and OS files
+# System & IDE files
+.DS_Store
+*.pem
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-.DS_Store
 Thumbs.db
 Desktop.ini
+
+# Python (if any)
+__pycache__/
+*.py[cod]
+.pytest_cache/
