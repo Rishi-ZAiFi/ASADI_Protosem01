@@ -9,10 +9,13 @@
     "test": "node --test tests/proposalLogic.test.js"
   },
   "dependencies": {
+    "@langchain/core": "^1.2.13",
+    "@langchain/google-genai": "^2.3.2",
     "brand-pitch-builder": "file:..",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "langchain": "^1.5.14"
   },
   "type": "commonjs"
 }
