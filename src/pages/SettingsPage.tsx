@@ -59,7 +59,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ systemStatus, onRefr
 
       const backup = {
         exportedAt: new Date().toISOString(),
-        system: 'CreatorOS 22-in-1 Suite',
+        system: 'CreatorFlow AI Workspace',
         stats: {
           ideasCount: ideas.length,
           savedContentCount: content.length,
@@ -74,7 +74,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ systemStatus, onRefr
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `creatoros_backup_${new Date().toISOString().slice(0, 10)}.json`
+      a.download = `creatorflow_backup_${new Date().toISOString().slice(0, 10)}.json`
       a.click()
       URL.revokeObjectURL(url)
     } catch (err) {

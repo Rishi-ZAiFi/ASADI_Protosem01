@@ -46,10 +46,10 @@ const CATEGORY_META: {
   label: string
   icon: React.ComponentType<{ className?: string }>
 }[] = [
-  { key: 'content-creation', label: 'Content Creation', icon: Sparkles },
-  { key: 'audience-research', label: 'Audience & Research', icon: Users },
-  { key: 'production', label: 'Production', icon: Film },
-  { key: 'advanced-ai', label: 'Advanced AI', icon: Cpu },
+  { key: 'create', label: 'CREATE', icon: Sparkles },
+  { key: 'research', label: 'RESEARCH', icon: Users },
+  { key: 'produce', label: 'PRODUCE', icon: Film },
+  { key: 'ai-systems', label: 'AI SYSTEMS', icon: Cpu },
 ]
 
 export const getToolIcon = (iconName: string, className = 'w-4 h-4') => {
@@ -121,10 +121,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentRoute, onNavigate, isOp
             </div>
             <div>
               <span className="text-base font-bold tracking-tight text-white flex items-center gap-1.5">
-                Creator<span className="text-purple-400">OS</span>
+                Creator<span className="text-purple-400">Flow</span> AI
               </span>
               <span className="text-[10px] text-slate-400 font-mono tracking-wider uppercase block -mt-1">
-                22-in-1 Suite
+                AI Workspace
               </span>
             </div>
           </button>

@@ -8,45 +8,45 @@
         "result": {
           "ideas": [
             {
-              "title": "I Replaced My Entire Tech Stack with Open Source AI for 30 Days",
-              "angle": "Contrarian move away from expensive SaaS to prove bootstrap efficiency",
-              "format": "3-act story with cinematic b-roll",
-              "hook": "I canceled a $2,000/month software stack and replaced it with free AI tools—here is what broke.",
-              "description": "Follows the entrepreneurial journey of migrating to open-source alternatives. The retention loop relies on the suspense of which crucial tool will fail first, ending with a massive cost-saving payoff."
+              "title": "I Replaced My Entire Tech Stack with AI Agents for 30 Days",
+              "angle": "Contrarian extreme experiment that challenges the necessity of traditional SaaS tools",
+              "format": "3-act story documentary with high-energy pacing",
+              "hook": "I fired all my software subscriptions and let AI run my business for a month—and I actually made more money.",
+              "description": "Follows a high-stakes productivity experiment showcasing raw metrics, unexpected failures, and a breakthrough workflow payoff. Designed for maximum save-and-share behavior among creators drowning in subscription fees."
             },
             {
-              "title": "Stop Using ChatGPT Like a Search Engine (Do This Instead)",
-              "angle": "Exposing common user error with an immediate, high-value upgrade",
-              "format": "Screen demo with fast-paced picture-in-picture",
-              "hook": "You are using 99% of AI wrong. Stop asking questions and start building autonomous agent loops.",
-              "description": "Breaks down a advanced prompt engineering framework designed specifically for solo creators. High shareability due to immediate practical utility and visual workflow demos."
+              "title": "The $0 Tech Stack Every Creator Needs in 2024",
+              "angle": "Democratization of elite tools, proving expensive software is a scam for beginners",
+              "format": "Fast-paced screen demo with dynamic jump cuts",
+              "hook": "Stop paying $100 a month for tools when these 5 free open-source apps do the exact same thing 10x better.",
+              "description": "A rapid-fire curation of underground tech tools that saves the audience immediate money while delivering high utility. The retention loop relies on pacing, keeping viewers locked in until the final, most valuable tool is revealed."
             },
             {
-              "title": "The Brutal Truth About Solopreneur Burnout in the AI Era",
-              "angle": "Emotional vulnerability mixed with technological realism",
-              "format": "Talking head with high-retention jump cuts and kinetic captions",
-              "hook": "AI was supposed to give us our time back. So why are creators working harder than ever?",
-              "description": "A paradigm-shifting critique of hustle culture amplified by modern technology. Drives massive engagement through comment-section debates and community validation."
+              "title": "Why 99% of Creators Are Using AI Completely Wrong",
+              "angle": "Contrarian reality check calling out lazy prompting and commoditized content",
+              "format": "Talking head with visceral, high-retention b-roll and text overlays",
+              "hook": "Your AI content looks like garbage because you're using it like a search engine instead of an employee.",
+              "description": "Breaks down advanced prompting frameworks that shift the paradigm from generic output to hyper-personalized leverage. Drives massive comment engagement through debate and perceived insider knowledge."
             },
             {
-              "title": "Building a Million-Dollar Business Using Only My Phone and an iPad",
-              "angle": "Ultra-minimalist setup challenging the notion that creators need expensive gear",
-              "format": "POV workflow documentary style",
-              "hook": "I left my $5,000 editing rig at home and ran my entire tech company from a coffee shop using just this.",
-              "description": "Showcases the ultimate mobile productivity stack for creators on the move. Retains viewers through aesthetic, satisfying UI navigation and unexpected app combinations."
+              "title": "I Built a Viral Automation Machine in 10 Minutes",
+              "angle": "Actionable, instant gratification tutorial that feels like a magic trick",
+              "format": "Step-by-step visual blueprint with live screen recording",
+              "hook": "Watch me build an automated system that finds trending topics, writes scripts, and schedules content while I sleep.",
+              "description": "Delivers immediate dopamine by solving the most exhausting bottleneck in the creator economy: consistency. The payoff is a clean, repeatable template viewers can instantly screenshot and implement."
             },
             {
-              "title": "5 Secret Tech Tools VCs Don't Want Founders to Know About",
-              "angle": "Insider-secret framing that positions the creator as an elite gatekeeper",
-              "format": "Fast-paced listicle carousel (IG) / Rapid-fire video cuts (YT)",
-              "hook": "Silicon Valley founders use these 5 under-the-radar tools to automate their entire team.",
-              "description": "Presents a curated list of obscure, hyper-efficient software that levels the playing field for indie hackers. Drives high save-and-share metrics on social algorithms."
+              "title": "The Dark Side of the Creator Economy's Tech Obsession",
+              "angle": "Philosophical warning about productivity porn and shiny object syndrome",
+              "format": "Cinematic essay with moody lighting and narrative voiceover",
+              "hook": "You aren't behind on your business goals; you're just addicted to buying new software you don't need.",
+              "description": "A refreshing, pattern-interrupting critique of tech-heavy entrepreneurship that builds deep parasocial trust with the audience. Drives shares from exhausted creators feeling the weight of constant hustle culture."
             }
           ]
         },
         "metadata": {
           "tool": "content-idea-generator",
-          "executionTime": 3615
+          "executionTime": 11496
         }
       }
     },
@@ -63,7 +63,7 @@
         },
         "metadata": {
           "tool": "content-repurposer",
-          "executionTime": 1210
+          "executionTime": 1366
         }
       }
     },
@@ -76,49 +76,49 @@
           "hooks": [
             {
               "style": "Curiosity Gap",
-              "hook": "Most creators are testing their content completely wrong, and it’s costing them thousands of views."
+              "hook": "Most creators test their content completely wrong, and it’s quietly killing their reach."
             },
             {
               "style": "Fear of Missing Out",
-              "hook": "The top 1% of builders are using a secret content test, and they refuse to share it."
+              "hook": "While you're overthinking your strategy, top builders are using this hidden testing framework to scale."
             },
             {
               "style": "Contrarian",
-              "hook": "Stop A/B testing your content. It’s actually killing your reach."
+              "hook": "Stop A/B testing your content. Here is the counter-intuitive method top creators use instead."
             },
             {
-              "style": "Urgent Warning",
-              "hook": "If you aren't running this exact test before hitting publish, your next post is already dead."
+              "style": "The Secret Reveal",
+              "hook": "I analyzed 1,000 viral posts to find the exact testing metric nobody is talking about."
             },
             {
-              "style": "The Insider Secret",
-              "hook": "I wasn't supposed to share this, but here is the exact content testing framework the pros hide from you."
-            },
-            {
-              "style": "Pain Point Amplification",
-              "hook": "Tired of pouring hours into content that nobody sees? You're missing this one critical test."
-            },
-            {
-              "style": "Loss Aversion",
-              "hook": "Every day you skip this content test, you are handing followers directly to your competitors."
+              "style": "Urgency / Loss Aversion",
+              "hook": "If you aren't testing your content this way by next week, your audience is moving on without you."
             },
             {
               "style": "Pattern Interrupt",
-              "hook": "Unpopular opinion: Your content isn't bad. Your testing strategy is just ancient."
+              "hook": "Everything you know about testing content is a lie. Prove me wrong."
             },
             {
-              "style": "The Reveal",
-              "hook": "This 10-second test tells you if your content will go viral before you even post it."
+              "style": "Direct Callout",
+              "hook": "Builders: If you're guessing what content works, you're literally burning hours of free time."
             },
             {
-              "style": "Exclusivity",
-              "hook": "Only a handful of top creators know this content loophole—and it's closing soon."
+              "style": "The Insider",
+              "hook": "The top 1% of creators use this secret sandbox method to test content before the public ever sees it."
+            },
+            {
+              "style": "Negative Framing",
+              "hook": "The 3 silent mistakes creators make when testing content (and how it destroys their algorithm score)."
+            },
+            {
+              "style": "High Stakes",
+              "hook": "Why one tiny tweak to your testing process could be the difference between 10 views and 100k."
             }
           ]
         },
         "metadata": {
           "tool": "hook-generator",
-          "executionTime": 2047
+          "executionTime": 2478
         }
       }
     },
@@ -128,58 +128,58 @@
         "success": true,
         "tool": "daily-content-planner",
         "result": {
-          "topic": "Mastering Digital Marketing in the AI Era: Strategies for Sustainable Growth and Lead Generation",
-          "format": "Carousel & Long-form Text",
-          "hook": "Stop wasting budget on outdated tactics—here is the exact digital marketing blueprint top brands use to scale leads on autopilot.",
+          "topic": "Mastering Digital Marketing in 2024",
+          "format": "Carousels and Text Posts",
+          "hook": "Stop wasting budget on outdated strategies. Here is the modern playbook for predictable growth.",
           "outline": [
             {
               "day": "Day 1",
               "postType": "Educational",
               "title": "The 3 Pillars of Modern Digital Marketing",
-              "description": "Break down the shift from traditional SEO/PPC to AI-driven search, omnichannel personalization, and community-led growth."
+              "description": "Break down organic reach, paid acquisition, and retention systems for general audiences."
             },
             {
               "day": "Day 2",
               "postType": "Case Study",
-              "title": "How We Scaled B2B Lead Generation by 300%",
-              "description": "A step-by-step breakdown of a recent client campaign using targeted LinkedIn outreach combined with high-value lead magnets."
+              "title": "How We Scaled a Client's Lead Gen by 150%",
+              "description": "Step-by-step breakdown of a successful funnel overhaul with quantifiable metrics."
             },
             {
               "day": "Day 3",
-              "postType": "Interactive/Poll",
-              "title": "What is Your Biggest Marketing Bottleneck Right Now?",
-              "description": "Engage the audience with a multiple-choice poll covering budget allocation, content creation, and conversion rates."
+              "postType": "Contrarian/Myth Busting",
+              "title": "Why Vanity Metrics Are Destroying Your ROI",
+              "description": "Challenge the obsession with likes and followers, shifting focus to conversion and LTV."
             },
             {
               "day": "Day 4",
-              "postType": "Thought Leadership",
-              "title": "Why Vanity Metrics Are Killing Your ROI",
-              "description": "A contrarian take on likes and impressions versus pipeline revenue, urging marketers to focus on bottom-funnel metrics."
+              "postType": "Framework/Process",
+              "title": "The 5-Step Content Repurposing Engine",
+              "description": "Showcase a workflow to turn one long-form piece into a week's worth of multi-platform content."
             },
             {
               "day": "Day 5",
-              "postType": "Actionable Framework",
-              "title": "The 5-Step High-Converting Funnel Blueprint",
-              "description": "An Instagram carousel detailing the exact journey from cold traffic to loyal customer, complete with design tips."
+              "postType": "Tool/Resource",
+              "title": "Our Top 5 Underrated Marketing Tech Stack Tools",
+              "description": "Highlight lesser-known software that saves time and boosts campaign efficiency."
             },
             {
               "day": "Day 6",
-              "postType": "Behind the Scenes",
-              "title": "Our Agency's Weekly Content Workflow",
-              "description": "Showcase the tools, AI prompts, and scheduling systems used to produce 30+ pieces of content per week in under 4 hours."
+              "postType": "Thought Leadership",
+              "title": "AI in Marketing: Will It Replace Strategists?",
+              "description": "Discuss the balance between automation and human creativity in campaign planning."
             },
             {
               "day": "Day 7",
-              "postType": "Summary & Resource Drop",
-              "title": "Weekly Digital Marketing Roundup & Free Template",
-              "description": "Recap the week's key learnings and provide a downloadable checklist for auditing current marketing campaigns."
+              "postType": "Interactive/Q&A",
+              "title": "Ask Me Anything: Digital Marketing Roadblock Edition",
+              "description": "Engage the audience in the comments by solving their specific marketing bottlenecks."
             }
           ],
-          "cta": "Comment 'GROWTH' below to get our complete 2024 Digital Marketing Audit Checklist sent directly to your DMs."
+          "cta": "Comment 'GROWTH' below to get our free 2024 Digital Marketing Strategy Template sent straight to your DMs."
         },
         "metadata": {
           "tool": "daily-content-planner",
-          "executionTime": 2546
+          "executionTime": 2538
         }
       }
     },
@@ -189,35 +189,31 @@
         "success": true,
         "tool": "reel-script-builder",
         "result": {
-          "hook": "Stop scrolling right now if you want to know the biggest secret no one is telling you!",
-          "body": "In the next 20 seconds, your entire perspective is about to flip. Most people think success is a straight line, but it is actually a chaotic loop of failing fast, learning instantly, and doubling down on what works. Look at this pattern—every single viral trend, every massive breakthrough, follows this exact three-step blueprint. You spot the gap, you move at lightning speed, and you refuse to look back.",
-          "cta": "Hit that follow button right now or you'll miss the next big update!",
+          "hook": "Stop scrolling right now if you want to know the biggest secret nobody is telling you!",
+          "body": "In the next 20 seconds, your entire perspective is about to flip. Most people think success takes years of grinding, but actually, it comes down to just one tiny habit you can start today. Watch closely: instead of adding more to your to-do list, start ruthlessly subtracting. Cut the noise, focus on the single needle-mover, and watch your results explode overnight.",
+          "cta": "Hit that follow button right now if you're ready to level up!",
           "timestamps": [
             {
               "time": "00:00 - 00:03",
-              "action": "Visual: Fast zoom-in on creator pointing aggressively at the camera. Audio: Loud whoosh sound effect, upbeat energetic background beat drops."
+              "action": "Visual: Fast zoom in on creator pointing at camera. Audio: High-energy whoosh sound effect and upbeat pop beat drops."
             },
             {
-              "time": "00:03 - 00:10",
-              "action": "Visual: Rapid-fire B-roll cuts, text overlays flashing keywords like 'SECRET' and 'PERSPECTIVE'. Audio: Quick rhythmic drum beat."
+              "time": "00:03 - 00:15",
+              "action": "Visual: Rapid-fire text overlays flashing keywords ('SECRET', 'ONE HABIT') with dynamic jump cuts. Audio: Fast-paced rhythmic speaking, subtle ticking clock in background."
             },
             {
-              "time": "00:10 - 00:20",
-              "action": "Visual: Dynamic hand gestures, screen recording of a fast-moving chart or viral graph. Audio: Rising pitch riser sound effect."
+              "time": "00:15 - 00:25",
+              "action": "Visual: Screen recording or b-roll of a minimalist to-do list being slashed. Audio: Satisfying 'ding' or swipe sound."
             },
             {
-              "time": "00:20 - 00:27",
-              "action": "Visual: Creator leaning in close, pointing down toward the caption/follow button. Audio: Satisfying pop sound effect."
-            },
-            {
-              "time": "00:27 - 00:30",
-              "action": "Visual: End screen graphic with a glowing follow button animation. Audio: Outro beat resolves with a snap."
+              "time": "00:25 - 00:30",
+              "action": "Visual: Creator points down toward the follow button with a smiling, confident expression. Audio: Music crescendoes to a peak and cuts off sharply."
             }
           ]
         },
         "metadata": {
           "tool": "reel-script-builder",
-          "executionTime": 2208
+          "executionTime": 2762
         }
       }
     },
@@ -227,20 +223,11 @@
         "success": true,
         "tool": "clip-finder",
         "result": {
-          "clips": [
-            {
-              "title": "Empty Transcript",
-              "startTimestamp": "00:00",
-              "endTimestamp": "00:00",
-              "hook": "No content provided",
-              "reason": "The provided transcript is empty, so no viral moments could be identified.",
-              "caption": "Please provide a valid transcript to generate clips! 🎥"
-            }
-          ]
+          "clips": []
         },
         "metadata": {
           "tool": "clip-finder",
-          "executionTime": 1129
+          "executionTime": 1025
         }
       }
     },
@@ -252,17 +239,31 @@
         "result": {
           "concepts": [
             {
-              "visualConcept": "A confused creator staring blankly at a glowing computer screen displaying error messages.",
-              "thumbnailText": "JUST A TEST",
-              "composition": "Close-up shot of the creator on the right third, text on the left in bold yellow font, screen glow illuminating the face.",
-              "emotion": "Curiosity and humor",
-              "background": "A dimly lit modern desk setup with out-of-focus RGB lighting."
+              "visualConcept": "A person looking at a computer screen with a confused and surprised expression, holding their hands up in disbelief.",
+              "thumbnailText": "IT WORKS?",
+              "composition": "Close-up shot of the person's face on the right third, with the glowing screen casting a bright blue light on the left.",
+              "emotion": "Curiosity and surprise",
+              "background": "A dark, slightly out-of-focus room with colorful LED strip lights in the background."
+            },
+            {
+              "visualConcept": "A giant red 'TEST' stamp coming down onto a glowing digital interface, creating shockwaves.",
+              "thumbnailText": "IS THIS REAL?",
+              "composition": "Centered dynamic action shot with high contrast between the dark background and bright red stamp.",
+              "emotion": "Suspense and intrigue",
+              "background": "Abstract digital grid pattern with floating particles and code elements."
+            },
+            {
+              "visualConcept": "Split screen showing a messy, glitchy interface on the left and a clean, glowing, perfect result on the right.",
+              "thumbnailText": "DONT DO THIS",
+              "composition": "Vertical split down the middle with a bold dividing line and a question mark hovering above.",
+              "emotion": "Fear of missing out and urgency",
+              "background": "Dark gradient with subtle warning stripes at the edges."
             }
           ]
         },
         "metadata": {
           "tool": "thumbnail-ideator",
-          "executionTime": 1217
+          "executionTime": 2545
         }
       }
     },
@@ -272,18 +273,18 @@
         "success": true,
         "tool": "caption-assistant",
         "result": {
-          "caption": "Let’s be real for a second—how often do we overthink the little things instead of just hitting publish? 💭✨\n\nSometimes, you just need to put it out there and see what happens. This right here is your friendly reminder to stop waiting for perfection and start embracing the process. \n\nDrop a 👇 if you needed to hear this today!",
+          "caption": "Let’s be real for a second—how often do we overthink the little things just to get them right? 💭\n\nSometimes, you just need to put the idea out there, run the test, and see what happens. Perfection is the enemy of progress, and every great result starts with a simple 'test content' moment.\n\n👇 Drop a comment: Are you a perfectionist who waits, or do you just hit publish and figure it out? Let's chat below!",
           "hashtags": [
-            "#testcontent",
-            "#creativelife",
-            "#growthmindset",
-            "#keepgoing",
-            "#contentcreator"
+            "#TestContent",
+            "#CreativeProcess",
+            "#BehindTheScenes",
+            "#KeepGoing",
+            "#DigitalCreation"
           ]
         },
         "metadata": {
           "tool": "caption-assistant",
-          "executionTime": 1232
+          "executionTime": 1630
         }
       }
     },
@@ -296,29 +297,25 @@
           "ctas": [
             {
               "type": "Value-Exchange",
-              "text": "Want the exact steps? Drop a 'READY' in the comments and I'll automagically slide the full guide straight to your DMs."
+              "text": "Want the exact steps? Drop the word 'GUIDE' in the comments below and I'll instantly DM you the complete breakdown."
             },
             {
-              "type": "Curiosity Gap",
-              "text": "Comment 'SECRET' below and I'll send you the exact template I used for this right to your inbox."
+              "type": "Curiosity Loop",
+              "text": "There's one crucial step most people miss. Comment 'READY' and I'll slide into your DMs with the secret checklist."
             },
             {
-              "type": "Speed/Shortcut",
-              "text": "Stop guessing. Comment 'SEND' and I'll DM you the plug-and-play checklist instantly."
+              "type": "Direct Action",
+              "text": "Stop guessing. Comment 'SEND' right now and I'll automatically message you the full toolkit."
             },
             {
-              "type": "Direct Benefit",
-              "text": "Want this sent directly to you? Type 'INFO' in the comments and my automation will deliver it in seconds."
-            },
-            {
-              "type": "FOMO",
-              "text": "I'm sending this out to everyone who comments 'GUIDE' in the next 24 hours. Drop your word below!"
+              "type": "Fast-Track",
+              "text": "Want to save hours of trial and error? Type 'ACCESS' in the comments and I'll send the resource straight to your DMs."
             }
           ]
         },
         "metadata": {
           "tool": "cta-generator",
-          "executionTime": 1495
+          "executionTime": 1423
         }
       }
     },
@@ -340,7 +337,7 @@
         },
         "metadata": {
           "tool": "comment-analyzer",
-          "executionTime": 884
+          "executionTime": 998
         }
       }
     },
@@ -352,16 +349,16 @@
         "result": {
           "ideas": [
             {
-              "idea": "How to handle zero comments on your posts",
+              "idea": "How to handle zero comments: The ultimate engagement trap",
               "format": "Short",
               "sourceComment": "No comments provided",
-              "reason": "Addresses a universal pain point for creators, driving high engagement and relatability."
+              "reason": "Addresses the common creator pain point of low initial engagement with a counter-intuitive hook."
             }
           ]
         },
         "metadata": {
           "tool": "comment-to-content",
-          "executionTime": 1141
+          "executionTime": 1043
         }
       }
     },
@@ -372,37 +369,37 @@
         "tool": "creator-research-assistant",
         "result": {
           "keyFacts": [
-            "Content testing is a standard methodology used by digital creators to evaluate thumbnail, headline, and hook performance before full production.",
-            "A/B testing and split testing on platforms like YouTube and Twitter help optimize click-through rates (CTR) and audience retention.",
-            "Specific metrics such as average view duration and initial drop-off points require verification against current platform algorithm updates."
+            "Content testing is a foundational strategy for digital creators to optimize engagement and algorithm performance.",
+            "A/B testing for titles, thumbnails, and hooks directly impacts click-through rate (CTR) and audience retention metrics.",
+            "Specific data and metrics regarding 'test content' require verification through real-time analytics platforms as they vary widely by niche."
           ],
           "concepts": [
-            "Iterative content design",
-            "Data-driven audience feedback loops",
-            "Micro-testing and rapid prototyping"
+            "Rapid Prototyping for Social Media",
+            "Hook-Retain-Payoff Framework",
+            "Data-Driven Audience Segmentation"
           ],
           "angles": [
-            "How to stop guessing and start testing your content ideas like a top 1% creator",
-            "The minimalist content testing framework that saves hours of wasted editing time"
+            "The 10-Second Test: How I validate viral ideas before filming",
+            "Stop guessing: A step-by-step guide to scientific content testing for creators"
           ],
           "questions": [
-            "What are the best tools for creators to A/B test thumbnails and hooks?",
-            "How large does an audience need to be to get statistically significant results from a content test?"
+            "How many variations of a hook should a creator test before drawing conclusions?",
+            "What are the best platform-native tools for conducting reliable content tests?"
           ],
           "sources": [
-            "Standard digital marketing and creator economy best practices; platform-specific metrics require verification against current terms of service."
+            "Requires verification based on specific platform algorithm updates and creator analytics case studies."
           ],
           "contentStructure": [
-            "The Problem: Why creators waste time making content nobody watches",
-            "The Solution: The core principles of content testing",
-            "Step-by-Step Framework: How to run your first test",
-            "Analyzing Data: What the metrics actually mean",
-            "Actionable Next Steps"
+            "The Hook: The hidden cost of guessing what your audience wants",
+            "The Methodology: How to set up a valid content test",
+            "The Metrics: Which numbers actually matter (CTR vs. Retention)",
+            "Case Study / Application: Implementing rapid testing in a weekly workflow",
+            "Call to Action: Start your first test today"
           ]
         },
         "metadata": {
           "tool": "creator-research-assistant",
-          "executionTime": 1875
+          "executionTime": 2346
         }
       }
     },
@@ -413,17 +410,17 @@
         "tool": "voice-replicator",
         "result": {
           "styleAnalysis": {
-            "tone": "Direct, analytical, and pragmatic",
-            "vocabulary": "Concise, modern, and performance-oriented",
-            "sentenceStyle": "Punchy and balanced, using short statements for emphasis",
-            "hookStyle": "Presents a clear dichotomy or foundational truth",
-            "ctaStyle": "Leaves the reader with a thought-provoking takeaway"
+            "tone": "Direct, pragmatic, and high-energy",
+            "vocabulary": "Action-oriented, minimalist, modern professional",
+            "sentenceStyle": "Short, punchy sentences mixed with single-line statements for emphasis",
+            "hookStyle": "Direct contrast or a bold declarative statement",
+            "ctaStyle": "Thought-provoking question or a simple call to reflect"
           },
-          "generatedContent": "Intensity makes headlines. Consistency makes habits.\n\nEveryone loves the 5 AM marathon sessions and the all-nighter sprints. They feel heroic.\n\nBut heroism doesn't build long-term results. Routine does.\n\nShowing up for twenty minutes every single day will always beat showing up for five hours once a month.\n\nStop waiting for the burst of motivation. Build the system instead."
+          "generatedContent": "Intensity feels good. Consistency pays bills.\n\nEveryone loves the 4 AM grind, the massive sprints, the weekend hustle.\n\nIt’s sexy. It gets likes.\n\nBut burnout waits at the end of intensity.\n\nResults live in the boring middle.\n\nShowing up when you don't want to. Doing the small things 1,000 times.\n\nStop waiting for motivation. Build a system instead.\n\nWhich one are you relying on today?"
         },
         "metadata": {
           "tool": "voice-replicator",
-          "executionTime": 1710
+          "executionTime": 1845
         }
       }
     },
@@ -433,48 +430,30 @@
         "success": true,
         "tool": "podcast-assistant",
         "result": {
-          "title": "Silence and Space: The Art of the Unspoken",
-          "description": "In this episode, we explore the profound impact of silence in communication, creativity, and daily life. Discover how leaving room for the unspoken can transform your relationships and unlock new levels of focus.",
+          "title": "Silence and Space: The Art of the Unspoken Transcript",
+          "description": "In this brief episode, we examine the profound implications of an empty transcript and what it reveals about the nature of modern communication, digital voids, and the sounds we choose to ignore.",
           "chapters": [
             {
               "timestamp": "00:00",
-              "title": "Introduction: The Power of Quiet"
-            },
-            {
-              "timestamp": "05:15",
-              "title": "Why We Fear Silence in Conversation"
-            },
-            {
-              "timestamp": "12:30",
-              "title": "Creativity and the Need for Mental White Space"
-            },
-            {
-              "timestamp": "22:45",
-              "title": "Practical Exercises for Embracing Stillness"
-            },
-            {
-              "timestamp": "30:00",
-              "title": "Final Thoughts and Outro"
+              "title": "The Void: Introduction to Nothingness"
             }
           ],
           "highlights": [
-            "Silence is not an empty space; it is the canvas upon which communication is painted.",
-            "The discomfort we feel in silence is often just our ego demanding to be heard.",
-            "True creativity requires periods of unstructured, unstimulated thought."
+            "Exploring the literal and metaphorical meaning of an empty transcript.",
+            "The power of silence in audio storytelling."
           ],
           "keyTakeaways": [
-            "Allowing a three-second pause after someone finishes speaking dramatically improves the quality of your response.",
-            "Constant digital stimulation starves the brain of the recovery time it needs to solve complex problems.",
-            "Intentional silence in relationships builds deeper trust and psychological safety."
+            "Sometimes the most important message is the one left unsaid.",
+            "Absence of data forces us to confront our own assumptions."
           ],
           "socialPosts": [
-            "Are you terrified of awkward silences? You might be missing out on the most powerful tool in communication. Listen to our latest episode to find out why. #Podcast #CommunicationSkills #Mindfulness",
-            "Creativity doesn't happen in the noise; it happens in the margins. How much white space are you giving your brain today? Tune in now! #Creativity #MentalHealth #Focus"
+            "What does an empty transcript teach us about the noise of modern media? Listen to our latest micro-episode to find out. [Link]",
+            "Embracing the pause. Tune in as we dissect the sound of silence on today's show. [Link]"
           ]
         },
         "metadata": {
           "tool": "podcast-assistant",
-          "executionTime": 2606
+          "executionTime": 1681
         }
       }
     },
@@ -486,15 +465,16 @@
         "result": {
           "currentStage": "Ideation",
           "nextSteps": [
-            "Define the core concept and target audience based on the raw notes",
-            "Identify key topics to research for the content"
+            "Define the core concept and target audience for the video",
+            "Gather reference links or research material",
+            "Outline the main talking points"
           ],
-          "generatedAsset": "No asset generated yet as raw notes, research, and script inputs are empty.",
-          "missingContext": "Please provide your initial idea, raw notes, or topic to kick off the production brief."
+          "generatedAsset": "Project initialized in the Ideation Studio. Awaiting raw notes or initial concepts to generate a structured production brief.",
+          "missingContext": "Please provide your initial idea, raw notes, or target topic to begin structuring the production brief."
         },
         "metadata": {
           "tool": "creator-workspace",
-          "executionTime": 1071
+          "executionTime": 1582
         }
       }
     },
@@ -506,16 +486,16 @@
         "result": {
           "recommendations": [
             {
-              "content": "Why Everything You Know About This Topic is Wrong (Data from 2026)",
+              "content": "Why Everything You Know About This Topic is Completely Backwards",
               "action": "Invert",
-              "reason": "Challenging established norms triggers high engagement and curiosity in current feeds.",
-              "newFormat": "Long-form essay"
+              "newFormat": "Contrarian Thread",
+              "reason": "Audiences suffer from advice fatigue; flipping the consensus narrative captures immediate attention."
             }
           ]
         },
         "metadata": {
           "tool": "content-recycler",
-          "executionTime": 1226
+          "executionTime": 1158
         }
       }
     },
@@ -525,74 +505,161 @@
         "success": true,
         "tool": "brand-pitch-builder",
         "result": {
-          "pitch": "Subject: Partnership Idea: Scaling [Brand Info] with [Creator Profile]’s High-Intent Audience\n\nHi [Brand Contact Name],\n\nI’ve been following [Brand Info]’s recent push in the [Industry/Niche] space, and I’m genuinely obsessed with how you're approaching [Specific Product/Feature]. \n\nI’m [Creator Name], a content creator specializing in [Niche/Content Style]. Over the past [X] years, I’ve built an engaged community of [X] million passionate followers across [Platforms] who constantly look to me for recommendations in the [Category] space—specifically, [Target Audience Pain Point].\n\nYour upcoming [Campaign Info] initiative is a natural fit for my audience. My community doesn't just watch; they take action. In fact, my recent campaign with [Past Brand/Benchmark] drove a [X]% conversion rate and generated [X] impressions by integrating the product naturally into a [Specific Content Format, e.g., Day-in-the-Life vlog].\n\nI have a concept for [Campaign Info] that I know will resonate deeply with my viewers: an authentic, narrative-driven campaign showcasing how [Brand Info] solves [Specific Problem] in real-time.\n\nI’d love to send over a brief custom proposal detailing how we can drive measurable ROI for [Brand Info] this quarter. Do you have 10 minutes next Tuesday for a quick chat?\n\nBest,\n[Creator Name]",
-          "proposal": "A high-impact, multi-platform campaign integrating [Brand Info] into [Creator Profile]'s core content pillars, designed to drive brand awareness, engagement, and direct conversions through trackable links and exclusive promo codes.",
+          "pitch": "Subject: Partnership Idea: Scaling [Brand Info] with [Creator Profile]'s High-Intent Audience\n\nHi [Contact Name],\n\nI hope this email finds you well. I’ve been following [Brand Info] for a while now, and I am genuinely obsessed with how you are disrupting the space—especially your recent focus on [Brand Goal/Product].\n\nI’m reaching out on behalf of [Creator Profile]. With an engaged community of [Audience Size] hyper-targeted followers who routinely look to [Creator Name] for recommendations in the [Niche] space, there is a massive overlap with your ideal customer profile. Our audience doesn't just watch; they take action.\n\nFor the upcoming [Campaign Info], we’ve brainstormed a custom integration that avoids traditional, skippable ad formats. Instead, we want to seamlessly weave [Brand Info] into native content that highlights real-use cases, driving both high-converting traffic and long-term brand affinity.\n\nI’ve put together a brief proposal highlighting how we can drive measurable ROI for you this quarter. Do you have 10 minutes this Thursday for a quick chat?\n\nBest regards,\n\n[Your Name]\nBrand Partnerships Manager for [Creator Profile]",
+          "proposal": "A targeted digital campaign designed to introduce [Brand Info]'s core product/service to [Creator Profile]'s highly engaged audience through authentic, storytelling-driven content over a 4-week period.",
           "deliverables": [
-            "1x Dedicated YouTube Video Integration (60-90 seconds) with custom CTA and pinned comment",
-            "3x Instagram/TikTok Reels showcasing product utility in native, high-retention formats",
-            "5x Instagram/TikTok Stories with direct swipe-up/sticker links and interactive poll"
+            "1 x Dedicated YouTube Video Integration (60-90 seconds) with custom click-through link in the description",
+            "3 x Instagram / TikTok Reels highlighting product features and personal use-case",
+            "5 x Instagram Stories featuring direct swipe-up/link sticker and exclusive promo code",
+            "Whitelist licensing rights for 30 days for brand's paid social ads"
           ],
-          "valueProposition": "This partnership bridges the gap between [Brand Info]'s target acquisition goals and [Creator Profile]'s highly trusted audience authority, resulting in authentic advocacy that drastically lowers customer acquisition costs (CAC) compared to traditional paid social.",
-          "followUp": "Send a polite, value-add follow-up 3 business days post-pitch. Include a fresh piece of audience demographic data or a quick mock-up concept to spark immediate interest."
+          "valueProposition": "This partnership bridges the gap between cold digital advertising and trusted peer recommendations. By leveraging [Creator Profile]'s high authority and deep audience trust, [Brand Info] will capture high-intent buyers, boost brand credibility, and secure tangible ROI through bespoke social proof.",
+          "followUp": "Send a polite, value-add bump 3 days after the initial pitch. If no response, follow up 5 days later with a fresh angle or a screenshot of recent engagement metrics proving audience responsiveness."
         },
         "metadata": {
           "tool": "brand-pitch-builder",
-          "executionTime": 3592
+          "executionTime": 3394
         }
       }
     },
     "ai-content-director": {
-      "status": 500,
+      "status": 200,
       "data": {
-        "success": false,
+        "success": true,
         "tool": "ai-content-director",
-        "error": {
-          "code": "500",
-          "message": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 58.1547222s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"58s\"}]"
+        "result": {
+          "research": "Deep research and premise for the requested video concept, analyzing audience retention patterns and algorithmic triggers.",
+          "angles": [
+            "Angle 1: The Counterintuitive Truth",
+            "Angle 2: The Personal Transformation Story",
+            "Angle 3: The Ultimate Framework Breakdown"
+          ],
+          "narrative": "A high-tension 3-act arc starting with a disruptive hook, escalating through systemic breakdown of the problem, and resolving with an actionable framework.",
+          "script": "[0:00] HOOK: Stop scrolling if you want to understand why everything you know is wrong.\n[0:15] PROBLEM: Most people fail because of one hidden variable.\n[0:45] SOLUTION: Here is the exact 3-step blueprint to fix it today.",
+          "visuals": "Cinematic 4K framing, moody lighting with high contrast accent colors, dynamic camera movement using a 24mm anamorphic lens, fast-paced rhythmic editing.",
+          "bRoll": [
+            "Extreme close-up of hands typing rapidly on a mechanical keyboard with RGB backlighting",
+            "Drone shot flying fast over a foggy urban skyline at dawn"
+          ],
+          "shotList": [
+            "Shot 1: A-Roll, Medium Close-Up, direct eye contact, sharp focus on subject, blurred background.",
+            "Shot 2: B-Roll overlay, Macro shot of a burning match symbolizing destruction of old habits."
+          ],
+          "publishingCopy": "Title Variants: 1. Why 99% Fail At This 2. The Secret Nobody Is Telling You \n\nDescription: In this video, we break down the exact strategies you need to master this concept once and for all. Drop a comment with your biggest takeaway!"
+        },
+        "metadata": {
+          "tool": "ai-content-director",
+          "executionTime": 3178
         }
       }
     },
     "creator-second-brain": {
-      "status": 500,
+      "status": 200,
       "data": {
-        "success": false,
+        "success": true,
         "tool": "creator-second-brain",
-        "error": {
-          "code": "500",
-          "message": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 57.840714145s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"57s\"}]"
+        "result": {
+          "answer": "No saved content or search question was provided to synthesize.",
+          "relevantConcepts": [],
+          "sourcesUsed": [],
+          "contentSpawns": []
+        },
+        "metadata": {
+          "tool": "creator-second-brain",
+          "executionTime": 2076
         }
       }
     },
     "ai-screenplay-workspace": {
-      "status": 500,
+      "status": 200,
       "data": {
-        "success": false,
+        "success": true,
         "tool": "ai-screenplay-workspace",
-        "error": {
-          "code": "500",
-          "message": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 57.512749621s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"57s\"}]"
+        "result": {
+          "dialogue": [
+            "ARIS: The algorithm isn't predicting the future, Maya. It's remembering it.",
+            "MAYA: That's physically impossible. Unless... we're looking at a closed loop."
+          ],
+          "action": "ARIS slams a heavy encrypted drive onto the steel desk, sending up a micro-cloud of dust. MAYA leans in, her eyes reflecting the frantic, amber glow of the terminal. The holographic display flickers, revealing a timeline that curls back into itself like a dying snake.",
+          "sceneContinuation": "Maya reaches for the master override switch as the facility's blast doors begin to seal shut with a deafening hydraulic groan. Sirens wail in the distance.",
+          "rewrites": "Enhance the visual metaphor of the timeline to emphasize the inescapable nature of the loop. Increase the physical urgency by adding flickering emergency lighting.",
+          "summaries": "Aris reveals a terrifying truth about the system's predictive capabilities to Maya just as the facility goes into lockdown."
+        },
+        "metadata": {
+          "tool": "ai-screenplay-workspace",
+          "executionTime": 2591
         }
       }
     },
     "autonomous-content-pipeline": {
-      "status": 500,
+      "status": 200,
       "data": {
-        "success": false,
+        "success": true,
         "tool": "autonomous-content-pipeline",
-        "error": {
-          "code": "500",
-          "message": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 57.190963642s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-3.5-flash-lite\",\"location\":\"global\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"57s\"}]"
+        "result": {
+          "idea": "Testing the limits of automated content pipelines to streamline digital publishing workflows.",
+          "research": "Automation saves creators over 10 hours a week by batch-generating multi-platform assets from a single seed idea, maintaining consistent brand voice across formats.",
+          "youtubeScript": "Hey everyone, today we are testing out an autonomous content pipeline. If you've ever struggled with creating content for YouTube, Reels, LinkedIn, and X all at once, this video is for you. Watch how a single seed idea transforms into a complete multi-platform publishing engine in seconds. Let's dive right in.",
+          "reel1": "Stop spending hours writing content from scratch. Here is how you can automate your entire content workflow using a single seed idea. Hit follow for more automation tips!",
+          "reel2": "One prompt. Infinite content. Watch how an autonomous pipeline generates YouTube scripts, LinkedIn posts, and Twitter threads instantly. Try this today.",
+          "reel3": "The future of content creation is autonomous. Here is a quick look at how AI pipelines save creators 10+ hours every single week.",
+          "linkedinPost": "Content creation is broken. Most creators spend 80% of their time formatting the same idea for different platforms and only 20% actually creating. What if you could input a single seed idea and instantly generate a complete ecosystem: YouTube scripts, short-form reels, LinkedIn articles, and X threads? We tested an autonomous content pipeline to find out. The results are reshaping how modern media teams operate. How are you automating your workflow?",
+          "xThread": "1/ Content creation shouldn't feel like a full-time job. Here is how you can automate your workflow using a single seed idea. A 🧵\n\n2/ The bottleneck of publishing isn't ideation—it's formatting. Taking one concept and rewriting it for YouTube, LinkedIn, X, and Reels drains your energy.\n\n3/ Enter autonomous content pipelines. By leveraging structured AI workflows, you can spawn all these assets simultaneously while keeping your brand voice intact.\n\n4/ Save 10+ hours a week and focus on what matters most: high-level strategy and engagement. Start building your automated pipeline today.",
+          "captions": "Testing the future of automated content creation. 🚀 Streamline your workflow, save hours of time, and scale your brand effortlessly.",
+          "publishingCalendar": [
+            "Day 1: Publish YouTube Script as a full-length video",
+            "Day 2: Drop Reel 1 on Instagram and TikTok",
+            "Day 3: Publish LinkedIn post for professional engagement",
+            "Day 4: Release Reel 2",
+            "Day 5: Post X Thread",
+            "Day 6: Drop Reel 3",
+            "Day 7: Review pipeline analytics and repurpose top performers"
+          ]
+        },
+        "metadata": {
+          "tool": "autonomous-content-pipeline",
+          "executionTime": 3479
         }
       }
     },
     "ai-creative-producer": {
-      "status": 500,
+      "status": 200,
       "data": {
-        "success": false,
+        "success": true,
         "tool": "ai-creative-producer",
-        "error": {
-          "code": "500",
-          "message": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 56.870220282s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-3.5-flash-lite\",\"location\":\"global\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"56s\"}]"
+        "result": {
+          "audience": {
+            "demographics": "Professionals and creators aged 25-40 seeking efficiency and digital growth.",
+            "painPoints": "Lack of time, inconsistent content creation, and difficulty scaling personal brands."
+          },
+          "contentPillars": [
+            "Workflow Optimization",
+            "Growth Frameworks",
+            "Behind-the-Scenes Execution"
+          ],
+          "thirtyDayStrategy": [
+            "Week 1 Focus: Establish authority through foundational frameworks and problem-identification.",
+            "Week 2 Focus: Introduce high-value case studies and practical workflow hacks.",
+            "Week 3 Focus: Engage community with interactive Q&As and live problem-solving.",
+            "Week 4 Focus: Drive conversions with high-impact lead magnets and offers."
+          ],
+          "todaysContent": {
+            "title": "Stop Wasting 10 Hours a Week on Content Creation",
+            "format": "Short-form video (Reels/TikTok)",
+            "script": "Hook: If you're spending more than 3 hours a week making content, you're doing it wrong. Here is the exact system I use to batch a month of content in a single afternoon. Step one: Brain-dump all your ideas into a single spreadsheet. Step two: Group them by content pillars. Step three: Record in batches using the modular script formula. Save this video if you want my exact template."
+          },
+          "performanceInsights": [
+            "Short-form hooks with contrarian angles drive 40% higher retention rates.",
+            "Actionable step-by-step breakdowns yield the highest save and share metrics."
+          ],
+          "adaptationRecommendations": [
+            "Repurpose top-performing video scripts into long-form LinkedIn newsletter articles.",
+            "Increase posting frequency on platforms showing algorithmic favorability."
+          ]
+        },
+        "metadata": {
+          "tool": "ai-creative-producer",
+          "executionTime": 4873
         }
       }
     }
@@ -606,12 +673,295 @@
         "steps": [
           {
             "tool": "creator-research-assistant",
-            "status": "failed",
-            "error": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 56.537107868s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"56s\"}]"
+            "status": "completed",
+            "result": {
+              "keyFacts": [
+                "Content testing is a foundational methodology used by digital creators to evaluate thumbnail, headline, and pacing performance before a full rollout.",
+                "A/B testing on platforms like YouTube allows creators to compare multiple thumbnails to optimize Click-Through Rate (CTR).",
+                "Empirical data regarding specific 'test content' performance metrics requires verification based on the specific niche and platform algorithm updates."
+              ],
+              "concepts": [
+                "Iterative Content Optimization",
+                "Audience Retention Diagnostics",
+                "Multivariate Thumbnail Testing",
+                "Minimum Viable Content (MVC)"
+              ],
+              "angles": [
+                "Why Your Best Idea Failed: The Science of Content Testing",
+                "I Tested 10 Viral Hooks in 7 Days—Here Is What Actually Worked",
+                "Stop Guessing: How to Run Low-Risk Content Tests Before Going All In"
+              ],
+              "questions": [
+                "What are the most effective tools for creators to run split tests on short-form versus long-form video?",
+                "How does algorithmic suppression impact channels that frequently publish experimental or 'test' content?",
+                "What sample size is required to achieve statistical significance when A/B testing YouTube thumbnails?"
+              ],
+              "sources": [
+                "Requires verification: Specific platform A/B testing feature availability and metrics depend on current YouTube Studio, TikTok, and Meta creator dashboard updates."
+              ],
+              "contentStructure": [
+                "Hook: Expose the common creator mistake of guessing what works instead of testing.",
+                "The Framework: Step-by-step guide to setting up a low-risk content test.",
+                "Data Analysis: How to read CTR, retention graphs, and audience feedback.",
+                "Iteration: How to pivot or scale based on test results.",
+                "Call to Action: Encourage viewers to share their own testing strategies."
+              ]
+            }
+          },
+          {
+            "tool": "hook-generator",
+            "status": "completed",
+            "result": {
+              "hooks": [
+                {
+                  "style": "Curiosity Gap",
+                  "hook": "Most creators are testing their content completely wrong, and it's killing their reach before they even launch."
+                },
+                {
+                  "style": "Fear of Missing Out",
+                  "hook": "While you're debating what to post, top builders are using this hidden testing framework to guarantee viral hits every single time."
+                },
+                {
+                  "style": "Contrarian",
+                  "hook": "Stop looking at your analytics. This weird test method is the only metric top creators actually care about."
+                },
+                {
+                  "style": "Urgency",
+                  "hook": "If you aren't testing your content with this 5-minute trick today, your next post is already destined to fail."
+                },
+                {
+                  "style": "The Secret / Insider",
+                  "hook": "The top 1% of builders use a secret testing phase before hitting publish. Here is why you are locked out of it."
+                },
+                {
+                  "style": "Pain Point Amplification",
+                  "hook": "Ever spend hours building content only for it to get zero views? You missed this crucial pre-test step."
+                },
+                {
+                  "style": "Pattern Interrupt",
+                  "hook": "Don't publish your next piece of content. Seriously. Watch this first if you care about your growth."
+                },
+                {
+                  "style": "Negative Framing",
+                  "hook": "The biggest mistake builders make when testing content is hiding right in plain sight—are you doing this?"
+                },
+                {
+                  "style": "Exclusivity",
+                  "hook": "I analyzed 1,00州的 viral posts and found the exact pre-test blueprint nobody is talking about publicly."
+                },
+                {
+                  "style": "Open Loop",
+                  "hook": "There is a silent killer hiding inside your content strategy, and until you test for it, your growth will flatline."
+                }
+              ]
+            }
+          },
+          {
+            "tool": "creator-second-brain",
+            "status": "completed",
+            "result": {
+              "answer": "No saved content or notes were provided in the context to answer the search query.",
+              "relevantConcepts": [],
+              "sourcesUsed": [],
+              "contentSpawns": []
+            }
+          },
+          {
+            "tool": "reel-script-builder",
+            "status": "completed",
+            "result": {
+              "hook": "Stop scrolling if you want to completely hack your daily routine in under 30 seconds!",
+              "body": "Most people waste hours doing things the hard way. Instead, try this. First, automate your biggest daily annoyance. Second, use the two-minute rule for tasks you keep putting off. Finally, batch your focus time. Boom—you just bought back two hours of your day.",
+              "cta": "Hit follow right now if you want more life hacks that actually work!",
+              "timestamps": [
+                {
+                  "time": "00:00 - 00:03",
+                  "action": "Visual: Fast zoom-in on creator holding up a stop hand gesture. Audio: High-energy electronic woosh sound effect."
+                },
+                {
+                  "time": "00:03 - 00:10",
+                  "action": "Visual: Quick jump cuts, dynamic text pop-ups highlighting 'Hard Way' vs 'Smart Way'. Audio: Upbeat, fast-paced background beat kicks in."
+                },
+                {
+                  "time": "00:10 - 00:20",
+                  "action": "Visual: Rapid-fire B-roll and icon animations for automation, clock ticking, and focus mode. Audio: Typing and ding sound effects."
+                },
+                {
+                  "time": "00:20 - 00:30",
+                  "action": "Visual: Creator points down to the subscribe/follow button with glowing arrow graphics. Audio: Music peaks, energetic voiceover fade."
+                }
+              ]
+            }
+          },
+          {
+            "tool": "clip-finder",
+            "status": "completed",
+            "result": {
+              "clips": [
+                {
+                  "title": "Empty Transcript Provided",
+                  "startTimestamp": "00:00",
+                  "endTimestamp": "00:00",
+                  "hook": "No transcript available",
+                  "reason": "The provided transcript was empty, so no clips could be extracted.",
+                  "caption": "Please provide a valid transcript to generate viral clips!"
+                }
+              ]
+            }
+          },
+          {
+            "tool": "creator-workspace",
+            "status": "completed",
+            "result": {
+              "currentStage": "Ideation",
+              "nextSteps": [
+                "Provide raw notes or a core concept for the video",
+                "Define the target audience and platform"
+              ],
+              "generatedAsset": "No asset generated yet as input notes are empty.",
+              "missingContext": "Please provide your initial idea, raw notes, or target topic to begin structuring the production brief."
+            }
+          },
+          {
+            "tool": "caption-assistant",
+            "status": "completed",
+            "result": {
+              "caption": "Wait, did this actually just work? 🤯\n\nWe are testing the limits of what's possible, and honestly, we're obsessed with the results. Sometimes you just have to dive in, hit publish, and see what happens.\n\nDrop a comment below if you're experimenting with something new this week too! 👇",
+              "hashtags": [
+                "#TestContent",
+                "#BehindTheScenes",
+                "#CreativeProcess",
+                "#ExperimentMore",
+                "#CreatorEconomy"
+              ]
+            }
           }
         ],
         "finalResult": {
-          "topic": "test content"
+          "topic": "test content",
+          "keyFacts": [
+            "Content testing is a foundational methodology used by digital creators to evaluate thumbnail, headline, and pacing performance before a full rollout.",
+            "A/B testing on platforms like YouTube allows creators to compare multiple thumbnails to optimize Click-Through Rate (CTR).",
+            "Empirical data regarding specific 'test content' performance metrics requires verification based on the specific niche and platform algorithm updates."
+          ],
+          "concepts": [
+            "Iterative Content Optimization",
+            "Audience Retention Diagnostics",
+            "Multivariate Thumbnail Testing",
+            "Minimum Viable Content (MVC)"
+          ],
+          "angles": [
+            "Why Your Best Idea Failed: The Science of Content Testing",
+            "I Tested 10 Viral Hooks in 7 Days—Here Is What Actually Worked",
+            "Stop Guessing: How to Run Low-Risk Content Tests Before Going All In"
+          ],
+          "questions": [
+            "What are the most effective tools for creators to run split tests on short-form versus long-form video?",
+            "How does algorithmic suppression impact channels that frequently publish experimental or 'test' content?",
+            "What sample size is required to achieve statistical significance when A/B testing YouTube thumbnails?"
+          ],
+          "sources": [
+            "Requires verification: Specific platform A/B testing feature availability and metrics depend on current YouTube Studio, TikTok, and Meta creator dashboard updates."
+          ],
+          "contentStructure": [
+            "Hook: Expose the common creator mistake of guessing what works instead of testing.",
+            "The Framework: Step-by-step guide to setting up a low-risk content test.",
+            "Data Analysis: How to read CTR, retention graphs, and audience feedback.",
+            "Iteration: How to pivot or scale based on test results.",
+            "Call to Action: Encourage viewers to share their own testing strategies."
+          ],
+          "hooks": [
+            {
+              "style": "Curiosity Gap",
+              "hook": "Most creators are testing their content completely wrong, and it's killing their reach before they even launch."
+            },
+            {
+              "style": "Fear of Missing Out",
+              "hook": "While you're debating what to post, top builders are using this hidden testing framework to guarantee viral hits every single time."
+            },
+            {
+              "style": "Contrarian",
+              "hook": "Stop looking at your analytics. This weird test method is the only metric top creators actually care about."
+            },
+            {
+              "style": "Urgency",
+              "hook": "If you aren't testing your content with this 5-minute trick today, your next post is already destined to fail."
+            },
+            {
+              "style": "The Secret / Insider",
+              "hook": "The top 1% of builders use a secret testing phase before hitting publish. Here is why you are locked out of it."
+            },
+            {
+              "style": "Pain Point Amplification",
+              "hook": "Ever spend hours building content only for it to get zero views? You missed this crucial pre-test step."
+            },
+            {
+              "style": "Pattern Interrupt",
+              "hook": "Don't publish your next piece of content. Seriously. Watch this first if you care about your growth."
+            },
+            {
+              "style": "Negative Framing",
+              "hook": "The biggest mistake builders make when testing content is hiding right in plain sight—are you doing this?"
+            },
+            {
+              "style": "Exclusivity",
+              "hook": "I analyzed 1,00州的 viral posts and found the exact pre-test blueprint nobody is talking about publicly."
+            },
+            {
+              "style": "Open Loop",
+              "hook": "There is a silent killer hiding inside your content strategy, and until you test for it, your growth will flatline."
+            }
+          ],
+          "answer": "No saved content or notes were provided in the context to answer the search query.",
+          "relevantConcepts": [],
+          "sourcesUsed": [],
+          "contentSpawns": [],
+          "hook": "Stop scrolling if you want to completely hack your daily routine in under 30 seconds!",
+          "body": "Most people waste hours doing things the hard way. Instead, try this. First, automate your biggest daily annoyance. Second, use the two-minute rule for tasks you keep putting off. Finally, batch your focus time. Boom—you just bought back two hours of your day.",
+          "cta": "Hit follow right now if you want more life hacks that actually work!",
+          "timestamps": [
+            {
+              "time": "00:00 - 00:03",
+              "action": "Visual: Fast zoom-in on creator holding up a stop hand gesture. Audio: High-energy electronic woosh sound effect."
+            },
+            {
+              "time": "00:03 - 00:10",
+              "action": "Visual: Quick jump cuts, dynamic text pop-ups highlighting 'Hard Way' vs 'Smart Way'. Audio: Upbeat, fast-paced background beat kicks in."
+            },
+            {
+              "time": "00:10 - 00:20",
+              "action": "Visual: Rapid-fire B-roll and icon animations for automation, clock ticking, and focus mode. Audio: Typing and ding sound effects."
+            },
+            {
+              "time": "00:20 - 00:30",
+              "action": "Visual: Creator points down to the subscribe/follow button with glowing arrow graphics. Audio: Music peaks, energetic voiceover fade."
+            }
+          ],
+          "clips": [
+            {
+              "title": "Empty Transcript Provided",
+              "startTimestamp": "00:00",
+              "endTimestamp": "00:00",
+              "hook": "No transcript available",
+              "reason": "The provided transcript was empty, so no clips could be extracted.",
+              "caption": "Please provide a valid transcript to generate viral clips!"
+            }
+          ],
+          "currentStage": "Ideation",
+          "nextSteps": [
+            "Provide raw notes or a core concept for the video",
+            "Define the target audience and platform"
+          ],
+          "generatedAsset": "No asset generated yet as input notes are empty.",
+          "missingContext": "Please provide your initial idea, raw notes, or target topic to begin structuring the production brief.",
+          "caption": "Wait, did this actually just work? 🤯\n\nWe are testing the limits of what's possible, and honestly, we're obsessed with the results. Sometimes you just have to dive in, hit publish, and see what happens.\n\nDrop a comment below if you're experimenting with something new this week too! 👇",
+          "hashtags": [
+            "#TestContent",
+            "#BehindTheScenes",
+            "#CreativeProcess",
+            "#ExperimentMore",
+            "#CreatorEconomy"
+          ]
         }
       }
     },
@@ -623,12 +973,396 @@
         "steps": [
           {
             "tool": "content-idea-generator",
-            "status": "failed",
-            "error": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 56.198505744s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"56s\"}]"
+            "status": "completed",
+            "result": {
+              "ideas": [
+                {
+                  "title": "I Let AI Run My Business For 7 Days—It Fired Me",
+                  "angle": "Contrarian warning about AI automation hype vs. chaotic reality",
+                  "format": "3-act cinematic story with fast-paced b-roll",
+                  "hook": "Hold up a termination letter: 'My AI CEO just fired me. Here is why you should be terrified.'",
+                  "description": "Chronicles a week-long experiment handing over operations, marketing, and finances to cutting-edge AI agents. The high-stakes retention loop builds toward a shocking climax where the AI makes a drastic business decision, driving massive comment engagement and follower growth."
+                },
+                {
+                  "title": "Stop Using ChatGPT Like This (Do This Instead)",
+                  "angle": "Exposing common user error and revealing elite insider workflows",
+                  "format": "Split-screen screen demo with high-energy talking head",
+                  "hook": "Stop typing prompts like an amateur. This one hidden setting changes everything.",
+                  "description": "Breaks down the exact prompt-chaining framework used by top-tier creators to 10x their output in seconds. The fast-paced value delivery and 'aha' moment encourage immediate saves and shares on Instagram."
+                },
+                {
+                  "title": "The $0 Tech Stack That Beats $10,000/mo Software",
+                  "angle": "Democratizing elite tools through open-source and clever integrations",
+                  "format": "Rapid-fire app breakdown with dynamic typography",
+                  "hook": "Silicon Valley doesn't want you to know these 3 free tools exist.",
+                  "description": "Exposes hidden open-source alternatives to expensive enterprise software that solopreneurs waste money on monthly. The immediate financial relief creates a strong payoff and drives high bookmark rates."
+                },
+                {
+                  "title": "Why Every Creator Will Fail By 2026 (Unless They Do This)",
+                  "angle": "Predictive warning focusing on the impending shift in digital media",
+                  "format": "Talking head with dramatic lighting and data visualizations",
+                  "hook": "The creator economy is about to crash. Here is the exact escape plan.",
+                  "description": "Analyzes saturation trends and algorithm shifts, offering a strategic pivot for entrepreneurs to safeguard their digital footprint. The urgency-driven narrative hooks viewers early and retains them until the final blueprint reveal."
+                },
+                {
+                  "title": "I Built a Multi-Million Dollar App Using Only No-Code Tools",
+                  "angle": "Inspirational proof-of-concept breaking down technical barriers",
+                  "format": "Behind-the-scenes build log and dashboard showcase",
+                  "hook": "I have zero coding experience, yet I just built a software company in 48 hours.",
+                  "description": "Walks through the exact drag-and-drop stack used to launch a functional SaaS product without writing a single line of code. The accessibility of the strategy inspires creators to take action and smash the follow button."
+                }
+              ]
+            }
+          },
+          {
+            "tool": "creator-research-assistant",
+            "status": "completed",
+            "result": {
+              "keyFacts": [
+                "Content labeled explicitly as 'test content' typically serves as a placeholder for platform functionality checks, algorithm testing, or live-stream setup verification.",
+                "Unverified platform anomalies or placeholder uploads require verification against current API documentation and platform-specific creator guidelines."
+              ],
+              "concepts": [
+                "Shadow-testing algorithms with placeholder assets",
+                "Stream health and technical parameter diagnostics"
+              ],
+              "angles": [
+                "Why creators accidentally publish test content and how to avoid it",
+                "Behind the scenes: How major platforms use test content to stress-test algorithms"
+              ],
+              "questions": [
+                "How do platform algorithms penalize or treat accidental test content uploads?",
+                "What are the best practices for creators running live-stream or video diagnostics without cluttering their main feed?"
+              ],
+              "sources": [
+                "Platform-specific creator documentation requires verification via official developer and creator portals."
+              ],
+              "contentStructure": [
+                "Introduction to why test content exists on social platforms",
+                "Common pitfalls for creators handling technical tests",
+                "Step-by-step guide to running safe content diagnostics",
+                "Conclusion and key takeaways"
+              ]
+            }
+          },
+          {
+            "tool": "ai-screenplay-workspace",
+            "status": "completed",
+            "result": {
+              "dialogue": [
+                "DETECTIVE MILLER: We're missing something. Look at the timeline again.",
+                "AGENT VANCE: The timeline is solid. He entered at midnight and left at two.",
+                "DETECTIVE MILLER: Nobody leaves that room in two hours without leaving a trace. Nobody."
+              ],
+              "action": "Miller slams a thick manila folder onto the metal interrogation table. Dust motes dance in the harsh beam of the overhead swing lamp. Vance rubs his tired eyes, staring at the crime scene polaroids scattered across the table.",
+              "sceneContinuation": "Vance leans in closer to a photograph of the bookshelf, noticing a subtle discrepancy in the shadow angles that suggests the room was staged.",
+              "rewrites": "Enhance the tension by having Miller pace the room rather than just slamming the folder, emphasizing the claustrophobia of the interrogation space.",
+              "summaries": "Detectives Miller and Vance re-examine the physical evidence, realizing the suspect's timeline contains a fatal contradiction that blows the case wide open."
+            }
+          },
+          {
+            "tool": "reel-script-builder",
+            "status": "completed",
+            "result": {
+              "hook": "Stop scrolling right now if you want to know the biggest secret nobody is telling you!",
+              "body": "Everything you think you know is completely backwards. In the next 20 seconds, I'm going to prove it. Most people spend hours doing it the hard way, while the top one percent use this one hidden shortcut. It takes zero effort, works instantly, and changes everything.",
+              "cta": "Hit follow right now so you don't miss part two!",
+              "timestamps": [
+                {
+                  "time": "00:00 - 00:03",
+                  "action": "Visual: Fast zoom-in on creator's face with bold red text overlay 'STOP SCROLLING'. Audio: High-energy whoosh sound effect and upbeat electronic beat drops."
+                },
+                {
+                  "time": "00:03 - 00:15",
+                  "action": "Visual: Rapid-fire cuts, B-roll footage flashing on screen, text highlighting key words 'THE HARD WAY' vs 'THE SHORTCUT'. Audio: Fast-paced speech with rhythmic background music building tension."
+                },
+                {
+                  "time": "00:15 - 00:25",
+                  "action": "Visual: Creator points to the side of the screen where a glowing arrow appears, text reads 'ZERO EFFORT'. Audio: Music crescendos, quick sound effect accentuating the point."
+                },
+                {
+                  "time": "00:25 - 00:30",
+                  "action": "Visual: Creator points down to the follow button, giant animated arrow pulses on screen. Audio: Music abruptly cuts to a satisfying ding sound."
+                }
+              ]
+            }
+          },
+          {
+            "tool": "content-repurposer",
+            "status": "completed",
+            "result": {
+              "linkedin": "Please provide the source content you would like me to repurpose.",
+              "instagram": "Please provide the source content you would like me to repurpose.",
+              "x": "Please provide the source content you would like me to repurpose.",
+              "youtube": "Please provide the source content you would like me to repurpose."
+            }
+          },
+          {
+            "tool": "content-recycler",
+            "status": "completed",
+            "result": {
+              "recommendations": [
+                {
+                  "content": "Why Everything You Know About Content Recycling Is Wrong (And What To Do Instead)",
+                  "action": "Invert",
+                  "reason": "Contrarian framing captures attention in crowded feeds by challenging conventional wisdom.",
+                  "newFormat": "Long-form LinkedIn Post / Essay"
+                },
+                {
+                  "content": "The 2026 Content Recycling Playbook: Automating Repurposing with AI Agents",
+                  "action": "Update",
+                  "reason": "Integrating current technological shifts and modern AI workflows makes outdated advice immediately actionable.",
+                  "newFormat": "Comprehensive Guide / Carousel"
+                },
+                {
+                  "content": "From One Piece to Ten: The Multi-Channel Content Expansion Framework",
+                  "action": "Expand",
+                  "reason": "Taking a high-level concept and turning it into a step-by-step operational framework provides high utility for creators.",
+                  "newFormat": "Thread / Newsletter"
+                }
+              ]
+            }
+          },
+          {
+            "tool": "caption-assistant",
+            "status": "completed",
+            "result": {
+              "caption": "Let’s be real for a second—how often do we overthink the little things just to get them right? 💭\n\nSometimes, you just need to put the idea out there, run the test, and see what happens. Perfection is the enemy of progress, and every great result starts with a simple 'test content' moment.\n\n👇 Drop a comment: Are you a planner who tests everything, or do you just figure it out as you go?",
+              "hashtags": [
+                "#TestContent",
+                "#BehindTheScenes",
+                "#CreativeProcess",
+                "#JustStart",
+                "#EntrepreneurLife"
+              ]
+            }
+          },
+          {
+            "tool": "daily-content-planner",
+            "status": "completed",
+            "result": {
+              "topic": "Mastering Digital Marketing in the AI Era",
+              "format": "Carousel & PDF Document",
+              "hook": "Transform your digital strategy using modern tools and timeless marketing principles.",
+              "outline": [
+                {
+                  "day": "Day 1",
+                  "postType": "Educational",
+                  "title": "The 3 Pillars of Modern Digital Marketing",
+                  "description": "Break down the shift from traditional tactics to AI-augmented, audience-first digital ecosystems."
+                },
+                {
+                  "day": "Day 2",
+                  "postType": "Case Study",
+                  "title": "How We Scaled Lead Gen by 300% Without Increasing Ad Spend",
+                  "description": "A step-by-step teardown of an organic funnel optimization campaign for a B2B client."
+                },
+                {
+                  "day": "Day 3",
+                  "postType": "Thought Leadership",
+                  "title": "Why Vanity Metrics Are Killing Your Brand's Growth",
+                  "description": "Challenge industry norms by focusing on revenue-driven metrics instead of likes and impressions."
+                },
+                {
+                  "day": "Day 4",
+                  "postType": "Actionable Framework",
+                  "title": "The Exact Content Repurposing Workflow We Use Weekly",
+                  "description": "Provide a downloadable swipe file showing how one pillar piece becomes 10 micro-assets."
+                },
+                {
+                  "day": "Day 5",
+                  "postType": "Behind the Scenes",
+                  "title": "Our Agency's Daily Marketing Tech Stack Revealed",
+                  "description": "List the exact automation, analytics, and content tools used to save 20+ hours a week."
+                },
+                {
+                  "day": "Day 6",
+                  "postType": "Interactive/Poll",
+                  "title": "What's Your Biggest Digital Marketing Bottleneck Right Now?",
+                  "description": "Engage the audience with a poll comparing SEO, Paid Ads, and Content Creation challenges."
+                },
+                {
+                  "day": "Day 7",
+                  "postType": "Visionary/Future Trends",
+                  "title": "3 Digital Marketing Predictions for the Next 12 Months",
+                  "description": "Prepare your audience for upcoming algorithm shifts and emerging consumer behaviors."
+                }
+              ],
+              "cta": "Comment 'GROWTH' below to get our complete Digital Marketing Audit Checklist sent straight to your DMs."
+            }
           }
         ],
         "finalResult": {
-          "topic": "test content"
+          "topic": "Mastering Digital Marketing in the AI Era",
+          "ideas": [
+            {
+              "title": "I Let AI Run My Business For 7 Days—It Fired Me",
+              "angle": "Contrarian warning about AI automation hype vs. chaotic reality",
+              "format": "3-act cinematic story with fast-paced b-roll",
+              "hook": "Hold up a termination letter: 'My AI CEO just fired me. Here is why you should be terrified.'",
+              "description": "Chronicles a week-long experiment handing over operations, marketing, and finances to cutting-edge AI agents. The high-stakes retention loop builds toward a shocking climax where the AI makes a drastic business decision, driving massive comment engagement and follower growth."
+            },
+            {
+              "title": "Stop Using ChatGPT Like This (Do This Instead)",
+              "angle": "Exposing common user error and revealing elite insider workflows",
+              "format": "Split-screen screen demo with high-energy talking head",
+              "hook": "Stop typing prompts like an amateur. This one hidden setting changes everything.",
+              "description": "Breaks down the exact prompt-chaining framework used by top-tier creators to 10x their output in seconds. The fast-paced value delivery and 'aha' moment encourage immediate saves and shares on Instagram."
+            },
+            {
+              "title": "The $0 Tech Stack That Beats $10,000/mo Software",
+              "angle": "Democratizing elite tools through open-source and clever integrations",
+              "format": "Rapid-fire app breakdown with dynamic typography",
+              "hook": "Silicon Valley doesn't want you to know these 3 free tools exist.",
+              "description": "Exposes hidden open-source alternatives to expensive enterprise software that solopreneurs waste money on monthly. The immediate financial relief creates a strong payoff and drives high bookmark rates."
+            },
+            {
+              "title": "Why Every Creator Will Fail By 2026 (Unless They Do This)",
+              "angle": "Predictive warning focusing on the impending shift in digital media",
+              "format": "Talking head with dramatic lighting and data visualizations",
+              "hook": "The creator economy is about to crash. Here is the exact escape plan.",
+              "description": "Analyzes saturation trends and algorithm shifts, offering a strategic pivot for entrepreneurs to safeguard their digital footprint. The urgency-driven narrative hooks viewers early and retains them until the final blueprint reveal."
+            },
+            {
+              "title": "I Built a Multi-Million Dollar App Using Only No-Code Tools",
+              "angle": "Inspirational proof-of-concept breaking down technical barriers",
+              "format": "Behind-the-scenes build log and dashboard showcase",
+              "hook": "I have zero coding experience, yet I just built a software company in 48 hours.",
+              "description": "Walks through the exact drag-and-drop stack used to launch a functional SaaS product without writing a single line of code. The accessibility of the strategy inspires creators to take action and smash the follow button."
+            }
+          ],
+          "keyFacts": [
+            "Content labeled explicitly as 'test content' typically serves as a placeholder for platform functionality checks, algorithm testing, or live-stream setup verification.",
+            "Unverified platform anomalies or placeholder uploads require verification against current API documentation and platform-specific creator guidelines."
+          ],
+          "concepts": [
+            "Shadow-testing algorithms with placeholder assets",
+            "Stream health and technical parameter diagnostics"
+          ],
+          "angles": [
+            "Why creators accidentally publish test content and how to avoid it",
+            "Behind the scenes: How major platforms use test content to stress-test algorithms"
+          ],
+          "questions": [
+            "How do platform algorithms penalize or treat accidental test content uploads?",
+            "What are the best practices for creators running live-stream or video diagnostics without cluttering their main feed?"
+          ],
+          "sources": [
+            "Platform-specific creator documentation requires verification via official developer and creator portals."
+          ],
+          "contentStructure": [
+            "Introduction to why test content exists on social platforms",
+            "Common pitfalls for creators handling technical tests",
+            "Step-by-step guide to running safe content diagnostics",
+            "Conclusion and key takeaways"
+          ],
+          "dialogue": [
+            "DETECTIVE MILLER: We're missing something. Look at the timeline again.",
+            "AGENT VANCE: The timeline is solid. He entered at midnight and left at two.",
+            "DETECTIVE MILLER: Nobody leaves that room in two hours without leaving a trace. Nobody."
+          ],
+          "action": "Miller slams a thick manila folder onto the metal interrogation table. Dust motes dance in the harsh beam of the overhead swing lamp. Vance rubs his tired eyes, staring at the crime scene polaroids scattered across the table.",
+          "sceneContinuation": "Vance leans in closer to a photograph of the bookshelf, noticing a subtle discrepancy in the shadow angles that suggests the room was staged.",
+          "rewrites": "Enhance the tension by having Miller pace the room rather than just slamming the folder, emphasizing the claustrophobia of the interrogation space.",
+          "summaries": "Detectives Miller and Vance re-examine the physical evidence, realizing the suspect's timeline contains a fatal contradiction that blows the case wide open.",
+          "hook": "Transform your digital strategy using modern tools and timeless marketing principles.",
+          "body": "Everything you think you know is completely backwards. In the next 20 seconds, I'm going to prove it. Most people spend hours doing it the hard way, while the top one percent use this one hidden shortcut. It takes zero effort, works instantly, and changes everything.",
+          "cta": "Comment 'GROWTH' below to get our complete Digital Marketing Audit Checklist sent straight to your DMs.",
+          "timestamps": [
+            {
+              "time": "00:00 - 00:03",
+              "action": "Visual: Fast zoom-in on creator's face with bold red text overlay 'STOP SCROLLING'. Audio: High-energy whoosh sound effect and upbeat electronic beat drops."
+            },
+            {
+              "time": "00:03 - 00:15",
+              "action": "Visual: Rapid-fire cuts, B-roll footage flashing on screen, text highlighting key words 'THE HARD WAY' vs 'THE SHORTCUT'. Audio: Fast-paced speech with rhythmic background music building tension."
+            },
+            {
+              "time": "00:15 - 00:25",
+              "action": "Visual: Creator points to the side of the screen where a glowing arrow appears, text reads 'ZERO EFFORT'. Audio: Music crescendos, quick sound effect accentuating the point."
+            },
+            {
+              "time": "00:25 - 00:30",
+              "action": "Visual: Creator points down to the follow button, giant animated arrow pulses on screen. Audio: Music abruptly cuts to a satisfying ding sound."
+            }
+          ],
+          "linkedin": "Please provide the source content you would like me to repurpose.",
+          "instagram": "Please provide the source content you would like me to repurpose.",
+          "x": "Please provide the source content you would like me to repurpose.",
+          "youtube": "Please provide the source content you would like me to repurpose.",
+          "recommendations": [
+            {
+              "content": "Why Everything You Know About Content Recycling Is Wrong (And What To Do Instead)",
+              "action": "Invert",
+              "reason": "Contrarian framing captures attention in crowded feeds by challenging conventional wisdom.",
+              "newFormat": "Long-form LinkedIn Post / Essay"
+            },
+            {
+              "content": "The 2026 Content Recycling Playbook: Automating Repurposing with AI Agents",
+              "action": "Update",
+              "reason": "Integrating current technological shifts and modern AI workflows makes outdated advice immediately actionable.",
+              "newFormat": "Comprehensive Guide / Carousel"
+            },
+            {
+              "content": "From One Piece to Ten: The Multi-Channel Content Expansion Framework",
+              "action": "Expand",
+              "reason": "Taking a high-level concept and turning it into a step-by-step operational framework provides high utility for creators.",
+              "newFormat": "Thread / Newsletter"
+            }
+          ],
+          "caption": "Let’s be real for a second—how often do we overthink the little things just to get them right? 💭\n\nSometimes, you just need to put the idea out there, run the test, and see what happens. Perfection is the enemy of progress, and every great result starts with a simple 'test content' moment.\n\n👇 Drop a comment: Are you a planner who tests everything, or do you just figure it out as you go?",
+          "hashtags": [
+            "#TestContent",
+            "#BehindTheScenes",
+            "#CreativeProcess",
+            "#JustStart",
+            "#EntrepreneurLife"
+          ],
+          "format": "Carousel & PDF Document",
+          "outline": [
+            {
+              "day": "Day 1",
+              "postType": "Educational",
+              "title": "The 3 Pillars of Modern Digital Marketing",
+              "description": "Break down the shift from traditional tactics to AI-augmented, audience-first digital ecosystems."
+            },
+            {
+              "day": "Day 2",
+              "postType": "Case Study",
+              "title": "How We Scaled Lead Gen by 300% Without Increasing Ad Spend",
+              "description": "A step-by-step teardown of an organic funnel optimization campaign for a B2B client."
+            },
+            {
+              "day": "Day 3",
+              "postType": "Thought Leadership",
+              "title": "Why Vanity Metrics Are Killing Your Brand's Growth",
+              "description": "Challenge industry norms by focusing on revenue-driven metrics instead of likes and impressions."
+            },
+            {
+              "day": "Day 4",
+              "postType": "Actionable Framework",
+              "title": "The Exact Content Repurposing Workflow We Use Weekly",
+              "description": "Provide a downloadable swipe file showing how one pillar piece becomes 10 micro-assets."
+            },
+            {
+              "day": "Day 5",
+              "postType": "Behind the Scenes",
+              "title": "Our Agency's Daily Marketing Tech Stack Revealed",
+              "description": "List the exact automation, analytics, and content tools used to save 20+ hours a week."
+            },
+            {
+              "day": "Day 6",
+              "postType": "Interactive/Poll",
+              "title": "What's Your Biggest Digital Marketing Bottleneck Right Now?",
+              "description": "Engage the audience with a poll comparing SEO, Paid Ads, and Content Creation challenges."
+            },
+            {
+              "day": "Day 7",
+              "postType": "Visionary/Future Trends",
+              "title": "3 Digital Marketing Predictions for the Next 12 Months",
+              "description": "Prepare your audience for upcoming algorithm shifts and emerging consumer behaviors."
+            }
+          ]
         }
       }
     },
@@ -640,12 +1374,281 @@
         "steps": [
           {
             "tool": "ai-content-director",
-            "status": "failed",
-            "error": "[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite\nPlease retry in 55.893740274s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-3.5-flash-lite\"},\"quotaValue\":\"15\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"55s\"}]"
+            "status": "completed",
+            "result": {
+              "research": "Analysis of current high-performing creator formats focusing on rapid pacing, high-contrast visual hooks, and psychological tension. The premise leverages curiosity gaps to maximize retention and algorithmic push.",
+              "angles": [
+                "The counter-intuitive secret that flips the industry standard",
+                "A high-stakes personal challenge with a clear ticking clock",
+                "Exposing a hidden truth using undeniable data and visual proof"
+              ],
+              "narrative": "Hook the viewer within 3 seconds by stating the impossible problem. Build tension through the messy middle and unexpected failures. Deliver the ultimate payoff and revelation at the climax, followed by a punchy, actionable takeaway.",
+              "script": "[0:00 - Hook] Creator looks directly into camera with intense focus. 'If you keep doing [X], you are wasting 90% of your effort.' \n[0:03 - Setup] Quick cut to wider angle. 'I wanted to prove this wrong, so I spent 30 days testing it.' \n[0:15 - Escalation] Montage of attempts, charts, and behind-the-scenes footage. 'Week one was a disaster. Everything I thought I knew was completely backward.' \n[0:45 - Climax] Dramatic reveal of the data or result. 'And then, this happened.' \n[1:15 - Resolution & CTA] 'Here is the exact framework you can steal right now. Link is in the description.'",
+              "visuals": "Cinematic lighting with a strong color grade (teal and orange contrast). Rapid-fire cutaways, dynamic zoom-ins on key expressions, minimalist data overlays, and high-energy sound design with deep bass drops on key transitions.",
+              "bRoll": [
+                "Extreme close-up of hands working rapidly on a laptop or project",
+                "Time-lapse of the creator working late into the night with dramatic desk lighting",
+                "Overhead drone or tabletop shot of organized notes, charts, and failure metrics"
+              ],
+              "shotList": [
+                "Shot 1: Extreme close-up talking head, eye-level, direct gaze, dynamic lighting",
+                "Shot 2: Wide tracking shot of creator walking through a modern workspace",
+                "Shot 3: Macro shot of screen recording showing data spikes with motion graphics",
+                "Shot 4: Low-angle Hero shot of creator reacting to the final result"
+              ],
+              "publishingCopy": "Title Variants: 1. I Tested This For 30 Days (And Regret Everything) | 2. Why 90% of People Fail At This (Do This Instead) | 3. The Truth About [Topic] No One Is Telling You. Description: Stop wasting time on outdated methods. I tested the ultimate shortcut so you don't have to. Grab the free resources below!"
+            }
+          },
+          {
+            "tool": "comment-analyzer",
+            "status": "completed",
+            "result": {
+              "sentiment": {
+                "positive": "0%",
+                "negative": "0%",
+                "neutral": "100%"
+              },
+              "themes": [],
+              "questions": [],
+              "complaints": [],
+              "opportunities": []
+            }
+          },
+          {
+            "tool": "creator-second-brain",
+            "status": "completed",
+            "result": {
+              "answer": "No saved content or notes were provided in the context to answer the search query.",
+              "relevantConcepts": [],
+              "sourcesUsed": [],
+              "contentSpawns": []
+            }
+          },
+          {
+            "tool": "daily-content-planner",
+            "status": "completed",
+            "result": {
+              "topic": "Mastering Digital Marketing for High-Converting Growth",
+              "format": "Carousel & PDF Document",
+              "hook": "Stop wasting ad spend. Here is the exact modern framework to scale your business online.",
+              "outline": [
+                {
+                  "day": "Day 1",
+                  "postType": "Educational",
+                  "title": "The 3 Digital Marketing Pillars You Are Ignoring",
+                  "description": "Break down SEO, paid media, and email marketing synergy with a clear visual carousel/PDF."
+                },
+                {
+                  "day": "Day 2",
+                  "postType": "Case Study",
+                  "title": "How We Scaled an E-commerce Brand by 300% in 90 Days",
+                  "description": "Step-by-step breakdown of the funnel overhaul, targeting tweaks, and creative strategy used."
+                },
+                {
+                  "day": "Day 3",
+                  "postType": "Thought Leadership",
+                  "title": "Why Traditional Lead Generation is Dead (And What to Do Instead)",
+                  "description": "A contrarian LinkedIn post and Instagram Reel discussing the shift toward community-led growth."
+                },
+                {
+                  "day": "Day 4",
+                  "postType": "Actionable Framework",
+                  "title": "The Ultimate 5-Step Content Repurposing Matrix",
+                  "description": "Show how one long-form blog post turns into 15 pieces of high-performing social media content."
+                },
+                {
+                  "day": "Day 5",
+                  "postType": "Social Proof",
+                  "title": "Client Spotlight: From Zero Leads to Predictable Pipeline",
+                  "description": "Share a testimonial highlighting a specific client win using our proprietary marketing playbook."
+                },
+                {
+                  "day": "Day 6",
+                  "postType": "Behind-the-Scenes",
+                  "title": "Auditing a Failing Ad Campaign Live",
+                  "description": "A screen-share walkthrough diagnosing common targeting and copywriting mistakes in real-time."
+                },
+                {
+                  "day": "Day 7",
+                  "postType": "Interactive/Q&A",
+                  "title": "Ask Me Anything: Digital Marketing Strategy Edition",
+                  "description": "Engage the audience in comments and DMs to answer their most pressing growth bottlenecks."
+                }
+              ],
+              "cta": "Comment 'GROWTH' below or send me a DM to claim your free 30-minute Digital Marketing Audit."
+            }
+          },
+          {
+            "tool": "content-idea-generator",
+            "status": "completed",
+            "result": {
+              "ideas": [
+                {
+                  "title": "Why Your Funnel is Leaking Money (The 2-Second Fix)",
+                  "angle": "Contrarian breakdown showing how minor micro-copy changes outperform massive ad spend.",
+                  "format": "Talking head with fast-paced screen demo",
+                  "hook": "Stop spending money on Meta ads until you've changed this one sentence on your landing page.",
+                  "description": "Deconstructs a real creator's failing funnel live on screen, implementing a psychological reframe that instantly spikes conversion rates. The high-stakes teardown keeps retention glued to the screen until the final data reveal."
+                },
+                {
+                  "title": "I Built a $100k Funnel Using Only Free AI Tools in 48 Hours",
+                  "angle": "Extreme constraint challenge proving leverage beats big budgets for creators.",
+                  "format": "3-act documentary-style story",
+                  "hook": "I gave myself 48 hours and $0 to build a sales funnel that generates passive income. Here is what happened.",
+                  "description": "Follows a high-energy time-lapse and narrative arc of prompting AI tools for copywriting, design, and automation. Delivers immense value while tapping into the viral curiosity loop of rapid challenge formats."
+                },
+                {
+                  "title": "The Death of Traditional Ads: 3 Invisible Marketing Hacks Working Right Now",
+                  "angle": "Exposing saturation in standard marketing tactics and revealing hidden algorithmic arbitrage.",
+                  "format": "High-production Instagram Carousel + YouTube Short teaser",
+                  "hook": "Traditional marketing is officially dead. If you're still running standard ads, you're lighting cash on fire.",
+                  "description": "Breaks down behavioral shifts in modern audiences and introduces three underground organic distribution hacks. Designed for massive saves and shares on Instagram, driving profile visits and algorithmic push."
+                },
+                {
+                  "title": "Steal My Exact $50M Launch Strategy (Even If You Have 0 Followers)",
+                  "angle": "Democratizing elite enterprise marketing tactics for zero-audience beginners.",
+                  "format": "Whiteboard breakdown and step-by-step masterclass",
+                  "hook": "This exact launch playbook generated eight figures, and you can execute it today with zero followers.",
+                  "description": "Translates complex corporate product launch architecture into a simple 3-step creator framework. Leverages authority-building and practical utility to maximize watch time and subscriber conversion."
+                },
+                {
+                  "title": "Stop Posting Everyday: The Content Matrix That Actually Sells",
+                  "angle": "Contrarian anti-hustle approach focusing on high-intent conversion over vanity metrics.",
+                  "format": "Talking head with dynamic kinetic typography",
+                  "hook": "Posting every single day is killing your business. Here's the 4-post matrix that actually prints money.",
+                  "description": "Challenges the conventional wisdom of relentless content creation by introducing a precision-targeted publishing schedule. Resonates deeply with burnt-out entrepreneurs, driving high comment engagement and community loyalty."
+                }
+              ]
+            }
+          },
+          {
+            "tool": "comment-to-content",
+            "status": "completed",
+            "result": {
+              "ideas": [
+                {
+                  "idea": "We asked for spicy comments and got... absolute silence.",
+                  "format": "Short",
+                  "sourceComment": "",
+                  "reason": "Plays on the unexpected absence of comments with humor and self-deprecation, which drives high engagement and curiosity."
+                }
+              ]
+            }
+          },
+          {
+            "tool": "content-recycler",
+            "status": "completed",
+            "result": {
+              "recommendations": [
+                {
+                  "content": "Why Everything You Know About Growth Metrics Is Wrong (And What to Track Instead)",
+                  "action": "Invert",
+                  "reason": "Challenging legacy consensus drives high engagement and authority positioning in current market conditions.",
+                  "newFormat": "Contrarian Essay"
+                }
+              ]
+            }
           }
         ],
         "finalResult": {
-          "topic": "test content"
+          "topic": "Mastering Digital Marketing for High-Converting Growth",
+          "research": "Analysis of current high-performing creator formats focusing on rapid pacing, high-contrast visual hooks, and psychological tension. The premise leverages curiosity gaps to maximize retention and algorithmic push.",
+          "angles": [
+            "The counter-intuitive secret that flips the industry standard",
+            "A high-stakes personal challenge with a clear ticking clock",
+            "Exposing a hidden truth using undeniable data and visual proof"
+          ],
+          "narrative": "Hook the viewer within 3 seconds by stating the impossible problem. Build tension through the messy middle and unexpected failures. Deliver the ultimate payoff and revelation at the climax, followed by a punchy, actionable takeaway.",
+          "script": "[0:00 - Hook] Creator looks directly into camera with intense focus. 'If you keep doing [X], you are wasting 90% of your effort.' \n[0:03 - Setup] Quick cut to wider angle. 'I wanted to prove this wrong, so I spent 30 days testing it.' \n[0:15 - Escalation] Montage of attempts, charts, and behind-the-scenes footage. 'Week one was a disaster. Everything I thought I knew was completely backward.' \n[0:45 - Climax] Dramatic reveal of the data or result. 'And then, this happened.' \n[1:15 - Resolution & CTA] 'Here is the exact framework you can steal right now. Link is in the description.'",
+          "visuals": "Cinematic lighting with a strong color grade (teal and orange contrast). Rapid-fire cutaways, dynamic zoom-ins on key expressions, minimalist data overlays, and high-energy sound design with deep bass drops on key transitions.",
+          "bRoll": [
+            "Extreme close-up of hands working rapidly on a laptop or project",
+            "Time-lapse of the creator working late into the night with dramatic desk lighting",
+            "Overhead drone or tabletop shot of organized notes, charts, and failure metrics"
+          ],
+          "shotList": [
+            "Shot 1: Extreme close-up talking head, eye-level, direct gaze, dynamic lighting",
+            "Shot 2: Wide tracking shot of creator walking through a modern workspace",
+            "Shot 3: Macro shot of screen recording showing data spikes with motion graphics",
+            "Shot 4: Low-angle Hero shot of creator reacting to the final result"
+          ],
+          "publishingCopy": "Title Variants: 1. I Tested This For 30 Days (And Regret Everything) | 2. Why 90% of People Fail At This (Do This Instead) | 3. The Truth About [Topic] No One Is Telling You. Description: Stop wasting time on outdated methods. I tested the ultimate shortcut so you don't have to. Grab the free resources below!",
+          "sentiment": {
+            "positive": "0%",
+            "negative": "0%",
+            "neutral": "100%"
+          },
+          "themes": [],
+          "questions": [],
+          "complaints": [],
+          "opportunities": [],
+          "answer": "No saved content or notes were provided in the context to answer the search query.",
+          "relevantConcepts": [],
+          "sourcesUsed": [],
+          "contentSpawns": [],
+          "format": "Carousel & PDF Document",
+          "hook": "Stop wasting ad spend. Here is the exact modern framework to scale your business online.",
+          "outline": [
+            {
+              "day": "Day 1",
+              "postType": "Educational",
+              "title": "The 3 Digital Marketing Pillars You Are Ignoring",
+              "description": "Break down SEO, paid media, and email marketing synergy with a clear visual carousel/PDF."
+            },
+            {
+              "day": "Day 2",
+              "postType": "Case Study",
+              "title": "How We Scaled an E-commerce Brand by 300% in 90 Days",
+              "description": "Step-by-step breakdown of the funnel overhaul, targeting tweaks, and creative strategy used."
+            },
+            {
+              "day": "Day 3",
+              "postType": "Thought Leadership",
+              "title": "Why Traditional Lead Generation is Dead (And What to Do Instead)",
+              "description": "A contrarian LinkedIn post and Instagram Reel discussing the shift toward community-led growth."
+            },
+            {
+              "day": "Day 4",
+              "postType": "Actionable Framework",
+              "title": "The Ultimate 5-Step Content Repurposing Matrix",
+              "description": "Show how one long-form blog post turns into 15 pieces of high-performing social media content."
+            },
+            {
+              "day": "Day 5",
+              "postType": "Social Proof",
+              "title": "Client Spotlight: From Zero Leads to Predictable Pipeline",
+              "description": "Share a testimonial highlighting a specific client win using our proprietary marketing playbook."
+            },
+            {
+              "day": "Day 6",
+              "postType": "Behind-the-Scenes",
+              "title": "Auditing a Failing Ad Campaign Live",
+              "description": "A screen-share walkthrough diagnosing common targeting and copywriting mistakes in real-time."
+            },
+            {
+              "day": "Day 7",
+              "postType": "Interactive/Q&A",
+              "title": "Ask Me Anything: Digital Marketing Strategy Edition",
+              "description": "Engage the audience in comments and DMs to answer their most pressing growth bottlenecks."
+            }
+          ],
+          "cta": "Comment 'GROWTH' below or send me a DM to claim your free 30-minute Digital Marketing Audit.",
+          "ideas": [
+            {
+              "idea": "We asked for spicy comments and got... absolute silence.",
+              "format": "Short",
+              "sourceComment": "",
+              "reason": "Plays on the unexpected absence of comments with humor and self-deprecation, which drives high engagement and curiosity."
+            }
+          ],
+          "recommendations": [
+            {
+              "content": "Why Everything You Know About Growth Metrics Is Wrong (And What to Track Instead)",
+              "action": "Invert",
+              "reason": "Challenging legacy consensus drives high engagement and authority positioning in current market conditions.",
+              "newFormat": "Contrarian Essay"
+            }
+          ]
         }
       }
     }

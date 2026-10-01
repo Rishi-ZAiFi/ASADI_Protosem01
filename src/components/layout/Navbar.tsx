@@ -78,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onNavigate('dashboard')}
             className="hover:text-purple-300 transition-colors cursor-pointer hidden sm:inline"
           >
-            CreatorOS
+            CreatorFlow AI
           </button>
           <ChevronRight className="w-3.5 h-3.5 text-slate-600 hidden sm:inline" />
           <span className="text-white font-semibold truncate">

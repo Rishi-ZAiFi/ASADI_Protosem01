@@ -5,7 +5,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'content-idea-generator',
     name: 'Content Idea Generator',
-    category: 'content-creation',
+    category: 'create',
     badge: 'Popular',
     iconName: 'Lightbulb',
     description: 'Generate high-virality, structured content ideas with tailored angles, hooks, and formats.',
@@ -67,7 +67,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'content-repurposer',
     name: 'Content Repurposer',
-    category: 'content-creation',
+    category: 'create',
     badge: 'High ROI',
     iconName: 'Repeat',
     description: 'Multiply 1 winning asset into 4 distinct cross-platform formats: Threads, LinkedIn, Reels, and Newsletters.',
@@ -98,7 +98,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'hook-generator',
     name: 'Hook Generator',
-    category: 'content-creation',
+    category: 'create',
     badge: 'Virality',
     iconName: 'Anchor',
     description: 'Generate 5 high-retention psychological hooks engineered to stop scrolling within the first 3 seconds.',
@@ -143,7 +143,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'daily-content-planner',
     name: 'Daily Content Planner',
-    category: 'content-creation',
+    category: 'create',
     iconName: 'Calendar',
     description: 'Map out a frictionless 7-day content schedule with pillars, hooks, formats, and posting windows.',
     samplePreset: {
@@ -174,7 +174,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'reel-script-builder',
     name: 'Reel Script Builder',
-    category: 'content-creation',
+    category: 'create',
     badge: 'Short-Form',
     iconName: 'Video',
     description: 'Paced short-form scripts with second-by-second timestamps, B-roll directions, and audio cues.',
@@ -206,7 +206,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'clip-finder',
     name: 'Clip Finder',
-    category: 'production',
+    category: 'research',
     iconName: 'Scissors',
     description: 'Pinpoint viral moments inside long podcasts, interviews, or video transcripts with virality ratings.',
     samplePreset: {
@@ -238,7 +238,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'thumbnail-ideator',
     name: 'Thumbnail Ideator',
-    category: 'content-creation',
+    category: 'produce',
     iconName: 'Image',
     description: 'High-CTR YouTube thumbnail formulas with visual composition, text overlays, and contrast guidance.',
     samplePreset: {
@@ -269,7 +269,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'caption-assistant',
     name: 'Caption Assistant',
-    category: 'content-creation',
+    category: 'create',
     iconName: 'FileText',
     description: 'Craft high-converting captions with opening punchlines, formatting, and high-relevance hashtags.',
     samplePreset: {
@@ -326,7 +326,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'cta-generator',
     name: 'CTA Generator',
-    category: 'content-creation',
+    category: 'create',
     iconName: 'Megaphone',
     description: 'Engineered calls-to-action designed to trigger comments, shares, saves, and bio link clicks.',
     samplePreset: {
@@ -356,7 +356,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'comment-analyzer',
     name: 'Comment Analyzer',
-    category: 'audience-research',
+    category: 'research',
     badge: 'Insights',
     iconName: 'MessageSquare',
     description: 'Analyze audience comments for sentiment, underlying pain points, objections, and hidden content goldmines.',
@@ -377,7 +377,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'comment-to-content',
     name: 'Comment-to-Content',
-    category: 'audience-research',
+    category: 'research',
     iconName: 'Reply',
     description: 'Convert real audience questions and spicy comments into viral reply videos and educational carousels.',
     samplePreset: {
@@ -407,7 +407,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'creator-research-assistant',
     name: 'Creator Research Assistant',
-    category: 'audience-research',
+    category: 'research',
     iconName: 'Search',
     description: 'Deep dive into niche trends, competitor content gaps, and data-backed viral angles.',
     samplePreset: {
@@ -426,7 +426,7 @@ export const ALL_TOOLS: ToolDefinition[] = [
   {
     id: 'voice-replicator',
     name: 'Voice Replicator',
-    category: 'audience-research',
+    category: 'produce',
     badge: 'Persona',
     iconName: 'Mic2',
     description: 'Decode your personal writing style, tone nuances, and cadence to generate authentic on-brand content.',
@@ -458,7 +458,7 @@ No emails. No Slack. No analytics. Just build.`,
   {
     id: 'podcast-assistant',
     name: 'Podcast Assistant',
-    category: 'production',
+    category: 'produce',
     iconName: 'Mic',
     description: 'Produce complete episode guides: provocative interview questions, intro hooks, and show notes.',
     samplePreset: {
@@ -487,7 +487,7 @@ No emails. No Slack. No analytics. Just build.`,
   {
     id: 'creator-workspace',
     name: 'Creator Workspace',
-    category: 'production',
+    category: 'produce',
     iconName: 'Briefcase',
     description: 'Centralized ideation studio to convert raw notes into structured creative production briefs.',
     samplePreset: {
@@ -519,7 +519,7 @@ No emails. No Slack. No analytics. Just build.`,
   {
     id: 'content-recycler',
     name: 'Content Recycler',
-    category: 'production',
+    category: 'create',
     iconName: 'RefreshCcw',
     description: 'Revitalize past top-performing winners with fresh 2026 angles, contrarian framing, and updated data.',
     samplePreset: {
@@ -537,7 +537,7 @@ Revenue went up 40% and our delivery speed doubled because we had 16 hours of un
   {
     id: 'brand-pitch-builder',
     name: 'Brand Pitch Builder',
-    category: 'production',
+    category: 'produce',
     badge: 'Monetization',
     iconName: 'DollarSign',
     description: 'Generate high-response brand sponsorship pitches, deliverables packaging, and rate card guidelines.',
@@ -559,7 +559,7 @@ Revenue went up 40% and our delivery speed doubled because we had 16 hours of un
   {
     id: 'ai-content-director',
     name: 'AI Content Director',
-    category: 'advanced-ai',
+    category: 'ai-systems',
     badge: '6-Stage Engine',
     iconName: 'Clapperboard',
     description: 'Multi-stage end-to-end creative direction: Research → Angles → Script → Visuals → Shot List → Publishing Copy.',
@@ -593,7 +593,7 @@ Revenue went up 40% and our delivery speed doubled because we had 16 hours of un
   {
     id: 'creator-second-brain',
     name: 'Creator Second Brain',
-    category: 'audience-research',
+    category: 'research',
     iconName: 'Brain',
     description: 'Synthesize research, literature notes, and loose thoughts into interconnected content assets.',
     samplePreset: {
@@ -613,7 +613,7 @@ How do we bridge the gap between hoarding information and rapidly publishing?`,
   {
     id: 'ai-screenplay-workspace',
     name: 'AI Screenplay Workspace',
-    category: 'production',
+    category: 'produce',
     badge: 'Hollywood',
     iconName: 'Film',
     description: 'Hollywood-standard screenplay and narrative scene generator with dialogue, action, and sluglines.',
@@ -646,7 +646,7 @@ How do we bridge the gap between hoarding information and rapidly publishing?`,
   {
     id: 'autonomous-content-pipeline',
     name: 'Autonomous Content Pipeline',
-    category: 'advanced-ai',
+    category: 'ai-systems',
     badge: '8-Asset Spawner',
     iconName: 'Workflow',
     description: 'One seed idea automatically spawned into YouTube Script → 3 Reels → LinkedIn → X Thread → Captions → Calendar.',
@@ -668,7 +668,7 @@ How do we bridge the gap between hoarding information and rapidly publishing?`,
   {
     id: 'ai-creative-producer',
     name: 'AI Creative Producer',
-    category: 'advanced-ai',
+    category: 'ai-systems',
     badge: '30-Day Strategy',
     iconName: 'Sparkles',
     description: 'Strategic production planner: Audience → Content Pillars → 30-Day Strategy → Today’s Content → Performance Insights.',

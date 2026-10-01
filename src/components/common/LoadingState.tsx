@@ -40,7 +40,7 @@ export const LoadingState: React.FC<LoadingStateProps> = ({ message, toolName })
       </div>
 
       <h3 className="text-lg font-semibold text-white tracking-wide mb-2">
-        {toolName ? `CreatorOS Generating: ${toolName}` : 'CreatorOS AI Engine at Work'}
+        {toolName ? `CreatorFlow AI Generating: ${toolName}` : 'CreatorFlow AI Engine at Work'}
       </h3>
 
       <p className="text-sm text-purple-300/90 font-medium h-6 transition-all duration-300">

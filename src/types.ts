@@ -1,4 +1,4 @@
-export type ToolCategory = 'content-creation' | 'audience-research' | 'production' | 'advanced-ai'
+export type ToolCategory = 'create' | 'research' | 'produce' | 'ai-systems'
 
 export interface InputFieldDefinition {
   name: string

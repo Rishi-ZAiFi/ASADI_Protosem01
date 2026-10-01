@@ -99,7 +99,7 @@ export const SavedContentPage: React.FC<SavedContentPageProps> = ({
             Content Vault & Saved Library
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Access your curated ideas, scripts, angles, and pipeline blueprints stored in the CreatorOS database.
+            Access your curated ideas, scripts, angles, and pipeline blueprints stored in the CreatorFlow AI database.
           </p>
         </div>
 
@@ -206,11 +206,11 @@ export const SavedContentPage: React.FC<SavedContentPageProps> = ({
             <div className="glass-panel rounded-2xl p-12 text-center space-y-4 border border-dashed border-slate-800">
               <Sparkles className="w-10 h-10 text-slate-600 mx-auto" />
               <div className="space-y-1">
-                <h4 className="text-base font-semibold text-slate-300">No saved ideas found</h4>
+                <h4 className="text-base font-semibold text-slate-300">Your creative workspace is empty.</h4>
                 <p className="text-xs text-slate-500">
                   {searchQuery
                     ? `No ideas matching "${searchQuery}"`
-                    : 'Use the Content Idea Generator to create high-virality ideas and click "Save" to build your vault.'}
+                    : 'Start with an idea and let CreatorFlow turn it into something publishable.'}
                 </p>
               </div>
               <button
@@ -218,8 +218,7 @@ export const SavedContentPage: React.FC<SavedContentPageProps> = ({
                 onClick={() => onNavigate('content-idea-generator')}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-colors cursor-pointer"
               >
-                <span>Launch Content Idea Generator</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>Create your first idea →</span>
               </button>
             </div>
           )}

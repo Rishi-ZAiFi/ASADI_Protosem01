@@ -37,7 +37,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({ error, onRetry, onOpenSe
                   Add <code className="text-purple-300 bg-purple-950/40 px-1 py-0.5 rounded">GEMINI_API_KEY</code> to your{' '}
                   <span className="text-slate-200 font-mono">.env</span> file.
                 </li>
-                <li>Or go directly to the Settings page in CreatorOS to enter and save your Gemini key securely.</li>
+                <li>Or go directly to the Settings page in CreatorFlow AI to enter and save your Gemini key securely.</li>
               </ul>
             </div>
           )}

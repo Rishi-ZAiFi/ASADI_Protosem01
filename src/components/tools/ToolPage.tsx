@@ -16,6 +16,7 @@ import { ToolInput } from '../common/ToolInput'
 import { GenerateButton } from '../common/GenerateButton'
 import { LoadingState } from '../common/LoadingState'
 import { ErrorState } from '../common/ErrorState'
+import { AIResultRenderer } from '../common/AIResultRenderer'
 import { ResultCard } from '../common/ResultCard'
 import { CopyButton } from '../common/CopyButton'
 import { SaveButton } from '../common/SaveButton'
@@ -143,77 +144,6 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool, onOpenSettings, onRefr
     setTimeout(() => setSavedSuccessMsg(null), 3000)
   }
 
-  // Helper to split multi-step output if applicable
-  const renderMultiStepSections = (rawText: string, steps: string[]) => {
-    // Try splitting by Markdown headers ### or ##
-    const sections = rawText.split(/(?=###?\s+)/gi).filter(Boolean)
-
-    return (
-      <div className="space-y-6">
-        {/* Step Navigation Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-800">
-          <button
-            type="button"
-            onClick={() => setActiveStepTab(-1)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap cursor-pointer transition-all ${
-              activeStepTab === -1
-                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-            }`}
-          >
-            All Stages ({steps.length})
-          </button>
-          {steps.map((step, idx) => (
-            <button
-              key={step}
-              type="button"
-              onClick={() => setActiveStepTab(idx)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap cursor-pointer transition-all flex items-center gap-1.5 ${
-                activeStepTab === idx
-                  ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-              }`}
-            >
-              <span className="w-4 h-4 rounded-full bg-slate-900/60 text-[10px] flex items-center justify-center font-mono">
-                {idx + 1}
-              </span>
-              <span>{step}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Display selected stage or all */}
-        {activeStepTab === -1 ? (
-          <div className="space-y-6">
-            {sections.map((sec, idx) => (
-              <ResultCard
-                key={idx}
-                badge={`Stage ${idx + 1}`}
-                content={sec.trim()}
-                rawTextToCopy={sec.trim()}
-              />
-            ))}
-          </div>
-        ) : (
-          <div>
-            {sections[activeStepTab] ? (
-              <ResultCard
-                badge={`Stage ${activeStepTab + 1}: ${steps[activeStepTab] || 'Phase'}`}
-                content={sections[activeStepTab].trim()}
-                rawTextToCopy={sections[activeStepTab].trim()}
-              />
-            ) : (
-              <ResultCard
-                badge={`Stage ${activeStepTab + 1}: ${steps[activeStepTab] || 'Phase'}`}
-                content={rawText}
-                rawTextToCopy={rawText}
-              />
-            )}
-          </div>
-        )}
-      </div>
-    )
-  }
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -224,6 +154,15 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool, onOpenSettings, onRefr
           <span>{savedSuccessMsg}</span>
         </div>
       )}
+
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-medium text-slate-400 mb-2">
+        <span>CreatorFlow AI</span>
+        <span className="text-slate-600">/</span>
+        <span className="text-purple-400">{tool.category.toUpperCase()}</span>
+        <span className="text-slate-600">/</span>
+        <span className="text-slate-200">{tool.name}</span>
+      </div>
 
       {/* Tool Header Banner */}
       <div className="glass-panel rounded-3xl p-6 md:p-8 border border-slate-800/80 relative overflow-hidden">
@@ -395,91 +334,9 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool, onOpenSettings, onRefr
                 </div>
               </div>
 
-              {/* SPECIFIC RENDERER 1: Content Idea Generator (Structured Idea Cards) */}
-              {(() => {
-                const ideasList: IdeaItem[] | null = Array.isArray(result.parsed)
-                  ? result.parsed
-                  : Array.isArray(result.parsed?.ideas)
-                  ? result.parsed.ideas
-                  : null
-
-                if (tool.id !== 'content-idea-generator' || !ideasList) return null
-
-                return (
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between text-xs text-slate-400 px-1">
-                      <span>Generated {ideasList.length} High-Virality Concepts</span>
-                      <span>Click Save to store individual cards in your Idea Vault</span>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4">
-                      {ideasList.map((idea: IdeaItem, idx: number) => (
-                        <div
-                          key={idx}
-                          className="glass-card rounded-2xl p-6 border border-slate-800 hover:border-purple-500/40 transition-all duration-200 space-y-4 group relative"
-                        >
-                          {/* Idea Header */}
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex items-center gap-3">
-                              <span className="w-7 h-7 rounded-xl bg-purple-600/20 text-purple-300 border border-purple-500/30 flex items-center justify-center font-bold text-xs font-mono shrink-0">
-                                0{idx + 1}
-                              </span>
-                              <h3 className="text-base font-bold text-white group-hover:text-purple-200 transition-colors">
-                                {idea.title}
-                              </h3>
-                            </div>
-
-                            <div className="flex items-center gap-1.5 shrink-0">
-                              <CopyButton
-                                textToCopy={`Title: ${idea.title}\nAngle: ${idea.angle}\nFormat: ${idea.format}\nHook: ${idea.hook}\nDescription: ${idea.description}`}
-                              />
-                              <SaveButton onSave={() => handleSaveIdea(idea)} />
-                            </div>
-                          </div>
-
-                          {/* Angle & Format Badges */}
-                          <div className="flex flex-wrap items-center gap-2 text-xs">
-                            <span className="px-2.5 py-1 rounded-lg bg-indigo-500/15 text-indigo-300 border border-indigo-500/25 flex items-center gap-1.5">
-                              <Flame className="w-3 h-3 text-indigo-400" />
-                              <strong>Angle:</strong> {idea.angle}
-                            </span>
-                            <span className="px-2.5 py-1 rounded-lg bg-purple-500/15 text-purple-300 border border-purple-500/25 flex items-center gap-1.5">
-                              <Layers className="w-3 h-3 text-purple-400" />
-                              <strong>Format:</strong> {idea.format}
-                            </span>
-                          </div>
-
-                          {/* Hook Quote Box */}
-                          <div className="bg-[#0b0d14] rounded-xl p-3.5 border border-slate-800/90 text-sm relative">
-                            <span className="text-[10px] font-bold text-purple-400 uppercase tracking-wider block mb-1">
-                              3-Second Verbal & On-Screen Hook
-                            </span>
-                            <p className="text-slate-200 italic font-medium">"{idea.hook}"</p>
-                          </div>
-
-                          {/* Description */}
-                          <p className="text-xs md:text-sm text-slate-300 leading-relaxed">
-                            {idea.description}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )
-              })()}
-
-              {tool.id !== 'content-idea-generator' && tool.isMultiStep && tool.steps ? (
-                /* SPECIFIC RENDERER 2: Advanced Multi-Step Workflows */
-                renderMultiStepSections(result.raw, tool.steps)
-              ) : (
-                /* SPECIFIC RENDERER 3: Standard Markdown / Structured Content */
-                <ResultCard
-                  title={`${tool.name} Results`}
-                  content={result.raw}
-                  rawTextToCopy={result.raw}
-                  onSave={handleSaveEntireOutput}
-                />
-              )}
+              <div className="glass-panel rounded-2xl p-6 border border-slate-800/80">
+                <AIResultRenderer data={result.parsed || result.raw} />
+              </div>
             </div>
           )}
 
