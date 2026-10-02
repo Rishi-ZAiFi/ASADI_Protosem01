@@ -140,6 +140,50 @@ git push -u origin <YOUR_BRANCH_NAME>
 
 ---
 
+## 🔭 LangSmith Observability
+
+The **Unified Creator AI SaaS** (Team 1 submission) integrates [LangSmith](https://smith.langchain.com/) for end-to-end tracing, monitoring, and debugging of all LangChain-based AI workflows.
+
+Every AI request — from single-step `RunnableSequence` chains to multi-node `LangGraph` pipelines — is automatically traced and logged to the LangSmith project:
+
+> **`WHOLE SAAS PRODUCT_JAISHANTH`**
+
+Traces capture the full execution path, including prompt inputs, model outputs, latency, token usage, and cost per run, enabling rapid diagnosis and continuous observability across all 24 creator tools.
+
+---
+
+### LangSmith Traces Overview
+
+The main Tracing dashboard for the `WHOLE SAAS PRODUCT_JAISHANTH` project displaying 30 recorded traces, with columns for run output, latency, token counts, and cost per call.
+
+![LangSmith Traces Overview](docs/5.png)
+
+---
+
+### Trace List — Run Names, Inputs and Outputs
+
+The same project trace list expanded to show each run's **Name**, **Input**, and **Output** columns. Named runs include `LangGraph` (stateful pipeline executions) and `RunnableSequence` (single-chain tool calls), all captured automatically via LangSmith instrumentation.
+
+![LangSmith Trace List with Names and Outputs](docs/6.png)
+
+---
+
+### Waterfall Detail — RunnableSequence (Gemini Chain)
+
+A detailed waterfall view of a selected `RunnableSequence` trace. The trace expands to show the inner `ChatGoogleGenerativeAI` call, with the full system + user prompt on the right panel (Creator Research Assistant tool, topic: "tiny ml", audience: "kids") and the structured JSON output returned by the Gemini model.
+
+![LangSmith Waterfall — RunnableSequence Gemini Chain](docs/7.png)
+
+---
+
+### Waterfall Detail — LangGraph Multi-Step Pipeline
+
+A detailed waterfall view of a selected `LangGraph` trace showing the autonomous multi-stage pipeline. The nested nodes — `research → ideation → packaging → audit` — are individually timed and logged. The right panel shows the full input state (including `pipeline_id`, `target_platforms`, `current_stage`) and structured output fields for the `Autonomous Content Pipeline` tool.
+
+![LangSmith Waterfall — LangGraph Pipeline Nodes](docs/8.png)
+
+---
+
 ## ✅ Evaluation & Review Checklist
 
 When evaluating your pull request, the mentor will review:
