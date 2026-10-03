@@ -2,6 +2,7 @@ import numpy as np
 from typing import List, Dict, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
+from langsmith import traceable
 from app.models.post import Post
 from app.models.embedding import Embedding
 from app.services.embedding_service import EmbeddingService
@@ -11,6 +12,7 @@ class RetrievalService:
         self.db = db
         self.embedding_service = EmbeddingService()
 
+    @traceable(name="RetrievalService.retrieve_relevant_posts", run_type="retriever")
     def retrieve_relevant_posts(
         self,
         project_id: str,
@@ -65,6 +67,7 @@ class RetrievalService:
         scored_posts.sort(key=lambda x: x["similarity_score"], reverse=True)
         return scored_posts[:top_k]
 
+    @traceable(name="RetrievalService.retrieve_style_exemplars", run_type="retriever")
     def retrieve_style_exemplars(
         self,
         project_id: str,

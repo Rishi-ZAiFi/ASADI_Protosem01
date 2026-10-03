@@ -4,6 +4,7 @@ import re
 from typing import Dict, Any, Optional
 import time
 import httpx
+from langsmith import traceable
 from app.config import settings
 
 class LLMProvider:
@@ -30,6 +31,7 @@ class GeminiLLMProvider(LLMProvider):
             except httpx.HTTPError as e:
                 print(f"Warning: Failed to validate model {self.model}: {e}")
 
+    @traceable(name="GeminiLLMProvider.generate", run_type="llm")
     def generate(self, prompt: str) -> Dict[str, Any]:
         if os.environ.get("TEST_FAKE_LLM") == "1":
             print("WARNING: Using fake LLM generation as TEST_FAKE_LLM=1")
@@ -74,6 +76,7 @@ class GeminiLLMProvider(LLMProvider):
             except Exception as e:
                 raise RuntimeError(f"Gemini API request failed: {str(e)}") from e
 
+    @traceable(name="GeminiLLMProvider.generate_structured", run_type="llm")
     def generate_structured(self, prompt: str, schema_cls: type) -> Any:
         if os.environ.get("TEST_FAKE_LLM") == "1":
             print("WARNING: Using fake LLM generation as TEST_FAKE_LLM=1")

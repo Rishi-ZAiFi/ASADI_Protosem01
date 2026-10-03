@@ -1,6 +1,7 @@
 import os
 import numpy as np
 from typing import List
+from langsmith import traceable
 
 # Attempt to import sentence_transformers
 try:
@@ -26,6 +27,7 @@ class EmbeddingService:
             device = os.environ.get("EMBEDDING_DEVICE", "cpu")
             self.model = SentenceTransformer(self.model_name, device=device)
 
+    @traceable(name="EmbeddingService.generate_embedding", run_type="embedding")
     def generate_embedding(self, text: str) -> List[float]:
         if not text or not text.strip():
             raise ValueError("Cannot generate embedding for empty text")
