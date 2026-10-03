@@ -1,0 +1,17 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Creating dummy style profile for project...
+
+--- TOPIC 1: How to use LangGraph for AI agents ---
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7189.68it/s]
+Gemini API returned 503. Retrying in 1s... (Attempt 1/4)
+Gemini API returned 503. Retrying in 2s... (Attempt 2/4)
+Gemini API returned 503. Retrying in 4s... (Attempt 3/4)
+1. Current Pipeline: FAILED: Gemini API Error 503: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9333.16it/s]

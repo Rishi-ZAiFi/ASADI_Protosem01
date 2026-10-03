@@ -15,6 +15,7 @@ class GeneratedDraft(Base):
     
     hook = Column(Text, nullable=True)
     caption = Column(Text, nullable=False)
+    body = Column(Text, nullable=True)
     cta = Column(Text, nullable=True)
     hashtags = Column(JSON, default=list)
     slides = Column(JSON, default=list)  # Carousel slides if applicable

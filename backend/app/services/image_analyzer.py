@@ -1,17 +1,22 @@
 import os
+import logging
 from typing import Dict, Any, List, Optional
 import numpy as np
 
 try:
     from PIL import Image
     import cv2
-except ImportError:
+except ImportError as e:
+    import logging
+    logging.warning("Failed to import PIL or cv2: %s", str(e))
     Image = None
     cv2 = None
 
 try:
     import pytesseract
-except ImportError:
+except ImportError as e:
+    import logging
+    logging.warning("Failed to import pytesseract: %s", str(e))
     pytesseract = None
 
 class ImageAnalyzer:
@@ -30,8 +35,10 @@ class ImageAnalyzer:
             "ocr_text": "",
         }
         
-        if not media_path or not os.path.exists(media_path) or Image is None or cv2 is None:
-            return default_features
+        if not media_path or not os.path.exists(media_path):
+            raise ValueError(f"Media path does not exist: {media_path}")
+        if Image is None or cv2 is None:
+            raise RuntimeError("Cannot extract features: PIL or cv2 is not installed.")
 
         try:
             pil_img = Image.open(media_path).convert("RGB")
@@ -65,8 +72,9 @@ class ImageAnalyzer:
             if pytesseract:
                 try:
                     ocr_text = pytesseract.image_to_string(pil_img).strip()
-                except Exception:
-                    ocr_text = ""
+                except Exception as e:
+                    logging.warning("OCR extraction failed: %s", str(e))
+                    raise RuntimeError(f"OCR extraction failed: {str(e)}") from e
 
             return {
                 "width": width,
@@ -82,7 +90,8 @@ class ImageAnalyzer:
             }
 
         except Exception as e:
-            return default_features
+            logging.warning("Image feature extraction failed: %s", str(e))
+            raise RuntimeError(f"Image extraction failed: {str(e)}") from e
 
     @staticmethod
     def _get_dominant_colors(img_np: np.ndarray, k: int = 3) -> List[str]:
@@ -101,5 +110,6 @@ class ImageAnalyzer:
                 r, g, b = int(center[0]), int(center[1]), int(center[2])
                 hex_colors.append(f"#{r:02x}{g:02x}{b:02x}".upper())
             return hex_colors
-        except Exception:
-            return ["#1E293B", "#64748B", "#F8FAFC"]
+        except Exception as e:
+            logging.warning("K-means clustering failed: %s", str(e))
+            raise RuntimeError(f"Color clustering failed: {str(e)}") from e
