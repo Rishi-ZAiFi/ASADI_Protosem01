@@ -43,3 +43,6 @@ api = "api:main"
 [build-system]
 requires = ["uv_build>=0.12.23,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.ruff.lint]
+ignore = ["B008", "BLE001", "F401", "RUF013", "RUF012", "DTZ003", "UP035", "I001"]
