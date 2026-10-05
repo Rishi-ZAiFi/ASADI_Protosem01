@@ -1,6 +1,8 @@
 import asyncio
+
 from app.orchestration.registry import registry
 from app.platform.judge import judge
+
 
 async def run_checks():
     print("--- 1. Checking Agents ---")

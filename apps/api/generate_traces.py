@@ -1,8 +1,8 @@
-import os
 import asyncio
+
 from dotenv import load_dotenv
-from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.language_models import FakeListChatModel
+from langchain_core.prompts import ChatPromptTemplate
 
 load_dotenv('../../.env')
 
