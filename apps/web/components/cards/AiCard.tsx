@@ -4,14 +4,14 @@ import { PaperSurface } from '../ui/PaperSurface';
 
 interface AiCardProps {
   kind: string;
-  data: any;
+  data?: any;
   score?: number;
   critique?: string;
   originId?: string;
   children: React.ReactNode;
 }
 
-export function AiCard({ kind, score, critique, originId, children }: AiCardProps) {
+export function AiCard({ kind, data, score, critique, originId, children }: AiCardProps) {
   return (
     <div className="flex flex-col gap-2 mb-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group opacity-0 animate-fade-in-up" style={{ animationFillMode: 'forwards' }}>
       <div className="flex justify-between items-center px-2">
