@@ -3,6 +3,7 @@ AI Video Pre-Production Studio — FastAPI Backend
 Serves three LangChain + Gemini agents via REST API
 """
 
+import os
 import logging
 import traceback
 from typing import Optional
@@ -77,7 +78,11 @@ def root():
 
 @app.get("/health")
 def health():
-    return {"status": "healthy"}
+    return {
+        "status": "healthy",
+        "langsmith_tracing": os.getenv("LANGSMITH_TRACING", "").lower() in ("true", "1", "yes"),
+        "langsmith_project": os.getenv("LANGSMITH_PROJECT", "FrameFlow-AI"),
+    }
 
 
 # ═══════════════════════════════════════════════════════════════

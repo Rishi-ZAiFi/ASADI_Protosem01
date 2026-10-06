@@ -11,9 +11,26 @@ import os
 import json
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage
+from langsmith import traceable
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# ─────────────────────────────────────────────
+# LangSmith Observability & Tracing Configuration
+# ─────────────────────────────────────────────
+if os.getenv("LANGSMITH_TRACING", "").lower() in ("true", "1", "yes"):
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGSMITH_TRACING"] = "true"
+
+langsmith_key = os.getenv("LANGSMITH_API_KEY") or os.getenv("LANGCHAIN_API_KEY")
+if langsmith_key and langsmith_key != "YOUR_LANGSMITH_API_KEY":
+    os.environ["LANGSMITH_API_KEY"] = langsmith_key
+    os.environ["LANGCHAIN_API_KEY"] = langsmith_key
+
+langsmith_project = os.getenv("LANGSMITH_PROJECT") or os.getenv("LANGCHAIN_PROJECT") or "FrameFlow-AI"
+os.environ["LANGSMITH_PROJECT"] = langsmith_project
+os.environ["LANGCHAIN_PROJECT"] = langsmith_project
 
 # Suppress harmless AFC warning from google-genai SDK
 try:
@@ -80,6 +97,11 @@ For each shot, provide:
 Return a JSON array of shot objects. Be cinematic, specific, and practical.
 """
 
+@traceable(
+    name="Shot List Agent",
+    run_type="chain",
+    metadata={"agent": "Shot List Agent", "framework": "LangChain"},
+)
 def run_shot_list_agent(
     script: str,
     platform: str,
@@ -134,7 +156,18 @@ Generate between 8-20 shots depending on the script length.
         HumanMessage(content=prompt),
     ]
 
-    response = llm.invoke(messages)
+    response = llm.invoke(
+        messages,
+        config={
+            "run_name": "Shot List Gemini Model Call",
+            "metadata": {
+                "agent": "Shot List Agent",
+                "title": title,
+                "platform": platform,
+                "video_type": video_type,
+            },
+        },
+    )
     raw = extract_content_text(response.content)
 
     # Extract JSON from the response
@@ -170,6 +203,11 @@ Your job is to define the complete creative vision for a video — its look, fee
 music direction, editing style, and visual motifs.
 """
 
+@traceable(
+    name="Creative Director Agent",
+    run_type="chain",
+    metadata={"agent": "Creative Director Agent", "framework": "LangChain"},
+)
 def run_creative_director_agent(
     script: str,
     platform: str,
@@ -227,7 +265,18 @@ Return a JSON object with this structure:
         HumanMessage(content=prompt),
     ]
 
-    response = llm.invoke(messages)
+    response = llm.invoke(
+        messages,
+        config={
+            "run_name": "Creative Director Gemini Model Call",
+            "metadata": {
+                "agent": "Creative Director Agent",
+                "title": title,
+                "platform": platform,
+                "video_type": video_type,
+            },
+        },
+    )
     raw = extract_content_text(response.content)
 
     try:
@@ -256,6 +305,11 @@ You create comprehensive production plans covering scenes, timelines, props, equ
 and shooting schedules. Your plans are practical, actionable, and optimized for the given platform.
 """
 
+@traceable(
+    name="Production Planner Agent",
+    run_type="chain",
+    metadata={"agent": "Production Planner Agent", "framework": "LangChain"},
+)
 def run_production_planner_agent(
     script: str,
     platform: str,
@@ -340,7 +394,18 @@ Return a JSON object with this structure:
         HumanMessage(content=prompt),
     ]
 
-    response = llm.invoke(messages)
+    response = llm.invoke(
+        messages,
+        config={
+            "run_name": "Production Planner Gemini Model Call",
+            "metadata": {
+                "agent": "Production Planner Agent",
+                "title": title,
+                "platform": platform,
+                "video_type": video_type,
+            },
+        },
+    )
     raw = extract_content_text(response.content)
 
     try:
