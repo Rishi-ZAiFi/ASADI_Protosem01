@@ -16,6 +16,7 @@ import {
   Trash2,
   Save,
   CheckCircle2,
+  Bot,
 } from 'lucide-react';
 import { Project, ProductionPlan, Scene } from '../../types';
 import { WorkspaceHeader } from './WorkspaceHeader';
@@ -28,6 +29,7 @@ import { BRollPlanView } from './BRollPlanView';
 import { TimelineView } from './TimelineView';
 import { SplitScreenView } from './SplitScreenView';
 import { AiActionsBar } from './AiActionsBar';
+import AgentsPanel from './AgentsPanel';
 import { Tabs } from '../common/Tabs';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
@@ -49,7 +51,8 @@ export type WorkspaceTab =
   | 'camera'
   | 'props'
   | 'broll'
-  | 'timeline';
+  | 'timeline'
+  | 'agents';
 
 export const ProductionPlanWorkspace: React.FC<ProductionPlanWorkspaceProps> = ({
   project,
@@ -357,6 +360,7 @@ export const ProductionPlanWorkspace: React.FC<ProductionPlanWorkspaceProps> = (
                     badge: plan.summary.brollCount,
                   },
                   { id: 'timeline', label: 'Timeline', icon: <Clock className="w-4 h-4" /> },
+                  { id: 'agents', label: 'AI Agents', icon: <Bot className="w-4 h-4" /> },
                 ]}
                 activeTab={activeTab}
                 onChange={(tabId) => {
@@ -479,6 +483,12 @@ export const ProductionPlanWorkspace: React.FC<ProductionPlanWorkspaceProps> = (
             )}
 
             {activeTab === 'timeline' && <TimelineView plan={plan} />}
+
+            {activeTab === 'agents' && (
+              <div className="bg-white rounded-xl border border-slate-200/80 shadow-xs p-6">
+                <AgentsPanel project={project} />
+              </div>
+            )}
           </>
         )}
       </div>
