@@ -1,0 +1,4 @@
+Total Projects: 1
+Total Posts: 2
+Project test-proj-30: 2 posts
+Non-seeded Project test-proj-30: 2 posts

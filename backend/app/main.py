@@ -7,10 +7,7 @@ from app.db.base import Base
 from app.api.routes import projects, posts, analysis, generation, validation, drafts
 
 # Ensure tables are created
-try:
-    Base.metadata.create_all(bind=engine)
-except Exception:
-    pass
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title=settings.APP_NAME,

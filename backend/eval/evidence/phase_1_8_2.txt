@@ -1,0 +1,25 @@
+--- 4: SMOKE TEST (REAL KEY) ---
+Gemini API returned 503. Retrying in 1s... (Attempt 1/4)
+
+[Topic 1]: The evolution of deep learning in 2024
+Verbatim Caption Output:
+----------------------------------------
+2024 was the year deep learning leaped from simple text generation to complex world simulation. We witnessed the rise of native multimodal models that see, hear, and reason simultaneously. But it wasn't just about making models bigger; efficiency took center stage with highly capable Small Language Models (SLMs) and the shift toward Agentic AI—systems that actually *do* work instead of just talking about it. Swipe through to see the massive shifts that redefined the AI landscape this year!
+----------------------------------------
+Gemini API returned 503. Retrying in 1s... (Attempt 1/4)
+
+[Topic 2]: How to bake the perfect sourdough bread
+Verbatim Caption Output:
+----------------------------------------
+Baking the perfect sourdough isn't magic—it's science, patience, and a little bit of love. If you've been struggling to get that perfect ear, airy crumb, and blistered crust, you're not alone. Here is the ultimate step-by-step guide to mastering the bake at home. Swipe through to see the exact process! 👇
+----------------------------------------
+
+[Topic 3]: Top 3 productivity hacks for remote workers
+Verbatim Caption Output:
+----------------------------------------
+Working from home sounds like a dream until you realize your bed is 5 feet away and the laundry is calling your name. 🧺
+
+If you're struggling to stay focused, you're not alone. The boundary between 'work' and 'life' gets blurry fast.
+
+Swipe through to discover 3 simple but powerful hacks to supercharge your remote work routine and get hours back in your week! 👇
+----------------------------------------

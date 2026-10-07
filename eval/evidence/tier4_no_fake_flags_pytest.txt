@@ -1,0 +1,92 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0
+rootdir: /home/surya-j-s/Projects/Agentic_AI_Demo/backend
+configfile: pytest.ini
+plugins: asyncio-1.4.0, anyio-4.15.1, langsmith-0.14.1, platformdirs-4.12.1
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 31 items
+
+tests/test_cv_ocr.py ...                                                 [  9%]
+tests/test_embeddings_retrieval.py ..                                    [ 16%]
+tests/test_environment.py .                                              [ 19%]
+tests/test_failed_posts.py ...                                           [ 29%]
+tests/test_health_api.py .                                               [ 32%]
+tests/test_originality_sanity.py .                                       [ 35%]
+tests/test_phase_1_9.py .....                                            [ 51%]
+tests/test_phase_3_0.py ..                                               [ 58%]
+tests/test_posts_api.py .....                                            [ 74%]
+tests/test_projects_api.py ......                                        [ 93%]
+tests/test_validation_originality.py ..                                  [100%]
+
+=============================== warnings summary ===============================
+app/config.py:4
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/config.py:4: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Settings(BaseSettings):
+
+app/schemas/project.py:6
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:6: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    name: str = Field(..., example="Tech Insights Creator")
+
+app/schemas/project.py:7
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:7: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    creator_handle: Optional[str] = Field(None, example="@tech_guru")
+
+app/schemas/project.py:8
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:8: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    description: Optional[str] = Field(None, example="AI & Software engineering content")
+
+app/schemas/project.py:18
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/project.py:18: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class ProjectResponse(ProjectBase):
+
+app/schemas/post.py:16
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/post.py:16: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class TextFeaturesResponse(BaseModel):
+
+app/schemas/post.py:41
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/post.py:41: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class VisualFeaturesResponse(BaseModel):
+
+app/schemas/post.py:55
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/post.py:55: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class PostResponse(BaseModel):
+
+app/schemas/style.py:5
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/style.py:5: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class StyleProfileResponse(BaseModel):
+
+app/schemas/generation.py:6
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:6: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    topic: str = Field(..., example="5 essential tools for modern AI developers")
+
+app/schemas/generation.py:7
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:7: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    post_type: Optional[str] = Field("educational", example="educational")
+
+app/schemas/generation.py:8
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:8: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    cta_requirement: Optional[str] = Field(None, example="Ask followers to comment their favorite tool")
+
+app/schemas/generation.py:9
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:9: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    desired_length: Optional[str] = Field("medium", example="medium") # short, medium, long
+
+app/schemas/generation.py:10
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:10: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'example'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    custom_instructions: Optional[str] = Field(None, example="Include a tip about python environment setup")
+
+app/schemas/generation.py:33
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/generation.py:33: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class GenerationResponse(BaseModel):
+
+app/schemas/validation.py:5
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/app/schemas/validation.py:5: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class ValidationResponse(BaseModel):
+
+.venv/lib/python3.10/site-packages/_pytest/config/__init__.py:1464
+  /home/surya-j-s/Projects/Agentic_AI_Demo/backend/.venv/lib/python3.10/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: env
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================= 31 passed, 17 warnings in 102.24s (0:01:42) ==================

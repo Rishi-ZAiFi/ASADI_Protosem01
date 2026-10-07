@@ -8,6 +8,23 @@ class GenerationRequest(BaseModel):
     cta_requirement: Optional[str] = Field(None, example="Ask followers to comment their favorite tool")
     desired_length: Optional[str] = Field("medium", example="medium") # short, medium, long
     custom_instructions: Optional[str] = Field(None, example="Include a tip about python environment setup")
+    n_candidates: Optional[int] = Field(4, ge=1)
+    max_iterations: Optional[int] = Field(2, ge=0)
+    enable_revision: Optional[bool] = Field(True)
+
+class ParsedBrief(BaseModel):
+    topic: str
+    format: str
+    goal: str
+    constraints: List[str] = Field(default_factory=list)
+
+class StructuredGeneratorOutput(BaseModel):
+    hook: str
+    body: str
+    cta: Optional[str] = ""
+    hashtags: List[str] = Field(default_factory=list)
+    image_text: Optional[str] = ""
+    visual_brief: Optional[str] = ""
 
 class SlideContent(BaseModel):
     title: str
@@ -20,10 +37,14 @@ class GenerationResponse(BaseModel):
     post_type: str
     hook: str
     caption: str
-    cta: Optional[str]
-    hashtags: List[str]
+    body: Optional[str] = ""
+    cta: Optional[str] = ""
+    hashtags: List[str] = Field(default_factory=list)
+    image_text: Optional[str] = ""
+    visual_brief: Optional[str] = ""
     slides: Optional[List[SlideContent]] = []
     created_at: datetime
+    warnings: Optional[List[str]] = Field(default_factory=list)
 
     class Config:
         from_attributes = True

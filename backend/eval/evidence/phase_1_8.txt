@@ -1,0 +1,112 @@
+# Phase 1.8 Evidence
+
+## 1. Models List
+Available models:
+ - models/gemini-2.5-flash
+ - models/gemini-2.5-pro
+ - models/gemini-2.5-flash-preview-tts
+ - models/gemini-2.5-pro-preview-tts
+ - models/gemma-4-26b-a4b-it
+ - models/gemma-4-31b-it
+ - models/gemini-flash-latest
+ - models/gemini-flash-lite-latest
+ - models/gemini-pro-latest
+ - models/gemini-2.5-flash-lite
+ - models/gemini-2.5-flash-image
+ - models/gemini-3-flash-preview
+ - models/gemini-3.1-pro-preview
+ - models/gemini-3.1-pro-preview-customtools
+ - models/gemini-3.1-flash-lite-preview
+ - models/gemini-3.1-flash-lite
+ - models/gemini-3-pro-image-preview
+ - models/gemini-3-pro-image
+ - models/nano-banana-pro-preview
+ - models/gemini-3.1-flash-image-preview
+ - models/gemini-3.1-flash-image
+ - models/gemini-3.1-flash-lite-image
+ - models/gemini-3.5-flash
+ - models/gemini-3.5-flash-lite
+ - models/gemini-omni-flash-preview
+ - models/gemini-omni-1.1-flash
+ - models/gemini-3.5-transcribe
+ - models/gemini-3.6-flash
+ - models/gemini-3.7-flash
+ - models/gemini-3.8-flash
+ - models/lyria-3-clip-preview
+ - models/lyria-3-pro-preview
+ - models/lyria-3.5
+ - models/gemini-3.1-flash-tts-preview
+ - models/gemini-3.8-flash-tts
+ - models/gemini-3.8-flash-lite-tts
+ - models/gemini-robotics-er-2-preview
+ - models/gemini-2.5-computer-use-preview-10-2025
+ - models/antigravity-preview-05-2026
+ - models/antigravity-preview-09-2026
+ - models/antigravity-preview-latest
+ - models/deep-research-max-preview-04-2026
+ - models/deep-research-preview-04-2026
+ - models/deep-research-pro-preview-12-2025
+ - models/gemini-embedding-001
+ - models/gemini-embedding-2-preview
+ - models/gemini-embedding-2
+ - models/aqa
+ - models/veo-3.1-generate-preview
+ - models/veo-3.1-fast-generate-preview
+
+## 4. Smoke Test B0 Verbatim Output
+(Will be appended after task finishes)
+
+## 5. Except Blocks and Fallbacks Returning Default/Fake Data
+
+1. backend/app/services/embedding_service.py
+   - Line 8: `except ImportError:`
+     - Swallows: Missing `sentence_transformers` library.
+     - Returns: Sets `SentenceTransformer = None`.
+   - (Note: Line 27 returns `[0.0] * 384` for empty text, though not an except block.)
+
+2. backend/app/services/image_analyzer.py
+   - Line 8: `except ImportError:`
+     - Swallows: Missing `pytesseract` library.
+     - Returns: Sets `pytesseract = None`.
+   - Line 14: `except ImportError:`
+     - Swallows: Missing `cv2` library.
+     - Returns: Sets `cv2 = None`.
+   - Line 68: `except Exception:`
+     - Swallows: Any exception during OCR extraction (`pytesseract.image_to_string`).
+     - Returns: `ocr_text = ""` (empty string).
+   - Line 84: `except Exception as e:`
+     - Swallows: Any exception during full image `extract_features` execution.
+     - Returns: `default_features` (fake fallback dictionary).
+   - Line 104: `except Exception:`
+     - Swallows: Any exception during K-Means clustering (`cv2.kmeans`).
+     - Returns: `["#1E293B", "#64748B", "#F8FAFC"]` (fake fallback colors).
+
+3. backend/app/services/text_analyzer.py
+   - Line 13: `except Exception:`
+     - Swallows: Any exception during loading spaCy model (`spacy.load("en_core_web_sm")`).
+     - Returns: Sets `_nlp = None` (disabling NLP pronoun/tone metrics later).
+--- 4: SMOKE TEST (REAL KEY) ---
+Gemini API returned 503. Retrying in 1s... (Attempt 1/4)
+
+[Topic 1]: The evolution of deep learning in 2024
+Verbatim Caption Output:
+----------------------------------------
+2024 was the year deep learning leaped from simple text generation to complex world simulation. We witnessed the rise of native multimodal models that see, hear, and reason simultaneously. But it wasn't just about making models bigger; efficiency took center stage with highly capable Small Language Models (SLMs) and the shift toward Agentic AI—systems that actually *do* work instead of just talking about it. Swipe through to see the massive shifts that redefined the AI landscape this year!
+----------------------------------------
+Gemini API returned 503. Retrying in 1s... (Attempt 1/4)
+
+[Topic 2]: How to bake the perfect sourdough bread
+Verbatim Caption Output:
+----------------------------------------
+Baking the perfect sourdough isn't magic—it's science, patience, and a little bit of love. If you've been struggling to get that perfect ear, airy crumb, and blistered crust, you're not alone. Here is the ultimate step-by-step guide to mastering the bake at home. Swipe through to see the exact process! 👇
+----------------------------------------
+
+[Topic 3]: Top 3 productivity hacks for remote workers
+Verbatim Caption Output:
+----------------------------------------
+Working from home sounds like a dream until you realize your bed is 5 feet away and the laundry is calling your name. 🧺
+
+If you're struggling to stay focused, you're not alone. The boundary between 'work' and 'life' gets blurry fast.
+
+Swipe through to discover 3 simple but powerful hacks to supercharge your remote work routine and get hours back in your week! 👇
+----------------------------------------
