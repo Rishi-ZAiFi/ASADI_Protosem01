@@ -12,7 +12,7 @@ def test_tc_embed_001_embedding_generation():
     assert any(val != 0.0 for val in vec)
 
 def test_tc_embed_005_empty_text_embedding():
-    """TC-EMBED-005 — Empty text embedding handling"""
+    """TC-EMBED-005 — Empty text embedding fails loudly (Phase 1.9 requirement)"""
     service = EmbeddingService()
-    vec = service.generate_embedding("")
-    assert len(vec) == 384
+    with pytest.raises(ValueError, match="Cannot generate embedding for empty text"):
+        service.generate_embedding("")

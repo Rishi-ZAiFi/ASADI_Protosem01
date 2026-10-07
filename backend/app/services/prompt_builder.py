@@ -66,12 +66,11 @@ Your goal is to adopt the creator's exact WRITING VOICE, TONE, STRUCTURAL PATTER
 Return ONLY a valid JSON object with the following schema:
 {{
   "hook": "Attention-grabbing opening line",
-  "caption": "Full caption text formatted with paragraph breaks and emojis matching the style profile",
+  "body": "Main body text formatted with paragraph breaks and emojis matching style profile",
   "cta": "Clear call to action line",
-  "hashtags": ["#hashtag1", "#hashtag2", "#hashtag3"],
-  "slides": [
-    {{"title": "Slide 1 Title", "body": "Slide 1 Content"}}
-  ]
+  "hashtags": ["#hashtag1", "#hashtag2"],
+  "image_text": "Overlay text for visual asset if applicable",
+  "visual_brief": "Brief description of recommended image/graphic"
 }}
 """
         return prompt
