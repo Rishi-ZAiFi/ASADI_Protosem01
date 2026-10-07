@@ -1,17 +1,47 @@
+import os
 import numpy as np
 from typing import List
+from langsmith import traceable
+
+# Attempt to import sentence_transformers
+try:
+    from sentence_transformers import SentenceTransformer
+except ImportError as e:
+    import logging
+    logging.warning("Failed to import sentence_transformers: %s", str(e))
+    SentenceTransformer = None
 
 class EmbeddingService:
     def __init__(self, provider: str = "sentence-transformers", model_name: str = "all-MiniLM-L6-v2"):
         self.provider = provider
         self.model_name = model_name
+        self.model = None
 
+        if os.environ.get("TEST_FAKE_EMBEDDINGS") == "1":
+            print("WARNING: Using fake embeddings as TEST_FAKE_EMBEDDINGS=1")
+            self.use_fake = True
+        else:
+            self.use_fake = False
+            if SentenceTransformer is None:
+                raise ImportError("sentence_transformers is not installed, and TEST_FAKE_EMBEDDINGS is not set.")
+            device = os.environ.get("EMBEDDING_DEVICE", "cpu")
+            self.model = SentenceTransformer(self.model_name, device=device)
+
+    @traceable(name="EmbeddingService.generate_embedding", run_type="embedding")
     def generate_embedding(self, text: str) -> List[float]:
         if not text or not text.strip():
-            return [0.0] * 384
+            raise ValueError("Cannot generate embedding for empty text")
             
-        # Fast, robust deterministic feature vectorization
-        return EmbeddingService._deterministic_hash_vector(text, dim=384)
+        if self.use_fake:
+            return EmbeddingService._deterministic_hash_vector(text, dim=384)
+            
+        # Real embedding
+        emb = self.model.encode([text])[0]
+        # Normalize
+        norm = np.linalg.norm(emb)
+        if norm > 0:
+            emb = emb / norm
+        return emb.tolist()
 
     @staticmethod
     def _deterministic_hash_vector(text: str, dim: int = 384) -> List[float]:

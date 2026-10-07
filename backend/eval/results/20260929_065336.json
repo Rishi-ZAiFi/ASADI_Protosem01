@@ -1,0 +1,177 @@
+[
+  {
+    "post_id": "4d9dd5f4-2a3c-414c-9f2e-36a00e04f1b8",
+    "topic": "5 AI Agent Frameworks You Need to Know in 2026 \ud83d\ude80 Building autonomous AI systems...",
+    "post_type": "educational",
+    "B0": {
+      "style_score": 75.5,
+      "centroid_dist": 0.9497355018079603,
+      "max_cosine_corpus": 0.09532966424292319,
+      "max_5gram_overlap": 0.0,
+      "length": 48,
+      "emoji_count": 1,
+      "hashtag_count": 5,
+      "caption": "Here is what nobody tells you about AI & Technology \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to AI & Technology comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes."
+    },
+    "B1": {
+      "style_score": 82.3,
+      "centroid_dist": 0.9878905234021209,
+      "max_cosine_corpus": 0.030886071332444233,
+      "max_5gram_overlap": 0.0,
+      "length": 72,
+      "emoji_count": 3,
+      "hashtag_count": 5,
+      "caption": "Here is what nobody tells you about 5 AI Agent Frameworks You Need to Know in 2026 \ud83d\ude80 Building autonomous AI systems... \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to 5 AI Agent Frameworks You Need to Know in 2026 \ud83d\ude80 Building autonomous AI systems... comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes."
+    },
+    "REAL": {
+      "style_score": 87.3,
+      "centroid_dist": 0.9898675601362326,
+      "max_cosine_corpus": 0.03520629621666221,
+      "max_5gram_overlap": 0.0,
+      "length": 111,
+      "emoji_count": 2,
+      "hashtag_count": 5,
+      "caption": "5 AI Agent Frameworks You Need to Know in 2026 \ud83d\ude80\n\nBuilding autonomous AI systems is moving faster than ever. If you're still writing custom wrapper scripts from scratch, you are losing hours of development time.\n\nHere are the top 5 frameworks reshaping AI engineering:\n\n\u2022 LangGraph \u2014 State graph orchestration for resilient multi-agent systems\n\u2022 AutoGen \u2014 Multi-agent conversation and task delegation\n\u2022 CrewAI \u2014 Role-playing AI agents working in structured crews\n\u2022 Semantic Kernel \u2014 Enterprise-grade AI integration by Microsoft\n\u2022 LlamaIndex \u2014 Data-centric agentic RAG & document knowledge graphs\n\nPro tip: Start by defining clear tool schemas before building your agent graph.\n\nWhich framework are you building with this week? Drop a comment below! \ud83d\udc47"
+    }
+  },
+  {
+    "post_id": "e29f04f3-4219-4a54-af5b-c992e08bb584",
+    "topic": "Why 90% of LLM Applications Fail in Production (And How to Fix It) \ud83d\udca1 Most...",
+    "post_type": "educational",
+    "B0": {
+      "style_score": 75.5,
+      "centroid_dist": 0.9497355018079603,
+      "max_cosine_corpus": 0.05598035727507313,
+      "max_5gram_overlap": 0.0,
+      "length": 48,
+      "emoji_count": 1,
+      "hashtag_count": 5,
+      "caption": "Here is what nobody tells you about AI & Technology \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to AI & Technology comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes."
+    },
+    "B1": {
+      "style_score": 79.1,
+      "centroid_dist": 0.8696550946300339,
+      "max_cosine_corpus": 0.10408565449056617,
+      "max_5gram_overlap": 0.0,
+      "length": 72,
+      "emoji_count": 3,
+      "hashtag_count": 5,
+      "caption": "Here is what nobody tells you about Why 90% of LLM Applications Fail in Production (And How to Fix It) \ud83d\udca1 Most... \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to Why 90% of LLM Applications Fail in Production (And How to Fix It) \ud83d\udca1 Most... comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes."
+    },
+    "REAL": {
+      "style_score": 89.8,
+      "centroid_dist": 0.9088265667771871,
+      "max_cosine_corpus": 0.08328504109724351,
+      "max_5gram_overlap": 0.0,
+      "length": 107,
+      "emoji_count": 2,
+      "hashtag_count": 5,
+      "caption": "Why 90% of LLM Applications Fail in Production (And How to Fix It) \ud83d\udca1\n\nMost developers build a demo in a Jupyter notebook, hit 95% accuracy, and assume it's ready to ship. Then real users hit it with edge cases and costs explode.\n\nHere are the 3 major pitfalls:\n\n1. No Deterministic Guardrails \u2014 Relying solely on prompt instructions instead of structured JSON outputs.\n2. Lack of Vector Indexing \u2014 Passing massive raw contexts into context windows instead of semantic hybrid search.\n3. Unmonitored Token Spikes \u2014 Failing to track usage metrics per user query.\n\nStop shipping fragile demos. Build resilient systems.\n\nSave this post for your next architecture review! \ud83d\udccc"
+    }
+  },
+  {
+    "post_id": "814d6cef-a8f5-494b-908d-1f9c92a7c1c0",
+    "topic": "How I built a full-stack AI app in 48 hours \u23f1\ufe0f\ud83d\udd25 Two years ago, building...",
+    "post_type": "storytelling",
+    "B0": {
+      "style_score": 75.5,
+      "centroid_dist": 0.9497355018079603,
+      "max_cosine_corpus": 0.09532966424292319,
+      "max_5gram_overlap": 0.0,
+      "length": 48,
+      "emoji_count": 1,
+      "hashtag_count": 5,
+      "caption": "Here is what nobody tells you about AI & Technology \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to AI & Technology comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes."
+    },
+    "B1": {
+      "style_score": 77.1,
+      "centroid_dist": 0.8749573391785175,
+      "max_cosine_corpus": 0.1012865810834717,
+      "max_5gram_overlap": 0.0,
+      "length": 74,
+      "emoji_count": 5,
+      "hashtag_count": 5,
+      "caption": "Here is what nobody tells you about How I built a full-stack AI app in 48 hours \u23f1\ufe0f\ud83d\udd25 Two years ago, building... \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to How I built a full-stack AI app in 48 hours \u23f1\ufe0f\ud83d\udd25 Two years ago, building... comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes."
+    },
+    "REAL": {
+      "style_score": 92.8,
+      "centroid_dist": 0.9203546122270628,
+      "max_cosine_corpus": 0.10429010788348683,
+      "max_5gram_overlap": 0.0,
+      "length": 86,
+      "emoji_count": 3,
+      "hashtag_count": 5,
+      "caption": "How I built a full-stack AI app in 48 hours \u23f1\ufe0f\ud83d\udd25\n\nTwo years ago, building a vector search web app required a team of 4 engineers and weeks of setup.\n\nLast weekend, I launched an AI content analyzer from scratch using FastAPI, Next.js, and pgvector.\n\nThe lesson? Tooling has caught up with developer imagination. Stop overcomplicating your stack.\n\n\u2022 Backend: Python + FastAPI\n\u2022 Database: PostgreSQL + pgvector\n\u2022 Frontend: Next.js App Router + Tailwind\n\u2022 Embeddings: Sentence-Transformers\n\nWhat are you launching this month? Let me know in the comments! \ud83d\udc47"
+    }
+  },
+  {
+    "post_id": "e5909c58-36e9-4e60-83a9-28b6e12a47ae",
+    "topic": "The Ultimate System Prompt Template for Clean JSON Outputs \ud83d\udcc4\ud83e\udd16 Getting an LLM to return...",
+    "post_type": "educational",
+    "B0": {
+      "style_score": 75.5,
+      "centroid_dist": 0.9497355018079603,
+      "max_cosine_corpus": 0.09532966424292319,
+      "max_5gram_overlap": 0.0,
+      "length": 48,
+      "emoji_count": 1,
+      "hashtag_count": 5,
+      "caption": "Here is what nobody tells you about AI & Technology \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to AI & Technology comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes."
+    },
+    "B1": {
+      "style_score": 82.3,
+      "centroid_dist": 0.9631328568628111,
+      "max_cosine_corpus": 0.05127825394988726,
+      "max_5gram_overlap": 0.0,
+      "length": 72,
+      "emoji_count": 3,
+      "hashtag_count": 5,
+      "caption": "Here is what nobody tells you about The Ultimate System Prompt Template for Clean JSON Outputs \ud83d\udcc4\ud83e\udd16 Getting an LLM to return... \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to The Ultimate System Prompt Template for Clean JSON Outputs \ud83d\udcc4\ud83e\udd16 Getting an LLM to return... comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes."
+    },
+    "REAL": {
+      "style_score": 83.3,
+      "centroid_dist": 0.9586194361650845,
+      "max_cosine_corpus": 0.05572958927190566,
+      "max_5gram_overlap": 0.0,
+      "length": 74,
+      "emoji_count": 2,
+      "hashtag_count": 5,
+      "caption": "The Ultimate System Prompt Template for Clean JSON Outputs \ud83d\udcc4\ud83e\udd16\n\nGetting an LLM to return strictly valid JSON without markdown wrapping or conversational filler can be frustrating.\n\nUse this 3-part prompt structure:\n\n1. Explicit Role Declaration \u2014 Declare the model as a schema-enforcing parser.\n2. Mandatory JSON Schema \u2014 Provide exact target key-value pairs.\n3. Zero-Filler Constraint \u2014 Instruct 'Return ONLY valid JSON. No conversational text.'\n\nSave this framework for your next backend API! \ud83d\udccc"
+    }
+  },
+  {
+    "post_id": "7d93bd8f-4c3b-4c08-9004-c6efca8eacaa",
+    "topic": "\ud83d\ude80 Master AI Engineering: Launching our new 2026 Masterclass! Want to level up from prompt...",
+    "post_type": "promotional",
+    "B0": {
+      "style_score": 75.5,
+      "centroid_dist": 0.9497355018079603,
+      "max_cosine_corpus": 0.09532966424292319,
+      "max_5gram_overlap": 0.0,
+      "length": 48,
+      "emoji_count": 1,
+      "hashtag_count": 5,
+      "caption": "Here is what nobody tells you about AI & Technology \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to AI & Technology comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes."
+    },
+    "B1": {
+      "style_score": 81.8,
+      "centroid_dist": 0.9449277189339284,
+      "max_cosine_corpus": 0.07498541905758432,
+      "max_5gram_overlap": 0.0,
+      "length": 72,
+      "emoji_count": 3,
+      "hashtag_count": 5,
+      "caption": "Here is what nobody tells you about \ud83d\ude80 Master AI Engineering: Launching our new 2026 Masterclass! Want to level up from prompt... \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to \ud83d\ude80 Master AI Engineering: Launching our new 2026 Masterclass! Want to level up from prompt... comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes."
+    },
+    "REAL": {
+      "style_score": 87.6,
+      "centroid_dist": 0.9537533820239839,
+      "max_cosine_corpus": 0.07641920336518454,
+      "max_5gram_overlap": 0.0,
+      "length": 53,
+      "emoji_count": 2,
+      "hashtag_count": 5,
+      "caption": "\ud83d\ude80 Master AI Engineering: Launching our new 2026 Masterclass!\n\nWant to level up from prompt engineer to full-stack AI system architect?\n\nOur flagship course covers:\n\u2022 Multi-agent orchestration\n\u2022 pgvector & hybrid search\n\u2022 Custom tool use & guardrails\n\u2022 Production evaluation & observability\n\nLimited spots available for the Q1 cohort.\n\nClick the link in bio to enroll today! \ud83d\udd17"
+    }
+  }
+]
