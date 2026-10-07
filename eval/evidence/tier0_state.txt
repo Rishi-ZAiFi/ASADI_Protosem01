@@ -1,0 +1,91 @@
+=== DB CHECK ===
+Dialect: postgresql
+pgvector installed: True
+
+=== POST COUNTS ===
+Total posts across all projects: 2
+Project ID: test-proj-30
+  Post Count: 2
+  Failed Count: 1
+  NULL Date Count: 0
+
+
+=== ALEMBIC ===
+Current: cd52d08bc5b8 (head)
+Heads: cd52d08bc5b8 (head)
+
+=== VERSIONS ===
+langgraph installed version: 1.2.12
+langchain-core installed version: 1.6.5
+
+Requirements file pins:
+langgraph
+langchain-core
+langgraph==1.2.12
+langchain-core==1.6.5
+
+
+=== GEMINI ===
+Configured Model: gemini-3.5-flash
+Model in models.list: True
+
+
+=== GIT STATUS ===
+M app/api/routes/analysis.py
+M  app/api/routes/generation.py
+ M app/api/routes/posts.py
+ M app/config.py
+ M app/db/session.py
+ M app/main.py
+ M app/services/embedding_service.py
+AM app/services/graph_service.py
+ M app/services/image_analyzer.py
+M  app/services/llm_service.py
+ M app/services/retrieval_service.py
+ M app/services/text_analyzer.py
+ M app/services/validation_service.py
+M  requirements.txt
+A  scripts/test_real_graph.py
+ M tests/conftest.py
+A  tests/test_graph_smoke.py
+?? ../GEMINI.md
+?? alembic/versions/cd52d08bc5b8_add_analysis_status_and_errors_to_posts.py
+?? app/services/custom_retriever.py
+?? eval/blind_review.py
+?? eval/evidence/phase_1_8.txt
+?? eval/evidence/phase_1_8_1.txt
+?? eval/evidence/phase_1_8_2.txt
+?? eval/evidence/phase_1_9_embedding_missing.txt
+?? eval/evidence/phase_1_9_tests.txt
+?? eval/evidence/phase_3_0_db_evidence.txt
+?? eval/evidence/phase_3_0_tests.txt
+?? eval/evidence/phase_3_0b_leftovers.txt
+?? eval/evidence/phase_3_1_alembic_check.txt
+?? eval/evidence/phase_3_1_db_check.txt
+?? eval/evidence/phase_3_1_db_history.txt
+?? eval/evidence/phase_3_1_db_stats.txt
+?? eval/evidence/phase_3_1_smoke_test.txt
+?? eval/evidence/phase_3_1b_real_runs.txt
+?? eval/evidence/phase_3_1b_state.txt
+?? eval/evidence/phase_3_1c_db_state.txt
+?? eval/results/
+?? inspect_out.txt
+?? pytest.ini
+?? scripts/inspect_data.py
+?? scripts/list_gemini_models.py
+?? scripts/reindex_embeddings.py
+?? scripts/smoke_test_b0.py
+?? scripts/state_check.py
+?? scripts/test_gemini_direct.py
+?? scripts/verify_embeddings.py
+?? test_langgraph_pydantic.py
+?? test_langgraph_pydantic_flow.py
+?? test_tx.py
+?? tests/test_graph_spec.py
+?? tests/test_originality_sanity.py
+?? tests/test_phase_1_9.py
+?? ../eval/
+
+
+=== PYTEST RUN ===
+================== 1 failed, 1 skipped, 17 warnings in 0.05s ===================

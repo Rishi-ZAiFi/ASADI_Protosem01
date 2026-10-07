@@ -36,9 +36,6 @@ def test_tc_cv_003_image_without_text(tmp_path):
     assert isinstance(feats["ocr_text"], str)
 
 def test_tc_cv_004_invalid_image_path():
-    """TC-CV-004 — Invalid image path gracefully handled"""
-    feats = ImageAnalyzer.extract_features("/nonexistent/path/image.jpg")
-    assert feats["width"] is None
-    assert feats["height"] is None
-    assert feats["text_area_ratio"] == 0.0
-    assert feats["ocr_text"] == ""
+    """TC-CV-004 — Invalid image path fails loudly with ValueError (Phase 1.9 requirement)"""
+    with pytest.raises(ValueError, match="Media path does not exist"):
+        ImageAnalyzer.extract_features("/nonexistent/path/image.jpg")
