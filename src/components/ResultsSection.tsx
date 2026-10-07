@@ -68,17 +68,32 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({
           gap: '12px',
         }}
       >
-        <h2
-          style={{
-            fontSize: '1.25rem',
-            fontWeight: 700,
-            color: '#ffffff',
-            margin: 0,
-            letterSpacing: '-0.01em',
-          }}
-        >
-          Generated Hooks
-        </h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <h2
+            style={{
+              fontSize: '1.25rem',
+              fontWeight: 700,
+              color: '#ffffff',
+              margin: 0,
+              letterSpacing: '-0.01em',
+            }}
+          >
+            Generated Hooks
+          </h2>
+          <span
+            style={{
+              fontSize: '0.78rem',
+              color: '#818cf8',
+              fontWeight: 500,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+            }}
+          >
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#34d399', display: 'inline-block' }}></span>
+            3-Agent Pipeline: Strategist → Critic → Refiner
+          </span>
+        </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button
