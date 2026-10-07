@@ -5,6 +5,7 @@ for the supervisor to reason over, plus a card (the specialist's full structured
 artifact — cards are streamed to the UI and kept in the thread, but never sent back to the model.
 """
 
+import logging
 import sqlite3
 import threading
 
@@ -15,13 +16,15 @@ from langgraph.checkpoint.sqlite import SqliteSaver
 from sqlalchemy import select
 
 from agents.context import AgentContext
-from agents.llm import chat_model, guardrails
+from agents.llm import as_app_error, chat_model, guardrails
 from agents.specialists import clip_editor, connections, drift_analyst, promise_auditor, researcher
-from ai.llm import LLMError
+from ai.llm import LLMConfigError
 from config import ROOT_DIR, settings
 from db import SessionLocal
 from models import Promise, Video
 from search.vector import fmt_ts, yt_url
+
+log = logging.getLogger("agents.brain")
 
 SYSTEM = """You are the Brain — the second brain of a YouTube creator, built from every transcript of their
 channel. You lead a team of specialist agents and talk to the creator directly ("you said...").
@@ -38,10 +41,13 @@ How to work:
   them one after another when a later step depends on an earlier result.
 - Give each specialist a clear, self-contained request (resolve "it"/"that" from the conversation first).
 - Don't call a specialist for greetings, thanks or questions about this conversation itself.
-- The creator sees every specialist's full result as a card below your reply, with sources, clips or charts.
-  So don't repeat everything: give a short synthesis (2-6 sentences), connect the results, and suggest a
-  useful next step. Keep [n] citations exactly as the researcher wrote them — they point to its card.
-- If a specialist fails or finds nothing, say so honestly; never invent videos, quotes or timestamps."""
+- The creator sees every specialist's full result as a card below your reply (sources, clips, charts,
+  promises, videos). Do NOT restate the card: no clip-by-clip breakdowns, no lists of sources. Reply in
+  2-5 sentences: the key takeaway, how the results connect, and one useful next step.
+- Only state facts that appear in the specialists' results. Never add timestamps, quotes, clip contents or
+  video details they didn't return.
+- Keep [n] citations exactly as the researcher wrote them — they point to its card.
+- If a specialist fails or finds nothing, say so honestly."""
 
 
 def _run(runtime: ToolRuntime[AgentContext], agent: str, detail: str, fn) -> tuple[str, dict | None]:
@@ -49,8 +55,11 @@ def _run(runtime: ToolRuntime[AgentContext], agent: str, detail: str, fn) -> tup
     emit({"type": "step", "agent": "brain", "tool": agent, "detail": detail[:200]})
     try:
         summary, card = fn(runtime.context.child(agent, emit))
-    except LLMError as e:
-        return f"The {agent} failed: {e}", None
+    except LLMConfigError:
+        raise  # a missing/invalid key is the creator's to fix — surface it, don't paper over it
+    except Exception as e:  # noqa: BLE001 — the Brain reports the failure and answers with what it has
+        log.warning("%s failed: %r", agent, e)  # repr keeps Gemini's own message (which quota was hit)
+        return f"The {agent} failed ({as_app_error(e)}). Tell the creator and suggest trying again.", None
     if card is not None:
         card = {"kind": card["kind"], "agent": agent, "data": card["data"]}
         emit({"type": "card", **card})
@@ -198,12 +207,12 @@ def brain():
     with _lock:
         if _brain is None:
             _brain = create_agent(
-                chat_model(),
+                chat_model(streaming=True),
                 TOOLS,
                 system_prompt=SYSTEM,
                 context_schema=AgentContext,
                 middleware=[
-                    # keep long threads inside Groq's token-per-minute budget
+                    # keep long threads inside the agent token budget
                     SummarizationMiddleware(chat_model(fast=True), trigger=("tokens", settings.agent_context_tokens), keep=("messages", 10)),
                     *guardrails(model_calls=6, tool_calls=5),
                 ],

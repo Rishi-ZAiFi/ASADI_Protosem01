@@ -1,6 +1,6 @@
 """Runs a specialist agent: a ReAct tool loop that ends by calling `submit_answer` with a typed result.
 
-Groq rejects LangChain's built-in structured-output strategies when tools are bound (forced tool choice,
+Some providers reject LangChain's built-in structured-output strategies when tools are bound (forced tool choice,
 or JSON mode + tools), so the final schema is exposed as one more tool. If the model stops without
 submitting — e.g. it hit the call limit — one JSON-schema call extracts the answer from its work so far.
 """
@@ -79,7 +79,11 @@ def run_specialist(
             {"messages": [{"role": "user", "content": prompt}]},
             context=ctx,
             # middleware hooks add graph steps per iteration; ModelCallLimitMiddleware is the real stop
-            config={"recursion_limit": 8 * model_calls + 10},
+            config={
+                "recursion_limit": 8 * model_calls + 10,
+                "tags": ["specialist"],
+                "metadata": {"agent": name, "channel_id": ctx.channel_id},
+            },
         )
         if (submitted := ctx.scratch.get("submitted")) is not None:
             return submitted
@@ -96,7 +100,7 @@ def run_specialist(
                 },
             ]
         )
-    except Exception as e:  # noqa: BLE001 — re-raised as the app's LLM errors when it's a Groq failure
+    except Exception as e:  # noqa: BLE001 — re-raised as the app's LLM errors when it's a Gemini failure
         err = as_app_error(e)
         if err is e:
             raise

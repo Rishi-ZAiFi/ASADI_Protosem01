@@ -32,3 +32,14 @@ def get_session():
         yield session
     finally:
         session.close()
+
+
+def fail_interrupted_jobs() -> None:
+    """Jobs run in-process, so any still queued/running at startup died with the previous server."""
+    from models import Job
+
+    with SessionLocal() as session:
+        for job in session.query(Job).filter(Job.status.in_(["queued", "running"])):
+            job.status = "failed"
+            job.message = "Interrupted by a server restart. Re-index to continue — finished videos are kept."
+        session.commit()
