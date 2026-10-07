@@ -57,3 +57,4 @@ Thumbs.db
 Desktop.ini
 *.tsbuildinfo
 backend/data/
+backend/.model_cache/
