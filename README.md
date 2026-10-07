@@ -154,43 +154,49 @@ creatorspace-ai/
 * **npm**: v9.x or v10+ (`npm -v`)
 * **Google Gemini API Key**: [Get key from Google AI Studio](https://aistudio.google.com/)
 
----
+```env
+# Google Gemini API Key
+GEMINI_API_KEY=your_gemini_api_key
 
-### Step 1: Set Up Backend
+# LangSmith Tracing
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY=your_langsmith_api_key
+LANGCHAIN_PROJECT=creator-os
+LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
 
-1. Navigate to `server/`:
-   ```bash
-   cd server
-   ```
-2. Configure your API key in `.env`:
-   ```env
-   PORT=5000
-   NODE_ENV=development
-   CLIENT_URL=http://localhost:5173
-   GEMINI_API_KEY=your_key_here
-   GEMINI_MODEL=gemini-3.5-flash-lite
-   ```
-3. Start the backend:
-   ```bash
-   npm start
-   ```
-   The backend will run on `http://localhost:5000`.
+# Server Configuration
+PORT=3002
+APP_URL=http://localhost:3002
+```
 
----
+### 3. Installation & Local Development
+```bash
+# 1. Install all monorepo dependencies
+pnpm install
 
-### Step 2: Set Up Frontend
+# 2. Run the Next.js Unified Dashboard
+pnpm dev --filter web
 
-1. Navigate to `client/`:
-   ```bash
-   cd client
-   ```
-2. Start the Vite development server:
-   ```bash
-   npm run dev
-   ```
-   The frontend will run on `http://localhost:5173`.
+# 3. (Optional) Run the Fastify LangGraph Agent Service
+pnpm dev --filter agent
+```
+
+Open **[http://localhost:3002](http://localhost:3002)** in your browser.
 
 ---
 
-## 📄 License
-MIT License. Built for modern creators and student developers.
+## 🧪 Testing & Verification
+
+Run the test suite across all monorepo packages:
+```bash
+# Run unit tests across packages
+pnpm test
+
+# Run typechecks across TypeScript packages
+pnpm typecheck
+```
+
+### Live Test Results:
+* **UI Routes:** All routes (`/`, `/ideas`, `/hooks`, `/reels`, `/thumbnails`, `/brain`) returning `200 OK`.
+* **API Endpoints:** Live generation verified with Gemini 2.5 Flash.
+* **LangSmith Traces:** Verified multi-agent trace tree active in project `creator-os`.
