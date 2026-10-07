@@ -30,14 +30,35 @@ export interface GenerateHooksRequest {
   tone: Tone;
 }
 
+export interface HookEvaluation {
+  style: HookStyle | string;
+  score: number;
+  critique: string;
+  suggestions: string;
+  isSafeStatistic?: boolean;
+}
+
+export interface CriticOutput {
+  evaluations: HookEvaluation[];
+  overallFeedback: string;
+}
+
+export interface MultiAgentPipelineResult {
+  initialHooks: Array<{ style: string; hook: string }>;
+  critique: CriticOutput;
+  finalHooks: HookItem[];
+}
+
 export interface GenerateHooksResponse {
   hooks: HookItem[];
   topic: string;
   platform: Platform;
   tone: Tone;
+  critique?: CriticOutput;
 }
 
 export interface ApiErrorResponse {
   error: string;
   details?: string;
 }
+
