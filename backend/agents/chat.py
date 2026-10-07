@@ -23,8 +23,11 @@ def _text(content) -> str:
     return "".join(p.get("text", "") for p in content if isinstance(p, dict) and p.get("type") == "text")
 
 
-def _config(thread_id: str) -> dict:
-    return {"configurable": {"thread_id": thread_id}, "recursion_limit": 30}
+def _config(thread_id: str, channel_id: str | None = None) -> dict:
+    config = {"configurable": {"thread_id": thread_id}, "recursion_limit": 30}
+    if channel_id:  # LangSmith: name the root run and make threads filterable
+        config |= {"run_name": "Brain chat", "tags": ["chat"], "metadata": {"channel_id": channel_id, "thread_id": thread_id}}
+    return config
 
 
 def stream_chat(channel_id: str, thread_id: str, message: str) -> Iterator[dict]:
@@ -37,7 +40,7 @@ def stream_chat(channel_id: str, thread_id: str, message: str) -> Iterator[dict]
             graph = brain()
             for mode, payload in graph.stream(
                 {"messages": [HumanMessage(message)]},
-                config=_config(thread_id),
+                config=_config(thread_id, channel_id),
                 context=AgentContext(channel_id, agent="brain"),
                 stream_mode=["messages", "custom"],
             ):
