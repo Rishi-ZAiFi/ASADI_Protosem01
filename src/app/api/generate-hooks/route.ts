@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateHooksWithGemini } from '@/lib/gemini';
+import { runMultiAgentHookPipeline } from '@/lib/agents';
 import { Platform, Tone, GenerateHooksRequest } from '@/types';
 
 const VALID_PLATFORMS: Platform[] = [
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
       ? (tone as Tone)
       : 'Bold';
 
-    const hooks = await generateHooksWithGemini({
+    const result = await runMultiAgentHookPipeline({
       topic: topic.trim(),
       audience: audience?.trim() || undefined,
       platform: validatedPlatform,
@@ -63,7 +63,8 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({
-      hooks,
+      hooks: result.finalHooks,
+      critique: result.critique,
       topic: topic.trim(),
       platform: validatedPlatform,
       tone: validatedTone,
