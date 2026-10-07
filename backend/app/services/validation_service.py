@@ -73,7 +73,9 @@ class ValidationService:
         )
 
         # 4. Copy-Protection and Originality Audit vs Historical Posts
-        originality_info = ValidationService._check_originality(draft_caption, historical_posts)
+        from app.services.embedding_service import EmbeddingService
+        embedder = EmbeddingService()
+        originality_info = ValidationService._check_originality(draft_caption, historical_posts, embedder)
 
         return {
             "overall_score": overall_score,
@@ -87,54 +89,66 @@ class ValidationService:
             },
             "originality_status": originality_info["status"],
             "max_ngram_overlap": originality_info["max_ngram_overlap"],
+            "max_cosine_corpus": float(originality_info.get("max_cosine_corpus", 0.0)),
             "flagged_phrases": originality_info["flagged_phrases"],
             "retrieved_examples_used": originality_info["retrieved_examples_used"]
         }
 
     @staticmethod
-    def _check_originality(draft_caption: str, historical_posts: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def _check_originality(draft_caption: str, historical_posts: List[Dict[str, Any]], embedder: Any = None) -> Dict[str, Any]:
         draft_words = [w.lower() for w in re.findall(r"\b\w+\b", draft_caption)]
-        if len(draft_words) < 4:
-            return {"status": "PASS", "max_ngram_overlap": 0.0, "flagged_phrases": [], "retrieved_examples_used": []}
+        if len(draft_words) < 5:
+            return {"status": "PASS", "max_ngram_overlap": 0.0, "max_cosine_corpus": 0.0, "flagged_phrases": [], "retrieved_examples_used": []}
 
-        # Create n-grams (3-grams and 4-grams)
-        draft_3grams = set(zip(draft_words[:-2], draft_words[1:-1], draft_words[2:]))
-        draft_4grams = set(zip(draft_words[:-3], draft_words[1:-2], draft_words[2:-1], draft_words[3:]))
+        # Create 5-grams
+        draft_5grams = set(zip(draft_words[:-4], draft_words[1:-3], draft_words[2:-2], draft_words[3:-1], draft_words[4:]))
 
         max_overlap_ratio = 0.0
+        max_cosine = 0.0
         flagged_phrases = []
         examples_used = []
+
+        import numpy as np
+        draft_vec = None
+        if embedder:
+            draft_vec = np.array(embedder.generate_embedding(draft_caption))
 
         for post in historical_posts:
             h_caption = post.get("caption", "")
             h_words = [w.lower() for w in re.findall(r"\b\w+\b", h_caption)]
-            if len(h_words) < 4:
+            if len(h_words) < 5:
                 continue
 
-            h_3grams = set(zip(h_words[:-2], h_words[1:-1], h_words[2:]))
-            h_4grams = set(zip(h_words[:-3], h_words[1:-2], h_words[2:-1], h_words[3:]))
+            h_5grams = set(zip(h_words[:-4], h_words[1:-3], h_words[2:-2], h_words[3:-1], h_words[4:]))
 
-            overlap_3 = draft_3grams.intersection(h_3grams)
-            overlap_4 = draft_4grams.intersection(h_4grams)
+            overlap_5 = draft_5grams.intersection(h_5grams)
 
-            if overlap_4:
-                for gram in overlap_4:
+            if overlap_5:
+                for gram in overlap_5:
                     phrase = " ".join(gram)
-                    if len(phrase) > 15 and phrase not in flagged_phrases:
+                    if phrase not in flagged_phrases:
                         flagged_phrases.append(phrase)
 
-            overlap_ratio = len(overlap_3) / max(1, len(draft_3grams))
+            overlap_ratio = len(overlap_5) / max(1, len(draft_5grams))
             if overlap_ratio > max_overlap_ratio:
                 max_overlap_ratio = overlap_ratio
+                
+            # Cosine similarity
+            h_vec_data = post.get("embedding_vector")
+            if draft_vec is not None and h_vec_data:
+                h_vec = np.array(h_vec_data)
+                sim = np.dot(draft_vec, h_vec)
+                if sim > max_cosine:
+                    max_cosine = sim
                 
             if post.get("id"):
                 examples_used.append(post["id"])
 
         max_overlap_pct = round(max_overlap_ratio * 100, 1)
 
-        if max_overlap_pct > 35.0 or len(flagged_phrases) >= 3:
+        if max_overlap_pct > 35.0 or len(flagged_phrases) >= 3 or max_cosine > 0.90:
             status = "FLAG"
-        elif max_overlap_pct > 60.0:
+        elif max_overlap_pct > 60.0 or max_cosine > 0.95:
             status = "REJECT"
         else:
             status = "PASS"
@@ -142,6 +156,7 @@ class ValidationService:
         return {
             "status": status,
             "max_ngram_overlap": max_overlap_pct,
+            "max_cosine_corpus": float(max_cosine),
             "flagged_phrases": flagged_phrases[:5],
             "retrieved_examples_used": examples_used[:5]
         }

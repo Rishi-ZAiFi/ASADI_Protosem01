@@ -14,8 +14,12 @@ class Post(Base):
     hashtags = Column(JSON, default=list)  # List of strings
     media_path = Column(String, nullable=True)
     post_type = Column(String, default="educational")  # educational, promotional, storytelling, carousel, etc.
-    published_at = Column(DateTime, nullable=True, default=datetime.utcnow)
+    published_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+    
+    analysis_status = Column(String, default="success") # success, failed
+    analysis_error = Column(Text, nullable=True)
+    parse_error = Column(Text, nullable=True)
 
     # Relationships
     project = relationship("Project", back_populates="posts")
@@ -57,6 +61,12 @@ class PostTextFeatures(Base):
     has_cta = Column(Integer, default=0)
     cta_phrase = Column(String, nullable=True)
     has_url = Column(Integer, default=0)
+    
+    # LLM & Heuristic Extraction Fields
+    extracted_hook = Column(Text, nullable=True)
+    extracted_cta = Column(Text, nullable=True)
+    extraction_source = Column(String, default="heuristic")  # "llm" or "heuristic"
+    extraction_status = Column(String, default="success")    # "success" or "failed"
     
     # Vocabulary & Pronoun / Tone Indicators
     vocabulary_stats = Column(JSON, default=dict)

@@ -1,0 +1,34 @@
+PASS: GET /api/health returned 200 in 0.023s
+POST /api/projects -> 200 (0.023s)
+PASS: project created with id=a7bea361-2918-411f-a251-6ef75dc92011
+POST /api/projects/a7bea361-2918-411f-a251-6ef75dc92011/posts/import -> 200 (7.708s)
+  imported_count=5, parse_errors=0, analysis_failures=0
+PASS: posts imported successfully
+POST /api/projects/a7bea361-2918-411f-a251-6ef75dc92011/analyze -> 200 (0.025s)
+PASS: style profile returned with all required fields
+POST /api/projects/a7bea361-2918-411f-a251-6ef75dc92011/generate -> 200 (20.204s)
+{
+  "id": "2a2292d9-d1c0-4b7f-a77c-222fa1c93d15",
+  "project_id": "a7bea361-2918-411f-a251-6ef75dc92011",
+  "topic": "5 essential tools for modern AI developers",
+  "post_type": "educational",
+  "hook": "5 Essential Tools to Upgrade Your AI Development Workflow \ud83d\ude80",
+  "caption": "5 Essential Tools to Upgrade Your AI Development Workflow \ud83d\ude80\n\nModern AI engineering requires more than just a basic API connection. If you want to build scalable, production-ready applications, you need the right ecosystem to manage complexity. \n\nHere is my current stack for building high-performance AI apps: \n\n\u2022 Weights & Biases \u2014 Essential for experiment tracking and model evaluation \n\u2022 Pinecone \u2014 High-speed vector search for production RAG systems \n\u2022 LangSmith \u2014 Debugging and tracing complex LLM chains \n\u2022 Pydantic \u2014 Strict data validation for model responses \n\u2022 Docker \u2014 Consistent environment management across deployments \n\nMaster these tools to ship faster.\n\nWhich tool are you adding to your stack this month? Let me know below! \ud83d\udc47",
+  "body": "Modern AI engineering requires more than just a basic API connection. If you want to build scalable, production-ready applications, you need the right ecosystem to manage complexity. \n\nHere is my current stack for building high-performance AI apps: \n\n\u2022 Weights & Biases \u2014 Essential for experiment tracking and model evaluation \n\u2022 Pinecone \u2014 High-speed vector search for production RAG systems \n\u2022 LangSmith \u2014 Debugging and tracing complex LLM chains \n\u2022 Pydantic \u2014 Strict data validation for model responses \n\u2022 Docker \u2014 Consistent environment management across deployments \n\nMaster these tools to ship faster.",
+  "cta": "Which tool are you adding to your stack this month? Let me know below! \ud83d\udc47",
+  "hashtags": [
+    "#ai",
+    "#python",
+    "#softwareengineering",
+    "#tech",
+    "#aiagents",
+    "#developers"
+  ],
+  "image_text": "",
+  "visual_brief": "",
+  "slides": [],
+  "created_at": "2026-09-29T19:30:35.973189",
+  "warnings": []
+}
+  hook_repeated=False (hook appears 1 times in caption)
+FAIL: hook does not appear more than once in caption

@@ -1,0 +1,2 @@
+Current DB Backend: postgresql+psycopg
+URL: postgresql+psycopg://instagram_user:***@localhost:5432/instagram_voice
