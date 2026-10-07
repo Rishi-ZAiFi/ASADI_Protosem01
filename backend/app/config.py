@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     
     # LLM Configuration
     LLM_PROVIDER: str = os.getenv("LLM_PROVIDER", "gemini")
-    LLM_MODEL: str = os.getenv("LLM_MODEL", "gemini-2.5-flash")
+    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
     LLM_API_KEY: str = os.getenv("LLM_API_KEY", "")
     
     # Embedding Configuration

@@ -10,8 +10,10 @@ def get_nlp():
     if _nlp is None:
         try:
             _nlp = spacy.load("en_core_web_sm")
-        except Exception:
-            _nlp = None
+        except Exception as e:
+            import logging
+            logging.warning("Failed to load spacy model: %s", str(e))
+            raise RuntimeError(f"Failed to load spacy model: {str(e)}") from e
     return _nlp
 
 EMOJI_REGEX = re.compile(

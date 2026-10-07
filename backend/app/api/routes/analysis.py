@@ -6,6 +6,7 @@ from app.models.post import Post
 from app.models.style_profile import StyleProfile
 from app.schemas.style import StyleProfileResponse
 from app.services.style_analyzer import StyleAnalyzer
+from sqlalchemy import or_
 
 router = APIRouter(prefix="/projects/{project_id}", tags=["analysis"])
 
@@ -15,7 +16,10 @@ def analyze_project_style(project_id: str, db: Session = Depends(get_db)):
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
 
-    posts = db.query(Post).filter(Post.project_id == project_id).all()
+    posts = db.query(Post).filter(
+        Post.project_id == project_id,
+        or_(Post.analysis_status != "failed", Post.analysis_status.is_(None))
+    ).all()
     if not posts:
         raise HTTPException(status_code=400, detail="Cannot analyze project without historical posts. Please import a dataset first.")
 

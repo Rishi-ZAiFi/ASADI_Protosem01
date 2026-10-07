@@ -1,0 +1,33 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Project ID: e5dbe9df-c368-419b-8a22-1e8b43595936
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9881.82it/s]
+Dataset imported
+Style analyzed
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9464.43it/s]
+WARNING: Using fake LLM generation as TEST_FAKE_LLM=1
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10036.55it/s]
+STATUS_CODE: 200
+{
+  "id": "6087a697-6b29-4088-968b-b25364a3433a",
+  "project_id": "e5dbe9df-c368-419b-8a22-1e8b43595936",
+  "topic": "5 essential tools for modern AI developers",
+  "post_type": "educational",
+  "hook": "Here is what nobody tells you about 5 essential tools for modern AI developers \ud83d\ude80",
+  "caption": "Here is what nobody tells you about 5 essential tools for modern AI developers \ud83d\ude80\n\nHere is what nobody tells you about 5 essential tools for modern AI developers \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to 5 essential tools for modern AI developers comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes.\n\nWhat's your biggest takeaway on 5 essential tools for modern AI developers? Drop a comment below! \ud83d\udc47",
+  "body": "Here is what nobody tells you about 5 essential tools for modern AI developers \ud83d\ude80\n\nMost creators focus on surface-level tactics, but the real secret to 5 essential tools for modern AI developers comes down to 3 core principles:\n\n1. Consistency over intensity\n2. Leveraging historical data & analytics\n3. Building authentic engagement\n\nWhen you master these, everything changes.",
+  "cta": "What's your biggest takeaway on 5 essential tools for modern AI developers? Drop a comment below! \ud83d\udc47",
+  "hashtags": [
+    "#contentstrategy",
+    "#ai",
+    "#creator",
+    "#growth",
+    "#productivity"
+  ],
+  "image_text": "",
+  "visual_brief": "",
+  "slides": [],
+  "created_at": "2026-09-29T18:33:45.169898",
+  "warnings": []
+}
+
+[MEASUREMENT] caption_len=559, body_len=376

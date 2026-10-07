@@ -1,0 +1,5 @@
+DB STATE EXPLANATION:
+1. The 128 posts were stored in the SQLite fallback database (`instagram_voice.db`) during Phase 1 because Postgres was unconfigured or pgvector was missing, so `ALLOW_SQLITE` triggered the fallback.
+2. The app now connects to the Postgres dev DB (`instagram_voice` on 5432). The Postgres dev DB never held the 128 posts; they were not deleted from it, they just never existed there.
+3. The 1 project (`test-proj-30`) and 2 posts currently in the Postgres DB were inserted by `tests/test_phase_3_0.py`. The tests were connecting directly to the dev DB URL. In `test_phase_3_0.py`, the `db_session` fixture calls `session.commit()` which permanently wrote the test project to the dev DB.
+4. I have fixed this by modifying `tests/conftest.py` to force `DATABASE_URL` to `.../instagram_voice_test` via `os.environ` before the app config loads, and added an `autouse=True` fixture that asserts `instagram_voice_test` is in the URL and calls `pytest.exit()` if it matches the dev URL.
