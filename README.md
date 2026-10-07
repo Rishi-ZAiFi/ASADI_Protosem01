@@ -1,136 +1,158 @@
-# Creator OS: Unified Autonomous AI Content Pipeline
+# CreatorSpace AI — AI Content Creation & Productivity Platform
 
-> **An Enterprise-Grade, Multi-Agent Operating System Unifying 23+ Creator Workflows into an Autonomous Content Engine.**
-
-[![Next.js 16](https://img.shields.io/badge/Next.js-16.3.6-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![Turborepo](https://img.shields.io/badge/Turborepo-2.4-blue?style=for-the-badge&logo=turborepo)](https://turbo.build/)
-[![LangChain / LangGraph](https://img.shields.io/badge/LangGraph-Multi--Agent-green?style=for-the-badge)](https://langchain-ai.github.io/langgraphjs/)
-[![LangSmith](https://img.shields.io/badge/LangSmith-Traced-orange?style=for-the-badge)](https://smith.langchain.com/)
-[![Google Gemini](https://img.shields.io/badge/Gemini-2.5%20Flash-4285F4?style=for-the-badge&logo=google)](https://ai.google.dev/)
+**CreatorSpace AI** is a full-stack content creation workspace designed for creators, solopreneurs, and marketers. It bridges the gap between raw ideas and ready-to-publish social media assets—providing format-engineered generation for **Instagram Reels**, **Carousels**, **Captions**, and **Stories** powered by the **Google Gemini API** (`gemini-3.5-flash-lite` with smart automatic failover).
 
 ---
 
-## 📸 Executive Proof & Live System Demonstrations
+## 🌟 3-Agent Autonomous Creator Architecture
 
-### 1. Unified Creator OS Dashboard
-The centralized Command Center providing an end-to-end interactive workflow from Idea to Production.
-
-![Creator OS Unified Dashboard](./docs/images/creator_os_dashboard.jpg)
-
----
-
-### 2. Live LangSmith Multi-Agent Tracing Proof
-Full observability into our LangGraph multi-agent execution pipeline, tracking exact token attribution, latency waterfalls, and agent state transitions.
-
-#### A. Multi-Agent Execution Trace Tree
-Shows the root `Autonomous_Content_Pipeline (Branch 21)` decomposing execution across specialized child agent spans (`01_Content_Idea_Generator`, `03_Hook_Generator`, `05_Reel_Script_Builder`, and `19_Creator_Second_Brain`):
-
-![LangSmith Multi-Agent Trace Tree](./docs/images/langsmith_trace_tree.png)
-
-#### B. Live Tracing Project Dashboard
-Active project view inside LangSmith (`creator-os`) tracking real-time status and sub-3-second end-to-end pipeline latencies:
-
-![LangSmith Project Overview](./docs/images/langsmith_overview.png)
-
-#### C. Granular Token & Metadata Inspection
-Live trace inspection showing inputs, structured outputs, estimated token consumption (1,420 tokens), and Node.js SDK runtime parameters:
-
-![LangSmith Run Detail](./docs/images/langsmith_run_detail.png)
-
----
-
-## 🎯 Problem Statement & Executive Vision
-
-Content creators currently use dozens of disconnected AI tools across different stages of creation. Moving an idea through research, writing scripts, planning B-roll, cutting clips, generating thumbnails, and writing platform-specific copy requires manual copy-pasting, breaks context continuity, and leads to severe creative burnout.
-
-**Creator OS solves this by unifying 23 specialized agent prototypes into a single, cohesive workflow.**
+CreatorSpace AI is powered by a coordinated 3-agent intelligence pipeline engineered with Google Gemini 3.5:
 
 ```
-[ Core Premise ]
-       │
-       ▼
- 1. Idea & Trend Research (01, 04, 12)
-       │
-       ▼
- 2. Scriptwriting & Hook Studio (03, 05, 08, 09, 13)
-       │
-       ▼
- 3. Video Production & Visuals (07, 18, 20)
-       │
-       ▼
- 4. Multi-Platform Repurposing & Multiplier (02, 06, 16, 21)
-       │
-       ▼
- 5. Continuous Knowledge & Second Brain (15, 19, 22)
+┌────────────────────────┐      ┌─────────────────────────┐      ┌────────────────────────┐
+│  AGENT 1: TREND SCOUT  │ ───► │ AGENT 2: SCRIPT BUILDER │ ───► │ AGENT 3: CONTENT CRITIC│
+│  Live Market Signals & │      │ Platform-Adapted Copy   │      │ Retention, Hook & CTA  │
+│  Viral Velocity Angles │      │ (Reels/Carousels/Story) │      │ Scoring & Optimization │
+└────────────────────────┘      └─────────────────────────┘      └────────────────────────┘
+```
+
+1. **Agent 1: Trend Scout Agent (`/api/gemini/trends/scout`)**:
+   * Scouts high-velocity narrative angles, breakout hooks, and algorithmic shifts tailored to any creator niche or platform.
+   * Calculates viral velocity scores (0-100), recommends ideal formats, tags, and suggested creative angles.
+   * 1-Click transfer from Trend Radar into the AI Studio.
+
+2. **Agent 2: Script Builder Agent (`/api/gemini/generate`)**:
+   * Crafts platform-adapted copy engineered for conversions and attention:
+     * **Instagram Reel**: Viral hook (0-3s), scene-by-scene b-roll, pacing directions, on-screen text, caption, and strategic hashtags.
+     * **Multi-Slide Carousel**: Catchy cover title, slide-by-slide value breakdowns, layout cues, final CTA slide, caption, and hashtags.
+     * **Social Caption**: High-retention openers, structured narrative body, call-to-action, and targeted hashtags.
+     * **Story Sequence**: 3-5 frame visual flow with poll/sticker engagement prompts and creator pro-tips.
+   * Tone adaptation (Educational, Conversational, Professional, Creative, Humorous, Friendly).
+   * Target audience customization (Beginners, Students, Entrepreneurs, Tech Enthusiasts, etc.).
+
+3. **Agent 3: Content Critic & Evaluator Agent (`/api/gemini/evaluate`)**:
+   * Evaluates generated scripts against retention benchmarks before publishing.
+   * Multi-dimensional scoring (1-10) for:
+     * **Hook Strength** (0-3s attention grab)
+     * **Retention & Pacing** (flow, drop-off mitigation)
+     * **CTA Power** (conversion trigger, comment/save prompt)
+     * **Clarity & Value** (actionability, cognitive load)
+   * Overall Quality Score (0-100) & Letter Grade (A+, A, B, etc.).
+   * Bulleted Strengths and Actionable Improvements.
+   * **AI-Engineered Optimized Hook**: 1-click **"Apply Hook to Script"** button dynamically injects the improved opener into your working draft!
+
+---
+
+## 🚀 Key Modules & Capabilities
+
+* **AI Studio (Multi-Agent Workspace)**:
+  * 3-Agent Creator Pipeline status bar showing active stage.
+  * Interactive script generation with quick topic pills (`+ 5 habits of top creators`, etc.).
+  * Embedded **Content Critic Scorecard** with metric progress bars, actionable critique, and hook applicator.
+  * 1-Click Copy and Save to Library.
+
+* **Trend Radar**:
+  * Dedicated **Agent 1 AI Trend Scout Panel** with live niche querying and platform filters.
+  * Curated industry trend database categorized by Technology & AI, Creator Economy, Productivity, Marketing, and Lifestyle.
+  * Search, category filtering, and bookmarking.
+  * **"Create Content From Trend" Action**: Automatically pre-populates AI Studio with the selected trend title and angle for seamless workflow acceleration.
+
+* **Dashboard**:
+  * Real-time metrics computed directly from application data (Total Saved Content, Bookmarked Trends, Recent Activities).
+  * Format-specific quick action launchers (Generate a Reel, Create a Carousel, Write a Caption, Create a Story).
+  * Recent activity feed with quick View, Copy, and Delete actions.
+
+* **Saved Content Library**:
+  * Comprehensive draft management with format filter tabs and search.
+  * Full content modal viewer.
+  * Safe deletion workflow with confirmation modal.
+  * Persisted across browser sessions using local storage.
+
+* **Google Gemini AI Engine**:
+  * Ultra-fast cloud generation using Google's multimodal Gemini Flash models (`gemini-3.5-flash-lite`).
+  * Smart multi-model failover for high availability during peak demand periods.
+  * Secure backend key management with zero frontend credential exposure.
+
+* **Workspace Settings**:
+  * Live status check for Google Gemini API.
+  * Secure backend environment setup instructions for Google Gemini API keys.
+  * Default writing tone and audience preferences persisted in local storage.
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend Framework** | React 18, Vite 6 |
+| **Routing** | React Router v6 |
+| **Icons & UI** | Lucide React |
+| **Styling** | Custom Responsive Design System (CSS3 Custom Properties) |
+| **Backend Framework** | Node.js (v20+), Express.js |
+| **AI Provider** | Google Gemini API (`gemini-3.5-flash-lite`, `gemini-flash-latest`) |
+| **Storage Layer** | Modular Web Storage API (localStorage) |
+
+---
+
+## 📁 Project Directory Structure
+
+```
+creatorspace-ai/
+├── README.md                      # Complete project documentation
+├── .gitignore                     # Git ignore rules
+│
+├── server/                        # Express.js REST API Backend (Port 5000)
+│   ├── package.json               # Backend dependencies
+│   ├── .env.example               # Environment variables template
+│   ├── .env                       # Local environment configuration
+│   ├── server.js                  # Main server entry & CORS middleware
+│   ├── config/
+│   │   └── config.js              # Centralized environment configuration
+│   ├── routes/
+│   │   ├── health.js              # GET /api/health
+│   │   └── gemini.js              # POST /api/gemini/generate
+│   ├── controllers/
+│   │   └── geminiController.js    # Request validation & Gemini handler
+│   └── services/
+│       ├── promptService.js       # Reusable format-specific prompt engineering
+│       └── geminiService.js       # Google Gemini integration & smart model failover
+│
+└── client/                        # React + Vite Frontend (Port 5173)
+    ├── package.json               # React 18, React Router v6, Lucide React
+    ├── vite.config.js             # Vite config & API reverse proxy (/api -> :5000)
+    ├── index.html                 # HTML template with Google Fonts
+    └── src/
+        ├── main.jsx               # React entry point with BrowserRouter
+        ├── App.jsx                # Layout shell, routes, toast & state persistence
+        ├── index.css              # CreatorSpace AI design system
+        ├── components/
+        │   ├── Sidebar.jsx        # Navigation sidebar with responsive mobile drawer
+        │   ├── Header.jsx         # Top navigation bar with active model pill
+        │   ├── FormatBadge.jsx    # Visual badges for Reels, Carousels, Stories, Captions
+        │   ├── Toast.jsx          # Notification toast system (copy, save, errors)
+        │   └── DeleteConfirmModal.jsx # Deletion confirmation dialog
+        ├── pages/
+        │   ├── Dashboard.jsx      # Workspace overview & quick actions
+        │   ├── AiStudio.jsx       # Multi-format AI generator
+        │   ├── TrendRadar.jsx     # Trend exploration & bookmarking
+        │   ├── SavedContent.jsx   # Drafts library with search & filter
+        │   └── Settings.jsx       # Gemini status & content preferences
+        ├── services/
+        │   ├── api.js             # REST API client
+        │   └── storage.js         # LocalStorage persistence service
+        └── data/
+            └── sampleTrends.js    # Curated sample trend dataset
 ```
 
 ---
 
-## 🏛️ System Architecture
+## 🚀 Installation & Getting Started
 
-The repository is built as a high-performance **Turborepo Monorepo** separating presentation, orchestration, and domain skills:
+### Prerequisites
 
-```
-creator-os/
-├── apps/
-│   ├── web/                     # Next.js 16 (App Router, Turbopack, Tailwind)
-│   │   ├── app/(app)/           # Command Center, Hooks, Reels, Ideas, Second Brain
-│   │   └── app/api/agents/      # Unified Server-Side Agent Endpoints
-│   └── agent/                   # Fastify + LangGraph.js Always-On Worker Service
-├── packages/
-│   ├── ai/                      # Centralized Gemini / OpenAI Model Gateway & Cache
-│   ├── schemas/                 # Canonical Zod Schemas & Domain Entity Contracts
-│   ├── skills/                  # Pluggable Skill Registry (Hooks, Reels, Shorts, etc.)
-│   ├── db/                      # MongoDB Checkpointer & Client Layer
-│   ├── ui/                      # Shared Dark Glassmorphism Design System
-│   └── config/                  # Validated Domain Configurations
-└── docs/images/                 # Live Proof Screenshots & Architecture Visuals
-```
-
----
-
-## 🧩 The 7 Core Agent Workflow Pillars
-
-All 23 prototype solutions from our research have been mapped into 7 operational pillars:
-
-| Pillar | Solution Modules Integrated | Core Responsibility |
-| :--- | :--- | :--- |
-| **1. Core Brain & Memory** | `15_Creator_Workspace`, `19_Creator_Second_Brain`, `22_AI_Creative_Producer` | Semantic vector search across past scripts; continuous creator voice adaptation. |
-| **2. Research & Ideation** | `01_Content_Idea_Generator`, `04_Daily_Content_Planner`, `12_Creator_Research_Assistant` | Gathers verifiable web facts; generates 10 high-CTR video angles. |
-| **3. Copywriting & Scripting** | `03_Hook_Generator`, `05_Reel_Script_Builder`, `08_Caption_Assistant`, `09_CTA_Generator`, `13_Voice_Replicator` | Formats word-for-word spoken teleprompter scripts with 10 psychological hook styles. |
-| **4. Visual & Video Direction**| `07_Thumbnail_Ideator`, `18_AI_Content_Director`, `20_AI_Screenplay_Workspace` | Scene-by-scene storyboards, B-roll recommendations, and high-contrast thumbnail overlays. |
-| **5. Repurposing & Multipliers**| `02_Content_Repurposer`, `06_Clip_Finder`, `16_Content_Recycler`, `21_Autonomous_Content_Pipeline` | Converts 1 YouTube video into 3 Instagram Reels, LinkedIn posts, and X threads. |
-| **6. Community & Sentiment** | `10_Comment_Analyzer`, `11_Comment_to_Content` | Ingests hundreds of comments to extract audience sentiment and generate new post ideas. |
-| **7. Business Development** | `17_Brand_Pitch_Builder`, `26_Creator_Collaboration_Finder` | Generates personalized sponsorship proposals and creator matchmaking. |
-
----
-
-## ⚡ Technical Highlights
-
-1. **Pass-Through UX Flow:**
-   * Selecting an idea in the **Idea Generator (`/ideas`)** allows 1-click handoff to the **Reel Script Studio (`/reels?topic=...`)**, carrying prompt context automatically without copy-pasting.
-
-2. **Verifiable Citations with Google Gemini:**
-   * Research plans cite real sources discovered at runtime rather than hallucinating unsubstantiated advice.
-
-3. **LangGraph State Machine with Checkpointing:**
-   * Execution state is snapshotted at each node, enabling human-in-the-loop approvals before content is dispatched to distribution channels.
-
-4. **Zero-Proxy Fast Generation:**
-   * Server-side route handlers running on **Gemini 2.5 Flash** guarantee sub-second token generation times.
-
----
-
-## 🚀 Getting Started
-
-### 1. Prerequisites
-* **Node.js** v20+
-* **pnpm** v10+ (run `npm install -g pnpm` or `npx pnpm`)
-* **Google Gemini API Key** ([aistudio.google.com](https://aistudio.google.com/))
-* **LangSmith API Key** ([smith.langchain.com](https://smith.langchain.com/))
-
-### 2. Environment Setup
-Configure your `.env` in the root and `apps/web/.env.local`:
+* **Node.js**: v18.x or v20.x installed (`node -v`)
+* **npm**: v9.x or v10+ (`npm -v`)
+* **Google Gemini API Key**: [Get key from Google AI Studio](https://aistudio.google.com/)
 
 ```env
 # Google Gemini API Key
