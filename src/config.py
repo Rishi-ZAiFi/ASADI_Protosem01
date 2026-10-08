@@ -54,3 +54,8 @@ CONFIDENCE_MED_LIFT = 0.10   # 10% lift vs median
 GEMINI_MODEL = "gemini-2.5-flash"
 API_TIMEOUT_SECONDS = 30
 MAX_RETRIES = 3
+
+# LangChain & LangSmith Config
+DEFAULT_LANGCHAIN_PROJECT = "creator-analytics-copilot"
+LANGCHAIN_DEFAULT_ENDPOINT = "https://api.smith.langchain.com"
+

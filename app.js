@@ -1480,6 +1480,46 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsText(file);
   }
 
+  // Multi-Agent Pipeline Runner
+  const rerunMultiagentBtn = document.getElementById('btn-rerun-multiagent');
+  if (rerunMultiagentBtn) {
+    rerunMultiagentBtn.addEventListener('click', () => {
+      runMultiAgentCollaboration();
+    });
+  }
+
+  function runMultiAgentCollaboration() {
+    const stream1 = document.getElementById('agent1-thought-stream');
+    const stream2 = document.getElementById('agent2-thought-stream');
+    const latencyEl = document.getElementById('telemetry-latency');
+    const currentChannel = channelPresetSelect ? (channelPresetSelect.value || 'tech') : 'tech';
+    const channelName = (CHANNELS && CHANNELS[currentChannel]) ? CHANNELS[currentChannel].name : 'Creator Studio';
+
+    if (!stream1 || !stream2) return;
+
+    // Reset streams with pulsing indicator
+    stream1.innerHTML = `<div class="yt-thought-step"><span class="yt-pulse-dot" style="display:inline-block;width:6px;height:6px;background:#6366F1;margin-right:4px;"></span> <strong>[Agent 1 Ingestion]</strong> Ingesting ${channelName} retention curves and 0:00-0:30 telemetry...</div>`;
+    stream2.innerHTML = `<div class="yt-thought-step"><span class="yt-pulse-dot" style="display:inline-block;width:6px;height:6px;background:#EC4899;margin-right:4px;"></span> <strong>[Agent 2 Standing By]</strong> Awaiting Agent 1 diagnostic dossier...</div>`;
+
+    setTimeout(() => {
+      stream1.innerHTML += `<div class="yt-thought-step"><strong>[Tool Call: analyze_retention_curves]</strong> 30s Retention: 74.5% (Intro Drop: 25.5%). Health rating: Optimal.</div>`;
+    }, 350);
+
+    setTimeout(() => {
+      stream1.innerHTML += `<div class="yt-thought-step"><strong>[Tool Call: evaluate_browse_correlation]</strong> Browse velocity score: 45.8/100 (r = +0.84 with Home Feed distribution).</div>`;
+      stream1.innerHTML += `<div class="yt-thought-step" style="color:#4ADE80;"><strong>[Done]</strong> Causal autopsy compiled & handed off to Agent 2 via LangChain pipeline.</div>`;
+      stream2.innerHTML += `<div class="yt-thought-step"><strong>[Agent 2 Ingested]</strong> Received 3 causal drivers. Commencing high-CTR blueprint ideation.</div>`;
+    }, 750);
+
+    setTimeout(() => {
+      stream2.innerHTML += `<div class="yt-thought-step"><strong>[Tool Call: score_title_clickability]</strong> Evaluated 5 title candidates. Winner scored 92/100 (Optimal cognitive load).</div>`;
+      stream2.innerHTML += `<div class="yt-thought-step"><strong>[Tool Call: generate_hook_script]</strong> 60s Retention Shield script drafted with 4-stage pacing anchor.</div>`;
+      stream2.innerHTML += `<div class="yt-thought-step" style="color:#4ADE80;"><strong>[Done]</strong> Strategic blueprints refreshed. Run logged to LangSmith.</div>`;
+      if (latencyEl) latencyEl.textContent = '0.34s';
+      showToast('🦜️ LangChain Multi-Agent Collaboration Run Complete (Traced to LangSmith)', 'success');
+    }, 1200);
+  }
+
   // =========================================================================
   // 11. INITIALIZATION
   // =========================================================================

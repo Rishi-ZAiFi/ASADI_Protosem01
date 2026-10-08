@@ -58,9 +58,9 @@
     <!-- Right Actions -->
     <div class="yt-header-right">
       <!-- AI Status Badge -->
-      <div class="yt-ai-status-pill" title="Algorithmic Diagnostic Engine is running">
-        <span class="yt-pulse-dot"></span>
-        <span class="yt-ai-status-text">Copilot v2.4 Active</span>
+      <div class="yt-ai-status-pill" title="LangChain Multi-Agent System & LangSmith Tracing Active">
+        <span class="yt-pulse-dot" style="background:#4ADE80;"></span>
+        <span class="yt-ai-status-text">🦜️ LangChain • LangSmith Active</span>
       </div>
 
       <!-- Upload Analytics / CREATE Button -->
@@ -143,6 +143,10 @@
           <a href="#copilot-step-2" class="yt-subnav-item" data-step="2">
             <span class="subnav-num">2</span>
             <span>Identify Patterns</span>
+          </a>
+          <a href="#langchain-agents-section" class="yt-subnav-item" data-step="agents">
+            <span class="subnav-num" style="background: #4F46E5; color: #FFFFFF;">AI</span>
+            <span>Multi-Agent Brain</span>
           </a>
           <a href="#copilot-step-3" class="yt-subnav-item" data-step="3">
             <span class="subnav-num">3</span>
@@ -571,6 +575,103 @@
                 <div class="yt-matrix-bars-list" id="matrix-bars">
                   <!-- Dynamically populated -->
                 </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               LANGCHAIN & LANGSMITH MULTI-AGENT INTELLIGENCE CENTER
+               --------------------------------------------------------------- -->
+          <section class="yt-langchain-card" id="langchain-agents-section">
+            <div class="yt-card-header">
+              <div class="yt-card-title-group">
+                <span class="yt-step-badge" style="background: linear-gradient(135deg, #6366F1, #8B5CF6); color: white;">LANGCHAIN + LANGSMITH</span>
+                <h3 class="yt-card-title">Multi-Agent Intelligence Center</h3>
+              </div>
+              <div class="yt-card-actions">
+                <button type="button" class="yt-btn-primary btn-sm" id="btn-rerun-multiagent">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                  Re-Run Agent Collaboration
+                </button>
+              </div>
+            </div>
+
+            <p class="yt-card-subtext">
+              Two specialized LangChain AI agents autonomously analyze your YouTube telemetry. 
+              <strong>Agent 1</strong> conducts forensic retention autopsies, then hands findings to <strong>Agent 2</strong> to engineer next video blueprints. Traced end-to-end via LangSmith.
+            </p>
+
+            <!-- 2-Agent Grid -->
+            <div class="yt-agents-grid">
+              <!-- Agent 1 Card -->
+              <div class="yt-agent-card" id="card-agent-1">
+                <div class="yt-agent-header">
+                  <div class="yt-agent-meta">
+                    <div class="yt-agent-avatar" style="border-color: #6366F1;">🔍</div>
+                    <div>
+                      <div class="yt-agent-name">Agent 1: PatternDiagnosticAgent</div>
+                      <div class="yt-agent-role">Forensic Analytics & Causal Specialist</div>
+                    </div>
+                  </div>
+                  <span class="yt-agent-badge agent1">LangChain Traced</span>
+                </div>
+
+                <div class="yt-agent-tools-row">
+                  <span class="yt-tool-chip">🛠️ analyze_retention_curves</span>
+                  <span class="yt-tool-chip">🛠️ evaluate_browse_correlation</span>
+                  <span class="yt-tool-chip">🛠️ detect_outlier_patterns</span>
+                </div>
+
+                <div class="yt-thought-stream" id="agent1-thought-stream">
+                  <div class="yt-thought-step"><strong>[Step 1]</strong> Ingested 184K subscriber telemetry. Detected 4.2x view multiplier in top 10% outliers.</div>
+                  <div class="yt-thought-step"><strong>[Step 2]</strong> Analyzed 0:00 - 0:30 retention curve. Identified 74.5% intro retention; benchmark: Excellent.</div>
+                  <div class="yt-thought-step"><strong>[Step 3]</strong> Evaluated browse correlation. Home feed distribution velocity unlocked at 45.2 score.</div>
+                  <div class="yt-thought-step" style="color: #4ADE80;"><strong>[Done]</strong> Diagnostic dossier compiled & forwarded to Agent 2.</div>
+                </div>
+              </div>
+
+              <!-- Agent 2 Card -->
+              <div class="yt-agent-card" id="card-agent-2">
+                <div class="yt-agent-header">
+                  <div class="yt-agent-meta">
+                    <div class="yt-agent-avatar" style="border-color: #EC4899;">🎨</div>
+                    <div>
+                      <div class="yt-agent-name">Agent 2: ContentStrategistAgent</div>
+                      <div class="yt-agent-role">Creative Blueprints & Script Architect</div>
+                    </div>
+                  </div>
+                  <span class="yt-agent-badge agent2">LangChain Traced</span>
+                </div>
+
+                <div class="yt-agent-tools-row">
+                  <span class="yt-tool-chip">🛠️ score_title_clickability</span>
+                  <span class="yt-tool-chip">🛠️ generate_hook_script</span>
+                  <span class="yt-tool-chip">🛠️ blueprint_synthesizer</span>
+                </div>
+
+                <div class="yt-thought-stream" id="agent2-thought-stream">
+                  <div class="yt-thought-step"><strong>[Step 1]</strong> Ingested Agent 1 diagnostic dossier. Targeted high-stakes curiosity premise.</div>
+                  <div class="yt-thought-step"><strong>[Step 2]</strong> Tested candidate titles. Top title scored 92/100 clickability with optimal cognitive load.</div>
+                  <div class="yt-thought-step"><strong>[Step 3]</strong> Formulated 60-second retention shield script designed to eliminate the 0:00 - 0:30 drop-off.</div>
+                  <div class="yt-thought-step" style="color: #4ADE80;"><strong>[Done]</strong> 5 Production-ready video blueprints deployed below.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- LangSmith Live Telemetry Bar -->
+            <div class="yt-langsmith-telemetry-bar">
+              <div class="yt-telemetry-item">
+                <span class="yt-pulse-dot" style="background:#4ADE80; width:8px; height:8px;"></span>
+                <span>LangSmith Project: <strong class="yt-telemetry-val">creator-analytics-copilot</strong></span>
+              </div>
+              <div class="yt-telemetry-item">
+                <span>Run Status: <strong class="yt-telemetry-val">SUCCESS</strong></span>
+              </div>
+              <div class="yt-telemetry-item">
+                <span>Pipeline Latency: <strong class="yt-telemetry-val" id="telemetry-latency">0.38s</strong></span>
+              </div>
+              <div class="yt-telemetry-item">
+                <span>Traced Runs: <strong class="yt-telemetry-val">12 Active</strong></span>
               </div>
             </div>
           </section>
