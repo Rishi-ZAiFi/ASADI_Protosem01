@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Studio | Creator Analytics Copilot</title>
+  <meta name="description" content="YouTube Creator Analytics Copilot: Upload content analytics, identify audience retention patterns, explain what worked algorithmically, and recommend the next breakout video ideas.">
+  
+  <!-- Fonts: Roboto (YouTube standard) & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="yt-studio-body">
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- =========================================================================
+       1. YOUTUBE STUDIO APP HEADER (TOP BAR)
+       ========================================================================= -->
+  <header class="yt-header" id="yt-header">
+    <div class="yt-header-left">
+      <button type="button" class="yt-icon-btn yt-hamburger-btn" id="btn-toggle-sidebar" aria-label="Toggle Studio navigation menu" title="Guide">
+        <svg viewBox="0 0 24 24" class="yt-svg-icon" fill="currentColor">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+        </svg>
+      </button>
+
+      <!-- YouTube Studio Logo -->
+      <a href="#dashboard" class="yt-studio-logo" aria-label="YouTube Studio Copilot Home">
+        <div class="yt-logo-badge">
+          <svg viewBox="0 0 24 24" class="yt-play-svg">
+            <path d="M21.58 7.19a2.78 2.78 0 0 0-1.95-1.96C17.9 4.75 12 4.75 12 4.75s-5.9 0-7.63.48A2.78 2.78 0 0 0 2.42 7.19 29.84 29.84 0 0 0 1.95 12c0 1.62.16 3.23.47 4.81.25.96 1 1.72 1.95 1.96 1.73.48 7.63.48 7.63.48s5.9 0 7.63-.48a2.78 2.78 0 0 0 1.95-1.96c.31-1.58.47-3.19.47-4.81 0-1.62-.16-3.23-.47-4.81z" fill="#FF0000"/>
+            <path d="M10 15.5l6-3.5-6-3.5v7z" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="yt-logo-text-group">
+          <span class="yt-logo-studio">Studio</span>
+          <span class="yt-logo-copilot-pill">COPILOT AI</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Search Bar -->
+    <div class="yt-header-center">
+      <div class="yt-search-box">
+        <svg viewBox="0 0 24 24" class="yt-search-icon" fill="currentColor">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input type="text" id="yt-global-search" placeholder="Search across your channel analytics, video retention, or ask Copilot..." aria-label="Search channel analytics">
+        <span class="yt-search-kbd">/</span>
+      </div>
+    </div>
+
+    <!-- Right Actions -->
+    <div class="yt-header-right">
+      <!-- AI Status Badge -->
+      <div class="yt-ai-status-pill" title="Algorithmic Diagnostic Engine is running">
+        <span class="yt-pulse-dot"></span>
+        <span class="yt-ai-status-text">Copilot v2.4 Active</span>
+      </div>
+
+      <!-- Upload Analytics / CREATE Button -->
+      <button type="button" class="yt-create-btn" id="btn-header-upload" aria-label="Upload content analytics">
+        <svg viewBox="0 0 24 24" class="yt-create-icon" fill="currentColor">
+          <path d="M14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2zm3-7H3v12h14v-4.5l4 4v-11l-4 4V6z"/>
+        </svg>
+        <span>Upload Analytics</span>
+      </button>
+
+      <!-- Help Button -->
+      <button type="button" class="yt-icon-btn" id="btn-header-help" aria-label="Help and documentation" title="Help">
+        <svg viewBox="0 0 24 24" class="yt-svg-icon" fill="currentColor">
+          <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/>
+        </svg>
+      </button>
+
+      <!-- Notifications Bell -->
+      <button type="button" class="yt-icon-btn yt-bell-btn" id="btn-header-notifs" aria-label="Notifications" title="Notifications">
+        <svg viewBox="0 0 24 24" class="yt-svg-icon" fill="currentColor">
+          <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+        </svg>
+        <span class="yt-notif-badge">3</span>
+      </button>
+
+      <!-- Channel Profile Picture -->
+      <button type="button" class="yt-channel-avatar-btn" id="btn-channel-profile" aria-label="Channel account" title="TechPulse Studio">
+        <span class="yt-avatar-fallback" id="header-avatar-emoji">💻</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. MAIN STUDIO CONTAINER (SIDEBAR + CONTENT)
+       ========================================================================= -->
+  <div class="yt-studio-layout">
+
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="yt-sidebar" id="yt-sidebar">
+      <!-- Channel Profile Header in Sidebar -->
+      <div class="yt-sidebar-channel">
+        <div class="yt-sidebar-avatar-circle" id="sidebar-avatar-emoji">💻</div>
+        <div class="yt-sidebar-channel-meta">
+          <span class="yt-sidebar-your-channel">Your channel</span>
+          <span class="yt-sidebar-channel-name" id="sidebar-channel-name">TechPulse Studio</span>
+          <span class="yt-sidebar-subs-count" id="sidebar-subs-count">184,210 subscribers</span>
+        </div>
+      </div>
+
+      <!-- Navigation List -->
+      <nav class="yt-sidebar-nav" aria-label="Studio Navigation">
+        <a href="#dashboard" class="yt-nav-item">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+          </svg>
+          <span class="yt-nav-label">Dashboard</span>
+        </a>
+
+        <a href="#content" class="yt-nav-item">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/>
+          </svg>
+          <span class="yt-nav-label">Content</span>
+        </a>
+
+        <!-- Analytics Item (Active) -->
+        <a href="#analytics" class="yt-nav-item active">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+          </svg>
+          <span class="yt-nav-label">Analytics</span>
+        </a>
+
+        <!-- Copilot Workflow Sub-items -->
+        <div class="yt-sidebar-subnav">
+          <a href="#copilot-step-1" class="yt-subnav-item active" data-step="1">
+            <span class="subnav-num">1</span>
+            <span>Upload Analytics</span>
+          </a>
+          <a href="#copilot-step-2" class="yt-subnav-item" data-step="2">
+            <span class="subnav-num">2</span>
+            <span>Identify Patterns</span>
+          </a>
+          <a href="#copilot-step-3" class="yt-subnav-item" data-step="3">
+            <span class="subnav-num">3</span>
+            <span>Explain What Worked</span>
+          </a>
+          <a href="#copilot-step-4" class="yt-subnav-item" data-step="4">
+            <span class="subnav-num">4</span>
+            <span>Recommend Next Ideas</span>
+          </a>
+        </div>
+
+        <a href="#comments" class="yt-nav-item">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+          </svg>
+          <span class="yt-nav-label">Comments</span>
+        </a>
+
+        <a href="#subtitles" class="yt-nav-item">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 7H9.5v-.5h-2v3h2V13H11v1c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v1zm7 0h-1.5v-.5h-2v3h2V13H18v1c0 .55-.45 1-1 1h-3c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v1z"/>
+          </svg>
+          <span class="yt-nav-label">Subtitles</span>
+        </a>
+
+        <a href="#copyright" class="yt-nav-item">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M11.88 9.14c1.28 0 2.22.61 2.57 1.54l1.83-.75C15.65 8.24 13.97 7.2 11.88 7.2c-3.13 0-5.38 2.27-5.38 5.38 0 3.09 2.26 5.38 5.38 5.38 2.11 0 3.79-1.07 4.43-2.76l-1.85-.73c-.34.92-1.3 1.53-2.58 1.53-1.89 0-3.32-1.37-3.32-3.42 0-2.07 1.44-3.44 3.32-3.44zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+          </svg>
+          <span class="yt-nav-label">Copyright</span>
+        </a>
+
+        <a href="#earn" class="yt-nav-item">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.93V18h-2v-1.07c-1.95-.37-3.5-1.93-3.5-3.93h2c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2c-2.21 0-4-1.79-4-4 0-2 1.55-3.56 3.5-3.93V4h2v1.07c1.95.37 3.5 1.93 3.5 3.93h-2c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2c2.21 0 4 1.79 4 4 0 2-1.55 3.56-3.5 3.93z"/>
+          </svg>
+          <span class="yt-nav-label">Earn</span>
+        </a>
+
+        <a href="#customization" class="yt-nav-item">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M7.5 5.6L10 7 8.6 4.5 10 2 7.5 3.4 5 2l1.4 2.5L5 7zm12 9.8L17 14l1.4 2.5L17 19l2.5-1.4L22 19l-1.4-2.5L22 14zM22 2l-2.5 1.4L17 2l1.4 2.5L17 7l2.5-1.4L22 7l-1.4-2.5zm-7.63 5.29c-.39-.39-1.02-.39-1.41 0L1.29 18.96c-.39.39-.39 1.02 0 1.41l2.34 2.34c.39.39 1.02.39 1.41 0L16.7 11.05c.39-.39.39-1.02 0-1.41l-2.33-2.35zm-1.03 5.49l-1.41-1.41 6.59-6.59 1.41 1.41-6.59 6.59z"/>
+          </svg>
+          <span class="yt-nav-label">Customization</span>
+        </a>
+
+        <a href="#audio-library" class="yt-nav-item">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+          <span class="yt-nav-label">Audio library</span>
+        </a>
+
+        <div class="yt-nav-divider"></div>
+
+        <a href="#settings" class="yt-nav-item">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+          </svg>
+          <span class="yt-nav-label">Settings</span>
+        </a>
+
+        <a href="#feedback" class="yt-nav-item">
+          <svg viewBox="0 0 24 24" class="yt-nav-icon" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/>
+          </svg>
+          <span class="yt-nav-label">Send feedback</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- MAIN ANALYTICS WORKSPACE -->
+    <main class="yt-main-content" id="yt-main-content">
+
+      <!-- TOP PROBLEM STATEMENT BANNER (YouTube Studio Creator Copilot Mission) -->
+      <section class="yt-problem-mission-banner" id="problem-banner">
+        <div class="mission-banner-left">
+          <div class="mission-badge">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="#3EA6FF">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            <span>The YouTube Creator Problem Statement</span>
+          </div>
+          <h1 class="mission-heading">
+            Creators have performance data, but struggle to understand <em>why</em> some content works better.
+          </h1>
+          <p class="mission-subtext">
+            Standard YouTube Studio shows flat retention percentages and CTR drops without context. VidCopilot inspects second-by-second drop-offs, decodes algorithmic causality, and scripts your next breakout hits.
+          </p>
+        </div>
+
+        <!-- 4-Stage Stepper Ribbon -->
+        <div class="mission-stepper-ribbon">
+          <a href="#copilot-step-1" class="mission-step-pill active" id="pill-step-1">
+            <span class="step-circle">1</span>
+            <div class="step-copy">
+              <strong>Upload Analytics</strong>
+              <small>CSV, JSON, or Channel Sync</small>
+            </div>
+          </a>
+          <div class="step-connector">&rarr;</div>
+          <a href="#copilot-step-2" class="mission-step-pill" id="pill-step-2">
+            <span class="step-circle">2</span>
+            <div class="step-copy">
+              <strong>Identify Patterns</strong>
+              <small>Retention curves & cliffs</small>
+            </div>
+          </a>
+          <div class="step-connector">&rarr;</div>
+          <a href="#copilot-step-3" class="mission-step-pill" id="pill-step-3">
+            <span class="step-circle">3</span>
+            <div class="step-copy">
+              <strong>Explain What Worked</strong>
+              <small>Algorithmic causality ("The Why")</small>
+            </div>
+          </a>
+          <div class="step-connector">&rarr;</div>
+          <a href="#copilot-step-4" class="mission-step-pill" id="pill-step-4">
+            <span class="step-circle">4</span>
+            <div class="step-copy">
+              <strong>Recommend Next Ideas</strong>
+              <small>Prescribed titles & hook scripts</small>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- YOUTUBE STUDIO ANALYTICS SUB-HEADER & CONTROLS -->
+      <div class="yt-analytics-header">
+        <div class="yt-analytics-title-group">
+          <h2 class="yt-page-title">Channel analytics</h2>
+          <span class="yt-title-copilot-tag">AI Copilot Diagnostic</span>
+        </div>
+
+        <!-- Date Range Picker & Action Tools -->
+        <div class="yt-header-controls-group">
+          <!-- Benchmark Channel Switcher -->
+          <div class="yt-benchmark-selector-wrap">
+            <label for="channel-preset-select" class="yt-control-label">Channel Benchmark:</label>
+            <select id="channel-preset-select" class="yt-select-dropdown">
+              <option value="tech" selected>💻 TechPulse (184K Subs)</option>
+              <option value="finance">📈 CapitalMind (92K Subs)</option>
+              <option value="gaming">🎮 LoreCraft (410K Subs)</option>
+              <option value="custom">📁 Custom Uploaded Studio CSV</option>
+            </select>
+          </div>
+
+          <!-- Date Picker Button -->
+          <div class="yt-date-dropdown-btn" id="btn-date-picker">
+            <svg viewBox="0 0 24 24" class="yt-dropdown-icon" fill="currentColor">
+              <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+            </svg>
+            <span>Last 28 days (Sep 10 – Oct 7, 2026)</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+          </div>
+
+          <button type="button" class="yt-btn-secondary" id="btn-open-upload-modal">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+            <span>Upload Studio CSV</span>
+          </button>
+
+          <button type="button" class="yt-btn-secondary" id="btn-export-studio-report">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            <span>ADVANCED MODE</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- YOUTUBE STUDIO HORIZONTAL TABS -->
+      <nav class="yt-tab-bar" role="tablist">
+        <button type="button" class="yt-tab-btn" role="tab" id="tab-overview">Overview</button>
+        <button type="button" class="yt-tab-btn" role="tab" id="tab-content">Content</button>
+        <button type="button" class="yt-tab-btn" role="tab" id="tab-audience">Audience</button>
+        <button type="button" class="yt-tab-btn" role="tab" id="tab-research">Research</button>
+        <button type="button" class="yt-tab-btn yt-tab-active" role="tab" id="tab-copilot" aria-selected="true">
+          <span class="tab-ai-sparkle">✨</span>
+          <span>AI Copilot Engine</span>
+          <span class="yt-tab-badge">NEW</span>
+        </button>
+      </nav>
+
+      <!-- =====================================================================
+           TWO-COLUMN YOUTUBE STUDIO GRID LAYOUT
+           ===================================================================== -->
+      <div class="yt-dashboard-grid">
+
+        <!-- LEFT PRIMARY WORKSPACE (THE 4-STEP COPILOT FLOW) -->
+        <div class="yt-primary-workspace">
+
+          <!-- ---------------------------------------------------------------
+               STAGE 1: UPLOAD & CHANNEL TELEMETRY SUMMARY
+               --------------------------------------------------------------- -->
+          <section class="yt-studio-card" id="copilot-step-1">
+            <div class="yt-card-header">
+              <div class="yt-card-title-group">
+                <span class="yt-step-badge">STEP 1</span>
+                <h3 class="yt-card-title">Upload Content Analytics & Channel Telemetry</h3>
+              </div>
+              <div class="yt-card-actions">
+                <button type="button" class="yt-text-btn" id="btn-sync-api">
+                  <span class="yt-pulse-green"></span>
+                  YouTube Data API v3 Synced
+                </button>
+              </div>
+            </div>
+
+            <!-- YouTube Studio 5 Big Metrics Summary Ribbon -->
+            <div class="yt-metrics-ribbon">
+              <div class="yt-metric-box">
+                <span class="yt-metric-label">Views</span>
+                <div class="yt-metric-value" id="kpi-views">1.24M</div>
+                <div class="yt-metric-change positive" id="kpi-views-trend">&uarr; 26.4% more than usual</div>
+                <!-- Mini SVG sparkline -->
+                <svg class="yt-sparkline" viewBox="0 0 100 24">
+                  <path d="M0,18 Q20,12 35,15 T70,8 T100,2" fill="none" stroke="#2BA640" stroke-width="2"/>
+                </svg>
+              </div>
+
+              <div class="yt-metric-box">
+                <span class="yt-metric-label">Watch time (hours)</span>
+                <div class="yt-metric-value" id="kpi-watchtime">68.4K</div>
+                <div class="yt-metric-change positive">&uarr; 31.2% vs previous period</div>
+                <svg class="yt-sparkline" viewBox="0 0 100 24">
+                  <path d="M0,20 Q25,14 45,17 T80,6 T100,3" fill="none" stroke="#2BA640" stroke-width="2"/>
+                </svg>
+              </div>
+
+              <div class="yt-metric-box">
+                <span class="yt-metric-label">Subscribers</span>
+                <div class="yt-metric-value" id="kpi-subs">+4.1K</div>
+                <div class="yt-metric-change positive">&uarr; 18.5% more than usual</div>
+                <svg class="yt-sparkline" viewBox="0 0 100 24">
+                  <path d="M0,16 Q30,10 50,14 T85,5 T100,2" fill="none" stroke="#2BA640" stroke-width="2"/>
+                </svg>
+              </div>
+
+              <div class="yt-metric-box">
+                <span class="yt-metric-label">Average CTR</span>
+                <div class="yt-metric-value" id="kpi-ctr">6.8%</div>
+                <div class="yt-metric-change neutral" id="kpi-ctr-trend">Benchmark: 4.5% - 7.2%</div>
+                <svg class="yt-sparkline" viewBox="0 0 100 24">
+                  <path d="M0,12 Q30,15 60,10 T100,8" fill="none" stroke="#3EA6FF" stroke-width="2"/>
+                </svg>
+              </div>
+
+              <div class="yt-metric-box">
+                <span class="yt-metric-label">30s Hook Retention</span>
+                <div class="yt-metric-value" id="kpi-hook">64.5%</div>
+                <div class="yt-metric-change positive" id="kpi-hook-trend">&uarr; 14.2% top quartile</div>
+                <svg class="yt-sparkline" viewBox="0 0 100 24">
+                  <path d="M0,22 Q20,16 50,12 T100,4" fill="none" stroke="#2BA640" stroke-width="2"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Quick Data Source Bar -->
+            <div class="yt-data-source-bar">
+              <div class="source-info">
+                <span class="source-icon">📊</span>
+                <div class="source-text">
+                  <strong id="active-dataset-title">TechPulse Studio (42 Videos Diagnosed)</strong>
+                  <span id="active-dataset-desc">YouTube Studio Advanced Export format &bull; 1-second retention curve resolution &bull; Primary Audience: Tech Enthusiasts 18-34</span>
+                </div>
+              </div>
+              <div class="source-actions">
+                <button type="button" class="yt-btn-pill" id="btn-quick-upload-trigger">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+                  Drop New Studio Export
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               STAGE 2: IDENTIFY PATTERNS (RETENTION CURVE AUTOPSY)
+               --------------------------------------------------------------- -->
+          <section class="yt-studio-card" id="copilot-step-2">
+            <div class="yt-card-header">
+              <div class="yt-card-title-group">
+                <span class="yt-step-badge">STEP 2</span>
+                <h3 class="yt-card-title">Identify Patterns: Key Moments for Audience Retention</h3>
+              </div>
+              
+              <!-- Curve Toggle Controls -->
+              <div class="yt-chart-toggles">
+                <button type="button" class="yt-toggle-chip active" id="toggle-winner">
+                  <span class="chip-color-dot winner-dot"></span>
+                  <span id="label-winner-title">Hit: "Why Apple's M4 Chip Terrifies Intel" (720K)</span>
+                </button>
+                <button type="button" class="yt-toggle-chip active" id="toggle-flop">
+                  <span class="chip-color-dot flop-dot"></span>
+                  <span id="label-flop-title">Flop: "M4 Mac Mini Review & Specs" (31K)</span>
+                </button>
+              </div>
+            </div>
+
+            <p class="yt-card-subtext">
+              Comparing your Outlier Hit vs Underperforming Flop to diagnose why the YouTube recommendation engine stopped serving video #2.
+            </p>
+
+            <!-- YouTube Studio Retention Chart Area -->
+            <div class="yt-retention-chart-card">
+              <div class="chart-y-axis">
+                <span>100%</span>
+                <span>75%</span>
+                <span>50%</span>
+                <span>25%</span>
+                <span>0%</span>
+              </div>
+
+              <div class="chart-canvas-wrapper" id="retention-canvas-area">
+                <svg id="retention-svg" viewBox="0 0 900 320" preserveAspectRatio="none" class="retention-svg">
+                  <defs>
+                    <linearGradient id="winner-gradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#2BA640" stop-opacity="0.35"/>
+                      <stop offset="100%" stop-color="#2BA640" stop-opacity="0.0"/>
+                    </linearGradient>
+                    <linearGradient id="flop-gradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#FF0000" stop-opacity="0.3"/>
+                      <stop offset="100%" stop-color="#FF0000" stop-opacity="0.0"/>
+                    </linearGradient>
+                    <filter id="glow-filter">
+                      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                      <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  <!-- Horizontal Grid Lines -->
+                  <line x1="0" y1="10" x2="900" y2="10" stroke="rgba(255,255,255,0.08)" stroke-dasharray="4"/>
+                  <line x1="0" y1="85" x2="900" y2="85" stroke="rgba(255,255,255,0.08)" stroke-dasharray="4"/>
+                  <line x1="0" y1="160" x2="900" y2="160" stroke="rgba(255,255,255,0.08)" stroke-dasharray="4"/>
+                  <line x1="0" y1="235" x2="900" y2="235" stroke="rgba(255,255,255,0.08)" stroke-dasharray="4"/>
+                  <line x1="0" y1="310" x2="900" y2="310" stroke="rgba(255,255,255,0.12)"/>
+
+                  <!-- YouTube Studio Retention Key Moment Bands -->
+                  <!-- Intro Phase -->
+                  <rect x="0" y="0" width="120" height="320" fill="rgba(62, 166, 255, 0.04)"/>
+                  <line x1="120" y1="0" x2="120" y2="320" stroke="rgba(62, 166, 255, 0.3)" stroke-dasharray="2"/>
+                  <text x="12" y="24" fill="#3EA6FF" font-size="11" font-weight="700" font-family="'JetBrains Mono', monospace">INTRO (0:00 - 0:30)</text>
+
+                  <!-- Continuous Segments -->
+                  <rect x="120" y="0" width="550" height="320" fill="rgba(255, 255, 255, 0.01)"/>
+                  <text x="135" y="24" fill="#AAAAAA" font-size="11" font-family="'JetBrains Mono', monospace">CONTINUOUS SEGMENTS</text>
+
+                  <!-- Outro Phase -->
+                  <rect x="670" y="0" width="230" height="320" fill="rgba(168, 85, 247, 0.04)"/>
+                  <line x1="670" y1="0" x2="670" y2="320" stroke="rgba(168, 85, 247, 0.3)" stroke-dasharray="2"/>
+                  <text x="685" y="24" fill="#C084FC" font-size="11" font-family="'JetBrains Mono', monospace">CLIMAX & OUTRO</text>
+
+                  <!-- Filled Area Paths -->
+                  <path id="svg-winner-area" d="" fill="url(#winner-gradient)"></path>
+                  <path id="svg-flop-area" d="" fill="url(#flop-gradient)"></path>
+
+                  <!-- Stroke Curves -->
+                  <path id="svg-winner-stroke" d="" fill="none" stroke="#2BA640" stroke-width="3.5" filter="url(#glow-filter)"></path>
+                  <path id="svg-flop-stroke" d="" fill="none" stroke="#FF0000" stroke-width="3"></path>
+
+                  <!-- Dynamic Pins Group -->
+                  <g id="svg-hotspot-group"></g>
+
+                  <!-- Scrubber line -->
+                  <line id="svg-scrubber-line" x1="-100" y1="0" x2="-100" y2="320" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="3"/>
+                </svg>
+
+                <!-- Tooltip Hover Overlay -->
+                <div id="chart-tooltip" class="yt-chart-tooltip" style="display: none;">
+                  <div class="tooltip-time" id="tt-time">0:45</div>
+                  <div class="tooltip-row">
+                    <span class="chip-color-dot winner-dot"></span>
+                    <span>Hit: <strong id="tt-winner-val">78%</strong></span>
+                  </div>
+                  <div class="tooltip-row">
+                    <span class="chip-color-dot flop-dot"></span>
+                    <span>Flop: <strong id="tt-flop-val">49%</strong></span>
+                  </div>
+                  <div class="tooltip-diff" id="tt-diff">+29% Retention Gap</div>
+                </div>
+              </div>
+
+              <div class="chart-x-axis">
+                <span>0:00</span>
+                <span>1:30</span>
+                <span>3:00</span>
+                <span>4:30</span>
+                <span>6:00</span>
+                <span>7:30</span>
+                <span>9:00</span>
+              </div>
+            </div>
+
+            <!-- YouTube Studio Forensic Key Moment Hotspots -->
+            <div class="yt-hotspots-section">
+              <div class="hotspots-title-row">
+                <h4>Audience Retention Breakdown (Dips & Spikes)</h4>
+                <span class="hotspots-subtext">Click any milestone to inspect algorithmic cause</span>
+              </div>
+              <div class="yt-hotspots-cards-grid" id="hotspots-container">
+                <!-- Dynamically injected via app.js -->
+              </div>
+            </div>
+
+            <!-- Identified Pattern Clusters Section -->
+            <div class="yt-patterns-section">
+              <div class="patterns-header-row">
+                <h4>Discovered Behavioral Patterns in Your Channel</h4>
+                <div class="pattern-filter-tabs" id="pattern-filter-pills">
+                  <button type="button" class="p-tab active" data-filter="all">All Factors</button>
+                  <button type="button" class="p-tab" data-filter="hook">Hooks & Intros</button>
+                  <button type="button" class="p-tab" data-filter="pacing">Pacing & Cuts</button>
+                  <button type="button" class="p-tab" data-filter="packaging">Thumbnails & Titles</button>
+                </div>
+              </div>
+              <div class="yt-patterns-grid" id="patterns-grid-container">
+                <!-- Dynamically injected -->
+              </div>
+
+              <!-- Browse Features Correlation Matrix -->
+              <div class="yt-correlation-card">
+                <div class="yt-matrix-header">
+                  <h5>Browse Features Correlation Analysis (What Gets Recommended to Home Feeds?)</h5>
+                  <span class="yt-badge-tag">Pearson r Index</span>
+                </div>
+                <div class="yt-matrix-bars-list" id="matrix-bars">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               STAGE 3: EXPLAIN WHAT WORKED ("THE WHY" - ALGORITHMIC CAUSALITY)
+               --------------------------------------------------------------- -->
+          <section class="yt-studio-card" id="copilot-step-3">
+            <div class="yt-card-header">
+              <div class="yt-card-title-group">
+                <span class="yt-step-badge">STEP 3</span>
+                <h3 class="yt-card-title">Explain What Worked: Algorithmic Causal Diagnostic</h3>
+              </div>
+              <button type="button" class="yt-btn-secondary btn-sm" id="btn-copy-diagnostic-report">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                Copy Diagnostic Report
+              </button>
+            </div>
+
+            <p class="yt-card-subtext">
+              Generated by VidCopilot's Algorithmic Reasoning Model. Plain-English diagnostic explaining why the YouTube recommendation system distributed your top video.
+            </p>
+
+            <div class="yt-diagnostic-cards-list" id="diagnostic-report-container">
+              <!-- Dynamically populated with deep causal explanations -->
+            </div>
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               STAGE 4: RECOMMEND NEXT IDEAS (CONTENT BLUEPRINTS)
+               --------------------------------------------------------------- -->
+          <section class="yt-studio-card" id="copilot-step-4">
+            <div class="yt-card-header">
+              <div class="yt-card-title-group">
+                <span class="yt-step-badge">STEP 4</span>
+                <h3 class="yt-card-title">Recommend Next Ideas: Production-Ready Blueprints</h3>
+              </div>
+              <div class="yt-card-actions">
+                <button type="button" class="yt-btn-secondary btn-sm" id="btn-regenerate-ideas">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                  Regenerate Concepts
+                </button>
+                <button type="button" class="yt-btn-primary btn-sm" id="btn-export-all-blueprints">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                  Export All (Markdown/Notion)
+                </button>
+              </div>
+            </div>
+
+            <p class="yt-card-subtext">
+              Extracted directly from your channel's winning hook structures and pacing rhythms. These are high-probability video concepts with ready-to-record opening scripts.
+            </p>
+
+            <div class="yt-blueprints-grid" id="blueprints-container">
+              <!-- Dynamically populated by app.js -->
+            </div>
+          </section>
+
+          <!-- BONUS LAB: YOUTUBE TITLE & THUMBNAIL LAB -->
+          <section class="yt-studio-card" id="title-lab-section">
+            <div class="yt-card-header">
+              <div class="yt-card-title-group">
+                <span class="yt-step-badge" style="background:#8B00FF;">LAB</span>
+                <h3 class="yt-card-title">YouTube Title & Thumbnail Clickability Diagnostic Lab</h3>
+              </div>
+            </div>
+            <p class="yt-card-subtext">
+              Test any proposed YouTube title before producing your video. Our model evaluates curiosity gaps, browse velocity triggers, and suggests 3 high-converting rewrites.
+            </p>
+
+            <div class="yt-title-lab-wrap">
+              <div class="yt-lab-input-bar">
+                <input type="text" id="input-title-test" class="yt-title-input" placeholder="e.g. Why Apple's New M4 Chip Will Ruin Everything..." value="Why Most Tech Creators Are Lying About The New M4 Mac">
+                <button type="button" class="yt-btn-primary" id="btn-analyze-title">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                  Analyze Title Score
+                </button>
+              </div>
+
+              <!-- Lab Results Row -->
+              <div class="yt-lab-results-grid">
+                <!-- Radial Score -->
+                <div class="yt-score-card">
+                  <div class="yt-radial-wrap">
+                    <svg viewBox="0 0 100 100" class="radial-svg">
+                      <circle cx="50" cy="50" r="42" class="radial-bg"></circle>
+                      <circle cx="50" cy="50" r="42" class="radial-progress" id="title-radial-circle" stroke-dasharray="264" stroke-dashoffset="35"></circle>
+                    </svg>
+                    <div class="radial-inner">
+                      <span class="score-big" id="title-score-num">8.7</span>
+                      <span class="score-out-of">/ 10</span>
+                    </div>
+                  </div>
+                  <div class="score-quality-label" id="title-rating-label">High Clickability</div>
+                  <div class="predicted-ctr-text">Predicted CTR: <strong id="title-predicted-ctr">7.8% - 9.4%</strong></div>
+                </div>
+
+                <!-- Breakdown Bars -->
+                <div class="yt-metrics-breakdown">
+                  <div class="metric-line">
+                    <div class="metric-meta-row">
+                      <span>Curiosity Gap:</span>
+                      <strong id="metric-curiosity-val">92% (Very High)</strong>
+                    </div>
+                    <div class="yt-track-bar">
+                      <div class="yt-track-fill fill-green" id="metric-curiosity-bar" style="width: 92%;"></div>
+                    </div>
+                  </div>
+
+                  <div class="metric-line">
+                    <div class="metric-meta-row">
+                      <span>Clarity & Specificity:</span>
+                      <strong id="metric-clarity-val">84% (Strong)</strong>
+                    </div>
+                    <div class="yt-track-bar">
+                      <div class="yt-track-fill fill-cyan" id="metric-clarity-bar" style="width: 84%;"></div>
+                    </div>
+                  </div>
+
+                  <div class="metric-line">
+                    <div class="metric-meta-row">
+                      <span>Emotional Valence:</span>
+                      <strong id="metric-emotion-val">79% (Contrarian/Warning)</strong>
+                    </div>
+                    <div class="yt-track-bar">
+                      <div class="yt-track-fill fill-purple" id="metric-emotion-bar" style="width: 79%;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3 Instant A/B Suggestions -->
+                <div class="yt-suggestions-card">
+                  <div class="sugg-header">✨ Copilot A/B Alternative Titles:</div>
+                  <div class="sugg-list" id="title-suggestions-list">
+                    <!-- Populated by app.js -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div> <!-- END LEFT PRIMARY WORKSPACE -->
+
+
+        <!-- ===================================================================
+             RIGHT STUDIO RAIL (AUTHENTIC YOUTUBE STUDIO RIGHT SIDEBAR)
+             =================================================================== -->
+        <aside class="yt-secondary-rail">
+
+          <!-- 1. Latest Video Performance (Classic YouTube Studio Card) -->
+          <div class="yt-rail-card">
+            <div class="rail-card-header">
+              <h4>Latest video performance</h4>
+            </div>
+            <div class="latest-video-preview">
+              <div class="latest-thumb-wrap">
+                <img src="assets/hero-dashboard.jpg" alt="Video Thumbnail" class="latest-thumb-img">
+                <span class="video-duration-badge">9:15</span>
+              </div>
+              <div class="latest-video-title" id="latest-vid-title">
+                Why Apple's M4 Chip Terrifies Intel
+              </div>
+              <div class="latest-video-time">First 14 days 8 hours</div>
+            </div>
+
+            <!-- YouTube Studio Ranking List -->
+            <div class="yt-perf-stats-list">
+              <div class="stat-row">
+                <span class="stat-name">Ranking by views:</span>
+                <span class="stat-val highlight">1 of 10 &nbsp;<span class="check-green">&uarr;</span></span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Views:</span>
+                <span class="stat-val" id="rail-views">720.4K</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Impressions click-through rate:</span>
+                <span class="stat-val text-green" id="rail-ctr">8.4%</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Average view duration:</span>
+                <span class="stat-val text-green" id="rail-avd">6:42 (72.4%)</span>
+              </div>
+            </div>
+
+            <div class="rail-card-footer">
+              <a href="#copilot-step-2" class="yt-blue-link">GO TO VIDEO RETENTION AUTOPSY &rarr;</a>
+            </div>
+          </div>
+
+          <!-- 2. Realtime Activity Card (Classic Studio Realtime Bar Chart) -->
+          <div class="yt-rail-card">
+            <div class="rail-card-header">
+              <h4>Realtime</h4>
+              <span class="live-dot-pulse">● Updating live</span>
+            </div>
+            <div class="realtime-subs-row">
+              <span class="realtime-metric-number" id="realtime-views-count">48,210</span>
+              <span class="realtime-metric-sub">Views &bull; Last 48 hours</span>
+            </div>
+
+            <!-- Mini Realtime Bar Chart -->
+            <div class="yt-realtime-bar-chart">
+              <div class="realtime-bar" style="height: 35%;"></div>
+              <div class="realtime-bar" style="height: 48%;"></div>
+              <div class="realtime-bar" style="height: 60%;"></div>
+              <div class="realtime-bar" style="height: 85%;"></div>
+              <div class="realtime-bar" style="height: 72%;"></div>
+              <div class="realtime-bar" style="height: 65%;"></div>
+              <div class="realtime-bar" style="height: 90%;"></div>
+              <div class="realtime-bar" style="height: 100%;"></div>
+              <div class="realtime-bar" style="height: 78%;"></div>
+              <div class="realtime-bar" style="height: 62%;"></div>
+              <div class="realtime-bar" style="height: 82%;"></div>
+              <div class="realtime-bar" style="height: 95%;"></div>
+            </div>
+
+            <div class="realtime-breakdown-list">
+              <div class="realtime-item">
+                <span class="realtime-item-title">M4 Chip Terrifies Intel</span>
+                <span class="realtime-item-views">28,400</span>
+              </div>
+              <div class="realtime-item">
+                <span class="realtime-item-title">M4 RAM Baseline Trap</span>
+                <span class="realtime-item-views">12,150</span>
+              </div>
+              <div class="realtime-item">
+                <span class="realtime-item-title">Mini vs Studio 14 Days</span>
+                <span class="realtime-item-views">7,660</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Growth & Revenue ROI Calculator Card -->
+          <div class="yt-rail-card" id="rail-calc-card">
+            <div class="rail-card-header">
+              <h4>Channel Growth & Revenue Calculator</h4>
+            </div>
+            <p class="calc-card-intro">
+              Adjust your metrics to calculate the projected Browse Feature traffic unlock when optimizing retention and CTR:
+            </p>
+
+            <div class="rail-slider-group">
+              <div class="slider-header-row">
+                <span>Monthly Views:</span>
+                <strong id="lbl-views-val">250,000</strong>
+              </div>
+              <input type="range" id="slider-views" min="20000" max="3000000" step="10000" value="250000" class="yt-range">
+            </div>
+
+            <div class="rail-slider-group">
+              <div class="slider-header-row">
+                <span>Current CTR:</span>
+                <strong id="lbl-ctr-val">4.5%</strong>
+              </div>
+              <input type="range" id="slider-ctr" min="2.0" max="12.0" step="0.1" value="4.5" class="yt-range">
+            </div>
+
+            <div class="rail-slider-group">
+              <div class="slider-header-row">
+                <span>Avg Duration (Min):</span>
+                <strong id="lbl-avd-val">3.5 min</strong>
+              </div>
+              <input type="range" id="slider-avd" min="1.0" max="15.0" step="0.5" value="3.5" class="yt-range">
+            </div>
+
+            <div class="rail-slider-group">
+              <div class="slider-header-row">
+                <span>Channel RPM ($):</span>
+                <strong id="lbl-rpm-val">$4.50</strong>
+              </div>
+              <input type="range" id="slider-rpm" min="1.0" max="25.0" step="0.5" value="4.5" class="yt-range">
+            </div>
+
+            <!-- Projection Outcome -->
+            <div class="rail-calc-outcome-box">
+              <div class="outcome-row">
+                <span>Projected New Views:</span>
+                <strong class="text-green" id="calc-views-unlocked">+165,000 / mo</strong>
+              </div>
+              <div class="outcome-row">
+                <span>Est. Ad Revenue Lift:</span>
+                <strong class="text-cyan" id="calc-revenue-unlocked">+$742.50 / mo</strong>
+              </div>
+              <div class="outcome-row">
+                <span>Annualized Value:</span>
+                <strong class="text-green" id="calc-annual-val">+$8,910 / yr</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Creator Insider Copilot Tips -->
+          <div class="yt-rail-card">
+            <div class="rail-card-header">
+              <h4>Creator Insider: Algorithm Tips</h4>
+            </div>
+            <div class="creator-insider-item">
+              <div class="insider-dot">💡</div>
+              <p><strong>The First 30s Hook Rule:</strong> Videos with &gt;65% 30-second retention are 3.4x more likely to be pushed to YouTube Home Feeds.</p>
+            </div>
+            <div class="creator-insider-item">
+              <div class="insider-dot">🎯</div>
+              <p><strong>Avoid the 2-Minute Monologue:</strong> Ensure an on-screen visual cut or sound cue every 6 to 8 seconds to prevent viewer bounce.</p>
+            </div>
+          </div>
+
+        </aside>
+
+      </div> <!-- END DASHBOARD GRID -->
+
+    </main>
+  </div> <!-- END STUDIO LAYOUT -->
+
+  <!-- =========================================================================
+       MODAL: UPLOAD YOUTUBE STUDIO CSV / JSON
+       ========================================================================= -->
+  <dialog class="yt-modal-dialog" id="upload-modal" aria-labelledby="modal-title">
+    <div class="yt-modal-content">
+      <div class="yt-modal-header">
+        <div class="yt-modal-title-row">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="#FF0000">
+            <path d="M14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2zm3-7H3v12h14v-4.5l4 4v-11l-4 4V6z"/>
+          </svg>
+          <h3 id="modal-title">Upload YouTube Content Analytics</h3>
+        </div>
+        <button type="button" class="yt-modal-close" id="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="yt-modal-body">
+        <p class="yt-modal-desc">
+          Export your YouTube Studio video analytics (Content &gt; See More &gt; Export Current View as CSV) and drop it here. VidCopilot will parse your retention curves, CTR, and traffic data.
+        </p>
+
+        <!-- Drag & Drop Zone -->
+        <div class="yt-file-dropzone" id="file-dropzone">
+          <input type="file" id="file-input" class="yt-file-hidden" accept=".csv, .json, text/csv, application/json">
+          <div class="dropzone-inner">
+            <svg viewBox="0 0 24 24" class="yt-drop-icon" fill="currentColor">
+              <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+            </svg>
+            <h4>Select or drag and drop your Studio CSV / JSON</h4>
+            <p>Supports YouTube Studio Video Metrics & Retention Data exports</p>
+            <span class="yt-privacy-badge">🔒 100% Client-side &bull; Read-only privacy</span>
+          </div>
+        </div>
+
+        <!-- Sample Dataset Presets in Modal -->
+        <div class="yt-modal-presets">
+          <h5>Or test immediately with a verified creator dataset:</h5>
+          <div class="preset-buttons-row">
+            <button type="button" class="btn-sample-file" data-load="tech">
+              <span>💻</span>
+              <div>
+                <strong>TechPulse Studio</strong>
+                <small>42 videos &bull; 184K subs</small>
+              </div>
+            </button>
+            <button type="button" class="btn-sample-file" data-load="finance">
+              <span>📈</span>
+              <div>
+                <strong>CapitalMind Finance</strong>
+                <small>28 videos &bull; 92K subs</small>
+              </div>
+            </button>
+            <button type="button" class="btn-sample-file" data-load="gaming">
+              <span>🎮</span>
+              <div>
+                <strong>LoreCraft Gaming</strong>
+                <small>56 videos &bull; 410K subs</small>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="yt-modal-footer">
+        <button type="button" class="yt-btn-secondary" id="modal-cancel-btn">Cancel</button>
+        <button type="button" class="yt-btn-primary" id="modal-load-sample-btn">Load Selected Dataset</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Script logic -->
+  <script src="app.js"></script>
+</body>
+</html>
