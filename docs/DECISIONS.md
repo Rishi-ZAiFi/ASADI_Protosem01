@@ -1,223 +1,182 @@
-# Architecture Decision Records — ContentYou
+# Architecture Decisions Log
 
-Short ADRs for the choices that would otherwise get silently reversed by a future session.
-Each records what was decided, what it costs, and **what evidence would justify revisiting it**.
+This document records the major architectural decisions for ContentYou, including their rationale, consequences, and conditions for reconsideration.
 
-Status key: **Accepted** · **Deferred** · **Superseded**
+## Status Key
 
----
-
-## ADR-001 — TypeScript end-to-end for the agent runtime
-
-**Status:** Accepted · **Date:** 2026-09-28
-
-### Context
-`PS.md` specifies LangGraph. LangGraph's reference implementation is Python; LangGraph.js is
-the TypeScript port. The web app is Next.js either way, so the choice is whether the agent
-service is a second language.
-
-### Decision
-TypeScript everywhere. `apps/agent` is Node + Fastify hosting LangGraph.js.
-
-### Rationale
-- LangGraph.js reached 1.0 GA alongside Python (Oct 2025) with parity on `StateGraph`,
-  conditional edges, checkpointers (**including MongoDB**), `interrupt()`, streaming modes,
-  subgraphs, and the Store API. The gap that would have forced Python is closed.
-- The highest-value asset in this codebase is the **shared Zod contract** in
-  `packages/schemas`. In a split-language repo it becomes Pydantic *and* Zod, hand-kept in
-  sync, and it drifts. Drift in the artifact schema is drift in the product.
-- One toolchain, one test runner, one lint config, one deploy story.
-
-### Consequences
-- Accepted cost: LangGraph Python gets new features first. If we need one, we wait or port it.
-- Accepted cost: the Python data/ML ecosystem is not directly available. Nothing in the
-  current scope needs it.
-
-### Revisit if
-We need a LangGraph or LangChain capability that is Python-only and cannot be reimplemented
-in a few hundred lines, or we add real ML work (fine-tuning, embeddings at scale, CV on
-video frames) rather than API calls.
+- **Accepted** — The decision is currently in effect.
+- **Deferred** — The decision is postponed.
+- **Superseded** — A newer decision has replaced it.
 
 ---
 
-## ADR-002 — Gemini-first, OpenAI optional
+## ADR-001 — TypeScript End-to-End for the Agent Runtime
 
-**Status:** Accepted · **Date:** 2026-09-28 · **Deviates from `PS.md`**
-
-### Context
-`PS.md` says: *"I want to use OpenAI API, for now, as to use free-tier services."* The stated
-goal is **free-tier development**; OpenAI is the assumed means to it. The means is wrong:
-OpenAI has no usable perpetual free API tier in 2026 — a paid balance is effectively
-required. Google Gemini does have a real free tier.
+**Status:** Accepted  
+**Date:** 2026-09-28
 
 ### Decision
-`packages/ai` is a provider abstraction. **Gemini is the default provider**; OpenAI is fully
-implemented and selectable by env. Model IDs come from env, never hardcoded. The product
-owner confirmed this trade explicitly.
+
+Use TypeScript throughout the application. The `apps/agent` service uses Node.js, Fastify, and LangGraph.js.
 
 ### Rationale
-- Serves `PS.md`'s actual goal (zero-cost development) rather than its incorrect premise.
-- Gemini's **Google Search grounding returns citations** — which is not a cost decision but
-  an architectural gift, since `PS.md` requires that plans be verifiable. It removes a whole
-  vendor (Tavily/Exa) from the critical path.
-- The abstraction means the decision is cheap to reverse; only a default changes.
+
+- Share Zod schemas across packages.
+- Avoid maintaining duplicate TypeScript and Python contracts.
+- Use one primary toolchain for development, testing, and deployment.
 
 ### Consequences
-- Gemini's free tier is **rate-limited, not token-billed** — requests past the limit *fail*.
-  This is the single most invasive constraint in the system: it dictates the sequencer in
-  the execute subgraph and makes `packages/ai` (Stage 4) a prerequisite of every agent stage.
-- Free tier is Flash-only since Pro moved behind billing (May 2026). Prompts must be written
-  for a Flash-class model, with a critic pass compensating for the capability gap.
 
-### Revisit if
-The project gets a funded API budget. Then flip the default to whichever model wins on the
-Stage 10 eval harness — that harness exists precisely to make this a measurement, not a
-preference.
+- Python-only LangGraph capabilities may require waiting or reimplementation.
+- Python-specific data science libraries are not directly available in the agent runtime.
+
+### Revisit If
+
+The project requires a Python-only capability that cannot reasonably be reimplemented, or substantial machine-learning workloads are introduced.
 
 ---
 
-## ADR-003 — Separate always-on agent worker, not serverless functions
+## ADR-002 — Gemini First, OpenAI Optional
 
-**Status:** Accepted · **Date:** 2026-09-28
-
-### Context
-A run performs research, mining, drafting, critique, a human pause, then six generations —
-minutes of wall-clock, much of it deliberately waiting on a rate-limit bucket. Vercel Hobby
-kills a function at ~10s (~60s with Fluid Compute).
+**Status:** Accepted  
+**Date:** 2026-09-28
 
 ### Decision
-Two processes. `apps/web` on Vercel never calls an LLM and never runs long work — it
-enqueues and streams. `apps/agent` is an always-on Node service owning LangGraph and every
-outbound AI call. MongoDB is the queue.
+
+Use `packages/ai` as the provider abstraction, with Gemini as the default provider and OpenAI available as an alternative. Configure model IDs through environment variables.
 
 ### Rationale
-- The timeout is not tunable on the target tier. No amount of streaming or chunking makes a
-  multi-minute rate-limited pipeline fit in a 10s function.
-- An always-on process holds the token bucket in memory, which is what makes pacing work.
-  Serverless would need a distributed limiter — more moving parts, on a free tier.
-- A Mongo-backed queue costs nothing extra: Atlas is already a dependency, and an atomic
-  `findOneAndUpdate` is a correct claim primitive for this scale.
 
-### Considered and rejected
-- **Inngest / Trigger.dev durable steps** — a real fit on paper, and the free tiers are
-  adequate. Rejected because LangGraph's checkpointer and `interrupt()` *already* provide
-  durability and human-in-the-loop. Adding one would mean two orchestrators with two
-  definitions of "the current step," and the seam between them is where bugs live. Revisit
-  only if we need cross-service workflow orchestration beyond a single graph.
-- **Vercel Workflows** — plausible, but ties orchestration to one host and duplicates
-  LangGraph the same way.
+- Support low-cost development where provider free-tier access is available.
+- Use search grounding and citations where supported.
+- Keep provider selection replaceable without changing the rest of the application.
 
 ### Consequences
-- Two deploy targets instead of one.
-- Free-tier hosts sleep idle instances. Mitigated by design: a slept worker's run is
-  reclaimed past `staleCutoff` and **resumes from its last checkpoint**, not from scratch.
+
+- Provider rate limits and availability affect execution.
+- The application must handle rate limiting, retries, and provider errors.
+- Model capabilities and costs should be validated against current provider documentation.
+
+### Revisit If
+
+The project obtains a funded API budget or evaluation results show that another provider is a better fit.
 
 ---
 
-## ADR-004 — Manual-export publishing first; Instagram Graph API deferred
+## ADR-003 — Separate Agent Worker
 
-**Status:** Accepted (Stage 11 Deferred) · **Date:** 2026-09-28 · **Deviates from `PS.md`**
-
-### Context
-`PS.md` implies autonomy through to posting. Meta gates this: publishing needs a **Business**
-account (Creator is not supported), a linked Facebook Page, and approved
-`instagram_business_content_publish`, with App Review taking 2–4 weeks and able to reject.
-Hashtag research needs the harder **Public Content Access** approval on top.
+**Status:** Accepted  
+**Date:** 2026-09-28
 
 ### Decision
-Define a `PublishingPort` interface now. Ship `ManualExportAdapter` in Stage 7 — asset
-bundle + caption + `.ics` calendar entry + in-app reminder. `InstagramGraphAdapter` is
-Stage 11, behind a feature flag, after approval. **Nothing in stages 0–10 may block on Meta.**
+
+Separate the web application from the long-running agent runtime. The web application enqueues work and presents progress; the agent service executes workflows and AI calls.
+
+Use MongoDB-backed job coordination if it is implemented and validated in the application.
 
 ### Rationale
-- App Review is unschedulable and externally controlled. Putting it on the critical path
-  makes the whole project's timeline a function of someone else's queue.
-- The manual path is genuinely useful on day one — the hard part of this product is the
-  research, plan and content, not the HTTP POST that publishes it.
-- Reviewers want to see a working app. Building the app first *improves* the submission.
+
+- Long-running workflows may exceed serverless execution limits.
+- A persistent worker can manage sequencing and rate limits.
+- Durable checkpoints can support recovery after interruptions.
 
 ### Consequences
-- The day-one product is "everything up to the moment of posting," and the UI must be
-  honest about that rather than implying automation it does not have.
-- Viral-reference mining uses **YouTube Data API** (free, real search, no review needed)
-  rather than Instagram hashtag data. Instagram signal is added later if Public Content
-  Access is granted.
 
-### Revisit if
-Meta approval lands — flip the flag, keep manual export as the fallback for unlinked
-accounts and unsupported media.
+- The application has separate deployment targets.
+- Job claiming, retries, stale-job recovery, and checkpoint resumption require testing.
+- Hosting limits and database costs must be evaluated.
+
+### Alternatives Considered
+
+Workflow platforms such as Inngest or Trigger.dev may be appropriate if the application later needs orchestration across multiple independent services.
+
+### Revisit If
+
+The workflow becomes short-lived or the deployment environment provides suitable durable execution.
 
 ---
 
-## ADR-005 — Contract-first parallelism with exclusive file ownership
+## ADR-004 — Manual Export Before Automated Publishing
 
-**Status:** Accepted · **Date:** 2026-09-28
-
-### Context
-Requested directly by the product owner: stage prompts must be executable **in parallel**
-across separate sessions or worktrees. The natural decomposition is a dependency chain
-(schema → gateway → graph → skills → UI), which serializes everything.
+**Status:** Accepted  
+**Date:** 2026-09-28
 
 ### Decision
-Three mechanisms, all enforced in the stage prompts:
-1. **Contract-first.** Stage 0 freezes `packages/schemas` — every entity, every port
-   interface, and a **mock for every port** — before any implementation exists.
-2. **Exclusive file ownership.** Each stage declares own / read-only / must-not-touch, scoped
-   by package. Shared-file contention is designed out: per-package `package.json`, per-domain
-   env fragments, append-only per-stage checkpoint sections.
-3. **Waves** with an integration gate between them.
+
+Define a `PublishingPort` interface and implement manual export first. The export should provide the content assets, caption, calendar entry, and reminder where supported.
+
+Defer Instagram Graph API publishing until the necessary account setup, permissions, and approvals are available.
 
 ### Rationale
-- Dependencies between stages are almost entirely **interface** dependencies, not
-  implementation ones. Stage 6 (skills) needs to *call* a model, not to know how the limiter
-  works. Naming that seam converts a serial edge into a parallel one.
-- Mocks make each track independently testable, which is worth having regardless of
-  parallelism — it is the same discipline as dependency injection, applied at package scope.
-- File-ownership tables prevent the actual failure mode of parallel agent sessions: two
-  sessions editing one file and silently clobbering each other.
+
+- External platform approval can delay delivery.
+- Manual export provides value without depending on publishing API access.
+- The core content workflow can be tested independently.
 
 ### Consequences
-- Up-front cost: Stage 0 is bigger and must be done carefully and **alone**. A sloppy
-  contract poisons every parallel track downstream.
-- Ports add indirection. Justified where stages are genuinely concurrent; not to be applied
-  reflexively everywhere else.
-- Integration gates are mandatory. Mocks passing is not evidence the real wiring works —
-  Stage 10 exists to prove it.
 
-### Revisit if
-The project becomes single-threaded (one person, one session at a time). The ports are still
-good design, but the ceremony around ownership could relax.
+- The interface must not imply that content has been automatically published.
+- Publishing integrations require separate permission and error handling.
+
+### Revisit If
+
+The required platform permissions and approvals are obtained and the integration is tested.
 
 ---
 
-## ADR-006 — The `PS.md` "light mode" palette is an accent ramp, not a light theme
+## ADR-005 — Contract-First Parallel Development
 
-**Status:** Accepted · **Date:** 2026-09-28 · **Deviates from `PS.md`**
-
-### Context
-`PS.md` gives two palettes. The dark one (`#06141B → #CCD0CF`) is a correct six-step
-background→text ramp. The light one (`#800021 #881144 #243A66 #C24366 #FF69B4`) is five
-dark, saturated hues with **no light neutrals** — no page background, no surface, no border.
+**Status:** Accepted  
+**Date:** 2026-09-28
 
 ### Decision
-Use the dark ramp exactly as given. Treat the five "light mode" colors as the **brand,
-accent and data-visualization ramp**, rendered over neutral light surfaces derived in
-Stage 1. All five hex values are preserved exactly.
+
+Use three practices for parallel implementation:
+
+1. Define shared schemas and interfaces before implementing dependent components.
+2. Assign explicit file ownership to each development stage.
+3. Integrate work in planned waves, with verification gates between them.
 
 ### Rationale
-- Taken literally, `--background: #800021` with `--foreground: #FF69B4` is roughly 2:1
-  contrast — it fails WCAG AA (4.5:1 for body text) and is genuinely hard to read.
-- The five colors are clearly chosen as a *brand* identity — deep crimson through hot pink
-  with a navy anchor. That intent is preserved and better served by using them as accents.
-- Stage 1 produces a contrast table as evidence, so this is a measurement rather than a
-  taste argument.
+
+- Stable interfaces reduce coordination overhead.
+- Mocks enable independent development and testing.
+- Explicit file ownership reduces merge conflicts.
 
 ### Consequences
-- Light mode needs neutrals that are not in `PS.md`. Stage 1 derives them and documents the
-  derivation.
-- Documented as a deviation in `CLAUDE.md` §8.2 so no future session "restores" the literal
-  reading.
 
-### Revisit if
-The product owner wants a genuinely dark-crimson light theme. Then the accents need
-light-tinted variants, and the contrast table becomes the acceptance criterion.
+- Shared contracts require careful review.
+- Integration testing remains mandatory; passing mock tests alone is insufficient.
+
+### Revisit If
+
+Development becomes strictly sequential and the coordination overhead outweighs the benefits.
+
+---
+
+## ADR-006 — Separate Brand Accents from Light-Theme Neutrals
+
+**Status:** Accepted  
+**Date:** 2026-09-28
+
+### Decision
+
+Use the dark palette specified in `PS.md` as the dark-theme foundation. Preserve the specified crimson, pink, and navy colors as brand accents and visualization colors.
+
+Derive neutral backgrounds, surfaces, and borders for light mode, and document the contrast results.
+
+### Rationale
+
+- The supplied accent colors do not provide a complete light-theme neutral palette.
+- Text and background combinations must meet applicable accessibility contrast requirements.
+- Preserving the supplied colors as accents maintains the intended visual identity.
+
+### Consequences
+
+- Light mode requires additional neutral colors.
+- Theme contrast and readability must be validated.
+- The design rationale should be documented in `CLAUDE.md`.
+
+### Revisit If
+
+The product owner requests a predominantly crimson light theme and suitable accessible color variants can be established.
