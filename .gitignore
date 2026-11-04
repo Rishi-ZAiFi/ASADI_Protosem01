@@ -1,8 +1,6 @@
 node_modules
 dist
 .next
-.env
-.env.local
 .env*.local
 .turbo
 coverage
@@ -12,3 +10,4 @@ temp_interactive_push.bat
 __pycache__/
 *.py[cod]
 .pytest_cache/
+config.bat
