@@ -1,162 +1,134 @@
-# CreatorSpace AI — AI Content Creation & Productivity Platform
+# 🎬 Creator Analytics Copilot — YouTube Studio Edition
 
-**CreatorSpace AI** is a full-stack content creation workspace designed for creators, solopreneurs, and marketers. It bridges the gap between raw ideas and ready-to-publish social media assets—providing format-engineered generation for **Instagram Reels**, **Carousels**, **Captions**, and **Stories** powered by the **Google Gemini API** (`gemini-3.5-flash-lite` with smart automatic failover).
-
----
-
-## 🌟 3-Agent Autonomous Creator Architecture
-
-CreatorSpace AI is powered by a coordinated 3-agent intelligence pipeline engineered with Google Gemini 3.5:
-
-```
-┌────────────────────────┐      ┌─────────────────────────┐      ┌────────────────────────┐
-│  AGENT 1: TREND SCOUT  │ ───► │ AGENT 2: SCRIPT BUILDER │ ───► │ AGENT 3: CONTENT CRITIC│
-│  Live Market Signals & │      │ Platform-Adapted Copy   │      │ Retention, Hook & CTA  │
-│  Viral Velocity Angles │      │ (Reels/Carousels/Story) │      │ Scoring & Optimization │
-└────────────────────────┘      └─────────────────────────┘      └────────────────────────┘
-```
-
-1. **Agent 1: Trend Scout Agent (`/api/gemini/trends/scout`)**:
-   * Scouts high-velocity narrative angles, breakout hooks, and algorithmic shifts tailored to any creator niche or platform.
-   * Calculates viral velocity scores (0-100), recommends ideal formats, tags, and suggested creative angles.
-   * 1-Click transfer from Trend Radar into the AI Studio.
-
-2. **Agent 2: Script Builder Agent (`/api/gemini/generate`)**:
-   * Crafts platform-adapted copy engineered for conversions and attention:
-     * **Instagram Reel**: Viral hook (0-3s), scene-by-scene b-roll, pacing directions, on-screen text, caption, and strategic hashtags.
-     * **Multi-Slide Carousel**: Catchy cover title, slide-by-slide value breakdowns, layout cues, final CTA slide, caption, and hashtags.
-     * **Social Caption**: High-retention openers, structured narrative body, call-to-action, and targeted hashtags.
-     * **Story Sequence**: 3-5 frame visual flow with poll/sticker engagement prompts and creator pro-tips.
-   * Tone adaptation (Educational, Conversational, Professional, Creative, Humorous, Friendly).
-   * Target audience customization (Beginners, Students, Entrepreneurs, Tech Enthusiasts, etc.).
-
-3. **Agent 3: Content Critic & Evaluator Agent (`/api/gemini/evaluate`)**:
-   * Evaluates generated scripts against retention benchmarks before publishing.
-   * Multi-dimensional scoring (1-10) for:
-     * **Hook Strength** (0-3s attention grab)
-     * **Retention & Pacing** (flow, drop-off mitigation)
-     * **CTA Power** (conversion trigger, comment/save prompt)
-     * **Clarity & Value** (actionability, cognitive load)
-   * Overall Quality Score (0-100) & Letter Grade (A+, A, B, etc.).
-   * Bulleted Strengths and Actionable Improvements.
-   * **AI-Engineered Optimized Hook**: 1-click **"Apply Hook to Script"** button dynamically injects the improved opener into your working draft!
+> **Assigned Problem No.:** 24  
+> **Application Name:** Creator Analytics Copilot  
+> **Assigned Branch:** `24_Creator_Analytics_Copilot`  
+> **Student:** Bhuvanashree K R  
 
 ---
 
-## 🚀 Key Modules & Capabilities
+## 📌 Problem Statement & Build Challenge
 
-* **AI Studio (Multi-Agent Workspace)**:
-  * 3-Agent Creator Pipeline status bar showing active stage.
-  * Interactive script generation with quick topic pills (`+ 5 habits of top creators`, etc.).
-  * Embedded **Content Critic Scorecard** with metric progress bars, actionable critique, and hook applicator.
-  * 1-Click Copy and Save to Library.
-
-* **Trend Radar**:
-  * Dedicated **Agent 1 AI Trend Scout Panel** with live niche querying and platform filters.
-  * Curated industry trend database categorized by Technology & AI, Creator Economy, Productivity, Marketing, and Lifestyle.
-  * Search, category filtering, and bookmarking.
-  * **"Create Content From Trend" Action**: Automatically pre-populates AI Studio with the selected trend title and angle for seamless workflow acceleration.
-
-* **Dashboard**:
-  * Real-time metrics computed directly from application data (Total Saved Content, Bookmarked Trends, Recent Activities).
-  * Format-specific quick action launchers (Generate a Reel, Create a Carousel, Write a Caption, Create a Story).
-  * Recent activity feed with quick View, Copy, and Delete actions.
-
-* **Saved Content Library**:
-  * Comprehensive draft management with format filter tabs and search.
-  * Full content modal viewer.
-  * Safe deletion workflow with confirmation modal.
-  * Persisted across browser sessions using local storage.
-
-* **Google Gemini AI Engine**:
-  * Ultra-fast cloud generation using Google's multimodal Gemini Flash models (`gemini-3.5-flash-lite`).
-  * Smart multi-model failover for high availability during peak demand periods.
-  * Secure backend key management with zero frontend credential exposure.
-
-* **Workspace Settings**:
-  * Live status check for Google Gemini API.
-  * Secure backend environment setup instructions for Google Gemini API keys.
-  * Default writing tone and audience preferences persisted in local storage.
+* **Problem Statement:** Creators have performance data in YouTube Studio but struggle to understand *why* some content works better.
+* **Core Workflow / Build Challenge:**  
+  $$\text{Upload Content Analytics} \longrightarrow \text{Identify Patterns} \longrightarrow \text{Explain What Worked} \longrightarrow \text{Recommend Next Content Ideas}$$
 
 ---
 
-## 🛠️ Technology Stack
+## 🌟 Key Features
 
-| Layer | Technology |
-|---|---|
-| **Frontend Framework** | React 18, Vite 6 |
-| **Routing** | React Router v6 |
-| **Icons & UI** | Lucide React |
-| **Styling** | Custom Responsive Design System (CSS3 Custom Properties) |
-| **Backend Framework** | Node.js (v20+), Express.js |
-| **AI Provider** | Google Gemini API (`gemini-3.5-flash-lite`, `gemini-flash-latest`) |
-| **Storage Layer** | Modular Web Storage API (localStorage) |
+### 1. YouTube Studio Native Interface
+* Designed and structured in the **exact look, feel, and navigation of YouTube Studio (`studio.youtube.com`)**.
+* Includes the collapsible sidebar navigation, channel identity, top studio app bar, and search tools.
 
----
+### 2. The 4-Step Copilot Pipeline
+1. **📤 Upload Content Analytics & Channel Telemetry:**
+   * Ingest YouTube Studio CSV/JSON exports (video metrics, watch duration, impressions, and retention curves) or choose verified benchmarks (*TechPulse 184K*, *CapitalMind Finance 92K*, *LoreCraft Gaming 410K*).
+   * Displays primary YouTube Studio KPI tiles with sparklines and trend indicators.
+2. **🔍 Identify Patterns (Key Moments for Audience Retention):**
+   * Head-to-Head interactive SVG audience retention curve comparing top outlier hits vs underperforming flops across **Intro (0:00 - 0:30)**, **Continuous segments**, and **Climax**.
+   * Second-by-second cursor scrubber with hover deltas.
+   * Clickable forensic drop-off hotspots (*0:24 Hook Cliff*, *2:40 Pacing Drag*, *6:15 Thermal Stress Spike*).
+   * Pearson $r$ Browse Feature recommendation correlation matrix.
+3. **🧠 Explain What Worked ("The Why" — Algorithmic Causal Diagnoses):**
+   * Plain-English causal explanations of why the YouTube recommendation engine pushed content to Browse Features (Home Feed) or dropped it.
+   * Diagnostic prescriptions for pacing, hook mechanics, and audience expectation fulfillment.
+4. **💡 Recommend Next Content Ideas (Prescriptive Video Blueprints):**
+   * Data-backed video concepts generated from the channel's winning retention DNA.
+   * Each blueprint includes Title A/B options, thumbnail composition guide, full **60-second opening hook script**, and retention arc.
+   * One-click copy and export to Markdown/Notion.
 
-## 📁 Project Directory Structure
+### 3. 🦜️ LangChain & LangSmith Multi-Agent Architecture (Minimum 2 Agents)
+The platform integrates an autonomous multi-agent pipeline built with **LangChain** and monitored with **LangSmith Tracing V2**:
 
-```
-creatorspace-ai/
-├── README.md                      # Complete project documentation
-├── .gitignore                     # Git ignore rules
-│
-├── server/                        # Express.js REST API Backend (Port 5000)
-│   ├── package.json               # Backend dependencies
-│   ├── .env.example               # Environment variables template
-│   ├── .env                       # Local environment configuration
-│   ├── server.js                  # Main server entry & CORS middleware
-│   ├── config/
-│   │   └── config.js              # Centralized environment configuration
-│   ├── routes/
-│   │   ├── health.js              # GET /api/health
-│   │   └── gemini.js              # POST /api/gemini/generate
-│   ├── controllers/
-│   │   └── geminiController.js    # Request validation & Gemini handler
-│   └── services/
-│       ├── promptService.js       # Reusable format-specific prompt engineering
-│       └── geminiService.js       # Google Gemini integration & smart model failover
-│
-└── client/                        # React + Vite Frontend (Port 5173)
-    ├── package.json               # React 18, React Router v6, Lucide React
-    ├── vite.config.js             # Vite config & API reverse proxy (/api -> :5000)
-    ├── index.html                 # HTML template with Google Fonts
-    └── src/
-        ├── main.jsx               # React entry point with BrowserRouter
-        ├── App.jsx                # Layout shell, routes, toast & state persistence
-        ├── index.css              # CreatorSpace AI design system
-        ├── components/
-        │   ├── Sidebar.jsx        # Navigation sidebar with responsive mobile drawer
-        │   ├── Header.jsx         # Top navigation bar with active model pill
-        │   ├── FormatBadge.jsx    # Visual badges for Reels, Carousels, Stories, Captions
-        │   ├── Toast.jsx          # Notification toast system (copy, save, errors)
-        │   └── DeleteConfirmModal.jsx # Deletion confirmation dialog
-        ├── pages/
-        │   ├── Dashboard.jsx      # Workspace overview & quick actions
-        │   ├── AiStudio.jsx       # Multi-format AI generator
-        │   ├── TrendRadar.jsx     # Trend exploration & bookmarking
-        │   ├── SavedContent.jsx   # Drafts library with search & filter
-        │   └── Settings.jsx       # Gemini status & content preferences
-        ├── services/
-        │   ├── api.js             # REST API client
-        │   └── storage.js         # LocalStorage persistence service
-        └── data/
-            └── sampleTrends.js    # Curated sample trend dataset
+```mermaid
+flowchart LR
+    A[Creator Analytics Telemetry] --> B[Agent 1: PatternDiagnosticAgent]
+    B -- Forensic Diagnostic Dossier --> C[Agent 2: ContentStrategistAgent]
+    C --> D[Strategic Video Blueprints & Hook Scripts]
+    
+    subgraph Observability [LangSmith Tracing V2]
+      B -. Trace Steps & Latency .-> LS[(LangSmith Project: creator-analytics-copilot)]
+      C -. Trace Steps & Latency .-> LS
+    end
 ```
 
+* **🔍 Agent 1: `PatternDiagnosticAgent` (Forensic Analytics Specialist):**
+  * **Role:** Analyzes audience retention drop-offs, click-through rates, and algorithmic distribution patterns to explain *why* specific videos outperformed while others underperformed.
+  * **LangChain Tools:**
+    * `analyze_retention_curves`: Forensically segments retention into Intro (0:00–0:30), Continuous watching, and Climax, detecting drop-off hotspots.
+    * `evaluate_browse_correlation`: Calculates Browse Velocity score ($r = +0.78$ with YouTube Home impressions).
+    * `detect_outlier_patterns`: Contrasts top 10% outlier videos against bottom 10% underperformers to extract core causal drivers.
+* **🎨 Agent 2: `ContentStrategistAgent` (Creative Blueprint & Script Architect):**
+  * **Role:** Consumes Agent 1's diagnostic evidence and formulates high-conversion video blueprints, title variations, thumbnail composition plans, and 60-second opening hook scripts.
+  * **LangChain Tools:**
+    * `score_title_clickability`: Evaluates curiosity gaps, emotional stakes, and cognitive load (5–9 words benchmark).
+    * `generate_hook_script`: Structures 60-second retention shield scripts (Visual Anchor $\rightarrow$ Problem Escalation $\rightarrow$ Stakes & Payoff $\rightarrow$ First Value Delivery).
+* **🛠️ `CopilotOrchestrator` & LangSmith Tracing:**
+  * Coordinates sequential multi-agent execution with complete run telemetry.
+  * Provides conversational routing for creator inquiries (routing metric questions to Agent 1 and creative questions to Agent 2).
+  * Automatically instruments all agent runs with `@traceable` for LangSmith observability.
+
+### 4. YouTube Title & Thumbnail Clickability Lab
+* Real-time pre-production sandbox evaluating curiosity gaps, clickability velocity, and suggesting 3 high-converting title rewrites.
+
+### 5. Channel Growth & Revenue ROI Calculator
+* Interactive sliders for Monthly Views, CTR, Average View Duration, and RPM with live projected view and ad revenue lifts.
+
+### 6. Multi-Mode Implementation
+* **Web Edition (Standalone HTML/CSS/JS):** Open [`index.html`](index.html) directly in any modern browser with zero dependencies, complete with live LangChain agent runner simulation!
+* **Python/Streamlit Edition:** Complete Streamlit analytics dashboard in [`app.py`](app.py) powered by LangChain, LangSmith tracing, and full pytest suite.
+
 ---
 
-## 🚀 Installation & Getting Started
+## 🛠️ Tech Stack
 
-### Prerequisites
+* **Agents & LLM Framework:** LangChain (`langchain`, `langchain-core`, `langchain-community`, `langchain-google-genai`), LangSmith (`langsmith`)
+* **Frontend:** HTML5 Semantic Structure, Vanilla CSS3 (YouTube Studio Dark Theme), Vanilla JavaScript (ES6+)
+* **Data Visualization:** Custom Interactive SVG Curve Generator, Canvas Scrubber, Plotly
+* **Python Engine:** Streamlit, Pandas, NumPy, Pydantic, Python-Dotenv
+* **Testing:** Pytest, AnyIO
 
-* **Node.js**: v18.x or v20.x installed (`node -v`)
-* **npm**: v9.x or v10+ (`npm -v`)
-* **Google Gemini API Key**: [Get key from Google AI Studio](https://aistudio.google.com/)
+---
 
-```env
-# Google Gemini API Key
-GEMINI_API_KEY=your_gemini_api_key
+## 🚀 How to Run Locally
+
+### Option A: YouTube Studio Web Application (Recommended, Zero Dependencies)
+1. Navigate to the repository root directory.
+2. Open [`index.html`](index.html) directly in any web browser (Chrome, Edge, Firefox, Brave):
+   ```bash
+   # On Windows (PowerShell):
+   Start-Process index.html
+   ```
+3. Or serve using Python's built-in HTTP server:
+   ```bash
+   python -m http.server 3030
+   # Open http://localhost:3030 in your browser
+   ```
+
+### Option B: Streamlit Dashboard with LangChain & LangSmith
+1. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   ```
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Configure environment variables in `.env` (optional for live LangSmith tracing & Gemini):
+   ```bash
+   cp .env.example .env
+   # Set LANGCHAIN_API_KEY and GEMINI_API_KEY
+   ```
+4. Run the Streamlit app:
+   ```bash
+   streamlit run app.py
+   ```
+5. Run automated tests (23 passed):
+   ```bash
+   pytest
+   ```
 
 # LangSmith Tracing
 LANGCHAIN_TRACING_V2=true
@@ -164,39 +136,42 @@ LANGCHAIN_API_KEY=your_langsmith_api_key
 LANGCHAIN_PROJECT=creator-os
 LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
 
-# Server Configuration
-PORT=3002
-APP_URL=http://localhost:3002
+## 📁 Repository Structure
+
+```text
+├── index.html                  # Main YouTube Studio Web Application (with Multi-Agent Brain)
+├── styles.css                  # YouTube Studio Dark Mode design system
+├── app.js                      # Client-side analytics, SVG curves, & Agent runner
+├── assets/
+│   ├── hero-dashboard.jpg      # Dashboard visualization asset
+│   ├── sample_data.csv         # Sample YouTube performance metrics
+│   └── style.css               # Streamlit custom styling
+├── app.py                      # Streamlit application with LangChain & LangSmith
+├── src/                        # Python analytics engine modules
+│   ├── agents/                 # LangChain Multi-Agent System
+│   │   ├── __init__.py
+│   │   ├── tools.py            # LangChain @tool definitions (retention, browse, clickability, hooks)
+│   │   ├── pattern_diagnostic_agent.py # Agent 1 (Causal forensics & retention)
+│   │   ├── content_strategist_agent.py # Agent 2 (Blueprints & 60s hook scripts)
+│   │   └── orchestrator.py     # Pipeline supervisor & LangSmith tracing coordinator
+│   ├── analytics.py            # KPI & statistical pattern detection
+│   ├── config.py               # Platform constants & LangSmith configuration
+│   ├── loader.py               # Multi-format CSV/Excel parser
+│   ├── mapping.py              # Canonical column auto-mapper
+│   └── ui.py                   # Custom Streamlit UI components
+├── tests/                      # Automated test suite
+│   ├── test_agents.py          # LangChain tools, agents, and orchestrator tests
+│   ├── test_analytics.py       # Deterministic analytics tests
+│   └── test_loader.py          # Data ingestion & schema tests
+├── requirements.txt            # Python dependencies (including LangChain & LangSmith)
+├── .env.example                # LangSmith & Gemini environment configuration
+└── README.md                   # Comprehensive project documentation
 ```
-
-### 3. Installation & Local Development
-```bash
-# 1. Install all monorepo dependencies
-pnpm install
-
-# 2. Run the Next.js Unified Dashboard
-pnpm dev --filter web
-
-# 3. (Optional) Run the Fastify LangGraph Agent Service
-pnpm dev --filter agent
-```
-
-Open **[http://localhost:3002](http://localhost:3002)** in your browser.
-
----
-
-## 🧪 Testing & Verification
-
-Run the test suite across all monorepo packages:
-```bash
-# Run unit tests across packages
-pnpm test
 
 # Run typechecks across TypeScript packages
 pnpm typecheck
 ```
 
-### Live Test Results:
-* **UI Routes:** All routes (`/`, `/ideas`, `/hooks`, `/reels`, `/thumbnails`, `/brain`) returning `200 OK`.
-* **API Endpoints:** Live generation verified with Gemini 2.5 Flash.
-* **LangSmith Traces:** Verified multi-agent trace tree active in project `creator-os`.
+## 👤 Author
+**Bhuvanashree K R**  
+Assigned Problem: `24_Creator_Analytics_Copilot`

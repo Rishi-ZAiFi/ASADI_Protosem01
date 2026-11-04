@@ -1,0 +1,221 @@
+/* Creator Analytics Copilot - Modern Responsive Design */
+
+:root {
+  --primary: #4F46E5;
+  --primary-hover: #4338CA;
+  --primary-light: #EEF2FF;
+  --success: #10B981;
+  --success-light: #ECFDF5;
+  --warning: #F59E0B;
+  --warning-light: #FFFBEB;
+  --danger: #EF4444;
+  --danger-light: #FEF2F2;
+  --text-main: #111827;
+  --text-muted: #6B7280;
+  --card-bg: #FFFFFF;
+  --border-color: #E5E7EB;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-main: #F9FAFB;
+    --text-muted: #9CA3AF;
+    --card-bg: #1F2937;
+    --border-color: #374151;
+    --primary-light: #312E81;
+    --success-light: #064E3B;
+    --warning-light: #78350F;
+    --danger-light: #7F1D1D;
+  }
+}
+
+/* Base resets & tap targets */
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ensure minimum 44px tap targets on interactive elements */
+button, .stButton > button, .stDownloadButton > button, input, select {
+  min-height: 44px !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-sm) !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.stButton > button {
+  background-color: var(--primary) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.stButton > button:hover {
+  background-color: var(--primary-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Custom Card Containers */
+.copilot-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.copilot-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Hero Header */
+.hero-header {
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  color: white;
+  padding: 2rem 1.5rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.hero-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+}
+
+.hero-header p {
+  font-size: 1.05rem;
+  opacity: 0.9;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  color: #E0E7FF;
+}
+
+/* KPI Stat Cards */
+.kpi-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  text-align: left;
+}
+
+.kpi-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.kpi-value {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.kpi-delta-pos {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--success);
+  margin-top: 0.35rem;
+}
+
+.kpi-delta-neg {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--danger);
+  margin-top: 0.35rem;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-high {
+  background-color: var(--success-light);
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.badge-med {
+  background-color: var(--warning-light);
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.badge-low {
+  background-color: var(--danger-light);
+  color: #991B1B;
+  border: 1px solid #FECACA;
+}
+
+/* Privacy Callout */
+.privacy-banner {
+  background: var(--primary-light);
+  border: 1px solid #C7D2FE;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: #3730A3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .hero-header {
+    padding: 1.25rem 1rem;
+  }
+  .hero-header h1 {
+    font-size: 1.5rem;
+  }
+  .hero-header p {
+    font-size: 0.9rem;
+  }
+  .kpi-container {
+    grid-template-columns: 1fr;
+  }
+  .kpi-value {
+    font-size: 1.5rem;
+  }
+  /* Remove horizontal scroll */
+  .stPlotlyChart {
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+}
