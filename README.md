@@ -1,189 +1,198 @@
-# 🚀 Protosem — AI Product Development Sprint
+# 🎬 CineCraft OS — Autonomous Creator & Video Studio SaaS
 
-Welcome to the **Protosem AI Product Development Repository**! 
+> **The All-in-One Autonomous AI Video SaaS Platform synthesizing Video Pre-Production, 7-Stage Creative Direction, Viral Meme Marketing & Creator Analytics Intelligence.**
 
-This repository serves as the central hub for the cohort's AI application development sprint. Each student has been allocated a unique real-world creator-economy problem statement. Students are required to develop a working prototype, test it, and submit their project via a **Pull Request (PR)** following the branch naming convention and workflow outlined below.
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Python](https://img.shields.io/badge/Python_3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 
 ---
 
-## 📌 Submission Guidelines & Workflow
+## 🌟 Executive Overview & Repository Synthesis
 
-Students must submit their work by **forking this repository** and opening a **Pull Request (PR)**. Once reviewed and approved by the mentor/admin, your branch will be merged into this repository.
+**CineCraft OS** unites three specialized, high-impact creator AI engines into a unified, commercial-grade SaaS product:
 
-### ⚠️ Strict Branch Naming Convention
+| # | Engine | GitHub Repository | Lead Contributor | Core Innovation |
+|---|--------|-------------------|------------------|-----------------|
+| **1** | **Creator Analytics Copilot** | [`bhuvanashreekr-del/ASADI_Protosem01`](https://github.com/bhuvanashreekr-del/ASADI_Protosem01.git) | **Bhuvanashree K R** | Deterministic analytics engine, Audience Fatigue anomaly detector, posting day/hour heatmaps, duration decay curves, Gemini conversational "Ask Your Data" AI, and PDF/CSV report exports. |
+| **2** | **AI Content Director (CineSensei)** | [`sriclickjananii-bot/18_AI-content-director`](https://github.com/sriclickjananii-bot/18_AI-content-director.git) | **Sri Jananii S** | 7-Stage Creative Direction pipeline (Research, Angles, Narrative, Script teleprompter, Visuals, Shot list, Publishing), Viral Meme Studio with canvas rendering, and casual video simulation. |
+| **3** | **AI Video Pre-Production Studio** | [`akshayam1207-oss/25_AI-Video-Pre-Production-Studio`](https://github.com/akshayam1207-oss/25_AI-Video-Pre-Production-Studio.git) | **Akshaya M** | Autonomous multi-agent pre-production planning, scene breakdowns, shot lists, camera specs, lighting setups, prop checklists, and crew/equipment budget estimation. |
+| **Upstream** | **Protosem01 Cohort Hub** | [`Rishi-ZAiFi/ASADI_Protosem01`](https://github.com/Rishi-ZAiFi/ASADI_Protosem01.git) | **Rishi-ZAiFi** | Upstream repository base for the Protosem01 engineering sprint. |
 
-Your branch name **MUST** strictly follow this pattern:
+---
 
-```text
-<No>_<Product_Name>
+## 🔄 Closed-Loop Creator Workflow
+
+Unlike fragmented single-purpose tools, CineCraft OS operates as a **closed-loop feedback cycle**:
+
+```mermaid
+flowchart LR
+    A["📊 Analytics Copilot<br/>(Audience Fatigue & Retention)"] -->|"Identifies High-ROI Formats"| B["🧠 AI Content Director<br/>(7-Stage Pipeline & Teleprompter)"]
+    B -->|"Validated Screenplay"| C["🎬 Pre-Production Studio<br/>(Multi-Agent Storyboards & Budget)"]
+    C -->|"Promo Hooks & Highlights"| D["🎭 Viral Meme Studio<br/>(Canvas Teaser Generation)"]
+    D -->|"Video Release Telemetry"| A
 ```
 
-> **Examples:**
-> - `01_Content_Idea_Generator`
-> - `05_Reel_Script_Builder`
-> - `18_AI_Content_Director`
->
-> *(Use double digits for numbers 01 to 09, followed by an underscore, and your assigned product name in Title_Snake_Case or snake_case without spaces or special characters).*
+1. **Step 1 — Channel Intelligence (Analytics Copilot)**: Ingest past YouTube/TikTok/Reels data. Detect that 45s-55s short-form videos achieve 3.2x higher share velocity with 0% fatigue, while 12m+ videos suffer a 40% retention drop.
+2. **Step 2 — Creative Strategy (AI Content Director)**: Generate 5 psychological angles, 3-act narrative tension, dual-column teleprompter scripts (audio vs visual action), and viral packaging.
+3. **Step 3 — Autonomous Pre-Production (Pre-Production Studio)**: Split the script into scenes, camera angles (35mm f/1.8), lighting mood (45° softbox), props checklist, and crew budget.
+4. **Step 4 — Viral Amplification (Meme Studio)**: Create viral promotional memes and teaser cutaways on the HTML5 canvas editor featuring comedy icons (Vadivelu) and global templates.
+5. **Step 5 — Post-Release Telemetry**: Ingest real audience watch curves and restart the cycle.
 
 ---
 
-## 🛠️ Step-by-Step Git Submission Guide
+## ⚡ The 4 Studio Engines
 
-### Step 1: Fork the Repository
-1. Navigate to the main repository page on GitHub.
-2. Click the **Fork** button (top right corner) to create a copy under your personal GitHub account.
+### 1. 🎬 Autonomous Pre-Production Studio
+- **Multi-Agent Orchestrator**: Director, Screenwriter, Storyboard Artist, and Budget Estimator agents.
+- **Detailed Scene Specs**: Shot-by-shot visual framing, camera movements, lens suggestions (24mm, 35mm, 50mm), composition rules, lighting mood, and audio cues.
+- **Production Binders & Screenplay Export**: Export to PDF Production Binder, Fountain Screenplay, and Shot List JSON/CSV.
 
-### Step 2: Clone Your Forked Repository
-Open your terminal / command prompt and run:
+### 2. 🧠 AI Content Director (7-Stage Pipeline)
+- **Stage 1 (Research & Facts)**: Psychological pain points, market facts, and empirical retention metrics.
+- **Stage 2 (Content Angles)**: Contrarian, experiment, and story hooks with uniqueness and emotional difficulty ratings.
+- **Stage 3 (Narrative Storyboard)**: Pacing curves and timecoded 3-act beat architecture.
+- **Stage 4 (Spoken Script & Teleprompter)**: Two-column teleprompter pairing voiceover with on-screen visual/sound action at ~146 WPM cadence.
+- **Stage 5 (Visuals & B-Roll)**: Color palette direction, B-roll stock queries, and SFX cues.
+- **Stage 6 (Production Shot List)**: Check-off shot list grouped by location setup to minimize shoot time.
+- **Stage 7 (Publishing & Packaging)**: A/B tested viral titles, high-contrast thumbnail concepts, and optimal posting windows.
+
+### 3. 🎭 Viral Meme Studio & Generator
+- **Interactive HTML5 Canvas Editor**: Customize top and bottom text, font sizing, color picker, and text outlines directly over templates.
+- **Template Registry**: Rich collection of iconic cinema meme legends (Vadivelu, Vivek, Santhanam) and global creator memes (Drake, Distracted Boyfriend, Expanding Brain, Two Buttons).
+- **One-Click Download & Attach**: Export high-resolution PNGs ready for social drops or video cutaways.
+
+### 4. 📈 Creator Analytics Copilot
+- **Data Ingestion & Normalization**: Seamlessly upload or explore demo datasets across YouTube, TikTok, and Instagram Reels.
+- **Deterministic KPI Engine**: Track total views, avg engagement rate, completion hold, and click-through rates.
+- **Audience Fatigue Anomaly Detector**: Identifies format saturation, diminishing returns, and duration decay before subscriber churn occurs.
+- **Posting Heatmap Matrix**: Identifies peak algorithmic windows (e.g., Tuesday & Thursday 6:00 PM – 9:00 PM, Sunday 7:00 PM).
+- **"Ask Your Data" AI Assistant**: Natural language conversational assistant powered by Google Gemini heuristics with direct one-click handoffs to Pre-Production.
+
+---
+
+## 💰 SaaS Business Model & Pricing
+
+| Feature | **Starter ($19/mo)** | **Pro Studio ($49/mo)** *(Popular)* | **Agency Enterprise ($149/mo)** |
+|---|:---:|:---:|:---:|
+| **Target Audience** | Solo Creators | Growing Creators & Teams | Agencies & Media Networks |
+| **Pre-Production Plans** | 10 plans / month | **Unlimited** | **Unlimited** |
+| **7-Stage Content Direction** | Standard | Full with Teleprompter | Multi-Channel Tone Profiles |
+| **Viral Meme Studio** | Unlimited PNGs | Unlimited PNGs | Custom Branded Watermarks |
+| **Analytics Telemetry** | 1 Channel | 3 Channels + Fatigue Engine | Unlimited Channel Networks |
+| **AI Data Copilot** | Basic Queries | Conversational Gemini Engine | Custom Data Webhooks |
+| **Exports** | PDF & Markdown | PDF Binders, Fountain Screenplay, CSV | White-label Binders & Custom APIs |
+
+---
+
+## 🚀 Quick Start Guide
+
+### Prerequisites
+- **Node.js** v18+ (tested on v24.16.0)
+- **npm** or **pnpm**
+- **Python** 3.10+ (for optional Streamlit engine)
+
+### Option A: Launch the Unified SaaS Web Application (Recommended)
+
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/ASADI_Protosem01.git
+# Clone the repository
+git clone https://github.com/bhuvanashreekr-del/ASADI_Protosem01.git
 cd ASADI_Protosem01
+
+# Checkout the SaaS product branch
+git checkout saas-product
+
+# Navigate to web application directory
+cd web
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-### Step 3: Link to Upstream (Original) Repo
-Keep your fork in sync with upstream changes:
+Open your browser at `http://localhost:5173` to explore the complete SaaS platform!
+
+To build for production:
 ```bash
-git remote add upstream https://github.com/Rishi-ZAiFi/ASADI_Protosem01.git
-git fetch upstream
+npm run build
+npm run preview
 ```
 
-### Step 4: Create and Checkout Your Assigned Branch
-Create a new branch with your exact assigned branch name:
+### Option B: Launch the Python Streamlit Analytics Engine
+
 ```bash
-# Example for Problem 01:
-git checkout -b 01_Content_Idea_Generator
-
-# Example for Problem 14:
-git checkout -b 14_Podcast_Assistant
+# From repository root
+cd ASADI_Protosem01
+pip install -r requirements.txt
+streamlit run app.py
 ```
 
-### Step 5: Build Your Application
-Develop your application inside your branch. Ensure your project is organized cleanly:
+---
+
+## 📁 Repository Structure
 
 ```text
-├── README.md               <-- Detailed instructions on how to run your app
-├── requirements.txt        <-- Python dependencies (or package.json for JS/TS)
-├── .env.example            <-- Sample environment variables (NO REAL API KEYS!)
-├── app.py / main.py        <-- Main application entry point
-├── src/                    <-- Source code and modules
-└── assets/                 <-- Screenshots / demo recordings / diagrams
+ASADI_Protosem01/
+├── package.json              # Root project scripts proxy
+├── requirements.txt          # Python analytics dependencies
+├── app.py                    # Streamlit Creator Analytics Copilot entrypoint
+├── src/                      # Python deterministic analytics modules
+│   ├── ai.py                 # Gemini AI analysis & Ask Your Data engine
+│   ├── analytics.py          # Deterministic KPI & pattern detection
+│   ├── config.py             # Benchmarks, sample data, canonical schemas
+│   ├── export.py             # PDF, CSV, and Markdown report generator
+│   ├── insights.py           # Rule-based offline insights generator
+│   ├── loader.py             # Multi-format data loader & validator
+│   ├── mapping.py            # Platform auto-detection & column mapper
+│   └── ui.py                 # Custom Streamlit UI components
+├── tests/                    # Pytest test suite for Python engine
+├── web/                      # 🌟 Unified Modern React SaaS Web Application
+│   ├── package.json          # Vite + React 18 + Tailwind + Lucide dependencies
+│   ├── vite.config.ts        # Vite build configuration
+│   ├── tailwind.config.js    # Studio design system & color tokens
+│   ├── index.html            # App entrypoint
+│   └── src/
+│       ├── App.tsx           # Global SaaS router & cross-engine state handoffs
+│       ├── types/            # Unified TypeScript domain interfaces
+│       ├── services/
+│       │   ├── aiGenerator.ts              # Multi-agent pre-production plan synthesis
+│       │   ├── contentDirectorService.ts   # 7-stage creative pipeline & mock engine
+│       │   ├── memeRegistry.ts             # Viral meme templates & situation matcher
+│       │   ├── analyticsEngine.ts          # TS analytics calculations & fatigue engine
+│       │   └── storage.ts                  # LocalStorage project persistence
+│       ├── pages/
+│       │   ├── LandingPage.tsx   # SaaS landing page with live interactive engine demos & pricing
+│       │   ├── DashboardPage.tsx # Centralized SaaS dashboard with 4-engine launch cards
+│       │   ├── CreateProjectPage.tsx # Step-by-step project creation wizard
+│       │   ├── ProjectsPage.tsx  # Project library & portfolio management
+│       │   └── SettingsPage.tsx  # User preferences, API keys, and billing settings
+│       └── components/
+│           ├── layout/           # Navbar with studio switcher & Footer with repo links
+│           ├── workspace/        # Pre-Production Studio (Scenes, shots, cameras, budget)
+│           ├── contentdirector/  # AI Content Director 7-stage interactive pipeline
+│           ├── memestudio/       # Interactive HTML5 Canvas Viral Meme Studio
+│           └── analytics/        # Creator Analytics Copilot view & Ask Your Data chat
+└── README.md                 # Complete SaaS documentation
 ```
 
-> 🔒 **Security Notice:** **NEVER commit API keys or secrets!** Add `.env` to `.gitignore` and only commit a `.env.example` file showing placeholder keys (e.g., `GEMINI_API_KEY=your_key_here`).
+---
 
-### Step 6: Commit and Push to Your Fork
-```bash
-# Check modified files
-git status
+## 👥 Contributors & Attribution
 
-# Stage your files
-git add .
+This SaaS product was engineered by uniting the strengths of three contributors during the **Protosem01 Sprint**:
 
-# Commit with a clear message
-git commit -m "feat(01_Content_Idea_Generator): initial implementation by Kavi Priya CA"
-
-# Push the branch to your GitHub fork
-git push -u origin <YOUR_BRANCH_NAME>
-```
-
-### Step 7: Create a Pull Request (PR)
-1. Go to your forked repository on GitHub.
-2. You will see a banner saying **"Compare & pull request"**. Click it.
-3. Configure the PR:
-   - **Base repository:** The main/original repository.
-   - **Head repository:** Your fork.
-   - **Compare branch:** Your assigned branch (`XX_<Product_Name>`).
-4. Set the **PR Title**:
-   ```text
-   [Submission] <No>_<Product_Name> - <Your Full Name>
-   ```
-   *Example:* `[Submission] 01_Content_Idea_Generator - Kavi Priya CA`
-5. Fill out the PR template completely:
-   - Overview of the feature
-   - Tech stack used
-   - Screenshots / GIF / Loom video demonstrating the working app
-   - Instructions to test locally
-
-### Step 8: Mentor Review & Approval
-- The mentor/admin will review your code and application logic.
-- If changes or improvements are requested, make commits locally and push them to the same branch — your PR will update automatically.
-- Upon final approval, your branch will be merged into the repository!
+- **Bhuvanashree K R** ([@bhuvanashreekr-del](https://github.com/bhuvanashreekr-del)) — Creator Analytics Copilot, Audience Fatigue Engine, Gemini Conversational AI, and Report Generation.
+- **Sri Jananii S** ([@sriclickjananii-bot](https://github.com/sriclickjananii-bot)) — AI Content Director (CineSensei), 7-Stage Creative Direction Pipeline, and Viral Meme Studio.
+- **Akshaya M** ([@akshayam1207-oss](https://github.com/akshayam1207-oss)) — AI Video Pre-Production Studio, Multi-Agent Planning Architecture, Scene Breakdown, and Shot Lists.
+- **Rishi-ZAiFi** ([@Rishi-ZAiFi](https://github.com/Rishi-ZAiFi)) — Protosem01 Upstream Mentor and Cohort Lead.
 
 ---
 
-## 📋 Student Problem Allocations
+## 📄 License
 
-| No. | Assigned Student | Application Name | Assigned Branch Name | Difficulty | Problem Statement | Build Challenge |
-|:---:|:---|:---|:---|:---:|:---|:---|
-| **01** | **Kavi Priya CA** | Content Idea Generator | `01_Content_Idea_Generator` | Standard | Creators struggle to consistently find content ideas. | Build an app where topic + audience generates 10 relevant content ideas. |
-| **02** | **Jaishanth L** | Content Repurposer | `02_Content_Repurposer` | Standard | One idea needs different treatment on every platform. | Convert one content input into LinkedIn, Instagram, X and YouTube versions. |
-| **03** | **Mithra Ravi** | Hook Generator | `03_Hook_Generator` | Standard | Writing strong hooks takes too much time. | Generate 10 hooks for a topic using different styles. |
-| **04** | **Theeran P** | Daily Content Planner | `04_Daily_Content_Planner` | Standard | Creators don't know what to post today. | Use niche + goal to generate today's content plan. |
-| **05** | **PRAVEEN.A** | Reel Script Builder | `05_Reel_Script_Builder` | Standard | Short-form creators struggle to structure 30–60 second videos. | Turn an idea into a hook, body and CTA. |
-| **06** | **Manoj M** | Clip Finder | `06_Clip_Finder` | Standard | Long videos contain many reusable short clips. | Analyze a transcript and identify the best short-form moments with timestamps. |
-| **07** | **Sanadhani** | Thumbnail Ideator | `07_Thumbnail_Ideator` | Standard | Creators need better thumbnail concepts. | Turn a video title into visual concepts and thumbnail text. |
-| **08** | **Tejaswi K** | Caption Assistant | `08_Caption_Assistant` | Standard | Creators waste time writing captions. | Turn content or an image description into a platform-ready caption. |
-| **09** | **Malligaarjunan AVK** | CTA Generator | `09_CTA_Generator` | Standard | Creators struggle with calls-to-action that don't sound repetitive. | Generate contextual CTAs based on the creator's goal. |
-| **10** | **Poornaa Shree Praveenraj** | Comment Analyzer | `10_Comment_Analyzer` | Standard | Creators receive hundreds of comments but can't easily understand audience sentiment. | Analyze comments into themes, questions, complaints and opportunities. |
-| **11** | **Satheesh** | Comment-to-Content | `11_Comment_to_Content` | Standard | Creators miss good ideas hidden inside audience comments. | Convert audience comments into future post and video ideas. |
-| **12** | **Sudhiksha** | Creator Research Assistant | `12_Creator_Research_Assistant` | Standard | Research before creating educational content takes too long. | Turn a topic into key facts, angles and useful sources. |
-| **13** | **Suryakumar J S** | Voice Replicator | `13_Voice_Replicator` | Standard | Creators don't maintain a consistent writing style. | Learn from previous posts and create a new draft following the creator's style. |
-| **14** | **Priyadharshini B** | Podcast Assistant | `14_Podcast_Assistant` | Standard | Podcast creators spend too much time creating supporting content. | Turn a transcript into a title, description, chapters and highlights. |
-| **15** | **Aatif F** | Creator Workspace | `15_Creator_Workspace` | Standard | Creators struggle to organize scripts, drafts and published content. | Build an Idea → Research → Script → Published workflow. |
-| **16** | **Archana C** | Content Recycler | `16_Content_Recycler` | Standard | Creators don't know which old content deserves to be reused. | Analyze content history and recommend what to repost or rework. |
-| **17** | **Prinetha kannan** | Brand Pitch Builder | `17_Brand_Pitch_Builder` | Standard | Brand collaborations require repetitive proposals and pitches. | Use creator profile + brand information to generate a personalized collaboration proposal. |
-| **18** | **Sri Jananii S** | AI Content Director | `18_AI_Content_Director` | Extra High | Turning an idea into a complete production plan requires several disconnected steps. | Research a topic, identify angles, recommend a narrative, generate a script, suggest visuals/B-roll, create a shot list and publishing copy. |
-| **19** | **Karthik Aravind M** | Creator Second Brain | `19_Creator_Second_Brain` | Extra High | Creators can't easily search, reuse or connect everything they have produced. | Store creator knowledge and enable semantic questions such as 'Have I talked about this before?' and 'What can become a reel?'. |
-| **20** | **SaiSanjay R** | AI Screenplay Workspace | `20_AI_Screenplay_Workspace` | Extra High | Writers need AI assistance without losing character and story continuity. | Build a workspace that understands characters, locations, scenes and previous context while assisting with dialogue, action and scene progression. |
-| **21** | **Sudharshan R** | Autonomous Content Pipeline | `21_Autonomous_Content_Pipeline` | Extra High | Creators repeatedly transform one idea into many different content formats. | Turn one idea through Research → YouTube Script → 3 Reels → LinkedIn Post → X Thread → Captions → Publishing Calendar. |
-| **22** | **Udhayan K** | AI Creative Producer | `22_AI_Creative_Producer` | Extra High | Creators need ongoing strategic decisions, not just individual generated posts. | Given a creator goal, define audience, content pillars and a 30-day strategy, generate today's content, retain history and adapt recommendations using performance data. |
-
----
-
-## ✅ Evaluation & Review Checklist
-
-When evaluating your pull request, the mentor will review:
-
-1. **Problem Solving & Core Logic:** Does the application address the specific challenge requirements?
-2. **UI & Usability:** Is the interface intuitive and user-friendly (Streamlit, Gradio, React, Next.js, etc.)?
-3. **Prompt Engineering & AI Integration:** Are prompt templates robust, structured, and handling edge cases effectively?
-4. **Code Quality:** Is code cleanly structured, modular, and well-commented?
-5. **Documentation:** Does your branch contain a clear `README.md` explaining how to set up, configure environment variables, and run the project?
-6. **Zero Leaked Secrets:** Ensure `.env` is omitted and `.env.example` is supplied.
-
----
-
-## ❓ Frequently Asked Questions (FAQ)
-
-<details>
-<summary><b>1. What if I accidentally made a typo in my branch name?</b></summary>
-
-You can rename your local branch and force push the update:
-```bash
-# Rename the local branch
-git branch -m wrong_branch_name 01_Content_Idea_Generator
-
-# Push the new branch and delete the old remote branch
-git push origin -u 01_Content_Idea_Generator
-git push origin --delete wrong_branch_name
-```
-</details>
-
-<details>
-<summary><b>2. Which tech stack can I use?</b></summary>
-
-You are free to choose the stack that best fits your project. Common choices include:
-- **Python:** Streamlit, Gradio, FastAPI, Chainlit, Flask
-- **JavaScript / TypeScript:** Next.js, React, Node.js, Express
-- **AI Models & Frameworks:** Google Gemini API, OpenAI API, LangChain, LlamaIndex, LiteLLM
-</details>
-
-<details>
-<summary><b>3. How do I provide API keys for the reviewer to test?</b></summary>
-
-Do **NOT** put your API keys in the code or PR description. In your app's UI, provide an input field (such as `st.sidebar.text_input("Enter API Key", type="password")`) so the reviewer can enter their own API key, or instruct them in your branch `README.md` on how to set it in their local `.env`.
-</details>
-
----
-
-💡 *Happy building! If you have any questions or blockers, reach out to the mentor or open an issue.*
+Distributed under the MIT License. See `LICENSE` for more information.

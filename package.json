@@ -1,0 +1,13 @@
+{
+  "name": "asadi-protosem-unified-saas",
+  "version": "1.0.0",
+  "description": "CineCraft OS - Unified Creator Studio SaaS Suite synthesizing Repo 24 (Analytics Copilot), Repo 18 (AI Content Director), and Repo 25 (AI Video Pre-Production Studio)",
+  "scripts": {
+    "postinstall": "cd web && npm install",
+    "dev": "cd web && npm run dev",
+    "build": "cd web && npm run build",
+    "preview": "cd web && npm run preview",
+    "web:dev": "npm --prefix web run dev",
+    "web:build": "npm --prefix web run build"
+  }
+}
