@@ -1,4 +1,4 @@
-"""Creator Analytics Copilot - Entry Point Application."""
+"""Creator Analytics Copilot - Main Application Entrypoint."""
 
 import streamlit as st
 import pandas as pd
@@ -22,11 +22,18 @@ from src.analytics import (
     analyze_all_patterns,
     get_analytics_summary_for_ai,
 )
+from src.ai import generate_ai_analysis, ask_your_data_ai
+from src.export import (
+    generate_markdown_report,
+    generate_ideas_csv,
+    generate_pdf_report,
+)
 from src.ui import (
     inject_custom_css,
     render_hero_header,
     render_privacy_callout,
     render_kpi_card,
+    render_confidence_badge,
     create_timeline_chart,
     create_posting_heatmap,
     create_format_comparison_chart,
@@ -36,7 +43,7 @@ from src.ui import (
 # Load environment variables
 load_dotenv()
 
-# Streamlit Page Config
+# Streamlit Page Configuration
 st.set_page_config(
     page_title="Creator Analytics Copilot",
     page_icon="✨",
@@ -98,7 +105,9 @@ tab_overview, tab_insights, tab_ideas, tab_chat, tab_export = st.tabs(
     ["📊 Dashboard", "💡 Insights & Patterns", "🚀 Next 10 Ideas", "💬 Ask Your Data", "📥 Export & Reports"]
 )
 
-# Ingestion & Dashboard Section
+# ==========================================
+# TAB 1: DASHBOARD & INGESTION
+# ==========================================
 with tab_overview:
     if st.session_state.data is None:
         st.markdown("### 📁 Ingest Content Analytics")
@@ -127,6 +136,7 @@ with tab_overview:
                     st.session_state.data = normalized_df
                     st.session_state.kpis = compute_kpis(normalized_df)
                     st.session_state.patterns = analyze_all_patterns(normalized_df)
+                    st.session_state.ai_results = None
                     st.success(f"Successfully loaded {len(normalized_df)} posts! Detected platform: **{st.session_state.platform}**")
                     st.rerun()
                 except DataValidationError as e:
@@ -148,6 +158,7 @@ with tab_overview:
                 st.session_state.data = normalized_df
                 st.session_state.kpis = compute_kpis(normalized_df)
                 st.session_state.patterns = analyze_all_patterns(normalized_df)
+                st.session_state.ai_results = None
                 st.success("Loaded sample dataset!")
                 st.rerun()
 
@@ -392,26 +403,278 @@ with tab_overview:
         )
         st.caption(f"Displaying {len(filtered_df)} of {len(df)} posts.")
 
+# ==========================================
+# TAB 2: INSIGHTS & PATTERNS
+# ==========================================
 with tab_insights:
     if st.session_state.data is None:
-        st.info("💡 Insights will appear once your content analytics are loaded.")
+        st.info("💡 Please upload your analytics or load sample data on the Dashboard tab to view insights.")
     else:
-        st.info("💡 Insights engine is being connected in Milestone 5.")
+        # Check / trigger synthesis
+        if st.session_state.ai_results is None:
+            with st.spinner("Analyzing patterns and generating synthesis..."):
+                summary_for_ai = get_analytics_summary_for_ai(st.session_state.kpis, st.session_state.patterns)
+                custom_key = st.session_state.get("CUSTOM_GEMINI_KEY")
+                st.session_state.ai_results = generate_ai_analysis(
+                    summary_for_ai,
+                    st.session_state.kpis,
+                    st.session_state.patterns,
+                    custom_api_key=custom_key,
+                )
 
+        ai_res = st.session_state.ai_results
+
+        # Top Source indicator & Re-analyze button
+        col_meta, col_regen = st.columns([3, 1])
+        with col_meta:
+            source_label = "✨ Synthesized by Gemini 2.5 Flash" if ai_res.get("source") == "gemini_ai" else "🧠 Powered by Rule-Based Engine (Deterministic)"
+            st.markdown(f"**Synthesis Status:** `{source_label}`")
+            st.caption(ai_res.get("message", ""))
+        with col_regen:
+            if st.button("🔄 Refresh Synthesis", use_container_width=True):
+                st.session_state.ai_results = None
+                st.rerun()
+
+        # Confidence Methodology Banner
+        st.markdown(
+            """
+            <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: #475569;">
+                <strong>Confidence Scoring Methodology:</strong><br>
+                • <strong>High Confidence:</strong> Large sample size (N ≥ 25) with strong effect size (|lift| ≥ 25%).<br>
+                • <strong>Medium Confidence:</strong> Moderate sample (N ≥ 10) with noticeable lift (|lift| ≥ 10%).<br>
+                • <strong>Low Confidence:</strong> Small sample size (N &lt; 10) or subtle difference. Flagged with caveats — treat as directional hints rather than fact.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        col_win, col_loss = st.columns([1, 1], gap="medium")
+
+        with col_win:
+            st.markdown("### 🏆 What Worked")
+            for item in ai_res.get("what_worked", []):
+                badge_html = render_confidence_badge(item.get("confidence", "low"))
+                caveat_html = f'<div style="color: #DC2626; font-size: 0.8rem; margin-top: 0.25rem;">⚠️ {item["caveat"]}</div>' if item.get("caveat") else ""
+                st.markdown(
+                    f"""
+                    <div class="copilot-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <span style="font-size: 0.8rem; font-weight: 700; color: #6B7280; text-transform: uppercase;">{item.get('dimension', 'Metric')}</span>
+                            {badge_html}
+                        </div>
+                        <div style="font-size: 0.95rem; font-weight: 600; color: #111827;">{item.get('statement')}</div>
+                        <div style="font-size: 0.8rem; color: #6B7280; margin-top: 0.35rem;">Sample: <strong>{item.get('sample_size')} posts</strong></div>
+                        {caveat_html}
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+        with col_loss:
+            st.markdown("### ⚠️ What Didn't Work")
+            for item in ai_res.get("what_didnt", []):
+                badge_html = render_confidence_badge(item.get("confidence", "low"))
+                caveat_html = f'<div style="color: #DC2626; font-size: 0.8rem; margin-top: 0.25rem;">⚠️ {item["caveat"]}</div>' if item.get("caveat") else ""
+                st.markdown(
+                    f"""
+                    <div class="copilot-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <span style="font-size: 0.8rem; font-weight: 700; color: #6B7280; text-transform: uppercase;">{item.get('dimension', 'Metric')}</span>
+                            {badge_html}
+                        </div>
+                        <div style="font-size: 0.95rem; font-weight: 600; color: #111827;">{item.get('statement')}</div>
+                        <div style="font-size: 0.8rem; color: #6B7280; margin-top: 0.35rem;">Sample: <strong>{item.get('sample_size')} posts</strong></div>
+                        {caveat_html}
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+        st.markdown("---")
+        st.markdown("### 💡 Why It Worked (Algorithmic & Psychological Hypotheses)")
+        st.caption("Every explanation is grounded in audience psychology and algorithmic distribution mechanics, formulated as empirical hypotheses.")
+
+        for hyp in ai_res.get("why_hypotheses", []):
+            st.markdown(
+                f"""
+                <div class="copilot-card" style="border-left: 4px solid #4F46E5;">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #4F46E5;">[Hypothesis] {hyp.get('topic')}</div>
+                    <div style="font-size: 0.95rem; color: #374151; margin-top: 0.35rem;">{hyp.get('hypothesis')}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+# ==========================================
+# TAB 3: NEXT 10 CONTENT IDEAS
+# ==========================================
 with tab_ideas:
     if st.session_state.data is None:
-        st.info("🚀 AI-powered ideas backed by your winning content patterns will be generated here.")
+        st.info("🚀 Content ideas will be generated once your analytics data is uploaded.")
     else:
-        st.info("🚀 Ideas generator is being connected in Milestone 6.")
+        if st.session_state.ai_results is None:
+            with st.spinner("Generating data-backed content ideas..."):
+                summary_for_ai = get_analytics_summary_for_ai(st.session_state.kpis, st.session_state.patterns)
+                custom_key = st.session_state.get("CUSTOM_GEMINI_KEY")
+                st.session_state.ai_results = generate_ai_analysis(
+                    summary_for_ai,
+                    st.session_state.kpis,
+                    st.session_state.patterns,
+                    custom_api_key=custom_key,
+                )
 
+        ideas = st.session_state.ai_results.get("next_10_ideas", [])
+
+        col_hdr, col_dl = st.columns([3, 1])
+        with col_hdr:
+            st.markdown("### 🚀 Next 10 High-Yield Content Ideas")
+            st.write("Engineered using your channel's verified winning formats, title hooks, and optimal posting times.")
+        with col_dl:
+            csv_data = generate_ideas_csv(ideas)
+            st.download_button(
+                "📥 Export Ideas as CSV",
+                data=csv_data,
+                file_name="next_10_content_ideas.csv",
+                mime="text/csv",
+                use_container_width=True,
+            )
+
+        for i, idea in enumerate(ideas, 1):
+            with st.expander(f"**Idea {i}: {idea.get('title')}**", expanded=(i <= 3)):
+                st.markdown(
+                    f"""
+                    - **🎣 3-Second Hook:** *"{idea.get('hook')}"*
+                    - **🎬 Recommended Format:** `{idea.get('format')}`
+                    - **⏰ Best Publishing Slot:** `{idea.get('best_posting_slot')}`
+                    - **📊 Data-Backed Rationale:** {idea.get('data_backed_reason')}
+                    """
+                )
+
+# ==========================================
+# TAB 4: ASK YOUR DATA (CHAT)
+# ==========================================
 with tab_chat:
     if st.session_state.data is None:
-        st.info("💬 Chat with your analytics once your data is uploaded.")
+        st.info("💬 Upload analytics or load sample data to query your performance metrics.")
     else:
-        st.info("💬 Ask Your Data chat is being connected in Milestone 6.")
+        st.markdown("### 💬 Ask Your Channel Data")
+        st.caption("Ask questions about your performance. Answers are strictly grounded in your computed summary statistics.")
 
+        # Starter Prompt Pills
+        st.markdown("**Suggested Questions:**")
+        pill_cols = st.columns(4)
+        starter_questions = [
+            "When is my best time to post?",
+            "Which format gets the most views?",
+            "Do numbers in titles help?",
+            "What do my top 10% winners have in common?",
+        ]
+        
+        selected_prompt = None
+        for i, q in enumerate(starter_questions):
+            with pill_cols[i]:
+                if st.button(q, key=f"pill_{i}", use_container_width=True):
+                    selected_prompt = q
+
+        st.markdown("---")
+
+        # Display Chat History
+        for msg in st.session_state.chat_history:
+            with st.chat_message(msg["role"]):
+                st.markdown(msg["content"])
+
+        # Input Box
+        user_input = st.chat_input("Ask a question about your channel performance...")
+        active_query = user_input or selected_prompt
+
+        if active_query:
+            # Append user message
+            st.session_state.chat_history.append({"role": "user", "content": active_query})
+            with st.chat_message("user"):
+                st.markdown(active_query)
+
+            # Generate AI or rule-based response
+            with st.chat_message("assistant"):
+                with st.spinner("Analyzing stats..."):
+                    summary_for_ai = get_analytics_summary_for_ai(st.session_state.kpis, st.session_state.patterns)
+                    custom_key = st.session_state.get("CUSTOM_GEMINI_KEY")
+                    reply = ask_your_data_ai(
+                        active_query,
+                        summary_for_ai,
+                        st.session_state.kpis,
+                        st.session_state.patterns,
+                        st.session_state.chat_history,
+                        custom_api_key=custom_key,
+                    )
+                    st.markdown(reply)
+                    st.session_state.chat_history.append({"role": "assistant", "content": reply})
+
+# ==========================================
+# TAB 5: EXPORT & REPORTS
+# ==========================================
 with tab_export:
     if st.session_state.data is None:
-        st.info("📥 Export your comprehensive PDF and Markdown reports here.")
+        st.info("📥 Reports will be ready for export once your data is uploaded.")
     else:
-        st.info("📥 Export features are being connected in Milestone 7.")
+        if st.session_state.ai_results is None:
+            summary_for_ai = get_analytics_summary_for_ai(st.session_state.kpis, st.session_state.patterns)
+            custom_key = st.session_state.get("CUSTOM_GEMINI_KEY")
+            st.session_state.ai_results = generate_ai_analysis(
+                summary_for_ai,
+                st.session_state.kpis,
+                st.session_state.patterns,
+                custom_api_key=custom_key,
+            )
+
+        st.markdown("### 📥 Download Reports & Content Plans")
+        st.write("Export your analytics report for team sharing, agency presentations, or personal strategy archives.")
+
+        exp_col1, exp_col2, exp_col3 = st.columns(3)
+
+        with exp_col1:
+            st.markdown("#### 📄 Executive PDF Report")
+            st.write("Full multi-page printable report with KPIs, what worked, hypotheses, and your next 10 ideas.")
+            pdf_bytes = generate_pdf_report(
+                st.session_state.kpis,
+                st.session_state.ai_results,
+                st.session_state.platform or "Creator Channel",
+            )
+            st.download_button(
+                "📥 Download PDF Report",
+                data=pdf_bytes,
+                file_name="Creator_Analytics_Copilot_Report.pdf",
+                mime="application/pdf",
+                use_container_width=True,
+            )
+
+        with exp_col2:
+            st.markdown("#### 📝 Markdown Strategy Document")
+            st.write("Raw markdown format perfect for Notion, Obsidian, GitHub, or documentation vaults.")
+            md_text = generate_markdown_report(
+                st.session_state.kpis,
+                st.session_state.ai_results,
+                st.session_state.platform or "Creator Channel",
+            )
+            st.download_button(
+                "📥 Download Markdown Report",
+                data=md_text,
+                file_name="Creator_Analytics_Copilot_Report.md",
+                mime="text/markdown",
+                use_container_width=True,
+            )
+
+        with exp_col3:
+            st.markdown("#### 📊 Content Ideas CSV")
+            st.write("Tabular spreadsheet export of all 10 ideas with hooks and posting slots for your content calendar.")
+            ideas_csv = generate_ideas_csv(st.session_state.ai_results.get("next_10_ideas", []))
+            st.download_button(
+                "📥 Download Ideas CSV",
+                data=ideas_csv,
+                file_name="Next_10_Content_Ideas.csv",
+                mime="text/csv",
+                use_container_width=True,
+            )
+
+        st.markdown("---")
+        with st.expander("👁️ Preview Markdown Strategy Report", expanded=False):
+            st.markdown(md_text)
