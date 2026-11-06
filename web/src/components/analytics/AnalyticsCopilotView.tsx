@@ -486,3 +486,4 @@ export const AnalyticsCopilotView: React.FC<AnalyticsCopilotViewProps> = ({
     </div>
   );
 };
+

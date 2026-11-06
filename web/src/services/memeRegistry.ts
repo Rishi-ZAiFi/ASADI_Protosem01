@@ -134,3 +134,4 @@ export function findMemesForQuery(query: string): MemeTemplate[] {
     m.situations.some((s) => s.toLowerCase().includes(q))
   );
 }
+
